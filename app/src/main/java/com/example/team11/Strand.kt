@@ -3,16 +3,16 @@ import com.google.android.gms.maps.model.LatLng
 
 class Strand (navn: String, latLng: LatLng, tempratur: Int) : Comparable<Strand> {
 
-    var tempraturInnafor = true
+    /**
+     * tanken er at denne kan brukes i compareTo metoden
+     * kan også være et enum, se diskusjon i PersonligPreferanse klassen
+     */
+    private var tempraturInnafor = true
 
 
     /**
-     *  Sjekker om den nye tempraturen er innafor, og oppdaterer den
-     *  @Tanker: Kommer ann på hvor mange grader vi vil ha av Innafor, vil vi ha
-     *  f.eks. ikke snakk om/ kan gå / perfekt, da burde Innafor være et enum, og vi
-     *  må ha en boolean sjekk for kan gå kan ikke være > en perfekt f.eks.
+     * Endrer tempraturInnafor slik at den er true hvis den er innafor, og false ellers
      *  @param nyPreferanse  Any [Int]
-     *  @return en boolean. True hvis den ble oppdater, false hvis det ikke gitt
     */
     fun oppdaterTempraturInnafor(nyPreferanse: Int): Boolean{
         TODO("ikke implementert")
