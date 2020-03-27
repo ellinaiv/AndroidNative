@@ -1,6 +1,7 @@
 package com.example.team11
 
-class PersonligPreferanse {
+class PersonalPreference {
+
     //satt den til MIN_VALUE nå, slik at alle strende automatisk kommer
     private var tempraturMinVerdi = Int.MIN_VALUE
 
@@ -18,4 +19,7 @@ class PersonligPreferanse {
     fun oppdaterPreferanse(): Boolean{
         TODO("Ikke implemntert")
     }
+}
+enum class Preference{
+    OPTIMAL, OKEY, NOT_OKEY
 }
