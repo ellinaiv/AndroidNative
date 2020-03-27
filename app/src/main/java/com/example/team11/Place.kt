@@ -1,8 +1,10 @@
 package com.example.team11
 import com.google.android.gms.maps.model.LatLng
+import java.lang.Math
+import kotlin.math.roundToInt
 
-class Strand (navn: String, latLng: LatLng, tempratur: Int) : Comparable<Strand> {
 
+class Place(val id: Int, val name: String, val latLng: LatLng, val temp: Int = (10*Math.random() + 15).roundToInt()){
     /**
      * tanken er at denne kan brukes i compareTo metoden
      * kan også være et enum, se diskusjon i PersonligPreferanse klassen
@@ -24,8 +26,15 @@ class Strand (navn: String, latLng: LatLng, tempratur: Int) : Comparable<Strand>
      * @return en Int. 0 > hvis this er større en other, 0 hvis this == strand
      * og 0 < hvis this er mindre enn other
      */
-    override fun compareTo(other: Strand): Int {
+    /*
+    override fun compareTo(other: Place): Int {
         TODO("ikke implemert")
+    }
+    */
+    fun preferenceCheck(minTemp: Int, midTemp: Int): Preference{
+        if (temp < minTemp) return Preference.NOT_OKEY
+        else if (temp > midTemp) return Preference.OPTIMAL
+        return Preference.OKEY
     }
 
 }
