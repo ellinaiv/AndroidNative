@@ -29,8 +29,15 @@ class Place(val id: Int, val name: String, val latLng: LatLng, val temp: Int = (
     /*
     override fun compareTo(other: Place): Int {
         TODO("ikke implemert")
-    }
-    */
+    }*/
+
+
+    /**
+     * Sjekker om preferansen til dette placet er innafor, sammenlignet med en minTemp og midTemp
+     * @param minTemp Any[Int] minimums tempraturen til preferansen
+     * @param midTem Any[Int] tempraturen mellom minTemp og midTemp er ok, mens over midTemp er optimalt
+     * @return en Preference
+     */
     fun preferenceCheck(minTemp: Int, midTemp: Int): Preference{
         if (temp < minTemp) return Preference.NOT_OKEY
         else if (temp > midTemp) return Preference.OPTIMAL

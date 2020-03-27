@@ -33,8 +33,9 @@ class MainActivity : AppCompatActivity() {
 
 
     }
-    /*
-     * getPlaces funksjonen henter getResponse fra API, parser XML-responsen og opretter en liste med place-objekter
+    /**
+     * getPlaces funksjonen henter getResponse fra API, parser XML-responsen og oppretter en liste
+     * med place-objekter
      * @param: String, urlen til APIet
      * @return: ArrayList<Place>, liste med badesteder
      */
