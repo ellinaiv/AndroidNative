@@ -64,7 +64,7 @@ class MapActivity : AppCompatActivity() {
 
     /**
      * Legger til ikoner som man kan plassere på kartet
-     * @param Style: stilen som kartet bruker
+     * @param style:  stilen som kartet bruker
      */
     private fun setUpMapImagePins(style: Style){
         var icon = BitmapFactory.decodeResource(
@@ -105,8 +105,8 @@ class MapActivity : AppCompatActivity() {
      */
     private fun addMarker(place: Place, style: Style){
         val id = place.id.toString() + "_LAYOR_ID"
-        val geo_id = GEOJSON_ID + place.id.toString()
-        val geoJsonSource = GeoJsonSource(geo_id, FeatureCollection.fromFeatures(
+        val geoId = GEOJSON_ID + place.id.toString()
+        val geoJsonSource = GeoJsonSource(geoId, FeatureCollection.fromFeatures(
             arrayListOf(getFeature(place))))
         style.addSource(geoJsonSource)
 
@@ -118,7 +118,7 @@ class MapActivity : AppCompatActivity() {
         }
         val textOffset: Array<Float> = arrayOf(0f, -2.5f)
 
-        val symbolLayer = SymbolLayer(id, geo_id)
+        val symbolLayer = SymbolLayer(id, geoId)
         symbolLayer.withProperties(
             PropertyFactory.iconImage(iconId),
             PropertyFactory.textField(place.name),
