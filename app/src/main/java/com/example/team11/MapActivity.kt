@@ -96,6 +96,13 @@ class MapActivity : AppCompatActivity() {
     }
 
 
+    /**
+     * Legger til en marker for en place. Legger til farge på markeren etter Preferance og
+     * legger til navnet på stedet
+     *
+     * @param place: Stedet som skal plasseres på kartet
+     * @param style: Stilen på kartet
+     */
     private fun addMarker(place: Place, style: Style){
         val id = place.id.toString() + "_LAYOR_ID"
         val geo_id = GEOJSON_ID + place.id.toString()
