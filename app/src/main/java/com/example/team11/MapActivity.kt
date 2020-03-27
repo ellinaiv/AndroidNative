@@ -20,6 +20,7 @@ class MapActivity : AppCompatActivity() {
     private val ICON_ID_YELLOW = "ICON_ID_YELLOW"
     private val ICON_ID_GREEN = "ICON_ID_GREEN "
     private val GEOJSON_ID = "GEOJSON_ID"
+    //Midlertidige verdier fram til preferanses er bestemt
     private val MIN_TEMP = 15
     private val MID_TEMP = 23
 
