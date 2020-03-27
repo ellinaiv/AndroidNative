@@ -130,4 +130,30 @@ class MapActivity : AppCompatActivity() {
      * @return en feature verdi basert på lokasjonen til place
      */
     private fun getFeature(place: Place) = Feature.fromGeometry(Point.fromLngLat(place.lng, place.lat))
+
+
+    override fun onResume() {
+        super.onResume()
+        mapView.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mapView.onPause()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        mapView.onStop()
+    }
+
+    override fun onLowMemory() {
+        super.onLowMemory()
+        mapView.onLowMemory()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mapView.onDestroy()
+    }
 }
