@@ -1,10 +1,12 @@
 package com.example.team11
 import com.google.android.gms.maps.model.LatLng
+import java.io.Serializable
 import java.lang.Math
 import kotlin.math.roundToInt
+import kotlin.random.Random
 
 
-class Place(val id: Int, val name: String, val latLng: LatLng, val temp: Int = (10*Math.random() + 15).roundToInt()){
+class Place(val id: Int, val name: String, val lat: Double, val lng: Double, val temp: Int = Random.nextInt(0, 35)): Serializable {
     /**
      * tanken er at denne kan brukes i compareTo metoden
      * kan også være et enum, se diskusjon i PersonligPreferanse klassen
@@ -19,6 +21,14 @@ class Place(val id: Int, val name: String, val latLng: LatLng, val temp: Int = (
     fun oppdaterTempraturInnafor(nyPreferanse: Int): Boolean{
         TODO("ikke implementert")
     }
+
+    /**
+     * Returerer posisjon i et latlng objekt
+     * @return latlng med posisjonen
+     */
+
+    fun getLatLng():LatLng = LatLng(lat, lng)
+
 
     /**
      * Sammenligner en strand med en annen
