@@ -16,16 +16,14 @@ class ListAdapter(private val myDataset: MutableList<Place>, val context: Contex
     class MyViewHolder(itemView: CardView) : RecyclerView.ViewHolder(itemView){
 
         var itemName: TextView
-        var itemAge: TextView
-        var itemLocation: TextView
-        var itemImg: ImageView
+        var itemTempAir: TextView
+        var itemTempWater: TextView
 
 
         init {
-            itemName = itemView.findViewById(R.id.tempWater)
-            itemAge = itemView.findViewById(R.id.tempAir)
-            itemLocation = itemView.findViewById(R.id.tempWater)
-            itemImg = itemView.findViewById(R.id.imgSun)
+            itemName = itemView.findViewById(R.id.name)
+            itemTempAir = itemView.findViewById(R.id.tempAir)
+            itemTempWater = itemView.findViewById(R.id.tempWater)
         }
 
     }
@@ -38,15 +36,9 @@ class ListAdapter(private val myDataset: MutableList<Place>, val context: Contex
     override fun onBindViewHolder(holder: MyViewHolder, position: Int){
 
         holder.itemName.text = myDataset[position].name
-        holder.itemLocation.text = myDataset[position].temp.toString()
-        holder.itemAge.text = myDataset[position].id.toString()
-        /*try {
-            GlideApp.with(context)
-                .load(myDataset[position].imgSrc)
-                .into(holder.itemImg)
-        }catch(e : Exception){
-            Log.d("error", e.message.toString())
-        }*/
+        holder.itemTempAir.text = myDataset[position].temp.toString() + "'C"
+        holder.itemTempWater.text = "request"//myDataset[position].id.toString()
+
     }
     override fun getItemCount() = myDataset.size
 }

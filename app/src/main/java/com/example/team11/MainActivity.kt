@@ -18,22 +18,21 @@ import kotlinx.coroutines.runBlocking
 class MainActivity : AppCompatActivity() {
 
     private lateinit var places: ArrayList<Place>
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val urlAPI = "http://oslokommune.msolution.no/friluft/badetemperaturer.jsp"
-        places = getPlaces(urlAPI)
+        val urlAPIPlaces = "http://oslokommune.msolution.no/friluft/badetemperaturer.jsp"
+        places = getPlaces(urlAPIPlaces)
 
         /*
          * manuelt testing for badesteder, skal slettes
          */
-        /*
+
         for(place in places){
             Log.d("name: ", place.name)
             Log.d("LatLng: ", place.getLatLng().toString())
             Log.d("tmp: ", place.temp.toString())
-        }*/
+        }
 
         //kun får å enn så lenge komme seg til kartet.
         val mapButton = findViewById<Button>(R.id.kartButton)
@@ -77,7 +76,7 @@ class MainActivity : AppCompatActivity() {
                 lateinit var name: String
                 lateinit var lat: String
                 lateinit var long: String
-                var id = -1
+                var id = 0
 
                 while (eventType != XmlPullParser.END_DOCUMENT) {
                     if (eventType == XmlPullParser.START_TAG && xpp.name == "name") {
