@@ -1,8 +1,10 @@
 package com.example.team11
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import android.widget.Toast
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserFactory
@@ -27,14 +29,24 @@ class MainActivity : AppCompatActivity() {
          */
         for(place in places){
             Log.d("name: ", place.name)
-            Log.d("LatLng: ", place.latLng.toString())
+            Log.d("LatLng: ", place.getLatLng().toString())
             Log.d("tmp: ", place.temp.toString())
+        }
+
+        //kun får å enn så lenge komme seg til kartet.
+        val mapButton = findViewById<Button>(R.id.kartButton)
+        mapButton.setOnClickListener {
+            val intent = Intent(this, MapActivity::class.java).apply{
+                putExtra("PLACES_LIST", places)
+            }
+            startActivity(intent)
         }
 
 
     }
-    /*
-     * getPlaces funksjonen henter getResponse fra API, parser XML-responsen og opretter en liste med place-objekter
+    /**
+     * getPlaces funksjonen henter getResponse fra API, parser XML-responsen og oppretter en liste
+     * med place-objekter
      * @param: String, urlen til APIet
      * @return: ArrayList<Place>, liste med badesteder
      */
@@ -72,7 +84,7 @@ class MainActivity : AppCompatActivity() {
                         xpp.next()
                         long = xpp.text
                         xpp.next()
-                        places.add(Place(id++, name, LatLng(lat.toDouble(), long.toDouble())))
+                        places.add(Place(id++, name, lat.toDouble(), long.toDouble()))
                     }
 
                     eventType = xpp.next()
