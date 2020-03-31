@@ -1,5 +1,7 @@
 package com.example.team11
 
+import android.os.Bundle
+
 class PersonalPreference {
 
     //satt den til MIN_VALUE nå, slik at alle strende automatisk kommer
@@ -20,6 +22,9 @@ class PersonalPreference {
         TODO("Ikke implemntert")
     }
 }
+
+
+
 enum class Preference{
     OPTIMAL, OKEY, NOT_OKEY
 }

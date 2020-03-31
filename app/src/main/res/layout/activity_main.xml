@@ -16,11 +16,11 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:layout_editor_absoluteY="269dp" />
     <Button
-        android:id="@+id/buttonPreference"
+        android:id="@+id/buttonSettings"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="12dp"
-        android:text="Preferanser"
+        android:text="Innstillinger"
         app:layout_constraintTop_toBottomOf="@id/buttonMap"
         app:layout_constraintEnd_toEndOf="parent"
         tools:layout_editor_absoluteY="269dp" />
