@@ -47,8 +47,8 @@ class MainActivity : AppCompatActivity() {
             }
             startActivity(intent)
         }
-        buttonPreference.setOnClickListener {
-            val intent = Intent(this, PersonalPreference::class.java).apply{
+        buttonSettings.setOnClickListener {
+            val intent = Intent(this, SettingsActivity::class.java).apply{
             }
             startActivity(intent)
         }
