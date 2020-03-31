@@ -11,6 +11,8 @@ import org.xmlpull.v1.XmlPullParserFactory
 import java.io.StringReader
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.coroutines.awaitString
+import com.google.android.gms.maps.model.LatLng
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.runBlocking
 
 class MainActivity : AppCompatActivity() {
@@ -45,6 +47,12 @@ class MainActivity : AppCompatActivity() {
             }
             startActivity(intent)
         }
+        buttonPreference.setOnClickListener {
+            val intent = Intent(this, PersonalPreference::class.java).apply{
+            }
+            startActivity(intent)
+        }
+
 
 
     }
