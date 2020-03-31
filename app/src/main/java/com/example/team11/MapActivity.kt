@@ -38,12 +38,13 @@ class MapActivity : AppCompatActivity() {
          * manuelt testing for badesteder, skal slettes
          */
         for(place in places){
+            Log.d("heeei", "placesList")
             Log.d("name: ", place.name)
             Log.d("LatLng: ", place.getLatLng().toString())
             Log.d("tmp: ", place.temp.toString())
         }
 
-        mapView = findViewById(R.id.mapView)
+        mapView = findViewById(R.id.mapView1)
         mapView.onCreate(savedInstanceState)
 
         mapView.getMapAsync {mapBoxMap ->

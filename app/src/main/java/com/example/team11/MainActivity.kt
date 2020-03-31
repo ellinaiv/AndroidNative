@@ -12,6 +12,7 @@ import java.io.StringReader
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.coroutines.awaitString
 import com.google.android.gms.maps.model.LatLng
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.runBlocking
 
 class MainActivity : AppCompatActivity() {
@@ -27,16 +28,24 @@ class MainActivity : AppCompatActivity() {
         /*
          * manuelt testing for badesteder, skal slettes
          */
+        /*
         for(place in places){
             Log.d("name: ", place.name)
             Log.d("LatLng: ", place.getLatLng().toString())
             Log.d("tmp: ", place.temp.toString())
-        }
+        }*/
 
         //kun får å enn så lenge komme seg til kartet.
         val mapButton = findViewById<Button>(R.id.kartButton)
         mapButton.setOnClickListener {
             val intent = Intent(this, MapActivity::class.java).apply{
+                putExtra("PLACES_LIST", places)
+            }
+            startActivity(intent)
+        }
+        val listButton = findViewById<Button>(R.id.listButton)
+        listButton.setOnClickListener {
+            val intent = Intent(this, PlacesListActivity::class.java).apply{
                 putExtra("PLACES_LIST", places)
             }
             startActivity(intent)

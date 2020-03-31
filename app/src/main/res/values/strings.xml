@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Team11</string>
     <string name="access_token">sk.eyJ1IjoiamFyaG9sdCIsImEiOiJjazg0ZDBsMHkwMTN4M2prNzJpcHZnMXFkIn0.k3JYH8gx2QewGmE4Vf2GsQ</string>
+    <string name="kart">Kart</string>
+    <string name="list">list</string>
+    <string name="textview">TextView</string>
 </resources>
