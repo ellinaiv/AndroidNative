@@ -12,6 +12,7 @@ import java.io.StringReader
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.coroutines.awaitString
 import com.google.android.gms.maps.model.LatLng
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.runBlocking
 
 class MainActivity : AppCompatActivity() {
@@ -34,13 +35,18 @@ class MainActivity : AppCompatActivity() {
         }
 
         //kun får å enn så lenge komme seg til kartet.
-        val mapButton = findViewById<Button>(R.id.kartButton)
-        mapButton.setOnClickListener {
+        buttonMap.setOnClickListener {
             val intent = Intent(this, MapActivity::class.java).apply{
                 putExtra("PLACES_LIST", places)
             }
             startActivity(intent)
         }
+        buttonPreference.setOnClickListener {
+            val intent = Intent(this, PersonalPreference::class.java).apply{
+            }
+            startActivity(intent)
+        }
+
 
 
     }
