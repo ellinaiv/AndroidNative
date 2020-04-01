@@ -1,13 +1,11 @@
 package com.example.team11
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.*
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
-import java.lang.Exception
 
 
 
@@ -36,8 +34,8 @@ class ListAdapter(private val myDataset: MutableList<Place>, val context: Contex
     override fun onBindViewHolder(holder: MyViewHolder, position: Int){
 
         holder.itemName.text = myDataset[position].name
-        holder.itemTempAir.text = myDataset[position].temp.toString() + "'C"
-        holder.itemTempWater.text = "request"//myDataset[position].id.toString()
+        holder.itemTempWater.text = myDataset[position].temp.toString() + "'C"
+        holder.itemTempAir.text = "no data"
 
     }
     override fun getItemCount() = myDataset.size

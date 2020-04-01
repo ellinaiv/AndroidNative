@@ -44,7 +44,7 @@ class MapActivity : AppCompatActivity() {
             Log.d("tmp: ", place.temp.toString())
         }
 
-        mapView = findViewById(R.id.mapView1)
+        mapView = findViewById(R.id.mapView)
         mapView.onCreate(savedInstanceState)
 
         mapView.getMapAsync {mapBoxMap ->
