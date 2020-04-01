@@ -4,7 +4,6 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
 import android.widget.Toast
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserFactory
@@ -35,14 +34,14 @@ class MainActivity : AppCompatActivity() {
         }
 
         //kun får å enn så lenge komme seg til kartet.
-        buttonMap.setOnClickListener {
+        btn_map.setOnClickListener {
             val intent = Intent(this, MapActivity::class.java).apply{
                 putExtra("PLACES_LIST", places)
             }
             startActivity(intent)
         }
-        buttonSettings.setOnClickListener {
-            val intent = Intent(this, SettingsActivity::class.java).apply{
+        btn_filter.setOnClickListener {
+            val intent = Intent(this, FilterActivity::class.java).apply{
             }
             startActivity(intent)
         }
