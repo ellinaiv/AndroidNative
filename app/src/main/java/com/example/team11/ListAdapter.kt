@@ -7,9 +7,13 @@ import android.widget.*
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 
+/*
+ * List adapter viser informasjon på de forskjellige cardsViews.
+ * @param myDataset er arraylist med badeplasser
+ * @param context er kotexten til activity der cardViews skal visses
+ */
 
-
-class ListAdapter(private val myDataset: MutableList<Place>, val context: Context) : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
+class ListAdapter(private val myDataset: ArrayList<Place>, val context: Context) : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
 
     class MyViewHolder(itemView: CardView) : RecyclerView.ViewHolder(itemView){
 
@@ -31,6 +35,10 @@ class ListAdapter(private val myDataset: MutableList<Place>, val context: Contex
         return MyViewHolder(v)
     }
 
+
+    /*
+     * Vi har for lite data nå. Burde se på APIer og ta ut mer info om badeplassene
+     */
     override fun onBindViewHolder(holder: MyViewHolder, position: Int){
 
         holder.itemName.text = myDataset[position].name
