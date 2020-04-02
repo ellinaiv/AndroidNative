@@ -136,14 +136,6 @@ class MapActivity : AppCompatActivity() {
     }
 
 
-    /**
-     * Gir featuren til en Place sin lokasjon (en feature er det som trengs for å vise noe
-     * på kartet)
-     * @param place: en strand
-     * @return en feature verdi basert på lokasjonen til place
-     */
-
-
     override fun onResume() {
         super.onResume()
         mapView.onResume()

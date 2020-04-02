@@ -13,20 +13,29 @@ import java.io.StringReader
 class PlaceRepository private constructor() {
 
     private var places = arrayListOf<Place>()
-    val urlAPI = "http://oslokommune.msolution.no/friluft/badetemperaturer.jsp"
+    private val urlAPI = "http://oslokommune.msolution.no/friluft/badetemperaturer.jsp"
 
     //Kotlin sin static
     companion object {
         @Volatile private var instance: PlaceRepository? = null
 
+        /**
+         * getInstance: henter PlaceRepository objekt, hvis det ikke finnes noen
+         * eller returneres det et.
+         * @return PlaceRepository
+         */
         fun getInstance() =
             instance ?: synchronized(this){
                 instance?: PlaceRepository().also { instance = it}
             }
     }
 
+    /**
+     * getPlaces funksjonen henter en liste til viewModel med badesteder
+     * @return: MutableLiveData<List<Place>>, liste med badesteder
+     */
     fun getPlaces(): MutableLiveData<List<Place>>{
-        places = fetchData(urlAPI)
+        places = fetchPlaces(urlAPI)
         var data = MutableLiveData<List<Place>>()
         data.value = places
         return data
@@ -34,13 +43,13 @@ class PlaceRepository private constructor() {
 
 
     /**
-     * getPlaces funksjonen henter getResponse fra API, parser XML-responsen og oppretter en liste
+     * fetchPlaces funksjonen henter getResponse fra API, parser XML-responsen og oppretter en liste
      * med place-objekter
      * @param: String, urlen til APIet
      * @return: ArrayList<Place>, liste med badesteder
      */
 
-    private fun fetchData(url : String) : ArrayList<Place>{
+    private fun fetchPlaces(url : String) : ArrayList<Place>{
         val places = arrayListOf<Place>()
         val tag = "getData() ---->"
         runBlocking{

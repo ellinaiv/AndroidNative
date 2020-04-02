@@ -12,6 +12,9 @@ class MapActivityViewModel: ViewModel() {
     var places: MutableLiveData<List<Place>>? = null
     private var placeRepository: PlaceRepository? = null
 
+    /**
+     * Setter verdier
+     */
     init {
         if(places == null){
             placeRepository = PlaceRepository.getInstance()
@@ -25,6 +28,12 @@ class MapActivityViewModel: ViewModel() {
         }
     }
 
+    /**
+     * Gir featuren til en Place sin lokasjon (en feature er det som trengs for å vise noe
+     * på kartet)
+     * @param place: en strand
+     * @return en feature verdi basert på lokasjonen til place
+     */
     fun getFeature(place: Place) = Feature.fromGeometry(Point.fromLngLat(place.lng, place.lat))!!
 
 }
