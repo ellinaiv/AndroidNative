@@ -41,5 +41,5 @@ dependencies {
     //implementation fra mapbox (kart)
     implementation 'com.mapbox.mapboxsdk:mapbox-android-plugin-annotation-v9:0.8.0'
     implementation 'com.mapbox.mapboxsdk:mapbox-android-plugin-annotation-v9:0.9.0-SNAPSHOT'
-    implementation 'com.mapbox.mapboxsdk:mapbox-android-plugin-markerview-v9:0.4.0'
+    implementation 'com.appyvet:materialrangebar:1.4.7'
 }

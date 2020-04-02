@@ -14,7 +14,9 @@
         android:text="Kart"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="269dp" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btn_filter"/>
+
     <Button
         android:id="@+id/btn_filter"
         android:layout_width="match_parent"
@@ -22,6 +24,6 @@
         android:padding="12dp"
         android:text="Filter"
         app:layout_constraintTop_toBottomOf="@id/btn_map"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:layout_editor_absoluteY="269dp" />
+
+        tools:layout_editor_absoluteX="0dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
