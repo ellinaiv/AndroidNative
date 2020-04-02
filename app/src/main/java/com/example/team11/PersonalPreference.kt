@@ -18,7 +18,7 @@ class PersonalPreference {
      *  @return en Boolean, true hvis den nye verdien er innfor og forandret, og
      *  false hvis den ikke er det.
      */
-    fun oppdaterPreferanse(): Boolean{
+    fun setPreferenceWaterTemp(good: Int, medium: Int, bad: Int): Boolean{
         TODO("Ikke implemntert")
     }
 }
@@ -26,5 +26,5 @@ class PersonalPreference {
 
 
 enum class Preference{
-    OPTIMAL, OKEY, NOT_OKEY
+    GOOD, MEDIUM, BAD
 }

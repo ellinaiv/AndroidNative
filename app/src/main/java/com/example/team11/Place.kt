@@ -47,9 +47,9 @@ class Place(val id: Int, val name: String, val lat: Double, val lng: Double, var
      * @return en Preference
      */
     fun preferenceCheck(minTemp: Int, midTemp: Int): Preference{
-        if (temp < minTemp) return Preference.NOT_OKEY
-        else if (temp >= midTemp) return Preference.OPTIMAL
-        return Preference.OKEY
+        if (temp < minTemp) return Preference.BAD
+        else if (temp >= midTemp) return Preference.GOOD
+        return Preference.MEDIUM
     }
 
     override fun toString(): String {
