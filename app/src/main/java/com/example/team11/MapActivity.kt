@@ -1,9 +1,11 @@
 package com.example.team11
 
 import android.graphics.BitmapFactory
+import android.graphics.PointF
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.viewModels
 import com.example.team11.viewmodels.MapActivityViewModel
 import com.mapbox.geojson.FeatureCollection
@@ -15,12 +17,18 @@ import com.mapbox.mapboxsdk.style.layers.PropertyFactory
 import com.mapbox.mapboxsdk.style.layers.SymbolLayer
 import com.mapbox.mapboxsdk.style.sources.GeoJsonSource
 import androidx.lifecycle.Observer
+import com.mapbox.geojson.Feature
+import com.mapbox.geojson.Point
+import com.mapbox.mapboxsdk.geometry.LatLng
 
-class MapActivity : AppCompatActivity() {
+class MapActivity : AppCompatActivity(), MapboxMap.OnMapClickListener {
     private val ICON_ID_RED = "ICON_ID_RED"
     private val ICON_ID_YELLOW = "ICON_ID_YELLOW"
     private val ICON_ID_GREEN = "ICON_ID_GREEN "
     private val GEOJSON_ID = "GEOJSON_ID"
+    private val LAYOR_ID = "LAYOR_ID:"
+    private var listOfLayerId = mutableListOf<String>()
+    private val propertyId = "PROPERTY_ID"
     //Midlertidige verdier fram til preferanses er bestemt
     private val MIN_TEMP = 15
     private val MID_TEMP = 23
@@ -29,7 +37,6 @@ class MapActivity : AppCompatActivity() {
     private lateinit var mapBoxMap: MapboxMap
 
     private val viewModel: MapActivityViewModel by viewModels{MapActivityViewModel.InstanceCreator() }
-
     
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,6 +45,7 @@ class MapActivity : AppCompatActivity() {
         setContentView(R.layout.activity_map)
         mapView = findViewById(R.id.mapView)
         mapView.onCreate(savedInstanceState)
+        listOfLayerId = mutableListOf<String>()
 
         viewModel.places!!.observe(this, Observer { places ->
             /*
@@ -55,16 +63,45 @@ class MapActivity : AppCompatActivity() {
             this.mapBoxMap = mapBoxMap
             mapBoxMap.setStyle(Style.MAPBOX_STREETS)
 
-            if(places.isNotEmpty()){
-                mapBoxMap.getStyle{style ->
+            mapBoxMap.getStyle { style ->
+                if(places.isNotEmpty()){
                     setUpMapImagePins(style)
-                    places.forEach { place ->
+                    for(place in places){
                         addMarker(place, style)
                     }
                 }
+                mapBoxMap.addOnMapClickListener(this)
             }
         }
     }
+
+    override fun onMapClick(point: LatLng): Boolean {
+        return handleClickIcon(mapBoxMap.projection.toScreenLocation(point))
+    }
+
+    private fun handleClickIcon(screenPoint: PointF): Boolean{
+        Log.d("tag", "håndterer det")
+        val features = filterLayer(screenPoint)
+        Log.d("Trykk", features.toString())
+        if(features.isNotEmpty()){
+            val feature = features[0]
+            val place = viewModel.places!!.value!!.filter {
+                it.id == (feature.getNumberProperty(propertyId).toInt()) }[0]
+            Log.d("tag", place.toString())
+            return true
+        }
+        return false
+    }
+
+    private fun filterLayer(screenPoint: PointF): List<Feature>{
+        val feature = mutableListOf<Feature>()
+        for(id in listOfLayerId){
+            val oneLayer = mapBoxMap.queryRenderedFeatures(screenPoint, id)
+            feature.addAll(oneLayer)
+        }
+        return feature
+    }
+
 
 
     /**
@@ -109,10 +146,12 @@ class MapActivity : AppCompatActivity() {
      * @param style: Stilen på kartet
      */
     private fun addMarker(place: Place, style: Style){
-        val id = place.id.toString() + "_LAYOR_ID"
+        val id = LAYOR_ID + place.id.toString()
         val geoId = GEOJSON_ID + place.id.toString()
+        val feature = viewModel.getFeature(place)
+        feature.addNumberProperty(propertyId, place.id)
         val geoJsonSource = GeoJsonSource(geoId, FeatureCollection.fromFeatures(
-            arrayListOf(viewModel.getFeature(place))))
+            arrayListOf(feature)))
         style.addSource(geoJsonSource)
 
         val iconId = when(place.preferenceCheck(MIN_TEMP, MID_TEMP)){
@@ -120,18 +159,15 @@ class MapActivity : AppCompatActivity() {
             Preference.OKEY -> ICON_ID_YELLOW
             Preference.NOT_OKEY -> ICON_ID_RED
         }
-        val textOffset: Array<Float> = arrayOf(0f, -2.5f)
 
         val symbolLayer = SymbolLayer(id, geoId)
         symbolLayer.withProperties(
             PropertyFactory.iconImage(iconId),
-            PropertyFactory.textField(place.name),
             PropertyFactory.iconAllowOverlap(true),
-            PropertyFactory.iconIgnorePlacement(true),
-            PropertyFactory.textSize(15f),
-            PropertyFactory.textOffset(textOffset)
+            PropertyFactory.iconIgnorePlacement(true)
         )
         style.addLayer(symbolLayer)
+        listOfLayerId.add(id)
     }
 
 
