@@ -43,7 +43,6 @@ class MapActivity : AppCompatActivity() {
             /*
          * manuelt testing for badesteder, skal slettes
          */
-
             for(place in places){
                 Log.d("MapTag: ", place.toString())
             }
