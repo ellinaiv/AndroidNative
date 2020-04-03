@@ -1,23 +1,37 @@
 package com.example.team11
 
+import android.app.Activity
+import android.app.Instrumentation
+import android.content.Intent
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.intent.Intents.intending
+import androidx.test.espresso.intent.matcher.IntentMatchers.toPackage
+import androidx.test.espresso.intent.rule.IntentsTestRule
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import org.junit.Assert.*
 import org.junit.Rule
-import androidx.test.rule.ActivityTestRule
 import org.junit.Test
 
 class ListAdapterTest(){
 
-    @Rule
-    @JvmField
-    val rule : ActivityTestRule<PlacesListActivity> = ActivityTestRule(PlacesListActivity::class.java)
+    @get:Rule
+    val intentsTestRule = IntentsTestRule(PlacesListActivity::class.java)
+
+    private val resultData = Intent()
+    private val place1 = Place(0, "sørenga", 1.0,2.3)
+    private val places : ArrayList<Place> = ArrayList<Place>(1)
 
     @Test
     fun testCardViewValues(){
-        //onView(withId(R.id.tempAir)).check(matches(withText("no data")))
+
+        places.add(place1)
+        resultData.putExtra("PLACES_LIST", places)
+        val result = Instrumentation.ActivityResult(Activity.RESULT_OK, resultData)
+        intending(toPackage("com.example.team11")).respondWith(result)
+        onView(withId(R.id.name)).check(matches(withText(places[0].name)))
+
     }
 
 

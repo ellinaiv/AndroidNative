@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_places_list.*
 
 
+
 /*
  * PlacesListActivity viser cardsViews med informasjon om de forskjellige badeplassene
  */
