@@ -1,8 +1,6 @@
 package com.example.team11
 import com.google.android.gms.maps.model.LatLng
 import java.io.Serializable
-import java.lang.Math
-import kotlin.math.roundToInt
 import kotlin.random.Random
 
 
@@ -52,6 +50,10 @@ class Place(val id: Int, val name: String, val lat: Double, val lng: Double, var
         if (temp < minTemp) return Preference.NOT_OKEY
         else if (temp >= midTemp) return Preference.OPTIMAL
         return Preference.OKEY
+    }
+
+    override fun toString(): String {
+        return "$id:$name[$lat,$lng]"
     }
 
 }

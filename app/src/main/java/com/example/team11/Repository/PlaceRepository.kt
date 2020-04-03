@@ -1,61 +1,55 @@
-package com.example.team11
+package com.example.team11.Repository
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import android.util.Log
-import android.widget.Button
-import android.widget.Toast
-import org.xmlpull.v1.XmlPullParser
-import org.xmlpull.v1.XmlPullParserFactory
-import java.io.StringReader
+import androidx.lifecycle.MutableLiveData
+import com.example.team11.Place
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.coroutines.awaitString
 import kotlinx.coroutines.runBlocking
+import org.xmlpull.v1.XmlPullParser
+import org.xmlpull.v1.XmlPullParserFactory
+import java.io.StringReader
 
-class MainActivity : AppCompatActivity() {
+class PlaceRepository private constructor() {
 
-    private lateinit var places: ArrayList<Place>
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        val urlAPIPlaces = "http://oslokommune.msolution.no/friluft/badetemperaturer.jsp"
-        places = getPlaces(urlAPIPlaces)
+    private var places = arrayListOf<Place>()
+    private val urlAPI = "http://oslokommune.msolution.no/friluft/badetemperaturer.jsp"
 
-        /*
-         * manuelt testing for badesteder, skal slettes
+    //Kotlin sin static
+    companion object {
+        @Volatile private var instance: PlaceRepository? = null
+
+        /**
+         * getInstance: henter PlaceRepository objekt, hvis det ikke finnes noen
+         * eller returneres det et.
+         * @return PlaceRepository
          */
-
-        for(place in places){
-            Log.d("name: ", place.name)
-            Log.d("LatLng: ", place.getLatLng().toString())
-            Log.d("tmp: ", place.temp.toString())
-        }
-
-        //kun får å enn så lenge komme seg til kartet.
-        val mapButton = findViewById<Button>(R.id.kartButton)
-        mapButton.setOnClickListener {
-            val intent = Intent(this, MapActivity::class.java)
-            startActivity(intent)
-        }
-        val listButton = findViewById<Button>(R.id.listButton)
-        listButton.setOnClickListener {
-            val intent = Intent(this, PlacesListActivity::class.java).apply{
-                putExtra("PLACES_LIST", places)
+        fun getInstance() =
+            instance ?: synchronized(this){
+                instance?: PlaceRepository().also { instance = it}
             }
-            startActivity(intent)
-        }
-
-
     }
+
     /**
-     * getPlaces funksjonen henter getResponse fra API, parser XML-responsen og oppretter en liste
+     * getPlaces funksjonen henter en liste til viewModel med badesteder
+     * @return: MutableLiveData<List<Place>>, liste med badesteder
+     */
+    fun getPlaces(): MutableLiveData<List<Place>>{
+        places = fetchPlaces(urlAPI)
+        var data = MutableLiveData<List<Place>>()
+        data.value = places
+        return data
+    }
+
+
+    /**
+     * fetchPlaces funksjonen henter getResponse fra API, parser XML-responsen og oppretter en liste
      * med place-objekter
      * @param: String, urlen til APIet
      * @return: ArrayList<Place>, liste med badesteder
      */
 
-    private fun getPlaces(url : String) : ArrayList<Place>{
+    private fun fetchPlaces(url : String) : ArrayList<Place>{
         val places = arrayListOf<Place>()
         val tag = "getData() ---->"
         runBlocking{
@@ -96,14 +90,8 @@ class MainActivity : AppCompatActivity() {
                 }
             } catch (e: Exception) {
                 Log.e(tag, e.message.toString())
-                Toast.makeText(this@MainActivity, "Error", Toast.LENGTH_SHORT).show()
             }
         }
         return places
     }
-
-
-
 }
-
-

@@ -4,9 +4,9 @@ import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import com.mapbox.geojson.Feature
+import androidx.activity.viewModels
+import com.example.team11.viewmodels.MapActivityViewModel
 import com.mapbox.geojson.FeatureCollection
-import com.mapbox.geojson.Point
 import com.mapbox.mapboxsdk.Mapbox
 import com.mapbox.mapboxsdk.maps.MapView
 import com.mapbox.mapboxsdk.maps.MapboxMap
@@ -14,6 +14,7 @@ import com.mapbox.mapboxsdk.maps.Style
 import com.mapbox.mapboxsdk.style.layers.PropertyFactory
 import com.mapbox.mapboxsdk.style.layers.SymbolLayer
 import com.mapbox.mapboxsdk.style.sources.GeoJsonSource
+import androidx.lifecycle.Observer
 
 class MapActivity : AppCompatActivity() {
     private val ICON_ID_RED = "ICON_ID_RED"
@@ -27,26 +28,29 @@ class MapActivity : AppCompatActivity() {
     private lateinit var mapView: MapView
     private lateinit var mapBoxMap: MapboxMap
 
+    private val viewModel: MapActivityViewModel by viewModels{MapActivityViewModel.InstanceCreator() }
+
+    
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Mapbox.getInstance(this, getString(R.string.access_token))
         setContentView(R.layout.activity_map)
-
-        val places = intent.getSerializableExtra("PLACES_LIST") as ArrayList<Place>
-
-        /*
-         * manuelt testing for badesteder, skal slettes
-         */
-        for(place in places){
-            Log.d("heeei", "placesList")
-            Log.d("name: ", place.name)
-            Log.d("LatLng: ", place.getLatLng().toString())
-            Log.d("tmp: ", place.temp.toString())
-        }
-
         mapView = findViewById(R.id.mapView)
         mapView.onCreate(savedInstanceState)
 
+        viewModel.places!!.observe(this, Observer { places ->
+            /*
+         * manuelt testing for badesteder, skal slettes
+         */
+            for(place in places){
+                Log.d("MapTag: ", place.toString())
+            }
+            makeMap(places)
+        })
+    }
+
+    private fun makeMap(places: List<Place>){
         mapView.getMapAsync {mapBoxMap ->
             this.mapBoxMap = mapBoxMap
             mapBoxMap.setStyle(Style.MAPBOX_STREETS)
@@ -108,9 +112,8 @@ class MapActivity : AppCompatActivity() {
         val id = place.id.toString() + "_LAYOR_ID"
         val geoId = GEOJSON_ID + place.id.toString()
         val geoJsonSource = GeoJsonSource(geoId, FeatureCollection.fromFeatures(
-            arrayListOf(getFeature(place))))
+            arrayListOf(viewModel.getFeature(place))))
         style.addSource(geoJsonSource)
-
 
         val iconId = when(place.preferenceCheck(MIN_TEMP, MID_TEMP)){
             Preference.OPTIMAL -> ICON_ID_GREEN
@@ -130,15 +133,6 @@ class MapActivity : AppCompatActivity() {
         )
         style.addLayer(symbolLayer)
     }
-
-
-    /**
-     * Gir featuren til en Place sin lokasjon (en feature er det som trengs for å vise noe
-     * på kartet)
-     * @param place: en strand
-     * @return en feature verdi basert på lokasjonen til place
-     */
-    private fun getFeature(place: Place) = Feature.fromGeometry(Point.fromLngLat(place.lng, place.lat))
 
 
     override fun onResume() {
