@@ -5,8 +5,10 @@ import android.graphics.PointF
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
+import android.view.View
+import android.widget.TextView
 import androidx.activity.viewModels
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.team11.viewmodels.MapActivityViewModel
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.mapboxsdk.Mapbox
@@ -18,7 +20,8 @@ import com.mapbox.mapboxsdk.style.layers.SymbolLayer
 import com.mapbox.mapboxsdk.style.sources.GeoJsonSource
 import androidx.lifecycle.Observer
 import com.mapbox.geojson.Feature
-import com.mapbox.geojson.Point
+import com.mapbox.mapboxsdk.camera.CameraPosition
+import com.mapbox.mapboxsdk.camera.CameraUpdateFactory
 import com.mapbox.mapboxsdk.geometry.LatLng
 
 class MapActivity : AppCompatActivity(), MapboxMap.OnMapClickListener {
@@ -29,6 +32,7 @@ class MapActivity : AppCompatActivity(), MapboxMap.OnMapClickListener {
     private val LAYOR_ID = "LAYOR_ID:"
     private var listOfLayerId = mutableListOf<String>()
     private val propertyId = "PROPERTY_ID"
+
     //Midlertidige verdier fram til preferanses er bestemt
     private val MIN_TEMP = 15
     private val MID_TEMP = 23
@@ -52,7 +56,7 @@ class MapActivity : AppCompatActivity(), MapboxMap.OnMapClickListener {
          * manuelt testing for badesteder, skal slettes
          */
             for(place in places){
-                Log.d("MapTag: ", place.toString())
+                Log.d("MapTg: ", place.toString())
             }
             makeMap(places)
         })
@@ -82,14 +86,15 @@ class MapActivity : AppCompatActivity(), MapboxMap.OnMapClickListener {
     private fun handleClickIcon(screenPoint: PointF): Boolean{
         Log.d("tag", "håndterer det")
         val features = filterLayer(screenPoint)
-        Log.d("Trykk", features.toString())
         if(features.isNotEmpty()){
             val feature = features[0]
             val place = viewModel.places!!.value!!.filter {
                 it.id == (feature.getNumberProperty(propertyId).toInt()) }[0]
             Log.d("tag", place.toString())
+            showPlace(place)
             return true
         }
+        removePlace()
         return false
     }
 
@@ -102,6 +107,34 @@ class MapActivity : AppCompatActivity(), MapboxMap.OnMapClickListener {
         return feature
     }
 
+    private fun showPlace(place: Place){
+        val nameTextView = findViewById<TextView>(R.id.namePlace)
+        val placeViewHolder = findViewById<ConstraintLayout>(R.id.placeViewHolder)
+        val tempAir = findViewById<TextView>(R.id.tempAir)
+        val tempWater = findViewById<TextView>(R.id.tempWater)
+
+        when(place.preferenceCheck(MIN_TEMP, MID_TEMP)){
+            Preference.OKEY -> tempWater.setBackgroundResource(R.drawable.drop_blue)
+            Preference.NOT_OKEY -> tempWater.setBackgroundResource(R.drawable.drop_blue)
+            Preference.OPTIMAL -> tempWater.setBackgroundResource(R.drawable.drop_red)
+        }
+        nameTextView.text = place.name
+        tempAir.text = "Ingen data"
+        tempWater.text = place.temp.toString() + "°C"
+        placeViewHolder.visibility = View.VISIBLE
+
+        //zoomer til stedet på kartet
+        val position = CameraPosition.Builder()
+            .target(LatLng(place.lat, place.lng))
+            .zoom(15.0)
+            .build()
+        mapBoxMap.animateCamera(CameraUpdateFactory.newCameraPosition(position), 2)
+    }
+
+    private fun removePlace(){
+        val placeViewHolder = findViewById<ConstraintLayout>(R.id.placeViewHolder)
+        placeViewHolder.visibility = View.GONE
+    }
 
 
     /**

@@ -12,6 +12,98 @@
         android:layout_height="match_parent"
         mapbox:mapbox_cameraTargetLat = "59.9139"
         mapbox:mapbox_cameraTargetLng= "10.7522"
-        mapbox:mapbox_cameraZoom = "10"
-        />
+        mapbox:mapbox_cameraZoom = "10">
+    </com.mapbox.mapboxsdk.maps.MapView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/placeViewHolder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+
+        mapbox:layout_constraintBottom_toBottomOf="parent"
+        mapbox:layout_constraintLeft_toLeftOf="parent"
+        mapbox:layout_constraintRight_toRightOf="parent"
+
+        android:background="@color/mapCardBackground"
+        android:outlineSpotShadowColor="@color/mainTextColor"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/namePlace"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+
+            mapbox:layout_constraintBottom_toBottomOf="parent"
+            mapbox:layout_constraintLeft_toLeftOf="@id/placeViewHolder"
+            mapbox:layout_constraintRight_toLeftOf="@id/tempWater"
+            mapbox:layout_constraintTop_toTopOf="parent"
+
+            android:padding="6dp"
+            android:text=""
+            android:textColor="@color/mainTextColor"
+            android:textSize="24sp"
+
+            />
+
+        <ImageButton
+            android:id="@+id/showPlaceButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+
+            mapbox:layout_constraintBottom_toBottomOf="parent"
+            mapbox:layout_constraintRight_toRightOf="@id/placeViewHolder"
+            mapbox:layout_constraintLeft_toRightOf="@+id/tempAir"
+            mapbox:layout_constraintTop_toTopOf="parent"
+
+            android:background="@color/mapCardBackground"
+            android:src="@drawable/arrow_right"
+            android:adjustViewBounds="true"
+            />
+
+        <TextView
+            android:id="@+id/tempAir"
+            android:layout_width="86dp"
+            android:layout_height="86dp"
+
+            mapbox:layout_constraintBottom_toBottomOf="parent"
+            mapbox:layout_constraintRight_toLeftOf="@id/showPlaceButton"
+            mapbox:layout_constraintLeft_toRightOf="@+id/tempWater"
+            mapbox:layout_constraintTop_toTopOf="parent"
+
+
+            android:padding="6dp"
+            android:text=""
+            android:textColor="@color/mainTextColor"
+            android:textSize="18sp"
+            android:gravity="center"
+
+            android:background="@drawable/sun_vector"/>
+
+        <TextView
+            android:id="@+id/tempWater"
+            android:layout_width="86dp"
+            android:layout_height="86dp"
+
+            mapbox:layout_constraintBottom_toBottomOf="parent"
+            mapbox:layout_constraintRight_toLeftOf="@id/tempWater"
+            mapbox:layout_constraintLeft_toRightOf="@+id/name"
+            mapbox:layout_constraintTop_toTopOf="parent"
+
+
+            android:padding="6dp"
+            android:text=""
+            android:textColor="@color/mainTextColor"
+            android:textSize="18sp"
+            android:gravity="center"
+
+            android:background="@drawable/drop_blue"
+            android:adjustViewBounds="true"/>
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
