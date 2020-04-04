@@ -1,5 +1,6 @@
 package com.example.team11
 
+import android.content.Intent
 import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -55,6 +56,11 @@ class PlaceActivity : AppCompatActivity() {
     private fun makeAboutPage(place: Place, savedInstanceState: Bundle?) {
         val namePlace = findViewById<TextView>(R.id.namePlace)
         val directionButton = findViewById<Button>(R.id.directionButton)
+
+        directionButton.setOnClickListener {
+            val intent = Intent(this, DirectionActivity::class.java)
+            startActivity(intent)
+        }
 
         namePlace.text = "Navn: " + place.name
 
