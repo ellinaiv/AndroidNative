@@ -14,6 +14,7 @@ class PlaceRepository private constructor() {
 
     private var places = arrayListOf<Place>()
     private val urlAPI = "http://oslokommune.msolution.no/friluft/badetemperaturer.jsp"
+    private var currentPlace: Place? = null
 
     //Kotlin sin static
     companion object {
@@ -38,6 +39,17 @@ class PlaceRepository private constructor() {
         places = fetchPlaces(urlAPI)
         var data = MutableLiveData<List<Place>>()
         data.value = places
+        return data
+    }
+
+    fun changeCurrentPlace(place: Place){
+        Log.d("tagRepository", "current endra")
+        currentPlace = place
+    }
+
+    fun getCurrentPlace(): MutableLiveData<Place>{
+        var data = MutableLiveData<Place>()
+        data.value = currentPlace
         return data
     }
 

@@ -1,11 +1,14 @@
 package com.example.team11
 
+import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.PointF
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -23,6 +26,7 @@ import com.mapbox.geojson.Feature
 import com.mapbox.mapboxsdk.camera.CameraPosition
 import com.mapbox.mapboxsdk.camera.CameraUpdateFactory
 import com.mapbox.mapboxsdk.geometry.LatLng
+import kotlinx.android.synthetic.main.activity_map.*
 
 class MapActivity : AppCompatActivity(), MapboxMap.OnMapClickListener {
     private val ICON_ID_RED = "ICON_ID_RED"
@@ -133,6 +137,14 @@ class MapActivity : AppCompatActivity(), MapboxMap.OnMapClickListener {
         val placeViewHolder = findViewById<ConstraintLayout>(R.id.placeViewHolder)
         val tempAir = findViewById<TextView>(R.id.tempAir)
         val tempWater = findViewById<TextView>(R.id.tempWater)
+        val showPlaceButton = findViewById<ImageButton>(R.id.showPlaceButton)
+
+        showPlaceButton.setOnClickListener {
+            Log.d("videreTag", "Nå skjer det")
+            val intent = Intent(this, PlaceActivity::class.java)
+            viewModel.changeCurrentPlace(place)
+            startActivity(intent)
+        }
 
         when(place.preferenceCheck(MIN_TEMP, MID_TEMP)){
             Preference.OKEY -> tempWater.setBackgroundResource(R.drawable.drop_blue)
