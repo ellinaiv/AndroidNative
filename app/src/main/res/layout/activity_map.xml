@@ -32,7 +32,7 @@
         <TextView
             android:id="@+id/namePlace"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
 
             mapbox:layout_constraintBottom_toBottomOf="parent"
             mapbox:layout_constraintLeft_toLeftOf="@id/placeViewHolder"
@@ -48,10 +48,10 @@
 
         <ImageButton
             android:id="@+id/showPlaceButton"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
 
-            mapbox:layout_constraintBottom_toBottomOf="parent"
+            mapbox:layout_constraintBottom_toBottomOf= "parent"
             mapbox:layout_constraintRight_toRightOf="@id/placeViewHolder"
             mapbox:layout_constraintLeft_toRightOf="@+id/tempAir"
             mapbox:layout_constraintTop_toTopOf="parent"
@@ -63,8 +63,8 @@
 
         <TextView
             android:id="@+id/tempAir"
-            android:layout_width="86dp"
-            android:layout_height="86dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
 
             mapbox:layout_constraintBottom_toBottomOf="parent"
             mapbox:layout_constraintRight_toLeftOf="@id/showPlaceButton"
@@ -75,26 +75,26 @@
             android:padding="6dp"
             android:text=""
             android:textColor="@color/mainTextColor"
-            android:textSize="18sp"
+            android:textSize="12sp"
             android:gravity="center"
 
             android:background="@drawable/sun_vector"/>
 
         <TextView
             android:id="@+id/tempWater"
-            android:layout_width="86dp"
-            android:layout_height="86dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
 
             mapbox:layout_constraintBottom_toBottomOf="parent"
             mapbox:layout_constraintRight_toLeftOf="@id/tempWater"
-            mapbox:layout_constraintLeft_toRightOf="@+id/name"
+            mapbox:layout_constraintLeft_toRightOf="@+id/namePlace"
             mapbox:layout_constraintTop_toTopOf="parent"
 
 
             android:padding="6dp"
             android:text=""
             android:textColor="@color/mainTextColor"
-            android:textSize="18sp"
+            android:textSize="12sp"
             android:gravity="center"
 
             android:background="@drawable/drop_blue"

@@ -26,8 +26,7 @@ import com.mapbox.mapboxsdk.geometry.LatLng
 
 class MapActivity : AppCompatActivity(), MapboxMap.OnMapClickListener {
     private val ICON_ID_RED = "ICON_ID_RED"
-    private val ICON_ID_YELLOW = "ICON_ID_YELLOW"
-    private val ICON_ID_GREEN = "ICON_ID_GREEN "
+    private val ICON_ID_BLUE = "ICON_ID_BLUE "
     private val GEOJSON_ID = "GEOJSON_ID"
     private val LAYOR_ID = "LAYOR_ID:"
     private var listOfLayerId = mutableListOf<String>()
@@ -62,6 +61,10 @@ class MapActivity : AppCompatActivity(), MapboxMap.OnMapClickListener {
         })
     }
 
+    /**
+     * Tegner opp kartet og passer på at alle steden blir plassert på kartet
+     * @param places: en liste med steder som skal plasseres på kartet
+     */
     private fun makeMap(places: List<Place>){
         mapView.getMapAsync {mapBoxMap ->
             this.mapBoxMap = mapBoxMap
@@ -83,6 +86,13 @@ class MapActivity : AppCompatActivity(), MapboxMap.OnMapClickListener {
         return handleClickIcon(mapBoxMap.projection.toScreenLocation(point))
     }
 
+    /**
+     * Det er denne metoden som registrerer om trykket faktisk traff et punkt på kartet, eller
+     * ikke, og hva man i såfall skal gjøre når man har trykket på noe. Her vil den da vise
+     * et kort med informasjon om badestedet
+     * @param screenPoint: det stedet på skjermen hvor brukeren trykket
+     * @return Boolean: true, hvis det er et sted vi kan trykke på, false ellers
+     */
     private fun handleClickIcon(screenPoint: PointF): Boolean{
         Log.d("tag", "håndterer det")
         val features = filterLayer(screenPoint)
@@ -98,6 +108,13 @@ class MapActivity : AppCompatActivity(), MapboxMap.OnMapClickListener {
         return false
     }
 
+    /**
+     * Filtrerer slik at kun de layeren som er et sted blir registert (Det ligger allerede
+     * noen layer automatisk inne i kartet. Og legger til de featurene som er i nærheten av
+     * der brukeren trykket
+     * @param screenPoint: det stedet på skjermen hvor brukeren trykket
+     * @return List<Feature> en liste med alle steden som ble registrert i nærheten av trykket
+     */
     private fun filterLayer(screenPoint: PointF): List<Feature>{
         val feature = mutableListOf<Feature>()
         for(id in listOfLayerId){
@@ -107,6 +124,10 @@ class MapActivity : AppCompatActivity(), MapboxMap.OnMapClickListener {
         return feature
     }
 
+    /**
+     * Legger til kort over kartviewet, med infomrasjon om en bestemt badestrand
+     * @param place: Stedet som skal ha informasjonen sin på display
+     */
     private fun showPlace(place: Place){
         val nameTextView = findViewById<TextView>(R.id.namePlace)
         val placeViewHolder = findViewById<ConstraintLayout>(R.id.placeViewHolder)
@@ -131,6 +152,9 @@ class MapActivity : AppCompatActivity(), MapboxMap.OnMapClickListener {
         mapBoxMap.animateCamera(CameraUpdateFactory.newCameraPosition(position), 2)
     }
 
+    /**
+     * Fjerner kortet som hviser informasjonen om et sted
+     */
     private fun removePlace(){
         val placeViewHolder = findViewById<ConstraintLayout>(R.id.placeViewHolder)
         placeViewHolder.visibility = View.GONE
@@ -153,21 +177,14 @@ class MapActivity : AppCompatActivity(), MapboxMap.OnMapClickListener {
 
         style.addImage(ICON_ID_RED, icon)
 
-        icon = BitmapFactory.decodeResource(
-            this@MapActivity.resources,
-            R.drawable.yellow_marker
-        )
-        if(icon == null) Log.d(tag, "YELLOW")
-
-        style.addImage(ICON_ID_YELLOW, icon)
 
         icon = BitmapFactory.decodeResource(
             this@MapActivity.resources,
             R.drawable.blue_marker
         )
 
-        if(icon == null) Log.d(tag, "GREEN")
-        style.addImage(ICON_ID_GREEN, icon)
+        if(icon == null) Log.d(tag, "BLUE")
+        style.addImage(ICON_ID_BLUE, icon)
     }
 
 
@@ -187,10 +204,11 @@ class MapActivity : AppCompatActivity(), MapboxMap.OnMapClickListener {
             arrayListOf(feature)))
         style.addSource(geoJsonSource)
 
+        //Velger hvilket ikon som skal brukes
         val iconId = when(place.preferenceCheck(MIN_TEMP, MID_TEMP)){
-            Preference.OPTIMAL -> ICON_ID_GREEN
-            Preference.OKEY -> ICON_ID_YELLOW
-            Preference.NOT_OKEY -> ICON_ID_RED
+            Preference.OPTIMAL -> ICON_ID_RED
+            Preference.OKEY -> ICON_ID_BLUE
+            Preference.NOT_OKEY -> ICON_ID_BLUE
         }
 
         val symbolLayer = SymbolLayer(id, geoId)
