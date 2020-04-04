@@ -33,6 +33,8 @@ class PlaceActivity : AppCompatActivity() {
 
         Log.d("tagPlace", viewModel.place!!.value.toString())
 
+
+        //Observerer stedet som er valgt
         viewModel.place!!.observe(this, Observer { place ->
             //Skriver ut slik at vi kan se om vi har riktig badestrand
 
@@ -45,6 +47,11 @@ class PlaceActivity : AppCompatActivity() {
 
     }
 
+    /**
+     * Lager om siden
+     * @param place: Stedet som man skal ha informasjon om
+     * @param savedInstanceState: mapView trenger denne i makeMap
+     */
     private fun makeAboutPage(place: Place, savedInstanceState: Bundle?) {
         val namePlace = findViewById<TextView>(R.id.namePlace)
         val directionButton = findViewById<Button>(R.id.directionButton)
@@ -54,6 +61,11 @@ class PlaceActivity : AppCompatActivity() {
         makeMap(place, savedInstanceState)
     }
 
+    /**
+     * Tegner kartet til stedet man er på nå, og zommer inn på det.
+     * @param place: Stedet som skal vises på kartet
+     * @param savedInstanceState: mapView trenger denne til onCreate metoden sin
+     */
     private fun makeMap(place: Place, savedInstanceState: Bundle?) {
         val mapView = findViewById<MapView>(R.id.mapView)
         mapView.onCreate(savedInstanceState)
