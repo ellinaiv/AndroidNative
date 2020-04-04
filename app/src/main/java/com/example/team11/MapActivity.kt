@@ -6,7 +6,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.team11.viewmodels.MapActivityViewModel
@@ -133,6 +135,11 @@ class MapActivity : AppCompatActivity(), MapboxMap.OnMapClickListener {
         val placeViewHolder = findViewById<ConstraintLayout>(R.id.placeViewHolder)
         val tempAir = findViewById<TextView>(R.id.tempAir)
         val tempWater = findViewById<TextView>(R.id.tempWater)
+        val showPlaceButton = findViewById<ImageButton>(R.id.showPlaceButton)
+
+        showPlaceButton.setOnClickListener{
+            Toast.makeText(this, place.toString(), Toast.LENGTH_LONG).show()
+        }
 
         when(place.preferenceCheck(MIN_TEMP, MID_TEMP)){
             Preference.OKEY -> tempWater.setBackgroundResource(R.drawable.drop_blue)
