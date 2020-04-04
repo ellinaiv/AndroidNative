@@ -32,9 +32,6 @@ class PlaceActivity : AppCompatActivity() {
         setContentView(R.layout.activity_place)
         Log.d("tagPlace", "kommet inn ")
 
-        Log.d("tagPlace", viewModel.place!!.value.toString())
-
-
         //Observerer stedet som er valgt
         viewModel.place!!.observe(this, Observer { place ->
             //Skriver ut slik at vi kan se om vi har riktig badestrand
