@@ -61,7 +61,7 @@
             android:background="@color/mapCardBackground"
             android:src="@drawable/arrow_right"
             android:adjustViewBounds="true"
-            />
+            android:contentDescription="@string/moreInfoPlace" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/tempAir"
@@ -87,7 +87,8 @@
                 mapbox:layout_constraintLeft_toRightOf="parent"
                 mapbox:layout_constraintRight_toLeftOf="parent"
 
-                mapbox:layout_constraintTop_toTopOf="parent" />
+                mapbox:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="@string/airTempImage" />
 
             <TextView
                 android:layout_height="wrap_content"
@@ -128,7 +129,7 @@
                 android:layout_height="wrap_content"
 
                 android:scaleType="fitXY"
-                android:maxWidth="48dp"
+                android:maxWidth="42dp"
                 android:adjustViewBounds="true"
 
                 android:src="@drawable/drop_blue"
@@ -136,7 +137,8 @@
                 mapbox:layout_constraintLeft_toRightOf="parent"
                 mapbox:layout_constraintRight_toLeftOf="parent"
 
-                mapbox:layout_constraintTop_toTopOf="parent" />
+                mapbox:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="@string/waterTempImage" />
 
             <TextView
                 android:layout_height="wrap_content"
@@ -146,7 +148,7 @@
                 android:gravity="center"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="Ingen data"
+                android:text="@string/noData"
 
                 android:textColor="@color/mainTextColor"
                 android:textSize="14sp"

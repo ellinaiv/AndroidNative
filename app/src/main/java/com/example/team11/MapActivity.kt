@@ -149,8 +149,8 @@ class MapActivity : AppCompatActivity(), MapboxMap.OnMapClickListener {
             Preference.OPTIMAL -> tempWaterImage.setImageResource(R.drawable.drop_red)
         }
         nameTextView.text = place.name
-        tempAirText.text = "Ingen data"
-        tempWaterText.text = place.temp.toString() + "°C"
+        tempAirText.text = getString(R.string.noData)
+        tempWaterText.text = getString(R.string.tempC, place.temp)
         placeViewHolder.visibility = View.VISIBLE
 
         //zoomer til stedet på kartet
