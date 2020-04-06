@@ -5,6 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import com.example.team11.Place
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.coroutines.awaitString
+import com.google.gson.Gson
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserFactory
@@ -38,6 +42,7 @@ class PlaceRepository private constructor() {
         places = fetchPlaces(urlAPI)
         var data = MutableLiveData<List<Place>>()
         data.value = places
+        fetchSeaCurrentSpeed(places[0])
         return data
     }
 
@@ -93,5 +98,24 @@ class PlaceRepository private constructor() {
             }
         }
         return places
+    }
+    private fun fetchSeaCurrentSpeed(place: Place){
+        //val gson = Gson()
+        //val svar: String? = null
+        val url = getSpeedUrl(place)
+        Log.d("tagStromninger", url)
+        GlobalScope.launch {
+            try {
+                val response = Fuel.get(url).awaitString()
+                Log.d("tagStromninger", response)
+            }catch (e: Exception){
+                Log.e("tagStromninger", e.message)
+            }
+
+        }
+    }
+
+    private fun getSpeedUrl(place: Place): String{
+        return "http://in2000-apiproxy.ifi.uio.no/weatherapi/oceanforecast/0.9/.json?lat=${place.lat}&lon=${place.lng}"
     }
 }
