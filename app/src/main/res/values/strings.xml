@@ -4,4 +4,7 @@
     <string name="kart">Kart</string>
     <string name="list">list</string>
     <string name="textview">TextView</string>
+    <string name="tilbake">Tilbake</string>
+    <string name="ikkeViseVei">Kan ikke vise vei uten lokasjon</string>
+    <string name="viTrengerPosFordi">Kan ikke vise deg veiene til stranden, uten din posisjon</string>
 </resources>
