@@ -60,14 +60,18 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
 
         //Observerer stedet som er valgt
         viewModel.place!!.observe(this, Observer { place ->
-            //Skriver ut slik at vi kan se om vi har riktig badestrand
-            Log.d("tagPlace", place.toString())
             makeMap(place, savedInstanceState)
         })
     }
 
+    /**
+     * Lager kartet, tegner opp destionasjon og lokasjon. Viser rute, og zoomer inn på destinasjon
+     * @param place: Stedet som skal vises på kartet
+     * @param savedInstanceState: mapView trenger denne til onCreate metoden sin
+     */
     private fun makeMap(place: Place, savedInstanceState: Bundle?) {
         val mapView = findViewById<MapView>(R.id.mapView)
+        mapView.onCreate(savedInstanceState)
         mapView.getMapAsync { mapboxMap ->
             this.mapboxMap = mapboxMap
             mapboxMap.setStyle(Style.MAPBOX_STREETS)
@@ -84,6 +88,10 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
         }
     }
 
+    /**
+     * Lager et layer på kartet, slik at man kan tegne det opp på et senere tidspunkt
+     * @param style: stilen kartet skal tegnes oppå
+     */
     private fun makeRouteLayer(style: Style){
         enableLocationComponent(style)
         val routeLayer = LineLayer("ROUTE_LAYER_ID", ROUTE_SOURCE_ID)
@@ -98,6 +106,11 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
         style.addLayer(routeLayer)
     }
 
+    /**
+     * Legger til pinnen til destinasjonen
+     * @param place: stedet som er destinasjonen
+     * @param style: stilen pinnen skla plaseres på
+     */
     private fun addDestinationMarker(place: Place, style: Style){
         val ICON_ID_RED = "ICON_ID_RED"
         val geoId = "GEO_ID"
@@ -121,11 +134,16 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
         style.addLayer(symbolLayer)
     }
 
+    /**
+     * Lager ruten, og tegner den på kartet
+     * @param place: stedet, osm er destinasjonen
+     */
     private fun getRoute(place: Place){
-        Log.d("tagDir", "er i getRoute")
+        //hentet stedet vi skal bruke
         val originLocation = mapboxMap.locationComponent.lastKnownLocation ?: return
         val originPoint = Point.fromLngLat(originLocation.longitude, originLocation.latitude)
 
+        //lager en klient som er ansvarlig for alt rundt ruten
         val client = MapboxDirections.builder()
             .origin(originPoint)
             .destination(Point.fromLngLat(place.lng, place.lat))
@@ -135,6 +153,8 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
             .steps(false)
             .build()
 
+
+        //tar ansvar for å tegne opp selve ruta
         client.enqueueCall(object : Callback<DirectionsResponse> {
             override fun onResponse(call: Call<DirectionsResponse>, response: Response<DirectionsResponse>) {
                 if(response.body() == null || response.body()!!.routes().size < 1){
@@ -161,9 +181,12 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
         })
     }
 
+    /**
+     * Finner lokasjonen til brukeren og bestemmer hvordan stilen runt bruker punktet skal være
+     * @param style: stilen sim skal tegnes opp
+     */
     @SuppressLint("MissingPermission")
     private fun enableLocationComponent(style: Style){
-        Log.d("tagDir", "er i enableComponent")
         if(PermissionsManager.areLocationPermissionsGranted(this)){
             val customLocationComponentOptions =
                 LocationComponentOptions.builder(this)
@@ -182,7 +205,6 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
                 cameraMode = CameraMode.TRACKING
                 renderMode = RenderMode.NORMAL
             }
-
             getRoute(viewModel.place!!.value!!)
         }else{
             permissionManager = PermissionsManager(this)
@@ -199,7 +221,6 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
     }
 
     override fun onPermissionResult(granted: Boolean) {
-        Log.d("tagDir", "er i premission result")
         if(granted){
             enableLocationComponent(mapboxMap.style!!)
         }else{
