@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -133,8 +134,9 @@ class MapActivity : AppCompatActivity(), MapboxMap.OnMapClickListener {
     private fun showPlace(place: Place){
         val nameTextView = findViewById<TextView>(R.id.namePlace)
         val placeViewHolder = findViewById<ConstraintLayout>(R.id.placeViewHolder)
-        val tempAir = findViewById<TextView>(R.id.tempAir)
-        val tempWater = findViewById<TextView>(R.id.tempWater)
+        val tempAirText = findViewById<TextView>(R.id.tempAirText)
+        val tempWaterText = findViewById<TextView>(R.id.tempWaterText)
+        val tempWaterImage = findViewById<ImageView>(R.id.tempWaterImage)
         val showPlaceButton = findViewById<ImageButton>(R.id.showPlaceButton)
 
         showPlaceButton.setOnClickListener{
@@ -142,13 +144,13 @@ class MapActivity : AppCompatActivity(), MapboxMap.OnMapClickListener {
         }
 
         when(place.preferenceCheck(MIN_TEMP, MID_TEMP)){
-            Preference.OKEY -> tempWater.setBackgroundResource(R.drawable.drop_blue)
-            Preference.NOT_OKEY -> tempWater.setBackgroundResource(R.drawable.drop_blue)
-            Preference.OPTIMAL -> tempWater.setBackgroundResource(R.drawable.drop_red)
+            Preference.OKEY -> tempWaterImage.setImageResource(R.drawable.drop_blue)
+            Preference.NOT_OKEY -> tempWaterImage.setImageResource(R.drawable.drop_blue)
+            Preference.OPTIMAL -> tempWaterImage.setImageResource(R.drawable.drop_red)
         }
         nameTextView.text = place.name
-        tempAir.text = "Ingen data"
-        tempWater.text = place.temp.toString() + "°C"
+        tempAirText.text = "Ingen data"
+        tempWaterText.text = place.temp.toString() + "°C"
         placeViewHolder.visibility = View.VISIBLE
 
         //zoomer til stedet på kartet
