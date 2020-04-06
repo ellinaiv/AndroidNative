@@ -230,6 +230,10 @@ class MapActivity : AppCompatActivity(), MapboxMap.OnMapClickListener {
         listOfLayerId.add(id)
     }
 
+    override fun onStart() {
+        super.onStart();
+        mapView.onStart();
+    }
 
     override fun onResume() {
         super.onResume()
