@@ -35,8 +35,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         //kun får å enn så lenge komme seg til kartet.
-        val mapButton = findViewById<Button>(R.id.kartButton)
-        mapButton.setOnClickListener {
+        btn_map.setOnClickListener {
             val intent = Intent(this, MapActivity::class.java)
             startActivity(intent)
         }
