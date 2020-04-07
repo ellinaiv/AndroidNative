@@ -6,6 +6,7 @@ import com.example.team11.Place
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.coroutines.awaitString
 import com.google.gson.Gson
+import com.google.gson.annotations.SerializedName
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
@@ -42,7 +43,7 @@ class PlaceRepository private constructor() {
         places = fetchPlaces(urlAPI)
         var data = MutableLiveData<List<Place>>()
         data.value = places
-        fetchSeaCurrentSpeed(places[0])
+        fetchSeaCurrentSpeed(places[7])
         return data
     }
 
@@ -100,16 +101,20 @@ class PlaceRepository private constructor() {
         return places
     }
     private fun fetchSeaCurrentSpeed(place: Place){
-        //val gson = Gson()
-        //val svar: String? = null
+        val tag = "tagStromninger"
+        val gson = Gson()
+        var oceanForecasts = mutableListOf<OceanForecast>()
         val url = getSpeedUrl(place)
-        Log.d("tagStromninger", url)
+        Log.d(tag, url)
         GlobalScope.launch {
             try {
                 val response = Fuel.get(url).awaitString()
-                Log.d("tagStromninger", response)
+                val ans = gson.fromJson(response, Forecast::class.java) as Forecast
+                //oceanForecasts = ans.ocenaforcasts.toMutableList()
+                Log.d(tag, response)
+                Log.d(tag, ans.toString())
             }catch (e: Exception){
-                Log.e("tagStromninger", e.message)
+                Log.e(tag, e.message)
             }
 
         }
@@ -119,3 +124,34 @@ class PlaceRepository private constructor() {
         return "http://in2000-apiproxy.ifi.uio.no/weatherapi/oceanforecast/0.9/.json?lat=${place.lat}&lon=${place.lng}"
     }
 }
+data class Forecast(
+    @SerializedName("mox:forecast")
+    val ocenaforcasts: Array<kukkMens>
+)
+
+data class kukkMens(
+    @SerializedName("metno:OceanForecast")
+    val ocenaforcast: OceanForecast
+)
+
+data class OceanForecast(
+    @SerializedName("mox:seaCurrentSpeed")
+    val seaSpeed: SeaSpeed,
+
+    @SerializedName("mox:validTime")
+    val validTime: ValidTime
+)
+
+data class SeaSpeed(val uom: String, val content: String)
+
+data class ValidTime(
+    @SerializedName("gml:TimePeriod")
+    val timePeriod: TimePeriod
+)
+
+data class TimePeriod(
+    @SerializedName("gml:begin")
+    val time: String
+)
+
+
