@@ -43,7 +43,7 @@ class PlaceRepository private constructor() {
         places = fetchPlaces(urlAPI)
         var data = MutableLiveData<List<Place>>()
         data.value = places
-        Log.d("tagSr", getSeaCurrentSpeed(places[places.size - 4]).toString())
+        //Log.d("tagSr", getSeaCurrentSpeed(places[places.size - 4]).toString())
         return data
     }
 
