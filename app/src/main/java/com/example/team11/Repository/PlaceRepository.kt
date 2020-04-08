@@ -2,13 +2,13 @@ package com.example.team11.Repository
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.example.team11.Forecast
 import com.example.team11.Place
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.coroutines.awaitString
 import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.xmlpull.v1.XmlPullParser
@@ -43,7 +43,6 @@ class PlaceRepository private constructor() {
         places = fetchPlaces(urlAPI)
         var data = MutableLiveData<List<Place>>()
         data.value = places
-        fetchSeaCurrentSpeed(places[7])
         return data
     }
 
@@ -100,58 +99,42 @@ class PlaceRepository private constructor() {
         }
         return places
     }
-    private fun fetchSeaCurrentSpeed(place: Place){
+
+    fun getSeaCurrentSpeed(place: Place) = fetchSeaCurrentSpeed(place)
+
+
+    private fun fetchSeaCurrentSpeed(place: Place): Double{
         val tag = "tagStromninger"
         val gson = Gson()
-        var oceanForecasts = mutableListOf<OceanForecast>()
+        var speed = (-1).toDouble()
         val url = getSpeedUrl(place)
         Log.d(tag, url)
-        GlobalScope.launch {
+        runBlocking {
             try {
                 val response = Fuel.get(url).awaitString()
                 val ans = gson.fromJson(response, Forecast::class.java) as Forecast
-                //oceanForecasts = ans.ocenaforcasts.toMutableList()
-                Log.d(tag, response)
-                Log.d(tag, ans.toString())
+                ans.ocenaforcasts ?: return@runBlocking
+                val oceanForecasts = ans.ocenaforcasts.toMutableList()
+                Log.d(tag, oceanForecasts.toString())
+                if (oceanForecasts.size > 1){
+                    val cast = oceanForecasts[1]
+                    Log.d(tag, cast.toString())
+                    speed = cast.ocenaforcast.seaSpeed.content.toDouble()
+                    Log.d(tag, speed.toString())
+                }else{
+                    speed = (-1).toDouble()
+                }
             }catch (e: Exception){
                 Log.e(tag, e.message)
             }
 
         }
+        return speed
     }
 
     private fun getSpeedUrl(place: Place): String{
         return "http://in2000-apiproxy.ifi.uio.no/weatherapi/oceanforecast/0.9/.json?lat=${place.lat}&lon=${place.lng}"
     }
 }
-data class Forecast(
-    @SerializedName("mox:forecast")
-    val ocenaforcasts: Array<kukkMens>
-)
-
-data class kukkMens(
-    @SerializedName("metno:OceanForecast")
-    val ocenaforcast: OceanForecast
-)
-
-data class OceanForecast(
-    @SerializedName("mox:seaCurrentSpeed")
-    val seaSpeed: SeaSpeed,
-
-    @SerializedName("mox:validTime")
-    val validTime: ValidTime
-)
-
-data class SeaSpeed(val uom: String, val content: String)
-
-data class ValidTime(
-    @SerializedName("gml:TimePeriod")
-    val timePeriod: TimePeriod
-)
-
-data class TimePeriod(
-    @SerializedName("gml:begin")
-    val time: String
-)
 
 
