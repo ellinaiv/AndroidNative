@@ -100,9 +100,19 @@ class PlaceRepository private constructor() {
         return places
     }
 
+    /**
+     * Henter ut hvor mye strømninger det er på en gitt badestrand
+     * @param place stranden man ønsker å vite strømningen på
+     * @return en Double. Hvis veriden < 0 er det ikke noen målinger på det stedet
+     */
     fun getSeaCurrentSpeed(place: Place) = fetchSeaCurrentSpeed(place)
 
 
+    /**
+     * Henter strømningene til et sted fra met sitt api.
+     * @param place stranden man ønsker å vite strømningen på
+     * @return en Double. Hvis verdien < 0 er det ikke noen målinger på det stedet
+     */
     private fun fetchSeaCurrentSpeed(place: Place): Double{
         val tag = "tagStromninger"
         val gson = Gson()
@@ -132,6 +142,12 @@ class PlaceRepository private constructor() {
         return speed
     }
 
+    /**
+     * En metode som lager url som skal, man skal hente json elemente på, når
+     * det kommer til havstrømninger.
+     * @param place: stedet som skal hente ut verdien.
+     * @return nettsiden man kan hente ut json elementene fra
+     */
     private fun getSpeedUrl(place: Place): String{
         return "http://in2000-apiproxy.ifi.uio.no/weatherapi/oceanforecast/0.9/.json?lat=${place.lat}&lon=${place.lng}"
     }
