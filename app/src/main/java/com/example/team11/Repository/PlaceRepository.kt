@@ -43,6 +43,7 @@ class PlaceRepository private constructor() {
         places = fetchPlaces(urlAPI)
         var data = MutableLiveData<List<Place>>()
         data.value = places
+        Log.d("tagSr", getSeaCurrentSpeed(places[places.size - 4]).toString())
         return data
     }
 
@@ -129,6 +130,7 @@ class PlaceRepository private constructor() {
                 if (oceanForecasts.size > 1){
                     val cast = oceanForecasts[1]
                     Log.d(tag, cast.toString())
+                    cast.ocenaforcast.seaSpeed ?: return@runBlocking
                     speed = cast.ocenaforcast.seaSpeed.content.toDouble()
                     Log.d(tag, speed.toString())
                 }else{
