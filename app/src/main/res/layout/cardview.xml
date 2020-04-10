@@ -19,25 +19,32 @@
 
         <TextView
             android:id="@+id/name"
-            android:layout_width="114dp"
-            android:layout_height="34dp"
-            android:textSize="15sp" android:minLines="3" android:minEms="20" android:maxEms="20" android:ems="20"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            android:textSize="24sp"
             android:gravity="center"
+            android:padding="4dp"
+
+
+            android:ellipsize="end"
+            android:maxLines="1"
+
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.135"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.516"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/water"
             />
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/water"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/air">
+            app:layout_constraintRight_toLeftOf="@+id/air"
+            android:padding="6dp">
 
 
             <ImageView
@@ -46,12 +53,16 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
 
+                android:scaleType="fitXY"
+                android:maxWidth="42dp"
+                android:adjustViewBounds="true"
+
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
 
-                android:src="@drawable/sun_vector" />
+                android:src="@drawable/drop_blue" />
 
             <TextView
                 android:id="@+id/tempWater"
@@ -78,19 +89,24 @@
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintRight_toRightOf="parent">
+            app:layout_constraintRight_toRightOf="parent"
+            android:padding="6dp">
 
             <ImageView
                 android:id="@+id/tempAirImage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
+                android:scaleType="fitXY"
+                android:maxWidth="62dp"
+                android:adjustViewBounds="true"
+
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
 
-                android:src="@drawable/drop_blue"/>
+                android:src="@drawable/sun_vector"/>
 
             <TextView
                 android:id="@+id/tempAir"
