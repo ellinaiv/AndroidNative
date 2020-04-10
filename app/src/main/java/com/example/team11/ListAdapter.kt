@@ -40,9 +40,8 @@ class ListAdapter(private val myDataset: ArrayList<Place>, val context: Context)
      * Vi har for lite data nå. Burde se på APIer og ta ut mer info om badeplassene
      */
     override fun onBindViewHolder(holder: MyViewHolder, position: Int){
-
         holder.itemName.text = myDataset[position].name
-        holder.itemTempWater.text = myDataset[position].temp.toString() + "'C"
+        holder.itemTempWater.text = myDataset[position].temp.toString() + "°C"
         holder.itemTempAir.text = "no data"
 
     }

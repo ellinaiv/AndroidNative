@@ -7,14 +7,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/card_view"
-    android:layout_margin="2dp"
-    card_view:cardElevation="2dp"
+    android:layout_margin="1dp"
     card_view:contentPadding="4dp"
     app:cardBackgroundColor="@color/cardBackground">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="127dp"
+        android:layout_height="98dp"
         android:orientation="vertical">
 
         <TextView
