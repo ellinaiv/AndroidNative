@@ -35,18 +35,17 @@ class MainActivity : AppCompatActivity() {
         }
 
         //kun får å enn så lenge komme seg til kartet.
-        btn_map.setOnClickListener {
+        buttonMap.setOnClickListener {
             val intent = Intent(this, MapActivity::class.java)
             startActivity(intent)
         }
-        val listButton = findViewById<Button>(R.id.listButton)
-        listButton.setOnClickListener {
+        buttonList.setOnClickListener {
             val intent = Intent(this, PlacesListActivity::class.java).apply{
                 putExtra("PLACES_LIST", places)
             }
             startActivity(intent)
         }
-        btn_filter.setOnClickListener {
+        buttonFilter.setOnClickListener {
             val intent = Intent(this, FilterActivity::class.java).apply{
             }
             startActivity(intent)
