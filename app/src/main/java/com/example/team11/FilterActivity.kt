@@ -13,7 +13,7 @@ class FilterActivity : AppCompatActivity() {
         seek_bar.progress = PersonalPreference.waterTempMid
         textTempLow.text = PersonalPreference.waterTempLow.toString()
         textTempHigh.text = PersonalPreference.waterTempHigh.toString()
-        seek_bar.max = PersonalPreference.waterTempHigh - PersonalPreference.waterTempLow
+        seek_bar.max = PersonalPreference.waterTempHigh
 
         seek_bar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seek: SeekBar,
@@ -33,6 +33,9 @@ class FilterActivity : AppCompatActivity() {
                 PersonalPreference.waterTempMid = seek.progress
             }
         })
+    }
+    fun progressCalculation(){
+        TODO("Regne om verdien til og fra progress")
     }
 
 }
