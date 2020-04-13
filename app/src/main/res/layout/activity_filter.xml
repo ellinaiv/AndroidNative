@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:textSize="12sp"
-        android:translationZ="90dp"
+        android:translationZ="80dp"
         app:layout_constraintBottom_toTopOf="@id/seek_bar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
