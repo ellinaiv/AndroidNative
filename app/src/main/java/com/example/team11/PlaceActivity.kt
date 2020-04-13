@@ -7,7 +7,10 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toolbar
 import androidx.activity.viewModels
+import androidx.appcompat.app.ActionBar
+import androidx.core.view.get
 import androidx.lifecycle.Observer
 import com.example.team11.viewmodels.MapActivityViewModel
 import com.example.team11.viewmodels.PlaceActivityViewModel
@@ -22,6 +25,7 @@ import com.mapbox.mapboxsdk.maps.Style
 import com.mapbox.mapboxsdk.style.layers.PropertyFactory
 import com.mapbox.mapboxsdk.style.layers.SymbolLayer
 import com.mapbox.mapboxsdk.style.sources.GeoJsonSource
+import kotlinx.android.synthetic.main.activity_place.view.*
 
 class PlaceActivity : AppCompatActivity() {
     private val viewModel: PlaceActivityViewModel by viewModels{ PlaceActivityViewModel.InstanceCreator() }
@@ -31,6 +35,11 @@ class PlaceActivity : AppCompatActivity() {
         Mapbox.getInstance(this, getString(R.string.access_token))
         setContentView(R.layout.activity_place)
         Log.d("tagPlace", "kommet inn ")
+
+        val toolbar = findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar)
+        setSupportActionBar(toolbar)
+        supportActionBar?.title = null
+
 
         //Observerer stedet som er valgt
         viewModel.place!!.observe(this, Observer { place ->
@@ -53,13 +62,16 @@ class PlaceActivity : AppCompatActivity() {
     private fun makeAboutPage(place: Place, savedInstanceState: Bundle?) {
         val namePlace = findViewById<TextView>(R.id.namePlace)
         val directionButton = findViewById<Button>(R.id.directionButton)
+        val tempWater = findViewById<TextView>(R.id.tempWater)
 
         directionButton.setOnClickListener {
             val intent = Intent(this, DirectionActivity::class.java)
             startActivity(intent)
         }
 
-        namePlace.text = "Navn: " + place.name
+        namePlace.text = place.name
+        val degC = tempWater.text
+        tempWater.text = place.temp.toString() + degC
 
         makeMap(place, savedInstanceState)
     }
