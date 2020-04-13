@@ -7,30 +7,36 @@
     <SeekBar
         android:id="@+id/seek_bar"
         android:layout_width="match_parent"
-        android:layout_height="20dp"
+        android:layout_height="wrap_content"
         android:gravity="center"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:progressTint="@color/colorBlue"
-        android:progressBackgroundTint="@color/colorRed"
-        />
+        android:progressTint="@color/colorColdBlue"
+        android:thumbTint="@color/colorSeekThumb"
+        android:progressBackgroundTint="@color/colorWarmRed"
+        android:progressBackgroundTintMode="src_over"
+            />
     <TextView
         android:id="@+id/textTempMid"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="10dp"
+        android:layout_margin="10dp"
+        android:textSize="12sp"
+        android:translationZ="90dp"
         app:layout_constraintBottom_toTopOf="@id/seek_bar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        android:background="@color/colorWhite"
 
         />
     <TextView
         android:id="@+id/textTempLow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="10dp"
+        android:layout_margin="10dp"
+        android:textSize="12sp"
         app:layout_constraintBottom_toTopOf="@id/seek_bar"
         app:layout_constraintStart_toStartOf="parent"
 
@@ -39,13 +45,11 @@
         android:id="@+id/textTempHigh"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="10dp"
+        android:layout_margin="10dp"
+        android:textSize="12sp"
         app:layout_constraintBottom_toTopOf="@id/seek_bar"
         app:layout_constraintEnd_toEndOf="parent"
-
         />
-
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,18 +11,19 @@ class FilterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_filter)
         seek_bar.progress = PersonalPreference.waterTempMid
-        textTempLow.text = PersonalPreference.waterTempLow.toString()
-        textTempHigh.text = PersonalPreference.waterTempHigh.toString()
+        val degreeLow = "${PersonalPreference.waterTempLow.toString()} ${getString(R.string.degreeCelsius)}"
+        val degreeHigh = "${PersonalPreference.waterTempHigh.toString()} ${getString(R.string.degreeCelsius)}"
+        textTempLow.text = degreeLow
+        textTempHigh.text = degreeHigh
         seek_bar.max = PersonalPreference.waterTempHigh
 
         seek_bar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seek: SeekBar,
                 progress: Int, fromUser: Boolean) {
                 val value = (progress * (seek.width - 2 * seek.thumbOffset)) / seek.max
-                textTempMid.text = progress.toString() ;
-                textTempMid.x = seek_bar.x + value + seek.thumbOffset / 2;
-                //textView.setY(100); just added a value set this properly using screen with height aspect ratio , if you do not set it by default it will be there below seek bar
-
+                val degreeMid = "$progress ${getString(R.string.degreeCelsius)}"
+                textTempMid.text = degreeMid
+                textTempMid.x = seek_bar.x + value;
             }
 
             override fun onStartTrackingTouch(seek: SeekBar) {
