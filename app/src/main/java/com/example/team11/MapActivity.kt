@@ -115,10 +115,9 @@ class MapActivity : AppCompatActivity() {
             arrayListOf(viewModel.getFeature(place))))
         style.addSource(geoJsonSource)
 
-        val iconId = when(place.preferenceCheck(MIN_TEMP, MID_TEMP)){
-            Preference.GOOD -> ICON_ID_GREEN
-            Preference.MEDIUM -> ICON_ID_YELLOW
-            Preference.BAD -> ICON_ID_RED
+        val iconId = when(place.isWarm()){
+            true -> ICON_ID_RED
+            false -> ICON_ID_GREEN
         }
         val textOffset: Array<Float> = arrayOf(0f, -2.5f)
 
