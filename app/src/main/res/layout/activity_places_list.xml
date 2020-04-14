@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".PlacesListActivity"
-    android:background="@color/backgroundFilter">
+    android:background="@color/backgroundCardsDark">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/searchLayer"
@@ -41,7 +41,7 @@
             android:padding="4dp"
 
             android:src="@drawable/filter_list"
-            android:background="@color/backgroundFilter"
+            android:background="@color/backgroundCardsDark"
             />
 
         <EditText

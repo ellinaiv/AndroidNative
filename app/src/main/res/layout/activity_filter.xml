@@ -14,9 +14,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:progressTint="@color/colorColdBlue"
-        android:thumbTint="@color/colorSeekThumb"
-        android:progressBackgroundTint="@color/colorWarmRed"
+        android:progressTint="@color/coldBlue"
+        android:thumbTint="@color/seekThumb"
+        android:progressBackgroundTint="@color/warmRed"
         android:progressBackgroundTintMode="src_over"
             />
     <TextView
@@ -25,6 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:textSize="20sp"
+        android:textColor="@color/mainTextColor"
         android:translationZ="80dp"
         app:layout_constraintBottom_toTopOf="@id/seek_bar"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,6 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:textSize="20sp"
+        android:textColor="@color/mainTextColor"
         app:layout_constraintBottom_toTopOf="@id/seek_bar"
         app:layout_constraintStart_toStartOf="parent"
 
@@ -48,6 +50,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:textSize="20sp"
+        android:textColor="@color/mainTextColor"
         app:layout_constraintBottom_toTopOf="@id/seek_bar"
         app:layout_constraintEnd_toEndOf="parent"
         />

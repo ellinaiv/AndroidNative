@@ -7,5 +7,4 @@ object PersonalPreference {
     var waterTempMid : Int = 15
     var waterTempHigh = 30
 
-
 }

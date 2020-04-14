@@ -4,5 +4,5 @@
         android:type="linear"
         android:angle="90"
         android:startColor="#BFBFBF"
-        android:endColor="@color/cardBackground" />
+        android:endColor="@color/backgroundCardsLight" />
 </shape>
