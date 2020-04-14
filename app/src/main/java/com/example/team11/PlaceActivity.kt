@@ -2,16 +2,14 @@ package com.example.team11
 
 import android.content.Intent
 import android.graphics.BitmapFactory
-import android.media.Image
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.ToggleButton
 import androidx.activity.viewModels
-import androidx.core.view.isGone
-import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import com.example.team11.viewmodels.PlaceActivityViewModel
 import com.mapbox.geojson.FeatureCollection
@@ -24,6 +22,7 @@ import com.mapbox.mapboxsdk.maps.Style
 import com.mapbox.mapboxsdk.style.layers.PropertyFactory
 import com.mapbox.mapboxsdk.style.layers.SymbolLayer
 import com.mapbox.mapboxsdk.style.sources.GeoJsonSource
+import kotlinx.android.synthetic.main.activity_place.*
 
 class PlaceActivity : AppCompatActivity() {
     private val viewModel: PlaceActivityViewModel by viewModels{ PlaceActivityViewModel.InstanceCreator() }
@@ -63,23 +62,12 @@ class PlaceActivity : AppCompatActivity() {
         val directionButton = findViewById<Button>(R.id.directionButton)
         val tempWater = findViewById<TextView>(R.id.tempWater)
         val backButton = findViewById<ImageButton>(R.id.backButton)
-        val favouriteButtonOutlined = findViewById<ImageButton>(R.id.favouriteButtonOutlined)
-        val favouriteButtonFilled = findViewById<ImageButton>(R.id.favouriteButtonFilled)
+//        val favouriteButtonOutlined = findViewById<ImageButton>(R.id.favouriteButtonOutlined)
+//        val favouriteButtonFilled = findViewById<ImageButton>(R.id.favouriteButtonFilled)
+        val toggleFavourite = findViewById<ToggleButton>(R.id.toggleFavourite)
 
         backButton.setOnClickListener {
             finish()
-        }
-
-        favouriteButtonOutlined.setOnClickListener {
-            favouriteButtonOutlined.isGone
-            favouriteButtonFilled.isVisible
-            //TODO: legge stedet inn i favoritter
-        }
-
-        favouriteButtonFilled.setOnClickListener {
-            favouriteButtonFilled.isGone
-            favouriteButtonOutlined.isVisible
-            //TODO: fjerne stedet fra favoritter
         }
 
         directionButton.setOnClickListener {

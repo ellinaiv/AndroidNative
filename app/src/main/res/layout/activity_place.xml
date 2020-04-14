@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".PlaceActivity">
 
+<!--    toolbar erstattet av topBar     slettes?-->
 <!--    <include-->
 <!--        android:id="@+id/toolbar"-->
 <!--        layout="@layout/toolbar_place"-->
@@ -35,27 +36,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-<!--        <ImageButton-->
-<!--            android:id="@+id/favouriteButtonOutlined"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:background="@color/mapCardBackground"-->
-<!--            android:src="@drawable/favourite_border"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="parent" />-->
-
-<!--        <ImageButton-->
-<!--            android:id="@+id/favouriteButtonFilled"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:background="@color/mapCardBackground"-->
-<!--            android:src="@drawable/favourite"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="parent"-->
-<!--            android:visibility="invisible"/>-->
-
         <ToggleButton
             android:id="@+id/toggleFavourite"
             android:layout_width="40dp"
@@ -66,7 +46,7 @@
             android:layout_gravity="center"
             android:textOn=""
             android:textOff=""
-            android:background="@drawable/favourite_border"/>
+            android:background="@drawable/toggle_favourite_image"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -91,8 +71,8 @@
                 android:layout_marginStart="28dp"
                 android:layout_marginTop="32dp"
                 android:gravity="center_vertical"
-                android:text="Badeplass"
-                android:textColor="#000000"
+                android:text="@string/badeplass"
+                android:textColor="@color/mainTextColor"
                 android:textSize="30sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -117,7 +97,8 @@
                 app:layout_constraintStart_toEndOf="@+id/namePlace"
                 app:layout_constraintTop_toTopOf="@+id/namePlace"
                 app:layout_constraintVertical_bias="0.91"
-                app:srcCompat="@drawable/drop_blue" />
+                app:srcCompat="@drawable/drop_blue"
+                android:contentDescription="@string/contentDescriptionWaterIcon" />
 
             <TextView
                 android:id="@+id/tempWater"
@@ -126,8 +107,8 @@
                 android:layout_marginHorizontal="5dp"
                 android:layout_marginTop="8dp"
                 android:gravity="center"
-                android:text="&#176;C"
-                android:textColor="#000000"
+                android:text="@string/degC"
+                android:textColor="@color/mainTextColor"
                 app:layout_constraintBottom_toBottomOf="@+id/tempAir"
                 app:layout_constraintEnd_toEndOf="@+id/water"
                 app:layout_constraintStart_toStartOf="@+id/water"
@@ -151,8 +132,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:gravity="center"
-                android:text="25&#176;C"
-                android:textColor="#000000"
+                android:text="@string/degC"
+                android:textColor="@color/mainTextColor"
                 app:layout_constraintEnd_toEndOf="@+id/weather"
                 app:layout_constraintStart_toStartOf="@+id/weather"
                 app:layout_constraintTop_toBottomOf="@+id/weather" />
@@ -163,8 +144,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="88dp"
-                android:text="Fasiliteter"
-                android:textColor="#000000"
+                android:text="@string/fasiliteter"
+                android:textColor="@color/mainTextColor"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/namePlace" />
@@ -176,7 +157,8 @@
                 android:layout_marginStart="16dp"
                 app:layout_constraintBottom_toBottomOf="@+id/icon_WC"
                 app:layout_constraintStart_toEndOf="@+id/icon_WC"
-                app:srcCompat="@drawable/food" />
+                app:srcCompat="@drawable/food"
+                android:contentDescription="TODO" />
 
             <ImageView
                 android:id="@+id/icon_WC"
@@ -185,7 +167,8 @@
                 android:layout_marginStart="16dp"
                 app:layout_constraintBottom_toBottomOf="@+id/icon_wheelchair"
                 app:layout_constraintStart_toEndOf="@+id/icon_wheelchair"
-                app:srcCompat="@drawable/wc" />
+                app:srcCompat="@drawable/wc"
+                android:contentDescription="@string/contentDescriptionToiletIcon" />
 
             <ImageView
                 android:id="@+id/icon_wheelchair"
@@ -194,15 +177,16 @@
                 android:layout_marginStart="160dp"
                 app:layout_constraintBottom_toBottomOf="@+id/facilities"
                 app:layout_constraintStart_toEndOf="@+id/facilities"
-                app:srcCompat="@drawable/wheelchair" />
+                app:srcCompat="@drawable/wheelchair"
+                android:contentDescription="@string/ContentDescriptionWheelchair" />
 
             <TextView
                 android:id="@+id/popular_times"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="52dp"
-                android:text="Populære tidspunkter"
-                android:textColor="#000000"
+                android:text="@string/popularTimes"
+                android:textColor="@color/mainTextColor"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="@+id/facilities"
                 app:layout_constraintTop_toBottomOf="@+id/facilities" />
@@ -213,15 +197,16 @@
                 android:layout_height="83dp"
                 app:layout_constraintStart_toStartOf="@+id/popular_times"
                 app:layout_constraintTop_toBottomOf="@+id/popular_times"
-                app:srcCompat="@drawable/bars" />
+                app:srcCompat="@drawable/bars"
+                android:contentDescription="@string/contentDescriptionPopularTimes" />
 
             <TextView
                 android:id="@+id/currents"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="52dp"
-                android:text="Havstrømninger"
-                android:textColor="#000000"
+                android:text="@string/currents"
+                android:textColor="@color/mainTextColor"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="@+id/popular_times_graph"
                 app:layout_constraintTop_toBottomOf="@+id/popular_times_graph" />
@@ -231,7 +216,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="UV-stråling"
+                android:text="@string/uv"
                 android:textColor="#000000"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="@+id/currents"
@@ -242,7 +227,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Vannkvalitet"
+                android:text="@string/waterQuality"
                 android:textColor="#000000"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="@+id/uv"
@@ -280,8 +265,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="24dp"
                 android:gravity="end"
-                android:text="Ikke tilgjengelig"
-                android:textColor="#000000"
+                android:text="@string/notAvailable"
+                android:textColor="@color/mainTextColor"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/water_quality" />
@@ -291,8 +276,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="60dp"
-                android:text="Værvarsel"
-                android:textColor="#000000"
+                android:text="@string/weatherForecast"
+                android:textColor="@color/mainTextColor"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="@+id/water_quality"
                 app:layout_constraintTop_toBottomOf="@+id/water_quality" />
@@ -305,7 +290,7 @@
                 android:layout_marginEnd="24dp"
                 android:gravity="center"
                 android:text="25/6"
-                android:textColor="#000000"
+                android:textColor="@color/mainTextColor"
                 android:textSize="15sp"
                 app:layout_constraintBottom_toBottomOf="@+id/date_4days"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -319,7 +304,7 @@
                 android:layout_marginStart="55dp"
                 android:gravity="center"
                 android:text="24/6"
-                android:textColor="#000000"
+                android:textColor="@color/mainTextColor"
                 android:textSize="15sp"
                 app:layout_constraintBottom_toBottomOf="@+id/date_3days"
                 app:layout_constraintEnd_toStartOf="@+id/date_5days"
@@ -333,7 +318,7 @@
                 android:layout_marginStart="55dp"
                 android:gravity="center"
                 android:text="23/6"
-                android:textColor="#000000"
+                android:textColor="@color/mainTextColor"
                 android:textSize="15sp"
                 app:layout_constraintBottom_toBottomOf="@+id/date_2days"
                 app:layout_constraintEnd_toStartOf="@+id/date_4days"
@@ -347,7 +332,7 @@
                 android:layout_marginStart="55dp"
                 android:gravity="center"
                 android:text="22/6"
-                android:textColor="#000000"
+                android:textColor="@color/mainTextColor"
                 android:textSize="15sp"
                 app:layout_constraintBottom_toBottomOf="@+id/date_1day"
                 app:layout_constraintEnd_toStartOf="@+id/date_3days"
@@ -362,7 +347,7 @@
                 android:layout_marginTop="16dp"
                 android:gravity="center"
                 android:text="21/6"
-                android:textColor="#000000"
+                android:textColor="@color/mainTextColor"
                 android:textSize="15sp"
                 app:layout_constraintEnd_toStartOf="@+id/date_2days"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -377,7 +362,8 @@
                 app:layout_constraintEnd_toEndOf="@+id/date_1day"
                 app:layout_constraintStart_toStartOf="@+id/date_1day"
                 app:layout_constraintTop_toBottomOf="@+id/date_1day"
-                app:srcCompat="@drawable/sun_vector" />
+                app:srcCompat="@drawable/sun_vector"
+                android:contentDescription="TODO" />
 
             <ImageView
                 android:id="@+id/forecast_2days"
@@ -386,7 +372,8 @@
                 app:layout_constraintBottom_toBottomOf="@+id/forecast_1day"
                 app:layout_constraintEnd_toEndOf="@+id/date_2days"
                 app:layout_constraintStart_toStartOf="@+id/date_2days"
-                app:srcCompat="@drawable/sun_vector" />
+                app:srcCompat="@drawable/sun_vector"
+                android:contentDescription="TODO" />
 
             <ImageView
                 android:id="@+id/forecast_3days"
@@ -395,7 +382,8 @@
                 app:layout_constraintBottom_toBottomOf="@+id/forecast_2days"
                 app:layout_constraintEnd_toEndOf="@+id/date_3days"
                 app:layout_constraintStart_toStartOf="@+id/date_3days"
-                app:srcCompat="@drawable/cloud" />
+                app:srcCompat="@drawable/cloud"
+                android:contentDescription="TODO" />
 
             <ImageView
                 android:id="@+id/forecast_4days"
@@ -404,7 +392,8 @@
                 app:layout_constraintBottom_toBottomOf="@+id/forecast_3days"
                 app:layout_constraintEnd_toEndOf="@+id/date_4days"
                 app:layout_constraintStart_toStartOf="@+id/date_4days"
-                app:srcCompat="@drawable/sun_vector" />
+                app:srcCompat="@drawable/sun_vector"
+                android:contentDescription="TODO" />
 
             <ImageView
                 android:id="@+id/forecast_5days"
@@ -413,7 +402,8 @@
                 app:layout_constraintBottom_toBottomOf="@+id/forecast_4days"
                 app:layout_constraintEnd_toEndOf="@+id/date_5days"
                 app:layout_constraintStart_toStartOf="@+id/date_5days"
-                app:srcCompat="@drawable/cloud" />
+                app:srcCompat="@drawable/cloud"
+                android:contentDescription="TODO" />
 
             <TextView
                 android:id="@+id/temp_1day"
@@ -421,7 +411,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="25&#176;C"
-                android:textColor="#000000"
+                android:textColor="@color/mainTextColor"
                 android:textSize="15sp"
                 app:layout_constraintTop_toBottomOf="@+id/forecast_1day"
                 app:layout_constraintStart_toStartOf="@+id/forecast_1day"
@@ -433,7 +423,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="23&#176;C"
-                android:textColor="#000000"
+                android:textColor="@color/mainTextColor"
                 android:textSize="15sp"
                 app:layout_constraintTop_toBottomOf="@+id/forecast_2days"
                 app:layout_constraintStart_toStartOf="@+id/forecast_2days"
@@ -445,7 +435,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="20&#176;C"
-                android:textColor="#000000"
+                android:textColor="@color/mainTextColor"
                 android:textSize="15sp"
                 app:layout_constraintTop_toBottomOf="@+id/forecast_3days"
                 app:layout_constraintStart_toStartOf="@+id/forecast_3days"
@@ -457,7 +447,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="21&#176;C"
-                android:textColor="#000000"
+                android:textColor="@color/mainTextColor"
                 android:textSize="15sp"
                 app:layout_constraintTop_toBottomOf="@+id/forecast_4days"
                 app:layout_constraintStart_toStartOf="@+id/forecast_4days"
@@ -469,7 +459,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="20&#176;C"
-                android:textColor="#000000"
+                android:textColor="@color/mainTextColor"
                 android:textSize="15sp"
                 app:layout_constraintTop_toBottomOf="@+id/forecast_5days"
                 app:layout_constraintStart_toStartOf="@+id/forecast_5days"
@@ -480,7 +470,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="60dp"
-                android:text="Sykkelvei"
+                android:text="@string/directionButton"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/forecast_1day" />
@@ -492,7 +482,6 @@
                 android:layout_marginStart="30dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="30dp"
-                android:clickable="true"
                 app:layout_constraintEnd_toEndOf="@+id/directionButton"
                 app:layout_constraintStart_toStartOf="@+id/directionButton"
                 app:layout_constraintTop_toBottomOf="@+id/directionButton">
@@ -505,7 +494,7 @@
                 android:layout_marginTop="24dp"
                 android:layout_marginBottom="52dp"
                 android:linksClickable="true"
-                android:text="Finn reise med kollektivtransport"
+                android:text="@string/publicTransportLink"
                 android:textColor="#055864"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
