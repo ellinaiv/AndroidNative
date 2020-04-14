@@ -28,7 +28,7 @@ class Place(val id: Int, val name: String, val lat: Double, val lng: Double, var
     fun getLatLng():LatLng = LatLng(lat, lng)
 
     /**
-     * Sjekker om preferansen til dette placet er innafor.
+     * Sjekker om dette stedet er varmt
      * @return boolean
      */
     fun isWarm(): Boolean{
