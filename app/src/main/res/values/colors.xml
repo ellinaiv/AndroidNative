@@ -7,4 +7,7 @@
     <color name="colorWarmRed">#F73030</color>
     <color name="colorSeekThumb">#6A6969</color>
     <color name="colorWhite">#ffffff</color>
+    <color name="mainTextColor">#000000</color>
+    <color name="cardBackground">#F4F4F4</color>
+    <color name="backgroundFilter">#C4C4C4</color>
 </resources>
