@@ -11,8 +11,6 @@ import org.xmlpull.v1.XmlPullParserFactory
 import java.io.StringReader
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.coroutines.awaitString
-import com.google.android.gms.maps.model.LatLng
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.runBlocking
 
 class MainActivity : AppCompatActivity() {
@@ -37,9 +35,7 @@ class MainActivity : AppCompatActivity() {
         //kun får å enn så lenge komme seg til kartet.
         val mapButton = findViewById<Button>(R.id.kartButton)
         mapButton.setOnClickListener {
-            val intent = Intent(this, MapActivity::class.java).apply{
-                putExtra("PLACES_LIST", places)
-            }
+            val intent = Intent(this, MapActivity::class.java)
             startActivity(intent)
         }
         val listButton = findViewById<Button>(R.id.listButton)
