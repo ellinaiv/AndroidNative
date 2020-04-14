@@ -2,17 +2,17 @@ package com.example.team11
 
 import android.content.Intent
 import android.graphics.BitmapFactory
+import android.media.Image
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
-import android.widget.Toolbar
 import androidx.activity.viewModels
-import androidx.appcompat.app.ActionBar
-import androidx.core.view.get
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
-import com.example.team11.viewmodels.MapActivityViewModel
 import com.example.team11.viewmodels.PlaceActivityViewModel
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.mapboxsdk.Mapbox
@@ -20,12 +20,10 @@ import com.mapbox.mapboxsdk.camera.CameraPosition
 import com.mapbox.mapboxsdk.camera.CameraUpdateFactory
 import com.mapbox.mapboxsdk.geometry.LatLng
 import com.mapbox.mapboxsdk.maps.MapView
-import com.mapbox.mapboxsdk.maps.MapboxMap
 import com.mapbox.mapboxsdk.maps.Style
 import com.mapbox.mapboxsdk.style.layers.PropertyFactory
 import com.mapbox.mapboxsdk.style.layers.SymbolLayer
 import com.mapbox.mapboxsdk.style.sources.GeoJsonSource
-import kotlinx.android.synthetic.main.activity_place.view.*
 
 class PlaceActivity : AppCompatActivity() {
     private val viewModel: PlaceActivityViewModel by viewModels{ PlaceActivityViewModel.InstanceCreator() }
@@ -36,9 +34,10 @@ class PlaceActivity : AppCompatActivity() {
         setContentView(R.layout.activity_place)
         Log.d("tagPlace", "kommet inn ")
 
-        val toolbar = findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar)
-        setSupportActionBar(toolbar)
-        supportActionBar?.title = null
+        // toolbar erstattet av constraint layout topBar    slettes?
+//        val toolbar = findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar)
+//        setSupportActionBar(toolbar)
+//        supportActionBar?.title = null
 
 
         //Observerer stedet som er valgt
@@ -63,6 +62,25 @@ class PlaceActivity : AppCompatActivity() {
         val namePlace = findViewById<TextView>(R.id.namePlace)
         val directionButton = findViewById<Button>(R.id.directionButton)
         val tempWater = findViewById<TextView>(R.id.tempWater)
+        val backButton = findViewById<ImageButton>(R.id.backButton)
+        val favouriteButtonOutlined = findViewById<ImageButton>(R.id.favouriteButtonOutlined)
+        val favouriteButtonFilled = findViewById<ImageButton>(R.id.favouriteButtonFilled)
+
+        backButton.setOnClickListener {
+            finish()
+        }
+
+        favouriteButtonOutlined.setOnClickListener {
+            favouriteButtonOutlined.isGone
+            favouriteButtonFilled.isVisible
+            //TODO: legge stedet inn i favoritter
+        }
+
+        favouriteButtonFilled.setOnClickListener {
+            favouriteButtonFilled.isGone
+            favouriteButtonOutlined.isVisible
+            //TODO: fjerne stedet fra favoritter
+        }
 
         directionButton.setOnClickListener {
             val intent = Intent(this, DirectionActivity::class.java)
