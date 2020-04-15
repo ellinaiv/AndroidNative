@@ -213,11 +213,9 @@ class MapActivity : AppCompatActivity(), MapboxMap.OnMapClickListener {
             arrayListOf(feature)))
         style.addSource(geoJsonSource)
 
-        //Velger hvilket ikon som skal brukes
-        val iconId = when(place.preferenceCheck(MIN_TEMP, MID_TEMP)){
-            Preference.OPTIMAL -> ICON_ID_RED
-            Preference.OKEY -> ICON_ID_BLUE
-            Preference.NOT_OKEY -> ICON_ID_BLUE
+        val iconId = when(place.isWarm()){
+            true -> ICON_ID_RED
+            false -> ICON_ID_GREEN
         }
 
         val symbolLayer = SymbolLayer(id, geoId)

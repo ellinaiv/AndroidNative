@@ -11,19 +11,17 @@ class PlaceTest{
     @Test
     fun testPreferenceCheck1(){
         val place = Place(-1 , "test", 10.toDouble(),10.toDouble(), 25)
-        assertEquals(Preference.OPTIMAL, place.preferenceCheck(minTemp, midTemp))
+        assertEquals(true, place.isWarm())
     }
 
     @Test
     fun testPreferenceCheck2(){
         val place = Place(-1 , "test", 10.toDouble(),10.toDouble(), 15)
-        assertEquals(Preference.OKEY, place.preferenceCheck(minTemp, midTemp))
-    }
+        assertEquals(true, place.isWarm())    }
 
 
     @Test
     fun testPreferenceCheck3(){
         val place = Place(-1 , "test", 10.toDouble(),10.toDouble(), 14)
-        assertEquals(Preference.NOT_OKEY, place.preferenceCheck(minTemp, midTemp))
-    }
+        assertEquals(false, place.isWarm())    }
 }
