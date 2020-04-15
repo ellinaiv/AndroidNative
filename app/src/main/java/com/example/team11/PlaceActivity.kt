@@ -33,12 +33,6 @@ class PlaceActivity : AppCompatActivity() {
         setContentView(R.layout.activity_place)
         Log.d("tagPlace", "kommet inn ")
 
-        // toolbar erstattet av constraint layout topBar    slettes?
-//        val toolbar = findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar)
-//        setSupportActionBar(toolbar)
-//        supportActionBar?.title = null
-
-
         //Observerer stedet som er valgt
         viewModel.place!!.observe(this, Observer { place ->
             //Skriver ut slik at vi kan se om vi har riktig badestrand
