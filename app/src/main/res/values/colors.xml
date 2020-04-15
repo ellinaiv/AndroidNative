@@ -3,7 +3,11 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="coldBlue">#0BA1F5</color>
+    <color name="warmRed">#F73030</color>
+    <color name="seekThumb">#6A6969</color>
     <color name="mainTextColor">#000000</color>
-    <color name="cardBackground">#F4F4F4</color>
-    <color name="backgroundFilter">#C4C4C4</color>
+    <color name="backgroundCardsLight">#F4F4F4</color>
+    <color name="backgroundCardsDark">#C4C4C4</color>
+    <color name="backgroundFilter">#F4F4F4</color>
 </resources>
