@@ -36,7 +36,6 @@ class PlaceActivity : AppCompatActivity() {
         //Observerer stedet som er valgt
         viewModel.place!!.observe(this, Observer { place ->
             //Skriver ut slik at vi kan se om vi har riktig badestrand
-
             Log.d("tagPlace", place.toString())
             makeAboutPage(place, savedInstanceState)
         })
@@ -56,9 +55,6 @@ class PlaceActivity : AppCompatActivity() {
         val directionButton = findViewById<Button>(R.id.directionButton)
         val tempWater = findViewById<TextView>(R.id.tempWater)
         val backButton = findViewById<ImageButton>(R.id.backButton)
-//        val favouriteButtonOutlined = findViewById<ImageButton>(R.id.favouriteButtonOutlined)
-//        val favouriteButtonFilled = findViewById<ImageButton>(R.id.favouriteButtonFilled)
-        val toggleFavourite = findViewById<ToggleButton>(R.id.toggleFavourite)
 
         backButton.setOnClickListener {
             finish()

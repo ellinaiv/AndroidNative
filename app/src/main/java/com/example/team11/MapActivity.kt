@@ -13,6 +13,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.lifecycle.MutableLiveData
 import com.example.team11.viewmodels.MapActivityViewModel
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.mapboxsdk.Mapbox
@@ -137,8 +138,11 @@ class MapActivity : AppCompatActivity(), MapboxMap.OnMapClickListener {
         val tempWaterImage = findViewById<ImageView>(R.id.tempWaterImage)
         val showPlaceButton = findViewById<ImageButton>(R.id.showPlaceButton)
 
+        viewModel.changeCurrentPlace(place)
+
         showPlaceButton.setOnClickListener{
-            Toast.makeText(this, place.toString(), Toast.LENGTH_LONG).show()
+            val intent = Intent(this, PlaceActivity::class.java)
+            startActivity(intent)
         }
 
         when(place.isWarm()){
