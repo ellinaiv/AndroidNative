@@ -7,9 +7,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Button
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.team11.viewmodels.MapActivityViewModel
@@ -35,10 +36,6 @@ class MapActivity : AppCompatActivity(), MapboxMap.OnMapClickListener {
     private val LAYOR_ID = "LAYOR_ID:"
     private var listOfLayerId = mutableListOf<String>()
     private val propertyId = "PROPERTY_ID"
-
-    //Midlertidige verdier fram til preferanses er bestemt
-    private val MIN_TEMP = 15
-    private val MID_TEMP = 23
 
     private lateinit var mapView: MapView
     private lateinit var mapBoxMap: MapboxMap
@@ -135,25 +132,23 @@ class MapActivity : AppCompatActivity(), MapboxMap.OnMapClickListener {
     private fun showPlace(place: Place){
         val nameTextView = findViewById<TextView>(R.id.namePlace)
         val placeViewHolder = findViewById<ConstraintLayout>(R.id.placeViewHolder)
-        val tempAir = findViewById<TextView>(R.id.tempAir)
-        val tempWater = findViewById<TextView>(R.id.tempWater)
+        val tempAirText = findViewById<TextView>(R.id.tempAirText)
+        val tempWaterText = findViewById<TextView>(R.id.tempWaterText)
+        val tempWaterImage = findViewById<ImageView>(R.id.tempWaterImage)
         val showPlaceButton = findViewById<ImageButton>(R.id.showPlaceButton)
 
-        showPlaceButton.setOnClickListener {
-            Log.d("videreTag", "Nå skjer det")
-            val intent = Intent(this, PlaceActivity::class.java)
-            viewModel.changeCurrentPlace(place)
-            startActivity(intent)
+        showPlaceButton.setOnClickListener{
+            Toast.makeText(this, place.toString(), Toast.LENGTH_LONG).show()
         }
 
-        when(place.preferenceCheck(MIN_TEMP, MID_TEMP)){
-            Preference.OKEY -> tempWater.setBackgroundResource(R.drawable.drop_blue)
-            Preference.NOT_OKEY -> tempWater.setBackgroundResource(R.drawable.drop_blue)
-            Preference.OPTIMAL -> tempWater.setBackgroundResource(R.drawable.drop_red)
+        when(place.isWarm()){
+            true -> tempWaterImage.setImageResource(R.drawable.drop_red)
+            false -> tempWaterImage.setImageResource(R.drawable.drop_blue)
         }
+
         nameTextView.text = place.name
-        tempAir.text = "Ingen data"
-        tempWater.text = place.temp.toString() + "°C"
+        tempAirText.text = getString(R.string.noData)
+        tempWaterText.text = getString(R.string.tempC, place.temp)
         placeViewHolder.visibility = View.VISIBLE
 
         //zoomer til stedet på kartet
@@ -216,11 +211,9 @@ class MapActivity : AppCompatActivity(), MapboxMap.OnMapClickListener {
             arrayListOf(feature)))
         style.addSource(geoJsonSource)
 
-        //Velger hvilket ikon som skal brukes
-        val iconId = when(place.preferenceCheck(MIN_TEMP, MID_TEMP)){
-            Preference.OPTIMAL -> ICON_ID_RED
-            Preference.OKEY -> ICON_ID_BLUE
-            Preference.NOT_OKEY -> ICON_ID_BLUE
+        val iconId = when(place.isWarm()){
+            true -> ICON_ID_RED
+            false -> ICON_ID_BLUE
         }
 
         val symbolLayer = SymbolLayer(id, geoId)
@@ -233,6 +226,10 @@ class MapActivity : AppCompatActivity(), MapboxMap.OnMapClickListener {
         listOfLayerId.add(id)
     }
 
+    override fun onStart() {
+        super.onStart();
+        mapView.onStart();
+    }
 
     override fun onResume() {
         super.onResume()
