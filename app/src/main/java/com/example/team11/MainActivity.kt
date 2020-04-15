@@ -12,21 +12,22 @@ import java.io.StringReader
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.coroutines.awaitString
 import com.google.android.gms.maps.model.LatLng
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.runBlocking
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var places: ArrayList<Place>
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val urlAPI = "http://oslokommune.msolution.no/friluft/badetemperaturer.jsp"
-        places = getPlaces(urlAPI)
+        val urlAPIPlaces = "http://oslokommune.msolution.no/friluft/badetemperaturer.jsp"
+        places = getPlaces(urlAPIPlaces)
 
         /*
          * manuelt testing for badesteder, skal slettes
          */
+
         for(place in places){
             Log.d("name: ", place.name)
             Log.d("LatLng: ", place.getLatLng().toString())
@@ -34,13 +35,22 @@ class MainActivity : AppCompatActivity() {
         }
 
         //kun får å enn så lenge komme seg til kartet.
-        val mapButton = findViewById<Button>(R.id.kartButton)
-        mapButton.setOnClickListener {
-            val intent = Intent(this, MapActivity::class.java).apply{
+        buttonMap.setOnClickListener {
+            val intent = Intent(this, MapActivity::class.java)
+            startActivity(intent)
+        }
+        buttonList.setOnClickListener {
+            val intent = Intent(this, PlacesListActivity::class.java).apply{
                 putExtra("PLACES_LIST", places)
             }
             startActivity(intent)
         }
+        buttonFilter.setOnClickListener {
+            val intent = Intent(this, FilterActivity::class.java).apply{
+            }
+            startActivity(intent)
+        }
+
 
 
     }
@@ -68,7 +78,7 @@ class MainActivity : AppCompatActivity() {
                 lateinit var name: String
                 lateinit var lat: String
                 lateinit var long: String
-                var id = -1
+                var id = 0
 
                 while (eventType != XmlPullParser.END_DOCUMENT) {
                     if (eventType == XmlPullParser.START_TAG && xpp.name == "name") {

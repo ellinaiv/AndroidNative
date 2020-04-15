@@ -1,8 +1,6 @@
 package com.example.team11
 import com.google.android.gms.maps.model.LatLng
 import java.io.Serializable
-import java.lang.Math
-import kotlin.math.roundToInt
 import kotlin.random.Random
 
 
@@ -29,6 +27,14 @@ class Place(val id: Int, val name: String, val lat: Double, val lng: Double, var
 
     fun getLatLng():LatLng = LatLng(lat, lng)
 
+    /**
+     * Sjekker om dette stedet er varmt
+     * @return boolean
+     */
+    fun isWarm(): Boolean{
+        return PersonalPreference.waterTempMid < temp
+    }
+
 
     /**
      * Sammenligner en strand med en annen
@@ -42,16 +48,10 @@ class Place(val id: Int, val name: String, val lat: Double, val lng: Double, var
     }*/
 
 
-    /**
-     * Sjekker om preferansen til dette placet er innafor, sammenlignet med en minTemp og midTemp
-     * @param minTemp: Int minimums tempraturen til preferansen
-     * @param midTem:  Int tempraturen mellom minTemp og midTemp er ok, mens over midTemp er optimalt
-     * @return en Preference
-     */
-    fun preferenceCheck(minTemp: Int, midTemp: Int): Preference{
-        if (temp < minTemp) return Preference.NOT_OKEY
-        else if (temp >= midTemp) return Preference.OPTIMAL
-        return Preference.OKEY
+
+
+    override fun toString(): String {
+        return "$id:$name[$lat,$lng]"
     }
 
 }
