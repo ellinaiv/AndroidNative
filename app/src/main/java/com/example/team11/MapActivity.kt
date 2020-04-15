@@ -35,10 +35,6 @@ class MapActivity : AppCompatActivity(), MapboxMap.OnMapClickListener {
     private var listOfLayerId = mutableListOf<String>()
     private val propertyId = "PROPERTY_ID"
 
-    //Midlertidige verdier fram til preferanses er bestemt
-    private val MIN_TEMP = 15
-    private val MID_TEMP = 23
-
     private lateinit var mapView: MapView
     private lateinit var mapBoxMap: MapboxMap
 
@@ -143,11 +139,11 @@ class MapActivity : AppCompatActivity(), MapboxMap.OnMapClickListener {
             Toast.makeText(this, place.toString(), Toast.LENGTH_LONG).show()
         }
 
-        when(place.preferenceCheck(MIN_TEMP, MID_TEMP)){
-            Preference.OKEY -> tempWaterImage.setImageResource(R.drawable.drop_blue)
-            Preference.NOT_OKEY -> tempWaterImage.setImageResource(R.drawable.drop_blue)
-            Preference.OPTIMAL -> tempWaterImage.setImageResource(R.drawable.drop_red)
+        when(place.isWarm()){
+            true -> tempWaterImage.setImageResource(R.drawable.drop_red)
+            false -> tempWaterImage.setImageResource(R.drawable.drop_blue)
         }
+
         nameTextView.text = place.name
         tempAirText.text = getString(R.string.noData)
         tempWaterText.text = getString(R.string.tempC, place.temp)
@@ -215,7 +211,7 @@ class MapActivity : AppCompatActivity(), MapboxMap.OnMapClickListener {
 
         val iconId = when(place.isWarm()){
             true -> ICON_ID_RED
-            false -> ICON_ID_GREEN
+            false -> ICON_ID_BLUE
         }
 
         val symbolLayer = SymbolLayer(id, geoId)
