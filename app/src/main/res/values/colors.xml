@@ -12,4 +12,5 @@
     <color name="backgroundCardsLight">#F4F4F4</color>
     <color name="backgroundCardsDark">#C4C4C4</color>
     <color name="backgroundFilter">#F4F4F4</color>
+    <color name="backgroundTopBar">#5EB7C3</color>
 </resources>
