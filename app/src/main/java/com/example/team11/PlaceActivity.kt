@@ -66,8 +66,7 @@ class PlaceActivity : AppCompatActivity() {
         }
 
         namePlace.text = place.name
-        val degC = tempWater.text
-        tempWater.text = place.temp.toString() + degC
+        tempWater.text = place.temp.toString() + getString(R.string.tempC, place.temp)
 
         makeMap(place, savedInstanceState)
     }

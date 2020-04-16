@@ -138,9 +138,8 @@ class MapActivity : AppCompatActivity(), MapboxMap.OnMapClickListener {
         val tempWaterImage = findViewById<ImageView>(R.id.tempWaterImage)
         val showPlaceButton = findViewById<ImageButton>(R.id.showPlaceButton)
 
-        viewModel.changeCurrentPlace(place)
-
         showPlaceButton.setOnClickListener{
+            viewModel.changeCurrentPlace(place)
             val intent = Intent(this, PlaceActivity::class.java)
             startActivity(intent)
         }
