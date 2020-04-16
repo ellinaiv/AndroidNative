@@ -1,5 +1,6 @@
 package com.example.team11
 
+import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.PointF
 import androidx.appcompat.app.AppCompatActivity
@@ -12,6 +13,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.lifecycle.MutableLiveData
 import com.example.team11.viewmodels.MapActivityViewModel
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.mapboxsdk.Mapbox
@@ -26,6 +28,7 @@ import com.mapbox.geojson.Feature
 import com.mapbox.mapboxsdk.camera.CameraPosition
 import com.mapbox.mapboxsdk.camera.CameraUpdateFactory
 import com.mapbox.mapboxsdk.geometry.LatLng
+import kotlinx.android.synthetic.main.activity_map.*
 
 class MapActivity : AppCompatActivity(), MapboxMap.OnMapClickListener {
     private val ICON_ID_RED = "ICON_ID_RED"
@@ -136,7 +139,9 @@ class MapActivity : AppCompatActivity(), MapboxMap.OnMapClickListener {
         val showPlaceButton = findViewById<ImageButton>(R.id.showPlaceButton)
 
         showPlaceButton.setOnClickListener{
-            Toast.makeText(this, place.toString(), Toast.LENGTH_LONG).show()
+            viewModel.changeCurrentPlace(place)
+            val intent = Intent(this, PlaceActivity::class.java)
+            startActivity(intent)
         }
 
         when(place.isWarm()){

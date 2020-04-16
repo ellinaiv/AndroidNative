@@ -1,10 +1,13 @@
 package com.example.team11
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 
 /*
@@ -20,7 +23,6 @@ class ListAdapter(private val myDataset: ArrayList<Place>, val context: Context)
         var itemName: TextView
         var itemTempAir: TextView
         var itemTempWater: TextView
-
 
         init {
             itemName = itemView.findViewById(R.id.name)
@@ -43,6 +45,15 @@ class ListAdapter(private val myDataset: ArrayList<Place>, val context: Context)
         holder.itemName.text = myDataset[position].name
         holder.itemTempWater.text = myDataset[position].temp.toString() + "°C"
         holder.itemTempAir.text = "no data"
+
+        /**
+        * starter PlaceActivity når man trykker på kortet
+         */
+        //TODO: trenger en viewModel som inneholder changeCurrentLocation() / setCurrentLocation()
+//        holder.itemView.setOnClickListener{
+//            val intent = Intent(context, PlaceActivity::class.java)
+//            context.startActivity(intent)
+//        }
 
     }
     override fun getItemCount() = myDataset.size
