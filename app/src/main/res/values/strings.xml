@@ -4,4 +4,11 @@
     <string name="kart">Kart</string>
     <string name="list">list</string>
     <string name="textview">TextView</string>
+    <string name="airTempImage">Hvis dråpen er rød er det varmt, hvis det er blått er et kaldt
+    (Basert på dine preferanser)</string>
+    <string name="waterTempImage">Bilde som forklarer været</string>
+    <string name="moreInfoPlace">Trykk her for mere informasjon om stranda</string>
+    <string name="noData">Ingen data</string>
+    <string name="tempC">%1$d  °C</string>
+    <string name="degreeCelsius">\u00B0C</string>
 </resources>
