@@ -60,7 +60,7 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
 
-                android:src="@drawable/drop_blue" />
+                android:src="@drawable/water_blue" />
 
             <TextView
                 android:id="@+id/tempWater"
@@ -106,7 +106,7 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
 
-                android:src="@drawable/sun_vector"/>
+                android:src="@drawable/sun"/>
 
             <TextView
                 android:id="@+id/tempAir"

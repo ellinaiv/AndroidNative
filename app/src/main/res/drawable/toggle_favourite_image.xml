@@ -4,7 +4,7 @@
     <item android:drawable="@drawable/favourite"
         android:state_checked="true" />
     <!-- When not selected-->
-    <item android:drawable="@drawable/favourite_border"
+    <item android:drawable="@drawable/favourite_outlined"
         android:state_checked="false"/>
 
 </selector>
