@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+<!--    app colors-->
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
-    <color name="mapCardBackground">#F4F4F4</color>
+
+<!--    text colors-->
     <color name="mainTextColor">#000000</color>
     <color name="subTextColor">#424242</color>
+
+<!--    backgrounds-->
+    <color name="backgroundCardsLight">#F4F4F4</color>
+    <color name="backgroundCardsDark">#C4C4C4</color>
+
+<!--    other colors-->
     <color name="coldBlue">#0BA1F5</color>
     <color name="warmRed">#F73030</color>
     <color name="seekThumb">#6A6969</color>
-    <color name="backgroundCardsLight">#F4F4F4</color>
-    <color name="backgroundCardsDark">#C4C4C4</color>
-    <color name="backgroundFilter">#F4F4F4</color>
-    <color name="backgroundTopBar">#5EB7C3</color>
 </resources>

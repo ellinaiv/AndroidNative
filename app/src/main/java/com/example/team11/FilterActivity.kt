@@ -11,8 +11,8 @@ class FilterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_filter)
         seek_bar.progress = PersonalPreference.waterTempMid
-        val degreeLow = "${PersonalPreference.waterTempLow.toString()} ${getString(R.string.degreeCelsius)}"
-        val degreeHigh = "${PersonalPreference.waterTempHigh.toString()} ${getString(R.string.degreeCelsius)}"
+        val degreeLow = getString(R.string.tempC, PersonalPreference.waterTempLow)
+        val degreeHigh = getString(R.string.tempC, PersonalPreference.waterTempHigh)
         textTempLow.text = degreeLow
         textTempHigh.text = degreeHigh
         seek_bar.max = PersonalPreference.waterTempHigh
@@ -21,7 +21,7 @@ class FilterActivity : AppCompatActivity() {
             override fun onProgressChanged(seek: SeekBar,
                 progress: Int, fromUser: Boolean) {
                 val value = (progress * (seek.width - 2 * seek.thumbOffset)) / seek.max
-                val degreeMid = "$progress ${getString(R.string.degreeCelsius)}"
+                val degreeMid = getString(R.string.tempC, progress)
                 textTempMid.text = degreeMid
                 textTempMid.x = seek_bar.x + value;
             }
