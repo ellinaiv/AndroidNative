@@ -49,17 +49,33 @@ class PlaceRepository private constructor() {
         return places
     }
 
+    /**
+     * endrer currentplace
+     * @param place: Stedet som skal endres til å være currentPlace
+     */
     fun changeCurrentPlace(place: Place){
         Log.d("tagRepository", "current endra")
         currentPlace.value = place
     }
 
+    /**
+     * Henter ut currentPlace
+     * @return stedet som er currentPlace
+     */
     fun getCurrentPlace() = currentPlace
 
+    /**
+     * Endrer måten brukeren ønsker å komme seg til en strand
+     * @param way: måten brukeren ønsker å komme seg til stranden
+     */
     fun changeWayOfTransportation(way: Transporatation){
         wayOfTransportation.value = way
     }
 
+    /**
+     * henter ut måten man kommer seg til stranden
+     * @return måten brukeren øsnker å komme seg til stranden
+     */
     fun getWayOfTransportation() = wayOfTransportation
 
 
