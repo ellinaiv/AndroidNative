@@ -69,13 +69,14 @@ class MapActivity : AppCompatActivity(), MapboxMap.OnMapClickListener {
             searchBar.doOnTextChanged { text, _, _, _ ->
 
                 filterPlaces = places.filter{ it.name.contains(text.toString(), ignoreCase = true)}
-                //zoomer til det første badestedet i filtrert list
-                val position = CameraPosition.Builder()
-                    .target(LatLng(filterPlaces[0].lat, filterPlaces[0].lng))
-                    .zoom(15.0)
-                    .build()
-                mapBoxMap.animateCamera(CameraUpdateFactory.newCameraPosition(position), 2)
-
+                if(filterPlaces.size == 1){
+                    val position = CameraPosition.Builder()
+                        .target(LatLng(filterPlaces[0].lat, filterPlaces[0].lng))
+                        .zoom(15.0)
+                        .build()
+                    mapBoxMap.animateCamera(CameraUpdateFactory.newCameraPosition(position), 2)
+                    showPlace(filterPlaces[0])
+                }
             }
         })
     }
