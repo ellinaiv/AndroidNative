@@ -7,7 +7,6 @@ import androidx.activity.viewModels
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.team11.viewmodels.PlacesListActivityViewModel
 import kotlinx.android.synthetic.main.activity_places_list.*
 
