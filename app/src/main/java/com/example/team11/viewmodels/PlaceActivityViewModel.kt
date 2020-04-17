@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.team11.Place
 import com.example.team11.Repository.PlaceRepository
+import com.example.team11.Transporatation
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Point
 
@@ -28,6 +29,10 @@ class PlaceActivityViewModel: ViewModel() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             return modelClass.getConstructor().newInstance()
         }
+    }
+
+    fun changeWayOfTransportation(way: Transporatation){
+        placeRepository!!.changeWayOfTransportation(way)
     }
 
     /**
