@@ -10,10 +10,8 @@ import android.view.View
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.lifecycle.MutableLiveData
 import com.example.team11.viewmodels.MapActivityViewModel
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.mapboxsdk.Mapbox
@@ -28,7 +26,6 @@ import com.mapbox.geojson.Feature
 import com.mapbox.mapboxsdk.camera.CameraPosition
 import com.mapbox.mapboxsdk.camera.CameraUpdateFactory
 import com.mapbox.mapboxsdk.geometry.LatLng
-import kotlinx.android.synthetic.main.activity_map.*
 
 class MapActivity : AppCompatActivity(), MapboxMap.OnMapClickListener {
     private val ICON_ID_RED = "ICON_ID_RED"
@@ -145,12 +142,12 @@ class MapActivity : AppCompatActivity(), MapboxMap.OnMapClickListener {
         }
 
         when(place.isWarm()){
-            true -> tempWaterImage.setImageResource(R.drawable.drop_red)
-            false -> tempWaterImage.setImageResource(R.drawable.drop_blue)
+            true -> tempWaterImage.setImageResource(R.drawable.water_red)
+            false -> tempWaterImage.setImageResource(R.drawable.water_blue)
         }
 
         nameTextView.text = place.name
-        tempAirText.text = getString(R.string.noData)
+        tempAirText.text = getString(R.string.notAvailable)
         tempWaterText.text = getString(R.string.tempC, place.temp)
         placeViewHolder.visibility = View.VISIBLE
 

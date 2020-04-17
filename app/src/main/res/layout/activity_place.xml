@@ -10,7 +10,7 @@
         android:id="@+id/topBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/backgroundTopBar"
+        android:background="@color/colorPrimary"
         android:padding="6dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,8 +20,8 @@
             android:id="@+id/backButton"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:background="@color/backgroundTopBar"
-            android:contentDescription="@string/tilbake"
+            android:background="@color/colorPrimary"
+            android:contentDescription="@string/back"
             android:src="@drawable/arrow_left"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -64,7 +64,7 @@
                 android:layout_marginStart="28dp"
                 android:layout_marginTop="32dp"
                 android:gravity="center_vertical"
-                android:text="@string/badeplass"
+                android:text="@string/placeName"
                 android:textColor="@color/mainTextColor"
                 android:textSize="30sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -77,6 +77,7 @@
                 android:layout_marginTop="8dp"
                 android:text="500 m"
                 android:textSize="20sp"
+                android:textColor="@color/subTextColor"
                 app:layout_constraintStart_toStartOf="@+id/namePlace"
                 app:layout_constraintTop_toBottomOf="@+id/namePlace" />
 
@@ -86,12 +87,12 @@
                 android:layout_height="44dp"
                 android:layout_marginHorizontal="5dp"
                 android:layout_marginStart="12dp"
-                android:contentDescription="@string/contentDescriptionWaterIcon"
+                android:contentDescription="@string/waterIcon"
                 app:layout_constraintBottom_toBottomOf="@+id/namePlace"
                 app:layout_constraintStart_toEndOf="@+id/namePlace"
                 app:layout_constraintTop_toTopOf="@+id/namePlace"
                 app:layout_constraintVertical_bias="0.91"
-                app:srcCompat="@drawable/waves" />
+                app:srcCompat="@drawable/water_blue" />
 
             <TextView
                 android:id="@+id/tempWater"
@@ -100,7 +101,7 @@
                 android:layout_marginHorizontal="5dp"
                 android:layout_marginTop="8dp"
                 android:gravity="center"
-                android:text="@string/degC"
+                android:text="@string/tempC"
                 android:textColor="@color/mainTextColor"
                 app:layout_constraintBottom_toBottomOf="@+id/tempAir"
                 app:layout_constraintEnd_toEndOf="@+id/water"
@@ -117,7 +118,8 @@
                 app:layout_constraintStart_toEndOf="@+id/water"
                 app:layout_constraintTop_toTopOf="@+id/water"
                 app:layout_constraintVertical_bias="0.0"
-                app:srcCompat="@drawable/sun_vector" />
+                app:srcCompat="@drawable/sun"
+                android:contentDescription="@string/weatherIcon" />
 
             <TextView
                 android:id="@+id/tempAir"
@@ -125,7 +127,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:gravity="center"
-                android:text="@string/degC"
+                android:text="@string/tempC"
                 android:textColor="@color/mainTextColor"
                 app:layout_constraintEnd_toEndOf="@+id/weather"
                 app:layout_constraintStart_toStartOf="@+id/weather"
@@ -137,7 +139,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="88dp"
-                android:text="@string/fasiliteter"
+                android:text="@string/facilities"
                 android:textColor="@color/mainTextColor"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -158,7 +160,7 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginStart="16dp"
-                android:contentDescription="@string/contentDescriptionToiletIcon"
+                android:contentDescription="@string/toiletIcon"
                 app:layout_constraintBottom_toBottomOf="@+id/facilities"
                 app:layout_constraintStart_toEndOf="@+id/icon_wheelchair"
                 app:srcCompat="@drawable/wc" />
@@ -168,7 +170,7 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginStart="160dp"
-                android:contentDescription="@string/ContentDescriptionWheelchair"
+                android:contentDescription="@string/wheelchairIcon"
                 app:layout_constraintBottom_toBottomOf="@+id/facilities"
                 app:layout_constraintStart_toEndOf="@+id/facilities"
                 app:srcCompat="@drawable/wheelchair" />
@@ -188,7 +190,7 @@
                 android:id="@+id/popular_times_graph"
                 android:layout_width="287dp"
                 android:layout_height="83dp"
-                android:contentDescription="@string/contentDescriptionPopularTimes"
+                android:contentDescription="@string/popularTimesGraph"
                 app:layout_constraintStart_toStartOf="@+id/popular_times"
                 app:layout_constraintTop_toBottomOf="@+id/popular_times"
                 app:srcCompat="@drawable/bars" />
@@ -358,7 +360,7 @@
                 app:layout_constraintEnd_toEndOf="@+id/date_1day"
                 app:layout_constraintStart_toStartOf="@+id/date_1day"
                 app:layout_constraintTop_toBottomOf="@+id/date_1day"
-                app:srcCompat="@drawable/sun_vector" />
+                app:srcCompat="@drawable/sun" />
 
             <ImageView
                 android:id="@+id/forecast_2days"
@@ -368,7 +370,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/forecast_1day"
                 app:layout_constraintEnd_toEndOf="@+id/date_2days"
                 app:layout_constraintStart_toStartOf="@+id/date_2days"
-                app:srcCompat="@drawable/sun_vector" />
+                app:srcCompat="@drawable/sun" />
 
             <ImageView
                 android:id="@+id/forecast_3days"
@@ -388,7 +390,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/forecast_3days"
                 app:layout_constraintEnd_toEndOf="@+id/date_4days"
                 app:layout_constraintStart_toStartOf="@+id/date_4days"
-                app:srcCompat="@drawable/sun_vector" />
+                app:srcCompat="@drawable/sun" />
 
             <ImageView
                 android:id="@+id/forecast_5days"
