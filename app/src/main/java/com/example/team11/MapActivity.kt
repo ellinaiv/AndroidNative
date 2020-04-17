@@ -62,20 +62,20 @@ class MapActivity : AppCompatActivity(), MapboxMap.OnMapClickListener {
             }
             makeMap(places)
 
-            /*søkefunksjonen: filtrerer places med hensyn til teksten som ble skrevet inn
-            */
+            /*
+             *Søkefunksjonen filtrerer places etter navn og zoomer til det stedet på kartet
+             */
             val searchBar = findViewById<EditText>(R.id.searchText)
             searchBar.doOnTextChanged { text, _, _, _ ->
 
                 filterPlaces = places.filter{ it.name.contains(text.toString(), ignoreCase = true)}
-                if(filterPlaces.size == 1){
-                    //zoomer til det første badestedet i filtrert list
-                    val position = CameraPosition.Builder()
-                        .target(LatLng(filterPlaces[0].lat, filterPlaces[0].lng))
-                        .zoom(15.0)
-                        .build()
-                    mapBoxMap.animateCamera(CameraUpdateFactory.newCameraPosition(position), 2)
-                }
+                //zoomer til det første badestedet i filtrert list
+                val position = CameraPosition.Builder()
+                    .target(LatLng(filterPlaces[0].lat, filterPlaces[0].lng))
+                    .zoom(15.0)
+                    .build()
+                mapBoxMap.animateCamera(CameraUpdateFactory.newCameraPosition(position), 2)
+
             }
         })
     }
