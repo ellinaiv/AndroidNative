@@ -21,6 +21,9 @@
     <string name="back">Trykk her for å gå tilbake</string>
     <string name="directionButton">Trykk her for å vise sykkelvei</string>
     <string name="moreInfoPlace">Trykk her for mer informasjon om stranda</string>
+    <string name="infoBikeButton">Vis sykkelvei til badestedet</string>
+    <string name="infoCarButton">Vis bilvei til badestedet</string>
+    <string name="infoWalkButton">Vis gangvei til badestedet</string>
 
     <!--    content description for images-->
     <string name="waterIcon">Badevann ikon</string>
@@ -34,11 +37,8 @@
     <string name="access_token">sk.eyJ1IjoiamFyaG9sdCIsImEiOiJjazg0ZDBsMHkwMTN4M2prNzJpcHZnMXFkIn0.k3JYH8gx2QewGmE4Vf2GsQ</string>
     <string name="ikkeViseVei">Kan ikke vise vei uten lokasjon</string>
     <string name="viTrengerPosFordi">Kan ikke vise veien til badeplassen uten din posisjon</string>
-
     <string name="bikeDirection">Sykkelvei til %1$s</string>
     <string name="carDirection">Bilvei til %1$s</string>
-    <string name="walkDirection">Gåtur til %1$s</string>
-    <string name="infoBikeButton">Viser veien med sykkel til badested</string>
-    <string name="infoCarButton">Viser veien med bil til badested</string>
-    <string name="infoWalkButton">Viser hvor man skal gå for å komme til badestedet</string>
+    <string name="walkDirection">Gangvei til %1$s</string>
+
 </resources>
