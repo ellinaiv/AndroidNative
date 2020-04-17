@@ -144,15 +144,16 @@
                 android:layout_height="wrap_content"
 
                 android:scaleType="fitXY"
-                android:maxWidth="62dp"
+                android:maxWidth="44dp"
                 android:adjustViewBounds="true"
 
                 android:src="@drawable/sun"
-                mapbox:layout_constraintBottom_toBottomOf="parent"
+
+                mapbox:layout_constraintBottom_toTopOf="@id/tempAirText"
                 mapbox:layout_constraintLeft_toRightOf="parent"
                 mapbox:layout_constraintRight_toLeftOf="parent"
-
                 mapbox:layout_constraintTop_toTopOf="parent"
+
                 android:contentDescription="@string/weatherIcon" />
 
             <TextView
@@ -160,7 +161,7 @@
                 android:layout_width="wrap_content"
 
                 android:id="@+id/tempAirText"
-                android:gravity="center"
+                android:paddingTop="6dp"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:text="Ingen data"
@@ -171,7 +172,7 @@
                 mapbox:layout_constraintBottom_toBottomOf="parent"
                 mapbox:layout_constraintLeft_toRightOf="parent"
                 mapbox:layout_constraintRight_toLeftOf="parent"
-                mapbox:layout_constraintTop_toTopOf="parent"
+                mapbox:layout_constraintTop_toBottomOf="@id/tempAirImage"
                  />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -198,11 +199,11 @@
                 android:adjustViewBounds="true"
 
                 android:src="@drawable/water_blue"
-                mapbox:layout_constraintBottom_toBottomOf="parent"
+                mapbox:layout_constraintBottom_toTopOf="@id/tempWaterText"
                 mapbox:layout_constraintLeft_toRightOf="parent"
                 mapbox:layout_constraintRight_toLeftOf="parent"
-
                 mapbox:layout_constraintTop_toTopOf="parent"
+
                 android:contentDescription="@string/waterTempIcon" />
 
             <TextView
@@ -210,7 +211,7 @@
                 android:layout_width="wrap_content"
 
                 android:id="@+id/tempWaterText"
-                android:gravity="center"
+                android:paddingTop="6dp"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:text="@string/notAvailable"
@@ -221,7 +222,7 @@
                 mapbox:layout_constraintBottom_toBottomOf="parent"
                 mapbox:layout_constraintLeft_toRightOf="parent"
                 mapbox:layout_constraintRight_toLeftOf="parent"
-                mapbox:layout_constraintTop_toTopOf="parent"
+                mapbox:layout_constraintTop_toBottomOf="@id/tempWaterImage"
                 />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
