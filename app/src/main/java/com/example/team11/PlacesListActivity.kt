@@ -27,11 +27,10 @@ class PlacesListActivity : AppCompatActivity() {
         recycler_view.layoutManager = layoutManager as RecyclerView.LayoutManager?
         recycler_view.adapter = ListAdapter(places, this)
 
-
         val searchBar = findViewById<EditText>(R.id.searchText)
-        searchBar.doOnTextChanged { text, start, count, after ->
+
+        searchBar.doOnTextChanged { text, _, _, _ ->
             filterPlaces = places.filter{ it.name.contains(text.toString(), ignoreCase = true)}
-            Log.d("searchBar ", text.toString())
             recycler_view.adapter = ListAdapter(filterPlaces, this)
         }
 

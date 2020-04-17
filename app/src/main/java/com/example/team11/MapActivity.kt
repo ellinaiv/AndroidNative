@@ -7,12 +7,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.activity.viewModels
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.MutableLiveData
 import com.example.team11.viewmodels.MapActivityViewModel
 import com.mapbox.geojson.FeatureCollection
@@ -29,6 +27,7 @@ import com.mapbox.mapboxsdk.camera.CameraPosition
 import com.mapbox.mapboxsdk.camera.CameraUpdateFactory
 import com.mapbox.mapboxsdk.geometry.LatLng
 import kotlinx.android.synthetic.main.activity_map.*
+import kotlinx.android.synthetic.main.activity_places_list.*
 
 class MapActivity : AppCompatActivity(), MapboxMap.OnMapClickListener {
     private val ICON_ID_RED = "ICON_ID_RED"
@@ -42,7 +41,9 @@ class MapActivity : AppCompatActivity(), MapboxMap.OnMapClickListener {
     private lateinit var mapBoxMap: MapboxMap
 
     private val viewModel: MapActivityViewModel by viewModels{MapActivityViewModel.InstanceCreator() }
-    
+
+    private lateinit var filterPlaces: List<Place>
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,6 +61,25 @@ class MapActivity : AppCompatActivity(), MapboxMap.OnMapClickListener {
                 Log.d("MapTg: ", place.toString())
             }
             makeMap(places)
+
+            /*søkefunksjonen: filtrerer places med hensyn til teksten som ble skrevet inn
+            */
+            val searchBar = findViewById<EditText>(R.id.searchText)
+
+            searchBar.doOnTextChanged { text, _, _, _ ->
+                filterPlaces = places.filter{ it.name.contains(text.toString(), ignoreCase = true)}
+                if(filterPlaces.isNotEmpty()){
+                    makeMap(filterPlaces)
+                    if(filterPlaces.size == 1){
+                        //zoomer til det første badestedet på kartet
+                        val position = CameraPosition.Builder()
+                            .target(LatLng(filterPlaces[0].lat, filterPlaces[0].lng))
+                            .zoom(15.0)
+                            .build()
+                        mapBoxMap.animateCamera(CameraUpdateFactory.newCameraPosition(position), 2)
+                    }
+                }
+            }
         })
     }
 
