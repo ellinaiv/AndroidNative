@@ -61,23 +61,29 @@ class MapActivity : AppCompatActivity(), MapboxMap.OnMapClickListener {
             }
             makeMap(places)
 
-            /*
-             *Søkefunksjonen filtrerer places etter navn og zoomer til det stedet på kartet
-             */
+
             val searchBar = findViewById<EditText>(R.id.searchText)
             searchBar.doOnTextChanged { text, _, _, _ ->
-
-                filterPlaces = places.filter{ it.name.contains(text.toString(), ignoreCase = true)}
-                if(filterPlaces.size == 1){
-                    val position = CameraPosition.Builder()
-                        .target(LatLng(filterPlaces[0].lat, filterPlaces[0].lng))
-                        .zoom(15.0)
-                        .build()
-                    mapBoxMap.animateCamera(CameraUpdateFactory.newCameraPosition(position), 2)
-                    showPlace(filterPlaces[0])
+                if(text.toString().isEmpty()){
+                    removePlace()
                 }
+                search(text.toString(), places)
             }
         })
+    }
+    /*
+     * Søkefunksjonen filtrerer places etter navn og zoomer til det stedet på kartet
+     */
+    private fun search(name: String, places: List<Place>){
+        filterPlaces = places.filter{ it.name.contains(name, ignoreCase = true)}
+        if(filterPlaces.size == 1){
+            val position = CameraPosition.Builder()
+                .target(LatLng(filterPlaces[0].lat, filterPlaces[0].lng))
+                .zoom(15.0)
+                .build()
+            mapBoxMap.animateCamera(CameraUpdateFactory.newCameraPosition(position), 2)
+            showPlace(filterPlaces[0])
+        }
     }
 
     /**

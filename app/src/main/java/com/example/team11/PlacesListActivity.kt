@@ -29,13 +29,16 @@ class PlacesListActivity : AppCompatActivity() {
             recycler_view.layoutManager = layoutManager
             recycler_view.adapter = ListAdapter(places, this)
             val searchBar = findViewById<EditText>(R.id.searchText)
-            /*
-             * Søkefunksjonen filtrerer places etter navn og oppdaterer listen som vises på skjermen
-             */
             searchBar.doOnTextChanged { text, _, _, _ ->
-                filterPlaces = places.filter{ it.name.contains(text.toString(), ignoreCase = true)}
-                recycler_view.adapter = ListAdapter(filterPlaces, this)
+                search(text.toString(), places)
             }
         })
+    }
+    /*
+     * Søkefunksjonen filtrerer places etter navn og oppdaterer listen som vises på skjermen
+     */
+    private fun search(name: String, places: List<Place>){
+        filterPlaces = places.filter{ it.name.contains(name.toString(), ignoreCase = true)}
+        recycler_view.adapter = ListAdapter(filterPlaces, this)
     }
 }
