@@ -22,7 +22,7 @@ class FavoritePlacesActivity : AppCompatActivity() {
         viewModel.places!!.observe(this, Observer { places ->
             val favoritePlaces = places.filter { place -> place.favorite }
             recycler_view.layoutManager = layoutManager as RecyclerView.LayoutManager?
-            recycler_view.adapter = ListAdapter(favoritePlaces, this)
+            recycler_view.adapter = ListAdapter(favoritePlaces, this, viewModel, true)
 
         })
     }

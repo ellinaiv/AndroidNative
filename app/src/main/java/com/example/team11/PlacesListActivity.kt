@@ -25,7 +25,7 @@ class PlacesListActivity : AppCompatActivity() {
 
         viewModel.places!!.observe(this, Observer { places ->
             recycler_view.layoutManager = layoutManager as RecyclerView.LayoutManager?
-            recycler_view.adapter = ListAdapter(places, this)
+            recycler_view.adapter = ListAdapter(places, this, viewModel, false)
 
         })
     }

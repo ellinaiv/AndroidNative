@@ -8,7 +8,11 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat.startActivity
+import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
+import com.example.team11.viewmodels.FavoritePlacesActivityViewModel
+import com.example.team11.viewmodels.PlaceActivityViewModel
+import com.example.team11.viewmodels.PlacesListActivityViewModel
 
 /*
  * List adapter viser informasjon på de forskjellige cardsViews.
@@ -16,7 +20,8 @@ import androidx.recyclerview.widget.RecyclerView
  * @param context er kotexten til activity der cardViews skal visses
  */
 
-class ListAdapter(private val myDataset: List<Place>, val context: Context) : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
+class ListAdapter(private val myDataset: List<Place>, val context: Context,
+                  val viewModel: ViewModel, val favorite: Boolean) : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
 
     class MyViewHolder(itemView: CardView) : RecyclerView.ViewHolder(itemView){
 
@@ -46,14 +51,18 @@ class ListAdapter(private val myDataset: List<Place>, val context: Context) : Re
         holder.itemTempWater.text = myDataset[position].temp.toString() + "°C"
         holder.itemTempAir.text = "no data"
 
-        /**
-        * starter PlaceActivity når man trykker på kortet
-         */
-        //TODO: trenger en viewModel som inneholder changeCurrentLocation() / setCurrentLocation()
-//        holder.itemView.setOnClickListener{
-//            val intent = Intent(context, PlaceActivity::class.java)
-//            context.startActivity(intent)
-//        }
+
+       holder.itemView.setOnClickListener{
+           if(favorite){
+               val favoritePlacesActivityViewModel = viewModel as FavoritePlacesActivityViewModel
+               favoritePlacesActivityViewModel.changeCurrentPlace(myDataset[position])
+           }else{
+               val placesListActivityViewModel = viewModel as PlacesListActivityViewModel
+               placesListActivityViewModel.changeCurrentPlace(myDataset[position])
+           }
+            val intent = Intent(context, PlaceActivity::class.java)
+            context.startActivity(intent)
+        }
 
     }
     override fun getItemCount() = myDataset.size

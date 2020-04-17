@@ -1,5 +1,6 @@
 package com.example.team11.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -21,6 +22,14 @@ class PlacesListActivityViewModel: ViewModel() {
     class InstanceCreator : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             return modelClass.getConstructor().newInstance()
+        }
+    }
+
+    fun changeCurrentPlace(place: Place){
+        if(placeRepository != null){
+            placeRepository!!.changeCurrentPlace(place)
+        }else{
+            Log.d("ViewModelTag", "finner ikke Placerepository ")
         }
     }
 }
