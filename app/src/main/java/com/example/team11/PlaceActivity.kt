@@ -66,7 +66,7 @@ class PlaceActivity : AppCompatActivity() {
         }
 
         namePlace.text = place.name
-        tempWater.text = place.temp.toString() + getString(R.string.tempC, place.temp)
+        tempWater.text = getString(R.string.tempC, place.temp)
 
         makeMap(place, savedInstanceState)
     }
