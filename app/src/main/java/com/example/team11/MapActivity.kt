@@ -65,19 +65,16 @@ class MapActivity : AppCompatActivity(), MapboxMap.OnMapClickListener {
             /*søkefunksjonen: filtrerer places med hensyn til teksten som ble skrevet inn
             */
             val searchBar = findViewById<EditText>(R.id.searchText)
-
             searchBar.doOnTextChanged { text, _, _, _ ->
+
                 filterPlaces = places.filter{ it.name.contains(text.toString(), ignoreCase = true)}
-                if(filterPlaces.isNotEmpty()){
-                    makeMap(filterPlaces)
-                    if(filterPlaces.size == 1){
-                        //zoomer til det første badestedet på kartet
-                        val position = CameraPosition.Builder()
-                            .target(LatLng(filterPlaces[0].lat, filterPlaces[0].lng))
-                            .zoom(15.0)
-                            .build()
-                        mapBoxMap.animateCamera(CameraUpdateFactory.newCameraPosition(position), 2)
-                    }
+                if(filterPlaces.size == 1){
+                    //zoomer til det første badestedet på kartet
+                    val position = CameraPosition.Builder()
+                        .target(LatLng(filterPlaces[0].lat, filterPlaces[0].lng))
+                        .zoom(15.0)
+                        .build()
+                    mapBoxMap.animateCamera(CameraUpdateFactory.newCameraPosition(position), 2)
                 }
             }
         })
