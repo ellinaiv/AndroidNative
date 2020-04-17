@@ -1,6 +1,5 @@
 package com.example.team11
 
-import android.os.Bundle
 
 object PersonalPreference {
     var waterTempLow = 0
