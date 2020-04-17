@@ -7,13 +7,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.doOnTextChanged
-import androidx.lifecycle.MutableLiveData
 import com.example.team11.viewmodels.MapActivityViewModel
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.mapboxsdk.Mapbox
@@ -28,7 +28,6 @@ import com.mapbox.geojson.Feature
 import com.mapbox.mapboxsdk.camera.CameraPosition
 import com.mapbox.mapboxsdk.camera.CameraUpdateFactory
 import com.mapbox.mapboxsdk.geometry.LatLng
-import kotlinx.android.synthetic.main.activity_map.*
 
 class MapActivity : AppCompatActivity(), MapboxMap.OnMapClickListener {
     private val ICON_ID_RED = "ICON_ID_RED"
