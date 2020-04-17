@@ -4,12 +4,10 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.team11.Forecast
 import com.example.team11.Place
+import com.example.team11.Transporatation
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.coroutines.awaitString
 import com.google.gson.Gson
-import com.google.gson.annotations.SerializedName
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserFactory
@@ -17,9 +15,10 @@ import java.io.StringReader
 
 class PlaceRepository private constructor() {
 
-    private var places = arrayListOf<Place>()
+    private var places = MutableLiveData<List<Place>>()
     private val urlAPI = "http://oslokommune.msolution.no/friluft/badetemperaturer.jsp"
-    private var currentPlace: Place? = null
+    private var currentPlace = MutableLiveData<Place>()
+    private var wayOfTransportation = MutableLiveData<Transporatation>()
 
     //Kotlin sin static
     companion object {
@@ -41,23 +40,43 @@ class PlaceRepository private constructor() {
      * @return: MutableLiveData<List<Place>>, liste med badesteder
      */
     fun getPlaces(): MutableLiveData<List<Place>>{
-        places = fetchPlaces(urlAPI)
-        var data = MutableLiveData<List<Place>>()
-        data.value = places
-        //Log.d("tagSr", getSeaCurrentSpeed(places[places.size - 4]).toString())
-        return data
+        Log.d("tagHente", "vil hente strender")
+        if (places.value == null){
+            Log.d("tagHente", "henter data")
+            places.value = fetchPlaces(urlAPI)
+        }
+        Log.d("tagHente", "strender returnert")
+        return places
     }
 
+    /**
+     * endrer currentplace
+     * @param place: Stedet som skal endres til å være currentPlace
+     */
     fun changeCurrentPlace(place: Place){
         Log.d("tagRepository", "current endra")
-        currentPlace = place
+        currentPlace.value = place
     }
 
-    fun getCurrentPlace(): MutableLiveData<Place>{
-        var data = MutableLiveData<Place>()
-        data.value = currentPlace
-        return data
+    /**
+     * Henter ut currentPlace
+     * @return stedet som er currentPlace
+     */
+    fun getCurrentPlace() = currentPlace
+
+    /**
+     * Endrer måten brukeren ønsker å komme seg til en strand
+     * @param way: måten brukeren ønsker å komme seg til stranden
+     */
+    fun changeWayOfTransportation(way: Transporatation){
+        wayOfTransportation.value = way
     }
+
+    /**
+     * henter ut måten man kommer seg til stranden
+     * @return måten brukeren øsnker å komme seg til stranden
+     */
+    fun getWayOfTransportation() = wayOfTransportation
 
 
     /**

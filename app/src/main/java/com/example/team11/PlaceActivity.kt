@@ -52,7 +52,9 @@ class PlaceActivity : AppCompatActivity() {
      */
     private fun makeAboutPage(place: Place, savedInstanceState: Bundle?) {
         val namePlace = findViewById<TextView>(R.id.namePlace)
-        val directionButton = findViewById<Button>(R.id.directionButton)
+        val directionBikeButton = findViewById<ImageButton>(R.id.directionButtonBike)
+        val directionCarButton = findViewById<ImageButton>(R.id.directionButtonCar)
+        val directionWalkButton = findViewById<ImageButton>(R.id.directionButtonWalk)
         val tempWater = findViewById<TextView>(R.id.tempWater)
         val backButton = findViewById<ImageButton>(R.id.backButton)
 
@@ -60,8 +62,21 @@ class PlaceActivity : AppCompatActivity() {
             finish()
         }
 
-        directionButton.setOnClickListener {
+        directionBikeButton.setOnClickListener {
             val intent = Intent(this, DirectionActivity::class.java)
+            viewModel.changeWayOfTransportation(Transporatation.BIKE)
+            startActivity(intent)
+        }
+
+        directionCarButton.setOnClickListener {
+            val intent = Intent(this, DirectionActivity::class.java)
+            viewModel.changeWayOfTransportation(Transporatation.CAR)
+            startActivity(intent)
+        }
+
+        directionWalkButton.setOnClickListener {
+            val intent = Intent(this, DirectionActivity::class.java)
+            viewModel.changeWayOfTransportation(Transporatation.WALK)
             startActivity(intent)
         }
 

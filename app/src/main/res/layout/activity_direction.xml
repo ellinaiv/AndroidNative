@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".DirectionActivity">
 
+
     <com.mapbox.mapboxsdk.maps.MapView
         android:id="@+id/mapView"
         android:layout_width="match_parent"
@@ -37,9 +38,23 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:contentDescription="@string/tilbake" />
+
+        <TextView
+            android:id="@+id/aboutDirectionText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/backButton"
+            app:layout_constraintRight_toRightOf="parent"
+
+            android:padding="6dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+
+            android:textColor="@color/mainTextColor"
+            android:textSize="22sp"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

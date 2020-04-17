@@ -460,15 +460,91 @@
                 app:layout_constraintStart_toStartOf="@+id/forecast_5days"
                 app:layout_constraintTop_toBottomOf="@+id/forecast_5days" />
 
-            <Button
-                android:id="@+id/directionButton"
+
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/direction"
                 android:layout_marginTop="60dp"
-                android:text="@string/directionButton"
+
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/forecast_1day" />
+                app:layout_constraintTop_toBottomOf="@+id/forecast_1day">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/directionText"
+
+                    android:text="Vis rute til strand:"
+                    android:textColor="@color/mainTextColor"
+                    android:textSize="20sp"
+
+                    android:padding="6dp"
+
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+                <ImageButton
+                    android:id="@+id/directionButtonBike"
+                    android:layout_width="48dp"
+                    android:layout_height="wrap_content"
+
+                    android:padding="6dp"
+                    android:src="@drawable/directions_bike"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="@string/infoBikeButton"
+
+                    android:gravity="center"
+                    android:scaleType="fitXY"
+                    android:adjustViewBounds="true"
+
+                    app:layout_constraintLeft_toRightOf="@id/directionText"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                     />
+
+                <ImageButton
+                    android:id="@+id/directionButtonCar"
+                    android:layout_width="48dp"
+                    android:layout_height="wrap_content"
+
+                    android:padding="6dp"
+                    android:src="@drawable/directions_car"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="@string/infoCarButton"
+
+                    android:scaleType="fitXY"
+                    android:adjustViewBounds="true"
+
+                    app:layout_constraintLeft_toRightOf="@id/directionButtonBike"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    />
+
+                <ImageButton
+                    android:id="@+id/directionButtonWalk"
+                    android:layout_width="48dp"
+                    android:layout_height="wrap_content"
+
+                    android:padding="6dp"
+                    android:src="@drawable/directions_walk"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="@string/infoWalkButton"
+
+                    android:scaleType="fitXY"
+                    android:adjustViewBounds="true"
+
+                    app:layout_constraintLeft_toRightOf="@id/directionButtonCar"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
             <com.mapbox.mapboxsdk.maps.MapView
                 android:id="@+id/mapView"
@@ -477,9 +553,9 @@
                 android:layout_marginStart="30dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="30dp"
-                app:layout_constraintEnd_toEndOf="@+id/directionButton"
-                app:layout_constraintStart_toStartOf="@+id/directionButton"
-                app:layout_constraintTop_toBottomOf="@+id/directionButton"></com.mapbox.mapboxsdk.maps.MapView>
+                app:layout_constraintEnd_toEndOf="@+id/direction"
+                app:layout_constraintStart_toStartOf="@+id/direction"
+                app:layout_constraintTop_toBottomOf="@+id/direction" />
 
             <TextView
                 android:id="@+id/link_publicTransport"

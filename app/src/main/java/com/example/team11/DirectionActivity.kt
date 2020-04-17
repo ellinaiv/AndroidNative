@@ -5,8 +5,8 @@ import android.graphics.BitmapFactory
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.ImageButton
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
@@ -47,6 +47,7 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
     private var permissionManager = PermissionsManager(this)
     private lateinit var mapboxMap: MapboxMap
     private val ROUTE_SOURCE_ID = "ROUTE_SOURCE_ID"
+    private var way: Transporatation? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,13 +55,22 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
         setContentView(R.layout.activity_direction)
 
         val backButton = findViewById<ImageButton>(R.id.backButton)
+        val aboutDirectionText = findViewById<TextView>(R.id.aboutDirectionText)
         backButton.setOnClickListener {
             finish()
         }
 
         //Observerer stedet som er valgt
         viewModel.place!!.observe(this, Observer { place ->
-            makeMap(place, savedInstanceState)
+            viewModel.wayOfTransporatation!!.observe(this, Observer { way->
+                aboutDirectionText.text = when(way) {
+                    Transporatation.BIKE -> getString(R.string.bikeDirection, place.name)
+                    Transporatation.CAR -> getString(R.string.carDirection, place.name)
+                    Transporatation.WALK -> getString(R.string.walkDirection, place.name)
+                }
+                this.way = way
+                makeMap(place, savedInstanceState)
+            })
         })
     }
 
@@ -69,7 +79,7 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
      * @param place: Stedet som skal vises på kartet
      * @param savedInstanceState: mapView trenger denne til onCreate metoden sin
      */
-    private fun makeMap(place: Place, savedInstanceState: Bundle?) {
+    private fun makeMap(place: Place,  savedInstanceState: Bundle?) {
         val mapView = findViewById<MapView>(R.id.mapView)
         mapView.onCreate(savedInstanceState)
         mapView.getMapAsync { mapboxMap ->
@@ -142,13 +152,19 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
         //hentet stedet vi skal bruke
         val originLocation = mapboxMap.locationComponent.lastKnownLocation ?: return
         val originPoint = Point.fromLngLat(originLocation.longitude, originLocation.latitude)
+        val profile = when(way){
+            Transporatation.BIKE -> DirectionsCriteria.PROFILE_CYCLING
+            Transporatation.CAR -> DirectionsCriteria.PROFILE_DRIVING
+            Transporatation.WALK -> DirectionsCriteria.PROFILE_WALKING
+            else -> DirectionsCriteria.PROFILE_CYCLING
+        }
 
         //lager en klient som er ansvarlig for alt rundt ruten
         val client = MapboxDirections.builder()
             .origin(originPoint)
             .destination(Point.fromLngLat(place.lng, place.lat))
             .overview(DirectionsCriteria.OVERVIEW_FULL)
-            .profile(DirectionsCriteria.PROFILE_CYCLING)
+            .profile(profile)
             .accessToken(getString(R.string.access_token))
             .steps(false)
             .build()
