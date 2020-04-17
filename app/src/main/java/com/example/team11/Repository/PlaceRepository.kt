@@ -40,12 +40,9 @@ class PlaceRepository private constructor() {
      * @return: MutableLiveData<List<Place>>, liste med badesteder
      */
     fun getPlaces(): MutableLiveData<List<Place>>{
-        Log.d("tagHente", "vil hente strender")
         if (places.value == null){
-            Log.d("tagHente", "henter data")
             places.value = fetchPlaces(urlAPI)
         }
-        Log.d("tagHente", "strender returnert")
         return places
     }
 
