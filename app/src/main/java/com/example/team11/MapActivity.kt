@@ -7,11 +7,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.widget.doOnTextChanged
 import com.example.team11.viewmodels.MapActivityViewModel
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.mapboxsdk.Mapbox
@@ -39,7 +41,8 @@ class MapActivity : AppCompatActivity(), MapboxMap.OnMapClickListener {
     private lateinit var mapBoxMap: MapboxMap
 
     private val viewModel: MapActivityViewModel by viewModels{MapActivityViewModel.InstanceCreator() }
-    
+
+    private lateinit var filterPlaces: List<Place>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,7 +60,32 @@ class MapActivity : AppCompatActivity(), MapboxMap.OnMapClickListener {
                 Log.d("MapTg: ", place.toString())
             }
             makeMap(places)
+
+
+            val searchBar = findViewById<EditText>(R.id.searchText)
+            searchBar.doOnTextChanged { text, _, _, _ ->
+                if(text.toString().isEmpty()){
+                    removePlace()
+                }
+                search(text.toString(), places)
+            }
         })
+    }
+    /**
+     * Søkefunksjonen filtrerer places etter navn og zoomer til det stedet på kartet
+     * @param text: en input-streng som skal brukes for å filtrere places
+     * @param places: en liste med badesteder som skal filtreres
+     */
+    private fun search(text: String, places: List<Place>){
+        filterPlaces = places.filter{ it.name.contains(text, ignoreCase = true)}
+        if(filterPlaces.size == 1){
+            val position = CameraPosition.Builder()
+                .target(LatLng(filterPlaces[0].lat, filterPlaces[0].lng))
+                .zoom(15.0)
+                .build()
+            mapBoxMap.animateCamera(CameraUpdateFactory.newCameraPosition(position), 2)
+            showPlace(filterPlaces[0])
+        }
     }
 
     /**
