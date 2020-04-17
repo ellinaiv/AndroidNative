@@ -71,11 +71,13 @@ class MapActivity : AppCompatActivity(), MapboxMap.OnMapClickListener {
             }
         })
     }
-    /*
+    /**
      * Søkefunksjonen filtrerer places etter navn og zoomer til det stedet på kartet
+     * @param text: en input-streng som skal brukes for å filtrere places
+     * @param places: en liste med badesteder som skal filtreres
      */
-    private fun search(name: String, places: List<Place>){
-        filterPlaces = places.filter{ it.name.contains(name, ignoreCase = true)}
+    private fun search(text: String, places: List<Place>){
+        filterPlaces = places.filter{ it.name.contains(text, ignoreCase = true)}
         if(filterPlaces.size == 1){
             val position = CameraPosition.Builder()
                 .target(LatLng(filterPlaces[0].lat, filterPlaces[0].lng))

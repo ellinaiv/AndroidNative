@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.activity_places_list.*
 
 
 
-/*
+/**
  * PlacesListActivity viser cardsViews med informasjon om de forskjellige badeplassene
  */
 class PlacesListActivity : AppCompatActivity() {
@@ -34,8 +34,10 @@ class PlacesListActivity : AppCompatActivity() {
             }
         })
     }
-    /*
+    /**
      * Søkefunksjonen filtrerer places etter navn og oppdaterer listen som vises på skjermen
+     * @param text: en input-streng som skal brukes for å filtrere places
+     * @param places: en liste med badesteder som skal filtreres
      */
     private fun search(name: String, places: List<Place>){
         filterPlaces = places.filter{ it.name.contains(name.toString(), ignoreCase = true)}
