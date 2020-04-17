@@ -2,6 +2,7 @@ package com.example.team11
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,10 +20,9 @@ class FavoritePlacesActivity : AppCompatActivity() {
         setContentView(R.layout.activity_favorite_places)
         val layoutManager = LinearLayoutManager(this)
 
-        viewModel.places!!.observe(this, Observer { places ->
-            val favoritePlaces = places.filter { place -> place.favorite }
+        viewModel.favoritePlaces!!.observe(this, Observer { places ->
             recycler_view.layoutManager = layoutManager as RecyclerView.LayoutManager?
-            recycler_view.adapter = ListAdapter(favoritePlaces, this, viewModel, true)
+            recycler_view.adapter = ListAdapter(places, this, viewModel, true)
 
         })
     }

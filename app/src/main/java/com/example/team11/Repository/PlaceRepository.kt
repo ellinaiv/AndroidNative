@@ -19,6 +19,7 @@ class PlaceRepository private constructor() {
     private val urlAPI = "http://oslokommune.msolution.no/friluft/badetemperaturer.jsp"
     private var currentPlace = MutableLiveData<Place>()
     private var wayOfTransportation = MutableLiveData<Transporatation>()
+    private var favoritePlaces = MutableLiveData<List<Place>>()
 
     //Kotlin sin static
     companion object {
@@ -33,6 +34,18 @@ class PlaceRepository private constructor() {
             instance ?: synchronized(this){
                 instance?: PlaceRepository().also { instance = it}
             }
+    }
+
+    fun getFavoritePlaces(): MutableLiveData<List<Place>>{
+        if(favoritePlaces.value == null){
+            favoritePlaces.value = emptyList()
+        }
+        return favoritePlaces
+    }
+
+    fun updateFavoritePlaces(){
+        if(places.value == null) return
+        favoritePlaces.value = places.value!!.filter { place ->  place.favorite}
     }
 
     /**

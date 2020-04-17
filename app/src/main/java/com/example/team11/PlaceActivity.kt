@@ -63,6 +63,7 @@ class PlaceActivity : AppCompatActivity() {
 
         toggelFavorite.setOnCheckedChangeListener { _, isChecked ->
             place.favorite = isChecked
+            viewModel.updateFavoritePlaces()
         }
 
         backButton.setOnClickListener {

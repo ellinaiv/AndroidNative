@@ -31,6 +31,10 @@ class PlaceActivityViewModel: ViewModel() {
         }
     }
 
+    fun updateFavoritePlaces(){
+        placeRepository!!.updateFavoritePlaces()
+    }
+
     /**
      * Endrer måten brukeren ønsker å komme seg til en strand i repository
      * @param way: måten brukeren ønsker å komme seg til stranden

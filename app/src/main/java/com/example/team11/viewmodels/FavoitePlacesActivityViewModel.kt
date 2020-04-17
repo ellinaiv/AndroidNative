@@ -9,13 +9,13 @@ import com.example.team11.Repository.PlaceRepository
 
 class FavoritePlacesActivityViewModel: ViewModel() {
 
-    var places: MutableLiveData<List<Place>>? = null
+    var favoritePlaces: MutableLiveData<List<Place>>? = null
     private var placeRepository: PlaceRepository? = null
 
     init {
-        if(places == null){
+        if(favoritePlaces == null){
             placeRepository = PlaceRepository.getInstance()
-            places = placeRepository!!.getPlaces()
+            favoritePlaces = placeRepository!!.getFavoritePlaces()
         }
     }
     class InstanceCreator : ViewModelProvider.Factory {
