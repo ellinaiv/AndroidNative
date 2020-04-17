@@ -31,7 +31,7 @@
     <string name="tempC">%1$d  °C</string>
     <string name="degreeCelsius">\u00B0C</string>
     <string name="bikeDirection">Sykkelvei til %1$s</string>
-    <string name="carDirection">BilVei til %1$s</string>
+    <string name="carDirection">Bilvei til %1$s</string>
     <string name="walkDirection">Gåtur til %1$s</string>
     <string name="infoBikeButton">Viser veien med sykkel til badested</string>
     <string name="infoCarButton">Viser veien med bil til badested</string>
