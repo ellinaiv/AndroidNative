@@ -478,7 +478,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/directionText"
 
-                    android:text="Vis rute til strand:"
+                    android:text="@string/infoChooseRouteType"
                     android:textColor="@color/mainTextColor"
                     android:textSize="20sp"
 

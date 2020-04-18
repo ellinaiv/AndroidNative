@@ -30,8 +30,6 @@ class PlacesListActivity : AppCompatActivity() {
             recycler_view.layoutManager = layoutManager as RecyclerView.LayoutManager?
             recycler_view.adapter = ListAdapter(places, this, viewModel, false)
 
-            recycler_view.layoutManager = layoutManager
-            recycler_view.adapter = ListAdapter(places, this)
             val searchBar = findViewById<EditText>(R.id.searchText)
             searchBar.doOnTextChanged { text, _, _, _ ->
                 search(text.toString(), places)
@@ -46,7 +44,7 @@ class PlacesListActivity : AppCompatActivity() {
      */
     private fun search(name: String, places: List<Place>){
         filterPlaces = places.filter{ it.name.contains(name.toString(), ignoreCase = true)}
-        recycler_view.adapter = ListAdapter(filterPlaces, this)
+        recycler_view.adapter = ListAdapter(filterPlaces, this, viewModel, false)
     }
 }
 

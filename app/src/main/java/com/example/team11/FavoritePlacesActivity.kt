@@ -15,6 +15,9 @@ class FavoritePlacesActivity : AppCompatActivity() {
 
     private val viewModel: FavoritePlacesActivityViewModel by viewModels{ FavoritePlacesActivityViewModel.InstanceCreator() }
 
+    /**
+     * FavoritePlacesListActivity viser cardsViews med informasjon om favoritt badeplassene
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_favorite_places)
