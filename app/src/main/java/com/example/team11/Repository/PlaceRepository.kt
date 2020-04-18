@@ -36,6 +36,10 @@ class PlaceRepository private constructor() {
             }
     }
 
+    /**
+     * Returnerer en liste med favoritt stedene til en bruker
+     * @return MutableLiceData<List<Place>> liste med brukerens favoritt steder
+     */
     fun getFavoritePlaces(): MutableLiveData<List<Place>>{
         if(favoritePlaces.value == null){
             favoritePlaces.value = emptyList()
@@ -43,6 +47,9 @@ class PlaceRepository private constructor() {
         return favoritePlaces
     }
 
+    /**
+     * Oppdaterer favoritt stedene
+     */
     fun updateFavoritePlaces(){
         if(places.value == null) return
         favoritePlaces.value = places.value!!.filter { place ->  place.favorite}

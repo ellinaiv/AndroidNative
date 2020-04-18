@@ -37,6 +37,12 @@ class MapActivityViewModel: ViewModel() {
      */
     fun getFeature(place: Place) = Feature.fromGeometry(Point.fromLngLat(place.lng, place.lat))!!
 
+
+    /**
+     * Sender beskjed til repository om at stedet man vil lese mer om skal endre seg.
+     * Denne må kalles når man før man går inn i PlaceActivity
+     * @param place: stedet man ønsker å dra til
+     */
     fun changeCurrentPlace(place: Place){
         if(placeRepository != null){
             placeRepository!!.changeCurrentPlace(place)
