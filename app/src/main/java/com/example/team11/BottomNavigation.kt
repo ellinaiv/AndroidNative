@@ -13,16 +13,21 @@ class BottomNavigation : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_bottom_navigation2)
-        val navView: BottomNavigationView = findViewById(R.id.nav_view)
 
+        //TODO: hide action bar in all other activities
+        supportActionBar!!.hide()
+        val navView: BottomNavigationView = findViewById(R.id.nav_view)
         val navController = findNavController(R.id.nav_host_fragment)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications
+                R.id.navigation_map, R.id.navigation_list, R.id.navigation_favorites
             )
         )
+
+
+
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }

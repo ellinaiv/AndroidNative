@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
  * @param context er kotexten til activity der cardViews skal visses
  */
 
-class ListAdapter(private val myDataset: List<Place>, val context: Context) : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
+class ListAdapter(private val myDataset: List<Place>, val context: Any) : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
 
     class MyViewHolder(itemView: CardView) : RecyclerView.ViewHolder(itemView){
 

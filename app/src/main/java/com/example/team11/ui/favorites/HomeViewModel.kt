@@ -1,4 +1,4 @@
-package com.example.team11.ui.home
+package com.example.team11.ui.favorites
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

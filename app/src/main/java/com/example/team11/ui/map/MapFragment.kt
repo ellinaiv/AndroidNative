@@ -1,4 +1,4 @@
-package com.example.team11.ui.dashboard
+package com.example.team11.ui.map
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,20 +10,20 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.team11.R
 
-class DashboardFragment : Fragment() {
+class MapFragment : Fragment() {
 
-    private lateinit var dashboardViewModel: DashboardViewModel
+    private lateinit var mapFragmentViewModel: MapFragmentViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        dashboardViewModel =
-            ViewModelProviders.of(this).get(DashboardViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_dashboard, container, false)
+        mapFragmentViewModel =
+            ViewModelProviders.of(this).get(MapFragmentViewModel::class.java)
+        val root = inflater.inflate(R.layout.fragment_map, container, false)
         val textView: TextView = root.findViewById(R.id.text_dashboard)
-        dashboardViewModel.text.observe(viewLifecycleOwner, Observer {
+        mapFragmentViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
         return root
