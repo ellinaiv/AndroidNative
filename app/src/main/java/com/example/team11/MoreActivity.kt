@@ -1,17 +1,61 @@
 package com.example.team11
 
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_filter.*
 
 
-class FilterActivity : AppCompatActivity() {
+class MoreActivity : AppCompatActivity() {
+    var aboutAppCliked = false
+    var aboutAPIClicked = false
+    var settingCliked = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_filter)
 
         makeSeekBar()
+
+        aboutAppTitle.setOnClickListener {
+            makeViewsDisappear()
+            if (aboutAppCliked) {
+                aboutAppCliked = false
+            } else {
+                aboutAppText.visibility = View.VISIBLE
+                aboutAppCliked = true;
+            }
+        }
+
+        aboutAPITitle.setOnClickListener {
+            Log.d("TAG", "HEI")
+            makeViewsDisappear()
+            if (aboutAPIClicked) {
+                aboutAPIClicked = false
+            }else{
+                aboutAPIText.visibility = View.VISIBLE
+                aboutAPIClicked = true
+            }
+        }
+
+        settingsText.setOnClickListener {
+            makeViewsDisappear()
+            if (settingCliked) {
+                settingCliked = false
+            }else{
+                seekBarLayout.visibility = View.VISIBLE
+                settingCliked = true
+            }
+        }
+    }
+
+    private fun makeViewsDisappear(){
+        Log.d("TAG", "FORSVINNER")
+        aboutAppText.visibility = View.GONE
+        aboutAPIText.visibility = View.GONE
+        seekBarLayout.visibility = View.GONE
     }
 
 

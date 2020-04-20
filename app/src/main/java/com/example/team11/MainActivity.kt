@@ -4,14 +4,12 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
 import android.widget.Toast
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserFactory
 import java.io.StringReader
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.coroutines.awaitString
-import com.google.android.gms.maps.model.LatLng
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.runBlocking
 
@@ -46,7 +44,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
         buttonFilter.setOnClickListener {
-            val intent = Intent(this, FilterActivity::class.java).apply{
+            val intent = Intent(this, MoreActivity::class.java).apply{
             }
             startActivity(intent)
         }
