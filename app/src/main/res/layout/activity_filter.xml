@@ -100,7 +100,8 @@
 
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toLeftOf="@id/aboutAPITitle" />
+                    app:layout_constraintRight_toLeftOf="@id/aboutAPITitle"
+                    android:visibility="gone"/>
 
                 <TextView
                     android:id="@+id/aboutAPITitle"
@@ -140,32 +141,57 @@
 
                 android:visibility="gone"/>
 
-            <TextView
-                android:id="@+id/settingsText"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/settingsTextLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="18dp"
 
                 app:layout_constraintTop_toBottomOf="@id/aboutAPIText"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
+                android:background="@color/backgroundBorder">
 
-                android:text="Innstilinger"
-                android:textSize="34sp"
-                android:textColor="@color/mainTextColor"
-                android:fontFamily="@font/raleway_medium"
-                android:background="@drawable/about_rectangle"
+                <View
+                    android:id="@+id/settingsView"
+                    android:layout_width="32dp"
+                    android:layout_height="match_parent"
 
-                android:clickable="true"
-                android:focusable="true"
-                />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@id/settingsText"
+                    android:visibility="gone"
+                    />
+
+                <TextView
+                    android:id="@+id/settingsText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="18dp"
+
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toRightOf="@+id/settingsView"
+                    app:layout_constraintRight_toRightOf="parent"
+
+                    android:text="Innstilinger"
+                    android:textSize="34sp"
+                    android:textColor="@color/mainTextColor"
+                    android:fontFamily="@font/raleway_medium"
+                    android:background="@drawable/about_rectangle"
+
+                    android:clickable="true"
+                    android:focusable="true"
+                    />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/seekBarLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
-                app:layout_constraintTop_toBottomOf="@id/settingsText"
+                app:layout_constraintTop_toBottomOf="@id/settingsTextLayout"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
 

@@ -50,6 +50,7 @@ class MoreActivity : AppCompatActivity() {
                 settingCliked = false
             }else{
                 seekBarLayout.visibility = View.VISIBLE
+                settingsView.visibility = View.VISIBLE
                 settingsText.background = resources.getDrawable(R.drawable.about_rectangle_clicked, null)
                 settingCliked = true
             }
@@ -68,6 +69,7 @@ class MoreActivity : AppCompatActivity() {
 
         aboutAppView.visibility = View.GONE
         aboutAPIView.visibility = View.GONE
+        settingsView.visibility = View.GONE
     }
 
 
