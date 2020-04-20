@@ -12,7 +12,7 @@ class BottomNavigation : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_bottom_navigation2)
+        setContentView(R.layout.activity_bottom_navigation)
 
         //TODO: hide action bar in all other activities
         supportActionBar!!.hide()

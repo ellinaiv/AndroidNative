@@ -12,12 +12,11 @@
 
     <item
         android:id="@+id/navigation_favorites"
-        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:icon="@drawable/favourite_outlined"
         android:title="@string/title_favoritter" />
     <item
         android:id="@+id/navigation_more"
-        android:icon="@drawable/ic_dashboard_black_24dp"
-        android:title="@string/title_mer"
-        android:text ="Mer" />
+        android:icon="@drawable/ic_more_horiz_black_24dp"
+        android:title="@string/title_mer" />
 
 </menu>

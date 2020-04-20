@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/navigation_favorites"
-        android:name="com.example.team11.ui.favorites.HomeFragment"
-        android:label="@string/title_notifications"
+        android:name="com.example.team11.ui.favorites.FavoritesFragment"
+        android:label="@string/title_favoritter"
         tools:layout="@layout/fragment_favorites" />
 </navigation>

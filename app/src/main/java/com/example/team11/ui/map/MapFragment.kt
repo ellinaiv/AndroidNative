@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -21,10 +20,9 @@ class MapFragment : Fragment() {
     ): View? {
         mapFragmentViewModel =
             ViewModelProviders.of(this).get(MapFragmentViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_map, container, false)
-        val textView: TextView = root.findViewById(R.id.text_dashboard)
-        mapFragmentViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
+        //TODO: change to map when wifi gets stable    ****
+        val root = inflater.inflate(R.layout.fragment_favorites, container, false)
+        mapFragmentViewModel.places!!.observe(viewLifecycleOwner, Observer {
         })
         return root
     }
