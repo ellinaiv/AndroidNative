@@ -79,7 +79,8 @@
                 android:textSize="14sp"
                 android:text="@string/LoremImpsum"
                 android:textColor="@color/mainTextColor"
-                android:fontFamily="@font/raleway_medium"
+                android:fontFamily="@font/roboto_medium"
+                android:lineSpacingExtra="10sp"
 
                 android:visibility="gone"/>
 
@@ -137,7 +138,8 @@
                 android:textSize="14sp"
                 android:text="@string/LoremImpsum"
                 android:textColor="@color/mainTextColor"
-                android:fontFamily="@font/raleway_medium"
+                android:fontFamily="@font/roboto_medium"
+                android:lineSpacingExtra="10sp"
 
                 android:visibility="gone"/>
 
@@ -240,7 +242,7 @@
                     android:textSize="14sp"
                     android:textColor="@color/mainTextColor"
                     android:translationZ="80dp"
-                    android:fontFamily="@font/raleway_medium"
+                    android:fontFamily="@font/roboto_medium"
 
                     app:layout_constraintBottom_toTopOf="@id/seek_bar"
                     app:layout_constraintStart_toStartOf="parent"
@@ -258,7 +260,7 @@
 
                     android:textSize="14sp"
                     android:textColor="@color/mainTextColor"
-                    android:fontFamily="@font/raleway_medium"
+                    android:fontFamily="@font/roboto_medium"
 
                     app:layout_constraintBottom_toTopOf="@id/seek_bar"
                     app:layout_constraintStart_toStartOf="parent"
@@ -273,7 +275,7 @@
 
                     android:textSize="14sp"
                     android:textColor="@color/mainTextColor"
-                    android:fontFamily="@font/raleway_medium"
+                    android:fontFamily="@font/roboto_medium"
 
                     app:layout_constraintBottom_toTopOf="@id/seek_bar"
                     app:layout_constraintTop_toBottomOf="@id/settingsTempWater"
