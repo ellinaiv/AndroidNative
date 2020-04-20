@@ -201,6 +201,42 @@ class PlaceRepository private constructor() {
     private fun getSpeedUrl(place: Place): String{
         return "http://in2000-apiproxy.ifi.uio.no/weatherapi/oceanforecast/0.9/.json?lat=${place.lat}&lon=${place.lng}"
     }
+
+    /**
+     * Henter strømningene til et sted fra met sitt api.
+     * @param place stranden man ønsker å vite strømningen på
+     * @return en Double. Hvis verdien < 0 er det ikke noen målinger på det stedet
+     */
+    private fun fetchWeatherForecast(place: Place): Double{
+        val tag = "tagWeather"
+        val gson = Gson()
+        var speed = (-1).toDouble()
+        val url = getSpeedUrl(place)
+        Log.d(tag, url)
+        runBlocking {
+            try {
+                val response = Fuel.get(url).awaitString()
+                val ans = gson.fromJson(response, Forecast::class.java) as Forecast
+                ans.ocenaforcasts ?: return@runBlocking
+                val oceanForecasts = ans.ocenaforcasts.toMutableList()
+                Log.d(tag, oceanForecasts.toString())
+                if (oceanForecasts.size > 1){
+                    val cast = oceanForecasts[1]
+                    Log.d(tag, cast.toString())
+                    cast.ocenaforcast.seaSpeed ?: return@runBlocking
+                    speed = cast.ocenaforcast.seaSpeed.content.toDouble()
+                    Log.d(tag, speed.toString())
+                }else{
+                    speed = (-1).toDouble()
+                }
+            }catch (e: Exception){
+                Log.e(tag, e.message)
+            }
+
+        }
+        return speed
+    }
+
 }
 
 
