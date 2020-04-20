@@ -17,12 +17,13 @@
         <!-- android:theme="@style/Theme.AppCompat.Light.NoActionBar"-->
         <activity
             android:name=".BottomNavigation"
-            android:label="@string/title_activity_bottom_navigation"></activity>
+            android:label="@string/title_activity_bottom_navigation" />
         <activity android:name=".MapActivity" />
         <activity android:name=".DirectionActivity" />
         <activity android:name=".FilterActivity" />
         <activity android:name=".PlaceActivity" />
         <activity android:name=".PlacesListActivity" />
+        <activity android:name=".FavoritePlacesActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

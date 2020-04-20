@@ -8,23 +8,29 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.team11.ListAdapter
 import com.example.team11.R
+import com.example.team11.viewmodels.FavoritesFragmentViewModel
+import kotlinx.android.synthetic.main.activity_places_list.*
 
 class FavoritesFragment : Fragment() {
 
-    private lateinit var homeViewModel: FavoritesViewModel
+    private lateinit var viewModel: FavoritesFragmentViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        homeViewModel =
-            ViewModelProviders.of(this).get(FavoritesViewModel::class.java)
+        val layoutManager = LinearLayoutManager(context)
+        viewModel =
+            ViewModelProviders.of(this).get(FavoritesFragmentViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_favorites, container, false)
-        val textView: TextView = root.findViewById(R.id.text_home)
-        homeViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
+        viewModel.favoritePlaces!!.observe(viewLifecycleOwner, Observer { places ->
+            recycler_view.layoutManager = layoutManager
+            recycler_view.adapter = ListAdapter(places, this, viewModel, true)
         })
         return root
     }

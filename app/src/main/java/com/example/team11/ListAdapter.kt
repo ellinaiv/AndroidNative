@@ -60,8 +60,8 @@ class ListAdapter(private val myDataset: List<Place>, val context: Any,
                val placesListActivityViewModel = viewModel as PlacesListActivityViewModel
                placesListActivityViewModel.changeCurrentPlace(myDataset[position])
            }
-            val intent = Intent(context, PlaceActivity::class.java)
-            context.startActivity(intent)
+         //   val intent = Intent(context, PlaceActivity::class.java)
+          //  context.startActivity(intent)
         }
 
     }

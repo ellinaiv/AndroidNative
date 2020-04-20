@@ -33,7 +33,7 @@ class PlacesListFragment : Fragment() {
 
         placesListViewModel.places!!.observe(viewLifecycleOwner, Observer { places ->
             recycler_viewPlaces.layoutManager = layoutManager
-            recycler_viewPlaces.adapter = ListAdapter(places, this)
+            recycler_viewPlaces.adapter = ListAdapter(places, this, placesListViewModel, false)
             searchText.doOnTextChanged { text, _, _, _ ->
                 search(text.toString(), places)
             }
@@ -47,7 +47,7 @@ class PlacesListFragment : Fragment() {
      */
     private fun search(name: String, places: List<Place>){
         filterPlaces = places.filter{ it.name.contains(name.toString(), ignoreCase = true)}
-        recycler_viewPlaces.adapter = ListAdapter(filterPlaces, this)
+        recycler_viewPlaces.adapter = ListAdapter(filterPlaces, this, placesListViewModel, false)
     }
 
 }
