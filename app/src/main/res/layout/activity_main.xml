@@ -37,6 +37,17 @@
         tools:layout_editor_absoluteX="0dp" />
 
     <Button
+        android:id="@+id/buttonFavorite"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        android:text="Favoritter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/buttonList"
+
+        tools:layout_editor_absoluteX="0dp" />
+
+    <Button
         android:id="@+id/buttonBottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

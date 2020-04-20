@@ -53,6 +53,11 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        buttonFavorite.setOnClickListener {
+            val intent = Intent(this, FavoritePlacesActivity::class.java)
+            startActivity(intent)
+        }
+
         buttonBottom.setOnClickListener {
             val intent = Intent(this, BottomNavigation::class.java)
             startActivity(intent)

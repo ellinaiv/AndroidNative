@@ -32,6 +32,15 @@ class PlaceActivityViewModel: ViewModel() {
     }
 
     /**
+     * Funksjonen forteller videre til place repository at det har blitt gjort endringer på
+     * hvilke steder som er favoirutter og ber den om å oppdatere det. Dette må gjøres hver gang
+     * hjertetoggelknappen blir trykket på
+     */
+    fun updateFavoritePlaces(){
+        placeRepository!!.updateFavoritePlaces()
+    }
+
+    /**
      * Endrer måten brukeren ønsker å komme seg til en strand i repository
      * @param way: måten brukeren ønsker å komme seg til stranden
      */
