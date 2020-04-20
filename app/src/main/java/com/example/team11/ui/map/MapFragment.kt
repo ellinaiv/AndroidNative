@@ -18,10 +18,11 @@ class MapFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         mapFragmentViewModel =
             ViewModelProviders.of(this).get(MapFragmentViewModel::class.java)
         //TODO: change to map when wifi gets stable    ****
-        val root = inflater.inflate(R.layout.fragment_favorites, container, false)
+        val root = inflater.inflate(R.layout.fragment_map, container, false)
         mapFragmentViewModel.places!!.observe(viewLifecycleOwner, Observer {
         })
         return root

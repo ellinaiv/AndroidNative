@@ -7,6 +7,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.mapbox.mapboxsdk.Mapbox
 
 class BottomNavigation : AppCompatActivity() {
 
@@ -20,6 +21,7 @@ class BottomNavigation : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
+        Mapbox.getInstance(this, getString(R.string.access_token))
         val appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.navigation_map, R.id.navigation_list, R.id.navigation_favorites
