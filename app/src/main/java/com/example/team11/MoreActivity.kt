@@ -57,6 +57,9 @@ class MoreActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Nullstriller hele activiten (med tanke på viewene).
+     */
     private fun makeViewsDisappear(){
         Log.d("TAG", "FORSVINNER")
         aboutAppText.visibility = View.GONE
@@ -77,6 +80,9 @@ class MoreActivity : AppCompatActivity() {
         TODO("Regne om verdien til og fra progress")
     }
 
+    /**
+     * Logikken til seek baren ligger her
+     */
     private fun makeSeekBar(){
         seek_bar.progress = PersonalPreference.waterTempMid
         val degreeLow = getString(R.string.tempC, PersonalPreference.waterTempLow)
