@@ -51,6 +51,10 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        buttonBottom.setOnClickListener {
+            val intent = Intent(this, BottomNavigation::class.java)
+            startActivity(intent)
+        }
 
 
     }
