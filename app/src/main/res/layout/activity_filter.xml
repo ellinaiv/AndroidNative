@@ -52,7 +52,7 @@
                     app:layout_constraintLeft_toRightOf="@id/aboutAppView"
                     app:layout_constraintRight_toRightOf="parent"
 
-                    android:text="Om appen"
+                    android:text="@string/aboutApp"
                     android:textSize="34sp"
                     android:textColor="@color/mainTextColor"
                     android:background="@drawable/about_rectangle"
@@ -113,7 +113,7 @@
                     app:layout_constraintLeft_toRightOf="@id/aboutAPIView"
                     app:layout_constraintRight_toRightOf="parent"
 
-                    android:text="Om API"
+                    android:text="@string/aboutAPI"
                     android:textSize="34sp"
                     android:textColor="@color/mainTextColor"
                     android:background="@drawable/about_rectangle"
@@ -172,7 +172,7 @@
                     app:layout_constraintLeft_toRightOf="@+id/settingsView"
                     app:layout_constraintRight_toRightOf="parent"
 
-                    android:text="Innstilinger"
+                    android:text="@string/settingsTitle"
                     android:textSize="34sp"
                     android:textColor="@color/mainTextColor"
                     android:fontFamily="@font/raleway_medium"
@@ -209,7 +209,7 @@
                     app:layout_constraintTop_toTopOf="parent"
 
                     android:padding="12dp"
-                    android:text="Preferanser for vanntemperatur"
+                    android:text="@string/waterPreference"
 
                     android:textColor="@color/mainTextColor"
                     android:textSize="14sp"
