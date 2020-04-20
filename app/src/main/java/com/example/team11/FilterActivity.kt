@@ -10,6 +10,16 @@ class FilterActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_filter)
+
+        makeSeekBar()
+    }
+
+
+    fun progressCalculation(){
+        TODO("Regne om verdien til og fra progress")
+    }
+
+    private fun makeSeekBar(){
         seek_bar.progress = PersonalPreference.waterTempMid
         val degreeLow = getString(R.string.tempC, PersonalPreference.waterTempLow)
         val degreeHigh = getString(R.string.tempC, PersonalPreference.waterTempHigh)
@@ -19,7 +29,7 @@ class FilterActivity : AppCompatActivity() {
 
         seek_bar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seek: SeekBar,
-                progress: Int, fromUser: Boolean) {
+                                           progress: Int, fromUser: Boolean) {
                 val value = (progress * (seek.width - 2 * seek.thumbOffset)) / seek.max
                 val degreeMid = getString(R.string.tempC, progress)
                 textTempMid.text = degreeMid
@@ -34,9 +44,6 @@ class FilterActivity : AppCompatActivity() {
                 PersonalPreference.waterTempMid = seek.progress
             }
         })
-    }
-    fun progressCalculation(){
-        TODO("Regne om verdien til og fra progress")
     }
 
 }
