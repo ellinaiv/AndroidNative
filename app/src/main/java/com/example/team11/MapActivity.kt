@@ -48,7 +48,7 @@ class MapActivity : AppCompatActivity(), MapboxMap.OnMapClickListener {
         super.onCreate(savedInstanceState)
         Mapbox.getInstance(this, getString(R.string.access_token))
         setContentView(R.layout.activity_map)
-        mapView = findViewById(R.id.mapView)
+        mapView = this.findViewById(R.id.mapView)
         mapView.onCreate(savedInstanceState)
         listOfLayerId = mutableListOf<String>()
 
@@ -161,13 +161,8 @@ class MapActivity : AppCompatActivity(), MapboxMap.OnMapClickListener {
         val tempAirText = findViewById<TextView>(R.id.tempAirText)
         val tempWaterText = findViewById<TextView>(R.id.tempWaterText)
         val tempWaterImage = findViewById<ImageView>(R.id.tempWaterImage)
-        val showPlaceButton = findViewById<ImageButton>(R.id.showPlaceButton)
 
-        showPlaceButton.setOnClickListener{
-            viewModel.changeCurrentPlace(place)
-            val intent = Intent(this, PlaceActivity::class.java)
-            startActivity(intent)
-        }
+
 
         when(place.isWarm()){
             true -> tempWaterImage.setImageResource(R.drawable.water_red)
@@ -177,7 +172,6 @@ class MapActivity : AppCompatActivity(), MapboxMap.OnMapClickListener {
         nameTextView.text = place.name
         tempAirText.text = getString(R.string.notAvailable)
         tempWaterText.text = getString(R.string.tempC, place.temp)
-        placeViewHolder.visibility = View.VISIBLE
 
         //zoomer til stedet på kartet
         val position = CameraPosition.Builder()
@@ -185,6 +179,13 @@ class MapActivity : AppCompatActivity(), MapboxMap.OnMapClickListener {
             .zoom(15.0)
             .build()
         mapBoxMap.animateCamera(CameraUpdateFactory.newCameraPosition(position), 2)
+
+        placeViewHolder.setOnClickListener{
+            viewModel.changeCurrentPlace(place)
+            val intent = Intent(this, PlaceActivity::class.java)
+            startActivity(intent)
+        }
+        placeViewHolder.visibility = View.VISIBLE
     }
 
     /**

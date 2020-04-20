@@ -19,6 +19,7 @@ class PlaceRepository private constructor() {
     private val urlAPI = "http://oslokommune.msolution.no/friluft/badetemperaturer.jsp"
     private var currentPlace = MutableLiveData<Place>()
     private var wayOfTransportation = MutableLiveData<Transporatation>()
+    private var favoritePlaces = MutableLiveData<List<Place>>()
 
     //Kotlin sin static
     companion object {
@@ -36,16 +37,32 @@ class PlaceRepository private constructor() {
     }
 
     /**
+     * Returnerer en liste med favoritt stedene til en bruker
+     * @return MutableLiceData<List<Place>> liste med brukerens favoritt steder
+     */
+    fun getFavoritePlaces(): MutableLiveData<List<Place>>{
+        if(favoritePlaces.value == null){
+            favoritePlaces.value = emptyList()
+        }
+        return favoritePlaces
+    }
+
+    /**
+     * Oppdaterer favoritt stedene
+     */
+    fun updateFavoritePlaces(){
+        if(places.value == null) return
+        favoritePlaces.value = places.value!!.filter { place ->  place.favorite}
+    }
+
+    /**
      * getPlaces funksjonen henter en liste til viewModel med badesteder
      * @return: MutableLiveData<List<Place>>, liste med badesteder
      */
     fun getPlaces(): MutableLiveData<List<Place>>{
-        Log.d("tagHente", "vil hente strender")
         if (places.value == null){
-            Log.d("tagHente", "henter data")
             places.value = fetchPlaces(urlAPI)
         }
-        Log.d("tagHente", "strender returnert")
         return places
     }
 

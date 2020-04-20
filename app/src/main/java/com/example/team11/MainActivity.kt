@@ -51,6 +51,11 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        buttonFavorite.setOnClickListener {
+            val intent = Intent(this, FavoritePlacesActivity::class.java)
+            startActivity(intent)
+        }
+
 
 
     }
