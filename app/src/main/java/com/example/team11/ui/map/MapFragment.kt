@@ -24,6 +24,7 @@ class MapFragment : Fragment() {
         //TODO: change to map when wifi gets stable    ****
         val root = inflater.inflate(R.layout.fragment_map, container, false)
         mapFragmentViewModel.places!!.observe(viewLifecycleOwner, Observer {
+
         })
         return root
     }

@@ -50,7 +50,7 @@ class MapActivity : AppCompatActivity(), MapboxMap.OnMapClickListener {
         setContentView(R.layout.activity_map)
         mapView = findViewById(R.id.mapView)
         mapView.onCreate(savedInstanceState)
-        listOfLayerId = mutableListOf<String>()
+        listOfLayerId = mutableListOf()
 
         viewModel.places!!.observe(this, Observer { places ->
             /*
