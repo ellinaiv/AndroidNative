@@ -13,6 +13,7 @@
     <color name="backgroundCardsLight">#F4F4F4</color>
     <color name="backgroundCardsDark">#C4C4C4</color>
     <color name="backgroundBorder">#919191</color>
+    <color name="backgroundCliked">#D3D3D3</color>
 
 <!--    other colors-->
     <color name="coldBlue">#0BA1F5</color>

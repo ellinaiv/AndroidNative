@@ -25,6 +25,8 @@ class MoreActivity : AppCompatActivity() {
                 aboutAppCliked = false
             } else {
                 aboutAppText.visibility = View.VISIBLE
+                aboutAppView.visibility = View.VISIBLE
+                aboutAppTitle.background = resources.getDrawable(R.drawable.about_rectangle_clicked, null)
                 aboutAppCliked = true;
             }
         }
@@ -36,6 +38,8 @@ class MoreActivity : AppCompatActivity() {
                 aboutAPIClicked = false
             }else{
                 aboutAPIText.visibility = View.VISIBLE
+                aboutAPIView.visibility = View.VISIBLE
+                aboutAPITitle.background = resources.getDrawable(R.drawable.about_rectangle_clicked, null)
                 aboutAPIClicked = true
             }
         }
@@ -46,6 +50,7 @@ class MoreActivity : AppCompatActivity() {
                 settingCliked = false
             }else{
                 seekBarLayout.visibility = View.VISIBLE
+                settingsText.background = resources.getDrawable(R.drawable.about_rectangle_clicked, null)
                 settingCliked = true
             }
         }
@@ -56,6 +61,13 @@ class MoreActivity : AppCompatActivity() {
         aboutAppText.visibility = View.GONE
         aboutAPIText.visibility = View.GONE
         seekBarLayout.visibility = View.GONE
+
+        aboutAppTitle.background = resources.getDrawable(R.drawable.about_rectangle, null)
+        aboutAPITitle.background = resources.getDrawable(R.drawable.about_rectangle, null)
+        settingsText.background = resources.getDrawable(R.drawable.about_rectangle, null)
+
+        aboutAppView.visibility = View.GONE
+        aboutAPIView.visibility = View.GONE
     }
 
 
