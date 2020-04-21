@@ -16,6 +16,7 @@ import com.example.team11.viewmodels.FavoritePlacesActivityViewModel
 import com.example.team11.viewmodels.FavoritesFragmentViewModel
 import com.example.team11.viewmodels.PlaceActivityViewModel
 import com.example.team11.viewmodels.PlacesListActivityViewModel
+import com.google.android.material.internal.ContextUtils.getActivity
 
 /*
  * List adapter viser informasjon på de forskjellige cardsViews.
@@ -23,7 +24,7 @@ import com.example.team11.viewmodels.PlacesListActivityViewModel
  * @param context er kotexten til activity der cardViews skal visses
  */
 
-class ListAdapter(private val myDataset: List<Place>, val context: Any,
+class ListAdapter(private val myDataset: List<Place>, val context: Context,
                   val viewModel: ViewModel, val favorite: Boolean) : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
 
     class MyViewHolder(itemView: CardView) : RecyclerView.ViewHolder(itemView){
@@ -36,7 +37,6 @@ class ListAdapter(private val myDataset: List<Place>, val context: Any,
             itemName = itemView.findViewById(R.id.name)
             itemTempAir = itemView.findViewById(R.id.tempAir)
             itemTempWater = itemView.findViewById(R.id.tempWater)
-
         }
 
     }
@@ -63,8 +63,8 @@ class ListAdapter(private val myDataset: List<Place>, val context: Any,
            }
 
            Log.d("in holder", "come here when your click on cards")
-          // val intent = Intent(context, PlaceActivity::class.java)
-           //context.startActivity(intent)
+           val intent = Intent(context, PlaceActivity::class.java)
+           context.startActivity(intent)
         }
 
     }

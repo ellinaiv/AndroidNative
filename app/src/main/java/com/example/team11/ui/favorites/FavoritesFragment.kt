@@ -30,7 +30,7 @@ class FavoritesFragment : Fragment() {
         val root = inflater.inflate(R.layout.fragment_favorites, container, false)
         viewModel.favoritePlaces!!.observe(viewLifecycleOwner, Observer { favoritePlaces ->
             recycler_view.layoutManager = layoutManager
-            recycler_view.adapter = ListAdapter(favoritePlaces, this, viewModel, true)
+            recycler_view.adapter = ListAdapter(favoritePlaces, context!!, viewModel, true)
         })
         return root
     }
