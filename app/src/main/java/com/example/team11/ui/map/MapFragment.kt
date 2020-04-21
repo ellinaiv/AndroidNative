@@ -28,7 +28,8 @@ import com.mapbox.mapboxsdk.style.layers.SymbolLayer
 import com.mapbox.mapboxsdk.style.sources.GeoJsonSource
 import kotlinx.android.synthetic.main.fragment_map.*
 
-class MapFragment : Fragment() {
+@Suppress("UNREACHABLE_CODE")
+class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
 
     private val ICON_ID_RED = "ICON_ID_RED"
     private val ICON_ID_BLUE = "ICON_ID_BLUE "
@@ -99,14 +100,15 @@ class MapFragment : Fragment() {
                         addMarker(place, style)
                     }
                 }
-                //mapBoxMap.addOnMapClickListener(this)
+                mapBoxMap.addOnMapClickListener(this)
             }
         }
     }
 
-    //override fun onMapClick(point: LatLng): Boolean {
-      //  return handleClickIcon(mapBoxMap.projection.toScreenLocation(point))
-    //}
+    override fun onMapClick(point: LatLng): Boolean {
+        return handleClickIcon(mapBoxMap.projection.toScreenLocation(point))
+    }
+
     /**
      * Det er denne metoden som registrerer om trykket faktisk traff et punkt på kartet, eller
      * ikke, og hva man i såfall skal gjøre når man har trykket på noe. Her vil den da vise
@@ -277,4 +279,6 @@ class MapFragment : Fragment() {
         super.onDestroy()
         mapView.onDestroy()
     }
+
+
 }
