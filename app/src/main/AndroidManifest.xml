@@ -24,8 +24,9 @@
         <activity android:name=".PlaceActivity" />
         <activity android:name=".PlacesListActivity" />
         <activity android:name=".FavoritePlacesActivity" />
+        <activity android:name=".MainActivityOld"/>
         <activity android:name=".MainActivity">
-            <intent-filter>
+        <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
