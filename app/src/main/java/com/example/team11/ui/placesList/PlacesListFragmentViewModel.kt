@@ -1,5 +1,6 @@
 package com.example.team11.ui.fragmentList
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.team11.Place
@@ -14,6 +15,14 @@ class PlacesListFragmentViewModel : ViewModel() {
         if(places == null){
             placeRepository = PlaceRepository.getInstance()
             places = placeRepository!!.getPlaces()
+        }
+    }
+
+    fun changeCurrentPlace(place: Place){
+        if(placeRepository != null){
+            placeRepository!!.changeCurrentPlace(place)
+        }else{
+            Log.d("ViewModelTag", "finner ikke Placerepository ")
         }
     }
 }

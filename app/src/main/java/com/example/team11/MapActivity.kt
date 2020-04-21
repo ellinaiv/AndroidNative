@@ -163,7 +163,6 @@ class MapActivity : AppCompatActivity(), MapboxMap.OnMapClickListener {
         val tempWaterImage = findViewById<ImageView>(R.id.tempWaterImage)
 
 
-
         when(place.isWarm()){
             true -> tempWaterImage.setImageResource(R.drawable.water_red)
             false -> tempWaterImage.setImageResource(R.drawable.water_blue)
