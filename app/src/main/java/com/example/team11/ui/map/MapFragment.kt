@@ -28,7 +28,6 @@ import com.mapbox.mapboxsdk.style.layers.SymbolLayer
 import com.mapbox.mapboxsdk.style.sources.GeoJsonSource
 import kotlinx.android.synthetic.main.fragment_map.*
 
-@Suppress("UNREACHABLE_CODE")
 class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
 
     private val ICON_ID_RED = "ICON_ID_RED"
