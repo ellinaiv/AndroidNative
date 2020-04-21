@@ -63,7 +63,7 @@ class ListAdapter(private val myDataset: List<Place>, val context: Any,
            }
 
            Log.d("in holder", "come here when your click on cards")
-           //val intent = Intent(context, PlaceActivity::class.java)
+          // val intent = Intent(context, PlaceActivity::class.java)
            //context.startActivity(intent)
         }
 
