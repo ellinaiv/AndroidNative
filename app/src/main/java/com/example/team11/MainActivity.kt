@@ -58,6 +58,7 @@ class MainActivity : AppCompatActivity() {
 
 
 
+
     }
     /**
      * getPlaces funksjonen henter getResponse fra API, parser XML-responsen og oppretter en liste

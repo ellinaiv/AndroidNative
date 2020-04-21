@@ -11,6 +11,7 @@ import android.widget.TextView
 import android.widget.ToggleButton
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
+import com.example.team11.Repository.PlaceRepository
 import com.example.team11.viewmodels.PlaceActivityViewModel
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.mapboxsdk.Mapbox
@@ -89,7 +90,7 @@ class PlaceActivity : AppCompatActivity() {
         }
 
         namePlace.text = place.name
-        tempWater.text = getString(R.string.tempC, place.temp)
+        tempWater.text = String.format(getString(R.string.tempC), PersonalPreference.waterTempMid, place.temp)
 
         makeMap(place, savedInstanceState)
     }

@@ -1,17 +1,21 @@
 package com.example.team11.Repository
 
 import android.util.Log
+import android.util.Log.i
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.team11.Forecast
-import com.example.team11.Place
-import com.example.team11.Transporatation
+import com.example.team11.*
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.coroutines.awaitString
 import com.google.gson.Gson
 import kotlinx.coroutines.runBlocking
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserFactory
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.io.StringReader
+import java.util.logging.Logger
 
 class PlaceRepository private constructor() {
 
@@ -64,6 +68,7 @@ class PlaceRepository private constructor() {
             places.value = fetchPlaces(urlAPI)
         }
         return places
+
     }
 
     /**
@@ -203,39 +208,38 @@ class PlaceRepository private constructor() {
     }
 
     /**
-     * Henter strømningene til et sted fra met sitt api.
-     * @param place stranden man ønsker å vite strømningen på
-     * @return en Double. Hvis verdien < 0 er det ikke noen målinger på det stedet
+     * Henter forecast til et sted fra met sitt api.
+     * @param place stranden man ønsker forecast for
+     * @return livedata
      */
-    private fun fetchWeatherForecast(place: Place): Double{
-        val tag = "tagWeather"
-        val gson = Gson()
-        var speed = (-1).toDouble()
-        val url = getSpeedUrl(place)
-        Log.d(tag, url)
-        runBlocking {
-            try {
-                val response = Fuel.get(url).awaitString()
-                val ans = gson.fromJson(response, Forecast::class.java) as Forecast
-                ans.ocenaforcasts ?: return@runBlocking
-                val oceanForecasts = ans.ocenaforcasts.toMutableList()
-                Log.d(tag, oceanForecasts.toString())
-                if (oceanForecasts.size > 1){
-                    val cast = oceanForecasts[1]
-                    Log.d(tag, cast.toString())
-                    cast.ocenaforcast.seaSpeed ?: return@runBlocking
-                    speed = cast.ocenaforcast.seaSpeed.content.toDouble()
-                    Log.d(tag, speed.toString())
-                }else{
-                    speed = (-1).toDouble()
-                }
-            }catch (e: Exception){
-                Log.e(tag, e.message)
-            }
 
-        }
-        return speed
+    fun getWeather(place: Place, callback: OperationCallback<WeatherForecast>) {
+        val tag = "tagWeather1"
+        val data = MutableLiveData<Array<WeatherForecast>>()
+        val call=ApiClient.build()?.getWeather(place.lat, place.lng)
+        call?.enqueue(object :Callback<ResponseWeather>{
+            override fun onFailure(call: Call<ResponseWeather>, t: Throwable) {
+                callback.onError("Error i getWeather")
+                Log.v(tag, "error")
+            }
+            override fun onResponse(call: Call<ResponseWeather>, response: Response<ResponseWeather>) {
+                response?.body()?.let {
+                    response?.body()?.let {
+                        if (response.isSuccessful && (it.isSuccess())) {
+                            Log.v(tag, "weather1")
+                            Log.v(tag, "data ${it.data}")
+                            callback.onSuccess(it.data)
+                        } else {
+                            callback.onError(it.msg)
+                            Log.v(tag, "weather1, else")
+                            Log.v(tag, "data ${it.msg}")
+                        }
+                    }
+                }
+            }
+        })
     }
+
 
 }
 
