@@ -5,7 +5,7 @@ import android.util.Log
 import android.view.View
 import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_filter.*
+import kotlinx.android.synthetic.main.activity_more.*
 
 
 class MoreActivity : AppCompatActivity() {
@@ -15,7 +15,7 @@ class MoreActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_filter)
+        setContentView(R.layout.activity_more)
 
         makeSeekBar()
 
@@ -32,7 +32,6 @@ class MoreActivity : AppCompatActivity() {
         }
 
         aboutAPITitle.setOnClickListener {
-            Log.d("TAG", "HEI")
             makeViewsDisappear()
             if (aboutAPIClicked) {
                 aboutAPIClicked = false
