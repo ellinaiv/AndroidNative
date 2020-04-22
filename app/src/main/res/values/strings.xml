@@ -3,7 +3,7 @@
 
     <!--    knapper for midlertidig navigering fra mainActivity (slettes sammen med koden)-->
     <string name="map">Kart</string>
-    <string name="list">list</string>
+    <string name="list">List</string>
 
     <!--    textViews-->
     <string name="tempC">%1$d °C</string>
@@ -48,6 +48,6 @@
     <string name="title_favoritter">Favoritter</string>
     <string name="title_mer">Mer</string>
     <string name="title_list">List</string>
-    <string name="title_map">Map</string>
+    <string name="title_map">Kart</string>
 
 </resources>

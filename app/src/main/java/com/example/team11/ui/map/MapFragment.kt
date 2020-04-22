@@ -68,11 +68,11 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
 
     /**
      * Søkefunksjonen filtrerer places etter navn og zoomer til det stedet på kartet
-     * @param text: en input-streng som skal brukes for å filtrere places
+     * @param name: en input-streng som skal brukes for å filtrere places
      * @param places: en liste med badesteder som skal filtreres
      */
-    private fun search(text: String, places: List<Place>){
-        filterPlaces = places.filter{ it.name.contains(text, ignoreCase = true)}
+    private fun search(name: String, places: List<Place>){
+        filterPlaces = places.filter{ it.name.contains(name, ignoreCase = true)}
         if(filterPlaces.size == 1){
             val position = CameraPosition.Builder()
                 .target(LatLng(filterPlaces[0].lat, filterPlaces[0].lng))
@@ -156,11 +156,6 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
      * @param place: Stedet som skal ha informasjonen sin på display
      */
     private fun showPlace(place: Place){
-       // val placeViewHolder = findViewById<ConstraintLayout>(R.id.placeViewHolder)
-        //val tempAirText = findViewById<TextView>(R.id.tempAirText)
-        //val tempWaterText = findViewById<TextView>(R.id.tempWaterText)
-       // val tempWaterImage = findViewById<ImageView>(R.id.tempWaterImage)
-
 
         when(place.isWarm()){
             true -> tempWaterImage.setImageResource(R.drawable.water_red)
@@ -168,7 +163,7 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
         }
 
         namePlace.text = place.name
-       // placeViewHolder.text = getString(R.string.notAvailable) text?
+        tempAirText.text = getString(R.string.notAvailable)
         tempWaterText.text = getString(R.string.tempC, place.temp)
 
         //zoomer til stedet på kartet

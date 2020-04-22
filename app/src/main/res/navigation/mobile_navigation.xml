@@ -9,17 +9,23 @@
         android:id="@+id/navigation_map"
         android:name="com.example.team11.ui.map.MapFragment"
         android:label="@string/title_map"
+
         tools:layout="@layout/fragment_map" />
 
     <fragment
         android:id="@+id/navigation_list"
         android:name="com.example.team11.ui.placesList.PlacesListFragment"
         android:label="@string/title_list"
+
         tools:layout="@layout/fragment_places_list" />
 
     <fragment
-        android:id="@+id/navigation_favorites"
-        android:name="com.example.team11.ui.favorites.FavoritesFragment"
-        android:label="@string/title_favoritter"
-        tools:layout="@layout/fragment_favorites" />
+    android:id="@+id/navigation_favorites"
+    android:name="com.example.team11.ui.favorites.FavoritesFragment"
+    android:label="@string/title_favoritter"
+
+    tools:layout="@layout/fragment_favorites" />
+
+
+
 </navigation>

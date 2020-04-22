@@ -42,7 +42,7 @@ class PlacesListFragment : Fragment() {
     }
     /**
      * Søkefunksjonen filtrerer places etter navn og oppdaterer listen som vises på skjermen
-     * @param text: en input-streng som skal brukes for å filtrere places
+     * @param name: en input-streng som skal brukes for å filtrere places
      * @param places: en liste med badesteder som skal filtreres
      */
     private fun search(name: String, places: List<Place>){
