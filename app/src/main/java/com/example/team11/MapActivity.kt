@@ -48,7 +48,9 @@ class MapActivity : AppCompatActivity(), MapboxMap.OnMapClickListener {
         super.onCreate(savedInstanceState)
         Mapbox.getInstance(this, getString(R.string.access_token))
         setContentView(R.layout.activity_map)
+        Log.d("TAG", "HEI")
         mapView = this.findViewById(R.id.mapView)
+        Log.d("TAG", mapView.toString())
         mapView.onCreate(savedInstanceState)
         listOfLayerId = mutableListOf()
 
