@@ -37,7 +37,7 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
     private var listOfLayerId = mutableListOf<String>()
     private val propertyId = "PROPERTY_ID"
 
-    private lateinit var mapView: MapView
+    private var mapView: MapView? = null;
     private lateinit var mapBoxMap: MapboxMap
 
     private lateinit var mapFragmentViewModel: MapFragmentViewModel
@@ -88,7 +88,7 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
      * @param places: en liste med steder som skal plasseres på kartet
      */
     private fun makeMap(places: List<Place>){
-        mapView.getMapAsync {mapBoxMap ->
+        mapView?.getMapAsync {mapBoxMap ->
             this.mapBoxMap = mapBoxMap
             mapBoxMap.setStyle(Style.MAPBOX_STREETS)
 
@@ -214,8 +214,10 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
     
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Log.d("TAG", "HEI")
         mapView = view.findViewById(R.id.mapView)
-        mapView.onCreate(savedInstanceState)
+        Log.d("TAG", mapView.toString())
+        mapView!!.onCreate(savedInstanceState)
 
     }
     /**
@@ -251,32 +253,32 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
 
     override fun onStart() {
         super.onStart();
-        mapView.onStart();
+        mapView?.onStart();
     }
 
     override fun onResume() {
         super.onResume()
-        mapView.onResume()
+        mapView?.onResume()
     }
 
     override fun onPause() {
         super.onPause()
-        mapView.onPause()
+        mapView?.onPause()
     }
 
     override fun onStop() {
         super.onStop()
-        mapView.onStop()
+        mapView?.onStop()
     }
 
     override fun onLowMemory() {
         super.onLowMemory()
-        mapView.onLowMemory()
+        mapView?.onLowMemory()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        mapView.onDestroy()
+        mapView?.onDestroy()
     }
 
 
