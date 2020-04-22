@@ -9,9 +9,9 @@ import kotlinx.android.synthetic.main.activity_filter.*
 
 
 class MoreActivity : AppCompatActivity() {
-    var aboutAppCliked = false
+    var aboutAppClicked = false
     var aboutAPIClicked = false
-    var settingCliked = false
+    var settingClicked = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,13 +21,13 @@ class MoreActivity : AppCompatActivity() {
 
         aboutAppTitle.setOnClickListener {
             makeViewsDisappear()
-            if (aboutAppCliked) {
-                aboutAppCliked = false
+            if (aboutAppClicked) {
+                aboutAppClicked = false
             } else {
                 aboutAppText.visibility = View.VISIBLE
                 aboutAppView.visibility = View.VISIBLE
                 aboutAppTitle.background = resources.getDrawable(R.drawable.about_rectangle_clicked, null)
-                aboutAppCliked = true;
+                aboutAppClicked = true;
             }
         }
 
@@ -46,13 +46,13 @@ class MoreActivity : AppCompatActivity() {
 
         settingsText.setOnClickListener {
             makeViewsDisappear()
-            if (settingCliked) {
-                settingCliked = false
+            if (settingClicked) {
+                settingClicked = false
             }else{
                 seekBarLayout.visibility = View.VISIBLE
                 settingsView.visibility = View.VISIBLE
                 settingsText.background = resources.getDrawable(R.drawable.about_rectangle_clicked, null)
-                settingCliked = true
+                settingClicked = true
             }
         }
     }
