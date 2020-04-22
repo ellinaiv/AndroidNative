@@ -20,12 +20,18 @@
         tools:layout="@layout/fragment_places_list" />
 
     <fragment
-    android:id="@+id/navigation_favorites"
-    android:name="com.example.team11.ui.favorites.FavoritesFragment"
-    android:label="@string/title_favoritter"
+        android:id="@+id/navigation_favorites"
+        android:name="com.example.team11.ui.favorites.FavoritesFragment"
+        android:label="@string/title_favoritter"
 
-    tools:layout="@layout/fragment_favorites" />
+        tools:layout="@layout/fragment_favorites" />
 
+    <fragment
+        android:id="@+id/navigation_more"
+        android:name="com.example.team11.ui.more.MoreFragment"
+        android:label="@string/title_mer"
+
+        tools:layout="@layout/fragment_more" />
 
 
 </navigation>

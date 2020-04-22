@@ -1,24 +1,31 @@
-package com.example.team11
+package com.example.team11.ui.more
 
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.SeekBar
-import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import com.example.team11.PersonalPreference
+import com.example.team11.R
 import kotlinx.android.synthetic.main.fragment_more.*
 
+class MoreFragment : Fragment() {
 
-class MoreActivity : AppCompatActivity() {
+
     var aboutAppClicked = false
     var aboutAPIClicked = false
     var settingClicked = false
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_more)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
 
+        val root = inflater.inflate(R.layout.fragment_more, container, false)
         makeSeekBar()
-
         aboutAppTitle.setOnClickListener {
             makeViewsDisappear()
             if (aboutAppClicked) {
@@ -54,6 +61,8 @@ class MoreActivity : AppCompatActivity() {
                 settingClicked = true
             }
         }
+
+        return root
     }
 
     /**
@@ -110,3 +119,4 @@ class MoreActivity : AppCompatActivity() {
     }
 
 }
+
