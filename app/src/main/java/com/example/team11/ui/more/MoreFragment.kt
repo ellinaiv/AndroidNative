@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.team11.PersonalPreference
 import com.example.team11.R
@@ -18,6 +19,7 @@ class MoreFragment : Fragment() {
     var aboutAPIClicked = false
     var settingClicked = false
 
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -25,7 +27,10 @@ class MoreFragment : Fragment() {
     ): View? {
 
         val root = inflater.inflate(R.layout.fragment_more, container, false)
-        makeSeekBar()
+        val aboutAppTitle = root.findViewById<TextView>(R.id.aboutAppTitle)
+        val aboutAPITitle = root.findViewById<TextView>(R.id.aboutAPITitle)
+        val settingsText = root.findViewById<TextView>(R.id.settingsText)
+//        makeSeekBar()
         aboutAppTitle.setOnClickListener {
             makeViewsDisappear()
             if (aboutAppClicked) {
@@ -33,7 +38,8 @@ class MoreFragment : Fragment() {
             } else {
                 aboutAppText.visibility = View.VISIBLE
                 aboutAppView.visibility = View.VISIBLE
-                aboutAppTitle.background = resources.getDrawable(R.drawable.about_rectangle_clicked, null)
+                aboutAppTitle.background =
+                    resources.getDrawable(R.drawable.about_rectangle_clicked, null)
                 aboutAppClicked = true;
             }
         }
@@ -42,10 +48,11 @@ class MoreFragment : Fragment() {
             makeViewsDisappear()
             if (aboutAPIClicked) {
                 aboutAPIClicked = false
-            }else{
+            } else {
                 aboutAPIText.visibility = View.VISIBLE
                 aboutAPIView.visibility = View.VISIBLE
-                aboutAPITitle.background = resources.getDrawable(R.drawable.about_rectangle_clicked, null)
+                aboutAPITitle.background =
+                    resources.getDrawable(R.drawable.about_rectangle_clicked, null)
                 aboutAPIClicked = true
             }
         }
@@ -54,10 +61,11 @@ class MoreFragment : Fragment() {
             makeViewsDisappear()
             if (settingClicked) {
                 settingClicked = false
-            }else{
+            } else {
                 seekBarLayout.visibility = View.VISIBLE
                 settingsView.visibility = View.VISIBLE
-                settingsText.background = resources.getDrawable(R.drawable.about_rectangle_clicked, null)
+                settingsText.background =
+                    resources.getDrawable(R.drawable.about_rectangle_clicked, null)
                 settingClicked = true
             }
         }

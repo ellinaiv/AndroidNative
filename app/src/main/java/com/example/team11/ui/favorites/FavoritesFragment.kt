@@ -31,6 +31,7 @@ class FavoritesFragment : Fragment() {
             recycler_view.layoutManager = layoutManager as RecyclerView.LayoutManager?
             recycler_view.adapter = ListAdapter(favoritePlaces, context!!, viewModel, true)
         })
+
         return root
     }
 }
