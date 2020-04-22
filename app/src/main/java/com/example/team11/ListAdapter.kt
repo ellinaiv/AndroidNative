@@ -10,6 +10,7 @@ import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
+import com.example.team11.Repository.PlaceRepository
 import com.example.team11.viewmodels.FavoritePlacesActivityViewModel
 import com.example.team11.viewmodels.PlaceActivityViewModel
 import com.example.team11.viewmodels.PlacesListActivityViewModel
@@ -50,6 +51,7 @@ class ListAdapter(private val myDataset: List<Place>, val context: Context,
         holder.itemName.text = myDataset[position].name
         holder.itemTempWater.text = myDataset[position].temp.toString() + "°C"
         holder.itemTempAir.text = "no data"
+        //holder.itemTempAir.text = PlaceRepository.getInstance().getWeather(myDataset[position])
 
 
        holder.itemView.setOnClickListener{

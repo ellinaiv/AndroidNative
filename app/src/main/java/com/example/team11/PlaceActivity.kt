@@ -38,6 +38,7 @@ class PlaceActivity : AppCompatActivity() {
         viewModel.place!!.observe(this, Observer { place ->
             //Skriver ut slik at vi kan se om vi har riktig badestrand
             Log.d("tagPlace", place.toString())
+            PlaceRepository.getInstance().getWeather(place)
             makeAboutPage(place, savedInstanceState)
         })
 
