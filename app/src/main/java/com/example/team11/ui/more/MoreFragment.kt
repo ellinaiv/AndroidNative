@@ -27,10 +27,12 @@ class MoreFragment : Fragment() {
     ): View? {
 
         val root = inflater.inflate(R.layout.fragment_more, container, false)
+
         val aboutAppTitle = root.findViewById<TextView>(R.id.aboutAppTitle)
         val aboutAPITitle = root.findViewById<TextView>(R.id.aboutAPITitle)
         val settingsText = root.findViewById<TextView>(R.id.settingsText)
-//        makeSeekBar()
+
+        makeSeekBar(root)
         aboutAppTitle.setOnClickListener {
             makeViewsDisappear()
             if (aboutAppClicked) {
@@ -99,21 +101,25 @@ class MoreFragment : Fragment() {
     /**
      * Logikken til seek baren ligger her
      */
-    private fun makeSeekBar(){
-        seek_bar.progress = PersonalPreference.waterTempMid
+    private fun makeSeekBar(root: View){
+        val seekBar = root.findViewById<SeekBar>(R.id.seek_bar)
+        val textTempLow = root.findViewById<TextView>(R.id.textTempLow)
+        val textTempHigh = root.findViewById<TextView>(R.id.textTempHigh)
+
+        seekBar.progress = PersonalPreference.waterTempMid
         val degreeLow = getString(R.string.tempC, PersonalPreference.waterTempLow)
         val degreeHigh = getString(R.string.tempC, PersonalPreference.waterTempHigh)
         textTempLow.text = degreeLow
         textTempHigh.text = degreeHigh
-        seek_bar.max = PersonalPreference.waterTempHigh
+        seekBar.max = PersonalPreference.waterTempHigh
 
-        seek_bar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+        seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seek: SeekBar,
                                            progress: Int, fromUser: Boolean) {
                 val value = (progress * (seek.width - 2 * seek.thumbOffset)) / seek.max
                 val degreeMid = getString(R.string.tempC, progress)
                 textTempMid.text = degreeMid
-                textTempMid.x = seek_bar.x + value;
+                textTempMid.x = seekBar.x + value;
             }
 
             override fun onStartTrackingTouch(seek: SeekBar) {

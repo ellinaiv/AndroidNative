@@ -1,4 +1,4 @@
-package com.example.team11.ui.fragmentList
+package com.example.team11.ui.placesList
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData

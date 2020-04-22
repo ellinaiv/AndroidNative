@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.team11.ListAdapter
 import com.example.team11.Place
 import com.example.team11.R
-import com.example.team11.ui.fragmentList.PlacesListFragmentViewModel
+import com.example.team11.ui.placesList.PlacesListFragmentViewModel
 import kotlinx.android.synthetic.main.fragment_places_list.*
 import kotlinx.android.synthetic.main.fragment_places_list.searchText
 

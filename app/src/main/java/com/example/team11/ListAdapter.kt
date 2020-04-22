@@ -4,19 +4,13 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.cardview.widget.CardView
-import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
-import com.example.team11.ui.fragmentList.PlacesListFragmentViewModel
-import com.example.team11.viewmodels.FavoritePlacesActivityViewModel
+import com.example.team11.ui.placesList.PlacesListFragmentViewModel
 import com.example.team11.viewmodels.FavoritesFragmentViewModel
-import com.example.team11.viewmodels.PlaceActivityViewModel
-import com.example.team11.viewmodels.PlacesListActivityViewModel
-import com.google.android.material.internal.ContextUtils.getActivity
 
 /*
  * List adapter viser informasjon på de forskjellige cardsViews.
