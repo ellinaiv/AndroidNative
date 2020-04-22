@@ -46,7 +46,7 @@ class MainActivityOld : AppCompatActivity() {
             startActivity(intent)
         }
         buttonFilter.setOnClickListener {
-            val intent = Intent(this, FilterActivity::class.java).apply{
+            val intent = Intent(this, MoreActivity::class.java).apply{
             }
             startActivity(intent)
         }
