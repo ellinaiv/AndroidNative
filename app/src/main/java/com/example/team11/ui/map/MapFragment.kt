@@ -11,7 +11,7 @@ import android.view.ViewGroup
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.example.team11.Place
 import com.example.team11.PlaceActivity
 import com.example.team11.R
@@ -51,7 +51,7 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
     ): View? {
 
         mapFragmentViewModel =
-            ViewModelProviders.of(this).get(MapFragmentViewModel::class.java)
+            ViewModelProvider(this).get(MapFragmentViewModel::class.java)
 
         val root = inflater.inflate(R.layout.fragment_map, container, false)
         mapFragmentViewModel.places!!.observe(viewLifecycleOwner, Observer {places->
@@ -116,13 +116,11 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
      * @return Boolean: true, hvis det er et sted vi kan trykke på, false ellers
      */
     private fun handleClickIcon(screenPoint: PointF): Boolean{
-        Log.d("tag", "håndterer det")
         val features = filterLayer(screenPoint)
         if(features.isNotEmpty()){
             val feature = features[0]
             val place = mapFragmentViewModel.places!!.value!!.filter {
                 it.id == (feature.getNumberProperty(propertyId).toInt()) }[0]
-            Log.d("tag", place.toString())
             showPlace(place)
             return true
         }
@@ -209,9 +207,7 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
     
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d("TAG", "HEI")
         mapView = view.findViewById(R.id.mapView)
-        Log.d("TAG", mapView.toString())
         mapView!!.onCreate(savedInstanceState)
 
     }

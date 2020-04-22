@@ -1,7 +1,6 @@
 package com.example.team11.ui.more
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -79,7 +78,7 @@ class MoreFragment : Fragment() {
      * Nullstriller hele activiten (med tanke på viewene).
      */
     private fun makeViewsDisappear(){
-        Log.d("TAG", "FORSVINNER")
+
         aboutAppText.visibility = View.GONE
         aboutAPIText.visibility = View.GONE
         seekBarLayout.visibility = View.GONE
