@@ -226,8 +226,8 @@ class PlaceRepository private constructor() {
             override fun onResponse(call: Call<WeatherForecast>, response: Response<WeatherForecast>) {
                 if (response.isSuccessful){
                     Log.v(tag, response.body().toString())
-                    val temp = response.body()?.weatherForecast?.weatherForecastTimeSlot?.get(0)?.forecastInfo?.temp?.value
-                    Log.v(tag, temp)
+                    val temp = response.body()?.weatherForecastTimeSlot?.get(0)?.types?.instantWeatherForecast?.details?.temp
+                    Log.v(tag, temp.toString())
                 }
             }
             override fun onFailure(call: Call<WeatherForecast>, t: Throwable) {

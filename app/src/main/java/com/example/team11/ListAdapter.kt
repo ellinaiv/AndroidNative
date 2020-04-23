@@ -51,7 +51,7 @@ class ListAdapter(private val myDataset: List<Place>, val context: Context,
         holder.itemName.text = myDataset[position].name
         holder.itemTempWater.text = myDataset[position].temp.toString() + "°C"
         holder.itemTempAir.text = "no data"
-        //holder.itemTempAir.text = PlaceRepository.getInstance().getWeather(myDataset[position])
+        holder.itemTempAir.text = PlaceRepository.getInstance().getWeather(myDataset[position])
 
 
        holder.itemView.setOnClickListener{
