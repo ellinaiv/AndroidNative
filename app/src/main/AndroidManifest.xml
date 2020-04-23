@@ -15,7 +15,7 @@
         <activity android:name=".FavoritePlacesActivity"></activity>
         <activity android:name=".MapActivity" />
         <activity android:name=".DirectionActivity" />
-        <activity android:name=".FilterActivity" />
+        <activity android:name=".MoreActivity" />
         <activity android:name=".PlaceActivity" />
         <activity android:name=".PlacesListActivity" />
         <activity android:name=".MainActivity">
