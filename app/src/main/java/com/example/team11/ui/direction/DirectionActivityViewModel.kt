@@ -1,4 +1,4 @@
-package com.example.team11.viewmodels
+package com.example.team11.ui.direction
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

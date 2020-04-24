@@ -2,7 +2,7 @@ package com.example.team11.Repository
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.example.team11.Forecast
+import com.example.team11.valueObjects.Forecast
 import com.example.team11.Place
 import com.example.team11.Transporatation
 import com.github.kittinunf.fuel.Fuel

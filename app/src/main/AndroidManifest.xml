@@ -15,14 +15,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <!-- android:theme="@style/Theme.AppCompat.Light.NoActionBar"-->
-        <activity android:name=".MapActivity" />
-        <activity android:name=".DirectionActivity" />
-        <activity android:name=".MoreActivity" />
-        <activity android:name=".PlaceActivity" />
-        <activity android:name=".PlacesListActivity" />
-        <activity android:name=".FavoritePlacesActivity" />
-        <activity android:name=".MainActivityOld"/>
-        <activity android:name=".MainActivity">
+        <activity android:name=".depricated.MapActivity" />
+        <activity android:name=".ui.direction.DirectionActivity" />
+        <activity android:name=".depricated.MoreActivity" />
+        <activity android:name=".ui.place.PlaceActivity" />
+        <activity android:name=".depricated.PlacesListActivity" />
+        <activity android:name=".depricated.FavoritePlacesActivity" />
+        <activity android:name=".depricated.MainActivityOld"/>
+        <activity android:name=".ui.bottomNavigation.MainActivity">
         <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
