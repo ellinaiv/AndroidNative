@@ -184,8 +184,8 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
                 }
 
                 val currentRoute = response.body()!!.routes()[0]
-                val stringD = "Lengde: " + viewModel.convertToRightDistance(currentRoute.distance()!!)
-                val stringT = "\nTid: " + viewModel.convertFromSecondsToHoursAndMinutes(currentRoute.duration()!!)
+                val stringD = "Lengde: " + viewModel.convertToRightDistance(currentRoute.distance())
+                val stringT = "\nTid: " + viewModel.convertFromSecondsToHoursAndMinutes(currentRoute.duration())
                 Toast.makeText(this@DirectionActivity, stringD + stringT, Toast.LENGTH_LONG).show()
 
                 mapboxMap.getStyle { style ->

@@ -49,7 +49,10 @@ class DirectionActivityViewModel: ViewModel() {
      * @param sec: tid oppgitt i sekunder
      * @return String representasjon av timer og minutter
      */
-    fun convertFromSecondsToHoursAndMinutes(sec: Double): String{
+    fun convertFromSecondsToHoursAndMinutes(sec: Double?): String{
+        if(sec == null){
+            return "kunne ikke finne hvor lang tid det tar å reise"
+        }
         val hoursAndMinutes = (sec/3600)
         var hours = hoursAndMinutes.roundToInt()
         if(hoursAndMinutes < hours){
@@ -74,7 +77,10 @@ class DirectionActivityViewModel: ViewModel() {
      * @param meters: lengden på distansen
      * @return String representasjon av distansen
      */
-    fun convertToRightDistance(meters: Double): String{
+    fun convertToRightDistance(meters: Double?): String{
+        if(meters == null){
+            return "kunne ikke finne lengden på distansen "
+        }
         val metersInt = meters.roundToInt()
         val cntDigits = digitsInInt(metersInt)
         if(cntDigits < 4){
@@ -85,5 +91,9 @@ class DirectionActivityViewModel: ViewModel() {
         return "%.1f km".format(km)
     }
 
+    /**
+     * @param int tallet
+     * @return antall tall i tallet 
+     */
     private fun digitsInInt(int: Int) = int.toString().toList().size
 }
