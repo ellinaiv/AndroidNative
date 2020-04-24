@@ -1,6 +1,5 @@
 package com.example.team11.ui.direction
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -57,7 +56,6 @@ class DirectionActivityViewModel: ViewModel() {
             hours -= 1
         }
         val minutes = ((hoursAndMinutes - hours)*60).roundToInt()
-
         if(hours == 0){
             return "$minutes minutter"
         }
@@ -84,7 +82,7 @@ class DirectionActivityViewModel: ViewModel() {
         }
 
         val km = metersInt.toDouble()/1000
-        return "%.2f km".format(km)
+        return "%.1f km".format(km)
     }
 
     private fun digitsInInt(int: Int) = int.toString().toList().size
