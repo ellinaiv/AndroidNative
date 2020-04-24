@@ -1,4 +1,4 @@
-package com.example.team11
+package com.example.team11.ui.placesList
 
 import android.content.Context
 import android.content.Intent
@@ -9,7 +9,9 @@ import android.widget.*
 import androidx.cardview.widget.CardView
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
-import com.example.team11.ui.placesList.PlacesListFragmentViewModel
+import com.example.team11.Place
+import com.example.team11.R
+import com.example.team11.ui.place.PlaceActivity
 import com.example.team11.viewmodels.FavoritesFragmentViewModel
 
 /*

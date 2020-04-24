@@ -1,4 +1,4 @@
-package com.example.team11
+package com.example.team11.ui.direction
 
 import android.annotation.SuppressLint
 import android.graphics.BitmapFactory
@@ -11,7 +11,9 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
-import com.example.team11.viewmodels.DirectionActivityViewModel
+import com.example.team11.Place
+import com.example.team11.R
+import com.example.team11.Transporatation
 import com.mapbox.android.core.permissions.PermissionsListener
 import com.mapbox.android.core.permissions.PermissionsManager
 import com.mapbox.api.directions.v5.DirectionsCriteria
@@ -64,9 +66,12 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
         viewModel.place!!.observe(this, Observer { place ->
             viewModel.wayOfTransporatation!!.observe(this, Observer { way->
                 aboutDirectionText.text = when(way) {
-                    Transporatation.BIKE -> getString(R.string.bikeDirection, place.name)
-                    Transporatation.CAR -> getString(R.string.carDirection, place.name)
-                    Transporatation.WALK -> getString(R.string.walkDirection, place.name)
+                    Transporatation.BIKE -> getString(
+                        R.string.bikeDirection, place.name)
+                    Transporatation.CAR -> getString(
+                        R.string.carDirection, place.name)
+                    Transporatation.WALK -> getString(
+                        R.string.walkDirection, place.name)
                 }
                 this.way = way
                 makeMap(place, savedInstanceState)
@@ -79,7 +84,7 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
      * @param place: Stedet som skal vises på kartet
      * @param savedInstanceState: mapView trenger denne til onCreate metoden sin
      */
-    private fun makeMap(place: Place,  savedInstanceState: Bundle?) {
+    private fun makeMap(place: Place, savedInstanceState: Bundle?) {
         val mapView = findViewById<MapView>(R.id.mapView)
         mapView.onCreate(savedInstanceState)
         mapView.getMapAsync { mapboxMap ->
@@ -207,7 +212,9 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
             val customLocationComponentOptions =
                 LocationComponentOptions.builder(this)
                     .trackingGesturesManagement(true)
-                    .accuracyColor(ContextCompat.getColor(this@DirectionActivity, R.color.mapbox_blue))
+                    .accuracyColor(ContextCompat.getColor(this@DirectionActivity,
+                        R.color.mapbox_blue
+                    ))
                     .build()
 
             val locationComponentActivityOptions =
