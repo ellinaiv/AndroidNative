@@ -1,7 +1,6 @@
-package com.example.team11
+package com.example.team11.valueObjects
 
 import com.google.gson.annotations.SerializedName
-import java.sql.Time
 
 // TODO("Burde disse ligge i SeaCurrent og vi kaller den APIModels? Eller burde vi har to ulike filer?")
 

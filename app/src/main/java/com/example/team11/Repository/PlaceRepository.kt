@@ -1,10 +1,11 @@
 package com.example.team11.Repository
 
 import android.util.Log
-import android.util.Log.i
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.team11.*
+import com.example.team11.api.ApiClient
+import com.example.team11.valueObjects.Forecast
+import com.example.team11.valueObjects.WeatherForecast
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.coroutines.awaitString
 import com.google.gson.Gson
@@ -15,7 +16,6 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.StringReader
-import java.util.logging.Logger
 
 class PlaceRepository private constructor() {
 
@@ -220,7 +220,8 @@ class PlaceRepository private constructor() {
         val data = MutableLiveData<WeatherForecast>()
         val temp = null;
 
-        val call=ApiClient.build()?.getWeather(place.lat, place.lng)
+        val call=
+            ApiClient.build()?.getWeather(place.lat, place.lng)
 
         call?.enqueue(object : Callback<WeatherForecast>{
             override fun onResponse(call: Call<WeatherForecast>, response: Response<WeatherForecast>) {

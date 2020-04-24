@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PlacesListActivity"
+    tools:context=".userInterface.PlacesListActivity"
     android:background="@color/backgroundCardsDark">
 
     <androidx.recyclerview.widget.RecyclerView

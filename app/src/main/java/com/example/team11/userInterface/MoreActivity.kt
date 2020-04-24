@@ -1,10 +1,12 @@
-package com.example.team11
+package com.example.team11.userInterface
 
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
+import com.example.team11.PersonalPreference
+import com.example.team11.R
 import kotlinx.android.synthetic.main.activity_more.*
 
 
@@ -84,8 +86,14 @@ class MoreActivity : AppCompatActivity() {
      */
     private fun makeSeekBar(){
         seek_bar.progress = PersonalPreference.waterTempMid
-        val degreeLow = getString(R.string.tempC, PersonalPreference.waterTempLow)
-        val degreeHigh = getString(R.string.tempC, PersonalPreference.waterTempHigh)
+        val degreeLow = getString(
+            R.string.tempC,
+            PersonalPreference.waterTempLow
+        )
+        val degreeHigh = getString(
+            R.string.tempC,
+            PersonalPreference.waterTempHigh
+        )
         textTempLow.text = degreeLow
         textTempHigh.text = degreeHigh
         seek_bar.max = PersonalPreference.waterTempHigh

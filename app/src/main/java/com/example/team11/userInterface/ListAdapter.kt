@@ -1,18 +1,17 @@
-package com.example.team11
+package com.example.team11.userInterface
 
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.cardview.widget.CardView
-import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
+import com.example.team11.Place
+import com.example.team11.R
 import com.example.team11.Repository.PlaceRepository
 import com.example.team11.viewmodels.FavoritePlacesActivityViewModel
-import com.example.team11.viewmodels.PlaceActivityViewModel
 import com.example.team11.viewmodels.PlacesListActivityViewModel
 
 /*

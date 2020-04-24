@@ -12,13 +12,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".FavoritePlacesActivity"></activity>
-        <activity android:name=".MapActivity" />
-        <activity android:name=".DirectionActivity" />
-        <activity android:name=".MoreActivity" />
-        <activity android:name=".PlaceActivity" />
-        <activity android:name=".PlacesListActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".userInterface.FavoritePlacesActivity"></activity>
+        <activity android:name=".userInterface.MapActivity" />
+        <activity android:name=".userInterface.DirectionActivity" />
+        <activity android:name=".userInterface.MoreActivity" />
+        <activity android:name=".userInterface.PlaceActivity" />
+        <activity android:name=".userInterface.PlacesListActivity" />
+        <activity android:name=".userInterface.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

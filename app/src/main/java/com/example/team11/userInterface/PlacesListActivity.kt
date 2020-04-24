@@ -1,4 +1,4 @@
-package com.example.team11
+package com.example.team11.userInterface
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -8,6 +8,8 @@ import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.team11.Place
+import com.example.team11.R
 import com.example.team11.viewmodels.PlacesListActivityViewModel
 import kotlinx.android.synthetic.main.activity_places_list.*
 
@@ -28,7 +30,12 @@ class PlacesListActivity : AppCompatActivity() {
 
         viewModel.places!!.observe(this, Observer { places ->
             recycler_view.layoutManager = layoutManager as RecyclerView.LayoutManager?
-            recycler_view.adapter = ListAdapter(places, this, viewModel, false)
+            recycler_view.adapter = ListAdapter(
+                places,
+                this,
+                viewModel,
+                false
+            )
 
             val searchBar = findViewById<EditText>(R.id.searchText)
             searchBar.doOnTextChanged { text, _, _, _ ->
@@ -44,7 +51,12 @@ class PlacesListActivity : AppCompatActivity() {
      */
     private fun search(name: String, places: List<Place>){
         filterPlaces = places.filter{ it.name.contains(name.toString(), ignoreCase = true)}
-        recycler_view.adapter = ListAdapter(filterPlaces, this, viewModel, false)
+        recycler_view.adapter = ListAdapter(
+            filterPlaces,
+            this,
+            viewModel,
+            false
+        )
     }
 }
 

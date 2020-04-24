@@ -1,10 +1,11 @@
-package com.example.team11
+package com.example.team11.userInterface
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import com.example.team11.*
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserFactory
 import java.io.StringReader
@@ -98,7 +99,14 @@ class MainActivity : AppCompatActivity() {
                         xpp.next()
                         long = xpp.text
                         xpp.next()
-                        places.add(Place(id++, name, lat.toDouble(), long.toDouble()))
+                        places.add(
+                            Place(
+                                id++,
+                                name,
+                                lat.toDouble(),
+                                long.toDouble()
+                            )
+                        )
                     }
 
                     eventType = xpp.next()

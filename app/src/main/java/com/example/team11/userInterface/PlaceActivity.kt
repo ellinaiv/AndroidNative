@@ -1,17 +1,20 @@
-package com.example.team11
+package com.example.team11.userInterface
 
 import android.content.Intent
 import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.ToggleButton
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
+import com.example.team11.PersonalPreference
+import com.example.team11.Place
+import com.example.team11.R
 import com.example.team11.Repository.PlaceRepository
+import com.example.team11.Transporatation
 import com.example.team11.viewmodels.PlaceActivityViewModel
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.mapboxsdk.Mapbox
@@ -23,7 +26,6 @@ import com.mapbox.mapboxsdk.maps.Style
 import com.mapbox.mapboxsdk.style.layers.PropertyFactory
 import com.mapbox.mapboxsdk.style.layers.SymbolLayer
 import com.mapbox.mapboxsdk.style.sources.GeoJsonSource
-import kotlinx.android.synthetic.main.activity_place.*
 
 class PlaceActivity : AppCompatActivity() {
     private val viewModel: PlaceActivityViewModel by viewModels{ PlaceActivityViewModel.InstanceCreator() }
@@ -91,7 +93,8 @@ class PlaceActivity : AppCompatActivity() {
         }
 
         namePlace.text = place.name
-        tempWater.text = String.format(getString(R.string.tempC), PersonalPreference.waterTempMid, place.temp)
+        tempWater.text = String.format(getString(R.string.tempC),
+            PersonalPreference.waterTempMid, place.temp)
 
         makeMap(place, savedInstanceState)
     }
