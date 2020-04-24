@@ -70,8 +70,8 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
                         R.string.bikeDirection, place.name)
                     Transporatation.CAR -> getString(
                         R.string.carDirection, place.name)
-                    Transporatation.WALK -> getString(
-                        R.string.walkDirection, place.name)
+                    Transporatation.WALK -> getString(R.string.walkDirection, place.name)
+                    else -> getString(R.string.bikeDirection, place.name)
                 }
                 this.way = way
                 makeMap(place, savedInstanceState)
@@ -184,7 +184,9 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
                 }
 
                 val currentRoute = response.body()!!.routes()[0]
-
+                val stringD = "Lengde: " + viewModel.convertToRightDistance(currentRoute.distance()!!)
+                val stringT = "\nTid: " + viewModel.convertFromSecondsToHoursAndMinutes(currentRoute.duration()!!)
+                Toast.makeText(this@DirectionActivity, stringD + stringT, Toast.LENGTH_LONG).show()
 
                 mapboxMap.getStyle { style ->
                     val source = style.getSourceAs<GeoJsonSource>(ROUTE_SOURCE_ID)
