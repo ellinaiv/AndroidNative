@@ -32,6 +32,7 @@ class PlaceActivity : AppCompatActivity() {
         Mapbox.getInstance(this, getString(R.string.access_token))
         setContentView(R.layout.activity_place)
         Log.d("tagPlace", "kommet inn ")
+        supportActionBar!!.hide()
 
         //Observerer stedet som er valgt
         viewModel.place!!.observe(this, Observer { place ->

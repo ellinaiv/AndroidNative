@@ -2,17 +2,15 @@ package com.example.team11
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.cardview.widget.CardView
-import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
-import com.example.team11.viewmodels.FavoritePlacesActivityViewModel
-import com.example.team11.viewmodels.PlaceActivityViewModel
-import com.example.team11.viewmodels.PlacesListActivityViewModel
+import com.example.team11.ui.placesList.PlacesListFragmentViewModel
+import com.example.team11.viewmodels.FavoritesFragmentViewModel
 
 /*
  * List adapter viser informasjon på de forskjellige cardsViews.
@@ -43,9 +41,6 @@ class ListAdapter(private val myDataset: List<Place>, val context: Context,
     }
 
 
-    /*
-     * Vi har for lite data nå. Burde se på APIer og ta ut mer info om badeplassene
-     */
     override fun onBindViewHolder(holder: MyViewHolder, position: Int){
         holder.itemName.text = myDataset[position].name
         holder.itemTempWater.text = myDataset[position].temp.toString() + "°C"
@@ -54,14 +49,16 @@ class ListAdapter(private val myDataset: List<Place>, val context: Context,
 
        holder.itemView.setOnClickListener{
            if(favorite){
-               val favoritePlacesActivityViewModel = viewModel as FavoritePlacesActivityViewModel
-               favoritePlacesActivityViewModel.changeCurrentPlace(myDataset[position])
+               val favoritePlacesViewModel = viewModel as FavoritesFragmentViewModel
+               favoritePlacesViewModel.changeCurrentPlace(myDataset[position])
            }else{
-               val placesListActivityViewModel = viewModel as PlacesListActivityViewModel
+               val placesListActivityViewModel = viewModel as PlacesListFragmentViewModel
                placesListActivityViewModel.changeCurrentPlace(myDataset[position])
            }
-            val intent = Intent(context, PlaceActivity::class.java)
-            context.startActivity(intent)
+
+           Log.d("in holder", "come here when your click on cards")
+           val intent = Intent(context, PlaceActivity::class.java)
+           context.startActivity(intent)
         }
 
     }

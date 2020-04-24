@@ -46,4 +46,12 @@
         app:layout_constraintTop_toBottomOf="@id/buttonList"
 
         tools:layout_editor_absoluteX="0dp" />
+
+    <Button
+        android:id="@+id/buttonBottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="BottomNavigation"
+        app:layout_constraintBottom_toTopOf="@+id/buttonMap"
+        tools:layout_editor_absoluteX="0dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
