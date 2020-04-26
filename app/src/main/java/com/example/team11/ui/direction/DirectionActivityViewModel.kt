@@ -5,14 +5,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.team11.Place
 import com.example.team11.Repository.PlaceRepository
-import com.example.team11.Transporatation
+import com.example.team11.Transportation
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Point
 import kotlin.math.roundToInt
 
 class DirectionActivityViewModel: ViewModel() {
     var place: MutableLiveData<Place>? = null
-    var wayOfTransporatation: MutableLiveData<Transporatation>? = null
+    var wayOfTransportation: MutableLiveData<Transportation>? = null
     private var placeRepository: PlaceRepository? = null
 
 
@@ -23,7 +23,7 @@ class DirectionActivityViewModel: ViewModel() {
         if(place == null){
             placeRepository = PlaceRepository.getInstance()
             place = placeRepository!!.getCurrentPlace()
-            wayOfTransporatation = placeRepository!!.getWayOfTransportation()
+            wayOfTransportation = placeRepository!!.getWayOfTransportation()
         }
     }
 
@@ -43,15 +43,15 @@ class DirectionActivityViewModel: ViewModel() {
     fun getFeature(place: Place) = Feature.fromGeometry(Point.fromLngLat(place.lng, place.lat))!!
 
     /**
-     * Konverter en tid gitt i sekunder til og bli til en string representasjon
-     * av timer og minutter. Hvis det tar 0 timer viser man kun mange minutter det
-     * tar, og minutter er 0 viser man det kun i timer.
+     * Konverter en gitt tid i sekunder til en string-representasjon
+     * i form av timer og minutter. Hvis det tar 0 timer viser man kun antall minutter det
+     * tar, og dersom minutter er 0 viser man det kun i timer.
      * @param sec: tid oppgitt i sekunder
      * @return String representasjon av timer og minutter
      */
-    fun convertFromSecondsToHoursAndMinutes(sec: Double?): String{
+    fun convertTime(sec: Double?): String{
         if(sec == null){
-            return "kunne ikke finne hvor lang tid det tar å reise"
+            return "Kunne ikke finne reisetid"
         }
         val hoursAndMinutes = (sec/3600)
         var hours = hoursAndMinutes.roundToInt()
@@ -77,9 +77,9 @@ class DirectionActivityViewModel: ViewModel() {
      * @param meters: lengden på distansen
      * @return String representasjon av distansen
      */
-    fun convertToRightDistance(meters: Double?): String{
+    fun convertToCorrectDistance(meters: Double?): String{
         if(meters == null){
-            return "kunne ikke finne lengden på distansen "
+            return "Kunne ikke finne reiselengde"
         }
         val metersInt = meters.roundToInt()
         val cntDigits = digitsInInt(metersInt)
