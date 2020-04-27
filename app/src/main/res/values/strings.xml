@@ -28,6 +28,9 @@
         unchanged. It was popularised in the 1960s with the release of Letraset sheets containing
         Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker
         including versions of Lorem Ipsum.</string>
+    <string name="titleRoute">Fra <b>din posisjon</b> til <b>%1$s</b></string>
+    <string name="distance">Distance:</string>
+    <string name="time">Beregnet resietid:</string>
 
     <!--    buttons-->
     <string name="back">Trykk her for å gå tilbake</string>

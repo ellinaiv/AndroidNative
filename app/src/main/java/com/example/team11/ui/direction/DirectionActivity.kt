@@ -2,14 +2,16 @@ package com.example.team11.ui.direction
 
 import android.annotation.SuppressLint
 import android.graphics.BitmapFactory
-import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.cardview.widget.CardView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import com.example.team11.Place
@@ -60,7 +62,6 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
         setContentView(R.layout.activity_direction)
         supportActionBar!!.hide()
         val backButton = findViewById<ImageButton>(R.id.backButton)
-        val aboutDirectionText = findViewById<TextView>(R.id.aboutDirectionText)
         backButton.setOnClickListener {
             finish()
         }
@@ -68,14 +69,6 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
         //Observerer stedet som er valgt
         viewModel.place!!.observe(this, Observer { place ->
             viewModel.wayOfTransportation!!.observe(this, Observer { way->
-                aboutDirectionText.text = when(way) {
-                    Transportation.BIKE -> getString(
-                        R.string.bikeDirection, place.name)
-                    Transportation.CAR -> getString(
-                        R.string.carDirection, place.name)
-                    Transportation.WALK -> getString(R.string.walkDirection, place.name)
-                    else -> getString(R.string.bikeDirection, place.name)
-                }
                 this.way = way
                 makeMap(place, savedInstanceState)
             })
@@ -120,7 +113,8 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
             PropertyFactory.lineCap(Property.LINE_CAP_ROUND),
             PropertyFactory.lineJoin(Property.LINE_JOIN_ROUND),
             PropertyFactory.lineWidth(5f),
-            PropertyFactory.lineColor(Color.parseColor("#009688"))
+            PropertyFactory.lineColor(ContextCompat
+                .getColor(this, R.color.pinkIconColor))
         )
 
         style.addLayer(routeLayer)
@@ -190,9 +184,21 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
                 }
 
                 val currentRoute = response.body()!!.routes()[0]
+
+                val layoutAboutRoute = findViewById<CardView>(R.id.layoutAboutRoute)
+                val textTitleRoute = findViewById<TextView>(R.id.textTitleRoute)
+                val textDistance = findViewById<TextView>(R.id.textDistance)
+                val textTime = findViewById<TextView>(R.id.textTime)
+
                 val stringD = "Lengde: " + viewModel.convertToCorrectDistance(currentRoute.distance())
                 val stringT = "\nTid: " + viewModel.convertTime(currentRoute.duration())
-                Toast.makeText(this@DirectionActivity, stringD + stringT, Toast.LENGTH_LONG).show()
+
+                textTitleRoute.text = getString(R.string.titleRoute, place.name)
+                textDistance.text = viewModel.convertToCorrectDistance(currentRoute.distance())
+                textTime.text = viewModel.convertTime(currentRoute.duration())
+                layoutAboutRoute.visibility = View.VISIBLE
+
+
 
                 mapboxMap.getStyle { style ->
                     val source = style.getSourceAs<GeoJsonSource>(ROUTE_SOURCE_ID)
