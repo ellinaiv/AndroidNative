@@ -18,7 +18,6 @@ class MoreFragment : Fragment() {
 
     var aboutAppClicked = false
     var aboutAPIClicked = false
-    var settingClicked = false
 
 
     override fun onCreateView(
@@ -31,9 +30,7 @@ class MoreFragment : Fragment() {
 
         val aboutAppTitle = root.findViewById<TextView>(R.id.aboutAppTitle)
         val aboutAPITitle = root.findViewById<TextView>(R.id.aboutAPITitle)
-        val settingsText = root.findViewById<TextView>(R.id.settingsText)
 
-        makeSeekBar(root)
         aboutAppTitle.setOnClickListener {
             makeViewsDisappear()
             if (aboutAppClicked) {
@@ -52,27 +49,13 @@ class MoreFragment : Fragment() {
             if (aboutAPIClicked) {
                 aboutAPIClicked = false
             } else {
+                aboutAPITitle.setTextColor(ContextCompat.getColor(this.context!!, R.color.whiteTextColor))
                 aboutAPIText.visibility = View.VISIBLE
-                aboutAPIView.visibility = View.VISIBLE
                 aboutAPITitle.background =
                     resources.getDrawable(R.drawable.about_rectangle_clicked, null)
                 aboutAPIClicked = true
             }
         }
-
-        settingsText.setOnClickListener {
-            makeViewsDisappear()
-            if (settingClicked) {
-                settingClicked = false
-            } else {
-                seekBarLayout.visibility = View.VISIBLE
-                settingsView.visibility = View.VISIBLE
-                settingsText.background =
-                    resources.getDrawable(R.drawable.about_rectangle_clicked, null)
-                settingClicked = true
-            }
-        }
-
         return root
     }
 
@@ -80,58 +63,14 @@ class MoreFragment : Fragment() {
      * Nullstriller hele activiten (med tanke på viewene).
      */
     private fun makeViewsDisappear(){
-
         aboutAppText.visibility = View.GONE
         aboutAPIText.visibility = View.GONE
-        seekBarLayout.visibility = View.GONE
-
 
         aboutAppTitle.background = resources.getDrawable(R.drawable.about_rectangle, null)
         aboutAPITitle.background = resources.getDrawable(R.drawable.about_rectangle, null)
-        settingsText.background = resources.getDrawable(R.drawable.about_rectangle, null)
 
         aboutAppTitle.setTextColor(ContextCompat.getColor(this.context!!, R.color.mainTextColor))
-        aboutAPIView.visibility = View.GONE
-        settingsView.visibility = View.GONE
-    }
-
-
-    fun progressCalculation(){
-        TODO("Regne om verdien til og fra progress")
-    }
-
-    /**
-     * Logikken til seek baren ligger her
-     */
-    private fun makeSeekBar(root: View){
-        val seekBar = root.findViewById<SeekBar>(R.id.seek_bar)
-        val textTempLow = root.findViewById<TextView>(R.id.textTempLow)
-        val textTempHigh = root.findViewById<TextView>(R.id.textTempHigh)
-
-        seekBar.progress = PersonalPreference.waterTempMid
-        val degreeLow = getString(R.string.tempC, PersonalPreference.waterTempLow)
-        val degreeHigh = getString(R.string.tempC, PersonalPreference.waterTempHigh)
-        textTempLow.text = degreeLow
-        textTempHigh.text = degreeHigh
-        seekBar.max = PersonalPreference.waterTempHigh
-
-        seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(seek: SeekBar,
-                                           progress: Int, fromUser: Boolean) {
-                val value = (progress * (seek.width - 2 * seek.thumbOffset)) / seek.max
-                val degreeMid = getString(R.string.tempC, progress)
-                textTempMid.text = degreeMid
-                textTempMid.x = seekBar.x + value;
-            }
-
-            override fun onStartTrackingTouch(seek: SeekBar) {
-                // write custom code for progress is started
-            }
-
-            override fun onStopTrackingTouch(seek: SeekBar) {
-                PersonalPreference.waterTempMid = seek.progress
-            }
-        })
+        aboutAPITitle.setTextColor(ContextCompat.getColor(this.context!!, R.color.mainTextColor))
     }
 
 }
