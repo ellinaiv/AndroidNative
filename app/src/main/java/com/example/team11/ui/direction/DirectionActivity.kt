@@ -49,6 +49,7 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
     private val viewModel: DirectionActivityViewModel by viewModels{ DirectionActivityViewModel.InstanceCreator() }
     private var permissionManager = PermissionsManager(this)
     private lateinit var mapboxMap: MapboxMap
+    private var mapView: MapView? = null
     private val ROUTE_SOURCE_ID = "ROUTE_SOURCE_ID"
     private var way: Transportation? = null
 
@@ -86,9 +87,9 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
      * @param savedInstanceState: mapView trenger denne til onCreate metoden sin
      */
     private fun makeMap(place: Place, savedInstanceState: Bundle?) {
-        val mapView = findViewById<MapView>(R.id.mapView)
-        mapView.onCreate(savedInstanceState)
-        mapView.getMapAsync { mapboxMap ->
+        mapView = findViewById<MapView>(R.id.mapView)
+        mapView?.onCreate(savedInstanceState)
+        mapView?.getMapAsync { mapboxMap ->
             this.mapboxMap = mapboxMap
             mapboxMap.setStyle(Style.MAPBOX_STREETS)
             mapboxMap.getStyle { style ->
@@ -254,5 +255,35 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
             Toast.makeText(this, getString(R.string.ikkeViseVei), Toast.LENGTH_LONG).show()
             finish()
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        mapView?.onStart()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mapView?.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mapView?.onPause()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        mapView?.onStop()
+    }
+
+    override fun onLowMemory() {
+        super.onLowMemory()
+        mapView?.onLowMemory()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mapView?.onDestroy()
     }
 }
