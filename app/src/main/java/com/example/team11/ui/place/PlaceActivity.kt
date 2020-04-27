@@ -12,7 +12,7 @@ import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.example.team11.Place
 import com.example.team11.R
-import com.example.team11.Transporatation
+import com.example.team11.Transportation
 import com.example.team11.ui.direction.DirectionActivity
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.mapboxsdk.Mapbox
@@ -74,19 +74,19 @@ class PlaceActivity : AppCompatActivity() {
 
         directionBikeButton.setOnClickListener {
             val intent = Intent(this, DirectionActivity::class.java)
-            viewModel.changeWayOfTransportation(Transporatation.BIKE)
+            viewModel.changeWayOfTransportation(Transportation.BIKE)
             startActivity(intent)
         }
 
         directionCarButton.setOnClickListener {
             val intent = Intent(this, DirectionActivity::class.java)
-            viewModel.changeWayOfTransportation(Transporatation.CAR)
+            viewModel.changeWayOfTransportation(Transportation.CAR)
             startActivity(intent)
         }
 
         directionWalkButton.setOnClickListener {
             val intent = Intent(this, DirectionActivity::class.java)
-            viewModel.changeWayOfTransportation(Transporatation.WALK)
+            viewModel.changeWayOfTransportation(Transportation.WALK)
             startActivity(intent)
         }
 
