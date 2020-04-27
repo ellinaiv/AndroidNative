@@ -52,6 +52,7 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
     private var mapView: MapView? = null
     private val ROUTE_SOURCE_ID = "ROUTE_SOURCE_ID"
     private var way: Transportation? = null
+    private var tag = "TAG"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -87,6 +88,7 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
      * @param savedInstanceState: mapView trenger denne til onCreate metoden sin
      */
     private fun makeMap(place: Place, savedInstanceState: Bundle?) {
+        Log.d(tag, "makemap")
         mapView = findViewById<MapView>(R.id.mapView)
         mapView?.onCreate(savedInstanceState)
         mapView?.getMapAsync { mapboxMap ->
@@ -103,6 +105,7 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
                 mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(position), 2)
             }
         }
+        Log.d(tag, "makemapDONE")
     }
 
     /**
@@ -157,6 +160,7 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
      */
     private fun getRoute(place: Place){
         //hentet stedet vi skal bruke
+        Log.d(tag, "getPlace")
         val originLocation = mapboxMap.locationComponent.lastKnownLocation ?: return
         val originPoint = Point.fromLngLat(originLocation.longitude, originLocation.latitude)
         val profile = when(way){
@@ -212,6 +216,7 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
      */
     @SuppressLint("MissingPermission")
     private fun enableLocationComponent(style: Style){
+        Log.d(tag, "enableLocationCOmponent")
         if(PermissionsManager.areLocationPermissionsGranted(this)){
             val customLocationComponentOptions =
                 LocationComponentOptions.builder(this)
