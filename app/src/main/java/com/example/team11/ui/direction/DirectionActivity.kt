@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
@@ -206,7 +207,7 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
 
     /**
      * Finner lokasjonen til brukeren og bestemmer hvordan stilen runt bruker punktet skal være
-     * @param style: stilen sim skal tegnes opp
+     * @param style: stilen som skal tegnes opp
      */
     @SuppressLint("MissingPermission")
     private fun enableLocationComponent(style: Style){
@@ -248,6 +249,7 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
     override fun onPermissionResult(granted: Boolean) {
         if(granted){
             enableLocationComponent(mapboxMap.style!!)
+            getRoute(viewModel.place!!.value!!)
         }else{
             Toast.makeText(this, getString(R.string.ikkeViseVei), Toast.LENGTH_LONG).show()
             finish()
