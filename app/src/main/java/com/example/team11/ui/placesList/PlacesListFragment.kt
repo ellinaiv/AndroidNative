@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.team11.ListAdapter
 import com.example.team11.Place
 import com.example.team11.R
 import kotlinx.android.synthetic.main.fragment_places_list.*
@@ -32,7 +31,13 @@ class PlacesListFragment : Fragment() {
 
         placesListViewModel.places!!.observe(viewLifecycleOwner, Observer { places ->
             recycler_viewPlaces.layoutManager = layoutManager
-            recycler_viewPlaces.adapter = ListAdapter(places, context!!, placesListViewModel, false)
+            recycler_viewPlaces.adapter =
+                ListAdapter(
+                    places,
+                    context!!,
+                    placesListViewModel,
+                    false
+                )
             searchText.doOnTextChanged { text, _, _, _ ->
                 search(text.toString(), places)
             }
@@ -46,7 +51,13 @@ class PlacesListFragment : Fragment() {
      */
     private fun search(name: String, places: List<Place>){
         filterPlaces = places.filter{ it.name.contains(name.toString(), ignoreCase = true)}
-        recycler_viewPlaces.adapter = ListAdapter(filterPlaces, context!!, placesListViewModel, false)
+        recycler_viewPlaces.adapter =
+            ListAdapter(
+                filterPlaces,
+                context!!,
+                placesListViewModel,
+                false
+            )
     }
 
 }
