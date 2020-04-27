@@ -1,10 +1,12 @@
-package com.example.team11
+package com.example.team11.depricated
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import com.example.team11.*
+import com.example.team11.ui.bottomNavigation.MainActivity
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserFactory
 import java.io.StringReader
@@ -13,12 +15,14 @@ import com.github.kittinunf.fuel.coroutines.awaitString
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.runBlocking
 
-class MainActivity : AppCompatActivity() {
+class MainActivityOld : AppCompatActivity() {
 
     private lateinit var places: ArrayList<Place>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        supportActionBar!!.hide()
+
         val urlAPIPlaces = "http://oslokommune.msolution.no/friluft/badetemperaturer.jsp"
         places = getPlaces(urlAPIPlaces)
 
@@ -54,6 +58,10 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        buttonBottom.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
 
 
 
@@ -98,7 +106,14 @@ class MainActivity : AppCompatActivity() {
                         xpp.next()
                         long = xpp.text
                         xpp.next()
-                        places.add(Place(id++, name, lat.toDouble(), long.toDouble()))
+                        places.add(
+                            Place(
+                                id++,
+                                name,
+                                lat.toDouble(),
+                                long.toDouble()
+                            )
+                        )
                     }
 
                     eventType = xpp.next()
@@ -106,14 +121,11 @@ class MainActivity : AppCompatActivity() {
                 }
             } catch (e: Exception) {
                 Log.e(tag, e.message.toString())
-                Toast.makeText(this@MainActivity, "Error", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@MainActivityOld, "Error", Toast.LENGTH_SHORT).show()
             }
         }
         return places
     }
-
-
-
 }
 
 

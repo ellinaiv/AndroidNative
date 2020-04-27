@@ -1,51 +1,32 @@
-package com.example.team11.viewmodels
+package com.example.team11.ui.map
 
-import androidx.lifecycle.MutableLiveData
+import android.util.Log
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import com.example.team11.Place
 import com.example.team11.Repository.PlaceRepository
-import com.example.team11.Transporatation
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Point
 
-class PlaceActivityViewModel: ViewModel() {
-
-    var place: MutableLiveData<Place>? = null
+class MapFragmentViewModel: ViewModel() {
+    var places: MutableLiveData<List<Place>>? = null
     private var placeRepository: PlaceRepository? = null
 
     /**
      * Setter verdier
      */
     init {
-        if(place == null){
+        if(places == null){
             placeRepository = PlaceRepository.getInstance()
-            place = placeRepository!!.getCurrentPlace()
+            places = placeRepository!!.getPlaces()
         }
     }
-
 
     class InstanceCreator : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             return modelClass.getConstructor().newInstance()
         }
-    }
-
-    /**
-     * Funksjonen forteller videre til place repository at det har blitt gjort endringer på
-     * hvilke steder som er favoirutter og ber den om å oppdatere det. Dette må gjøres hver gang
-     * hjertetoggelknappen blir trykket på
-     */
-    fun updateFavoritePlaces(){
-        placeRepository!!.updateFavoritePlaces()
-    }
-
-    /**
-     * Endrer måten brukeren ønsker å komme seg til en strand i repository
-     * @param way: måten brukeren ønsker å komme seg til stranden
-     */
-    fun changeWayOfTransportation(way: Transporatation){
-        placeRepository!!.changeWayOfTransportation(way)
     }
 
     /**
@@ -55,4 +36,14 @@ class PlaceActivityViewModel: ViewModel() {
      * @return en Feature verdi basert på lokasjonen til place
      */
     fun getFeature(place: Place) = Feature.fromGeometry(Point.fromLngLat(place.lng, place.lat))!!
+
+    fun changeCurrentPlace(place: Place){
+        if(placeRepository != null){
+            placeRepository!!.changeCurrentPlace(place)
+        }else{
+            Log.d("ViewModelTag", "finner ikke Placerepository ")
+        }
+    }
+
+
 }

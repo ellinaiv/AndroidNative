@@ -3,7 +3,7 @@
 
     <!--    knapper for midlertidig navigering fra mainActivity (slettes sammen med koden)-->
     <string name="map">Kart</string>
-    <string name="list">list</string>
+    <string name="list">List</string>
 
     <!--    textViews-->
     <string name="tempC">%1$d °C</string>
@@ -52,5 +52,13 @@
     <string name="bikeDirection">Sykkelvei til %1$s</string>
     <string name="carDirection">Bilvei til %1$s</string>
     <string name="walkDirection">Gangvei til %1$s</string>
+    <string name="title_activity_bottom_navigation">BottomNavigation</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_favoritter">FAVORITTER</string>
+    <string name="title_mer">MER</string>
+    <string name="title_list">LISTE</string>
+    <string name="title_map">KART</string>
 
 </resources>

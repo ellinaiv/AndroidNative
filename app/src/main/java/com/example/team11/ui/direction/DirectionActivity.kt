@@ -1,17 +1,20 @@
-package com.example.team11
+package com.example.team11.ui.direction
 
 import android.annotation.SuppressLint
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
-import com.example.team11.viewmodels.DirectionActivityViewModel
+import com.example.team11.Place
+import com.example.team11.R
+import com.example.team11.Transportation
 import com.mapbox.android.core.permissions.PermissionsListener
 import com.mapbox.android.core.permissions.PermissionsManager
 import com.mapbox.api.directions.v5.DirectionsCriteria
@@ -46,14 +49,16 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
     private val viewModel: DirectionActivityViewModel by viewModels{ DirectionActivityViewModel.InstanceCreator() }
     private var permissionManager = PermissionsManager(this)
     private lateinit var mapboxMap: MapboxMap
+    private var mapView: MapView? = null
     private val ROUTE_SOURCE_ID = "ROUTE_SOURCE_ID"
-    private var way: Transporatation? = null
+    private var way: Transportation? = null
+    private var tag = "TAG"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Mapbox.getInstance(this, getString(R.string.access_token))
         setContentView(R.layout.activity_direction)
-
+        supportActionBar!!.hide()
         val backButton = findViewById<ImageButton>(R.id.backButton)
         val aboutDirectionText = findViewById<TextView>(R.id.aboutDirectionText)
         backButton.setOnClickListener {
@@ -62,11 +67,14 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
 
         //Observerer stedet som er valgt
         viewModel.place!!.observe(this, Observer { place ->
-            viewModel.wayOfTransporatation!!.observe(this, Observer { way->
+            viewModel.wayOfTransportation!!.observe(this, Observer { way->
                 aboutDirectionText.text = when(way) {
-                    Transporatation.BIKE -> getString(R.string.bikeDirection, place.name)
-                    Transporatation.CAR -> getString(R.string.carDirection, place.name)
-                    Transporatation.WALK -> getString(R.string.walkDirection, place.name)
+                    Transportation.BIKE -> getString(
+                        R.string.bikeDirection, place.name)
+                    Transportation.CAR -> getString(
+                        R.string.carDirection, place.name)
+                    Transportation.WALK -> getString(R.string.walkDirection, place.name)
+                    else -> getString(R.string.bikeDirection, place.name)
                 }
                 this.way = way
                 makeMap(place, savedInstanceState)
@@ -79,10 +87,11 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
      * @param place: Stedet som skal vises på kartet
      * @param savedInstanceState: mapView trenger denne til onCreate metoden sin
      */
-    private fun makeMap(place: Place,  savedInstanceState: Bundle?) {
-        val mapView = findViewById<MapView>(R.id.mapView)
-        mapView.onCreate(savedInstanceState)
-        mapView.getMapAsync { mapboxMap ->
+    private fun makeMap(place: Place, savedInstanceState: Bundle?) {
+        Log.d(tag, "makemap")
+        mapView = findViewById<MapView>(R.id.mapView)
+        mapView?.onCreate(savedInstanceState)
+        mapView?.getMapAsync { mapboxMap ->
             this.mapboxMap = mapboxMap
             mapboxMap.setStyle(Style.MAPBOX_STREETS)
             mapboxMap.getStyle { style ->
@@ -96,6 +105,7 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
                 mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(position), 2)
             }
         }
+        Log.d(tag, "makemapDONE")
     }
 
     /**
@@ -150,12 +160,13 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
      */
     private fun getRoute(place: Place){
         //hentet stedet vi skal bruke
+        Log.d(tag, "getPlace")
         val originLocation = mapboxMap.locationComponent.lastKnownLocation ?: return
         val originPoint = Point.fromLngLat(originLocation.longitude, originLocation.latitude)
         val profile = when(way){
-            Transporatation.BIKE -> DirectionsCriteria.PROFILE_CYCLING
-            Transporatation.CAR -> DirectionsCriteria.PROFILE_DRIVING
-            Transporatation.WALK -> DirectionsCriteria.PROFILE_WALKING
+            Transportation.BIKE -> DirectionsCriteria.PROFILE_CYCLING
+            Transportation.CAR -> DirectionsCriteria.PROFILE_DRIVING
+            Transportation.WALK -> DirectionsCriteria.PROFILE_WALKING
             else -> DirectionsCriteria.PROFILE_CYCLING
         }
 
@@ -179,7 +190,9 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
                 }
 
                 val currentRoute = response.body()!!.routes()[0]
-
+                val stringD = "Lengde: " + viewModel.convertToCorrectDistance(currentRoute.distance())
+                val stringT = "\nTid: " + viewModel.convertTime(currentRoute.duration())
+                Toast.makeText(this@DirectionActivity, stringD + stringT, Toast.LENGTH_LONG).show()
 
                 mapboxMap.getStyle { style ->
                     val source = style.getSourceAs<GeoJsonSource>(ROUTE_SOURCE_ID)
@@ -199,15 +212,18 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
 
     /**
      * Finner lokasjonen til brukeren og bestemmer hvordan stilen runt bruker punktet skal være
-     * @param style: stilen sim skal tegnes opp
+     * @param style: stilen som skal tegnes opp
      */
     @SuppressLint("MissingPermission")
     private fun enableLocationComponent(style: Style){
+        Log.d(tag, "enableLocationCOmponent")
         if(PermissionsManager.areLocationPermissionsGranted(this)){
             val customLocationComponentOptions =
                 LocationComponentOptions.builder(this)
                     .trackingGesturesManagement(true)
-                    .accuracyColor(ContextCompat.getColor(this@DirectionActivity, R.color.mapbox_blue))
+                    .accuracyColor(ContextCompat.getColor(this@DirectionActivity,
+                        R.color.mapbox_blue
+                    ))
                     .build()
 
             val locationComponentActivityOptions =
@@ -239,9 +255,40 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
     override fun onPermissionResult(granted: Boolean) {
         if(granted){
             enableLocationComponent(mapboxMap.style!!)
+            getRoute(viewModel.place!!.value!!)
         }else{
             Toast.makeText(this, getString(R.string.ikkeViseVei), Toast.LENGTH_LONG).show()
             finish()
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        mapView?.onStart()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mapView?.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mapView?.onPause()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        mapView?.onStop()
+    }
+
+    override fun onLowMemory() {
+        super.onLowMemory()
+        mapView?.onLowMemory()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mapView?.onDestroy()
     }
 }

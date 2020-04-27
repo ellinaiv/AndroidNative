@@ -1,19 +1,18 @@
-package com.example.team11.viewmodels
+package com.example.team11.ui.place
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.team11.Place
 import com.example.team11.Repository.PlaceRepository
-import com.example.team11.Transporatation
+import com.example.team11.Transportation
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Point
 
-class DirectionActivityViewModel: ViewModel() {
-    var place: MutableLiveData<Place>? = null
-    var wayOfTransporatation: MutableLiveData<Transporatation>? = null
-    private var placeRepository: PlaceRepository? = null
+class PlaceActivityViewModel: ViewModel() {
 
+    var place: MutableLiveData<Place>? = null
+    private var placeRepository: PlaceRepository? = null
 
     /**
      * Setter verdier
@@ -22,7 +21,6 @@ class DirectionActivityViewModel: ViewModel() {
         if(place == null){
             placeRepository = PlaceRepository.getInstance()
             place = placeRepository!!.getCurrentPlace()
-            wayOfTransporatation = placeRepository!!.getWayOfTransportation()
         }
     }
 
@@ -31,6 +29,23 @@ class DirectionActivityViewModel: ViewModel() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             return modelClass.getConstructor().newInstance()
         }
+    }
+
+    /**
+     * Funksjonen forteller videre til place repository at det har blitt gjort endringer på
+     * hvilke steder som er favoirutter og ber den om å oppdatere det. Dette må gjøres hver gang
+     * hjertetoggelknappen blir trykket på
+     */
+    fun updateFavoritePlaces(){
+        placeRepository!!.updateFavoritePlaces()
+    }
+
+    /**
+     * Endrer måten brukeren ønsker å komme seg til en strand i repository
+     * @param way: måten brukeren ønsker å komme seg til stranden
+     */
+    fun changeWayOfTransportation(way: Transportation){
+        placeRepository!!.changeWayOfTransportation(way)
     }
 
     /**
