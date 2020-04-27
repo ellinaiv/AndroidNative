@@ -5,13 +5,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.team11.Place
 import com.example.team11.Repository.PlaceRepository
-import com.example.team11.Transporatation
+import com.example.team11.Transportation
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Point
 
 class DirectionActivityViewModel: ViewModel() {
     var place: MutableLiveData<Place>? = null
-    var wayOfTransporatation: MutableLiveData<Transporatation>? = null
+    var wayOfTransportation: MutableLiveData<Transportation>? = null
     private var placeRepository: PlaceRepository? = null
 
 
@@ -22,7 +22,7 @@ class DirectionActivityViewModel: ViewModel() {
         if(place == null){
             placeRepository = PlaceRepository.getInstance()
             place = placeRepository!!.getCurrentPlace()
-            wayOfTransporatation = placeRepository!!.getWayOfTransportation()
+            wayOfTransportation = placeRepository!!.getWayOfTransportation()
         }
     }
 

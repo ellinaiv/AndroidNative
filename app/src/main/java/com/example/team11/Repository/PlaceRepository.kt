@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.team11.valueObjects.Forecast
 import com.example.team11.Place
-import com.example.team11.Transporatation
+import com.example.team11.Transportation
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.coroutines.awaitString
 import com.google.gson.Gson
@@ -18,7 +18,7 @@ class PlaceRepository private constructor() {
     private var places = MutableLiveData<List<Place>>()
     private val urlAPI = "http://oslokommune.msolution.no/friluft/badetemperaturer.jsp"
     private var currentPlace = MutableLiveData<Place>()
-    private var wayOfTransportation = MutableLiveData<Transporatation>()
+    private var wayOfTransportation = MutableLiveData<Transportation>()
     private var favoritePlaces = MutableLiveData<List<Place>>()
 
     //Kotlin sin static
@@ -85,7 +85,7 @@ class PlaceRepository private constructor() {
      * Endrer måten brukeren ønsker å komme seg til en strand
      * @param way: måten brukeren ønsker å komme seg til stranden
      */
-    fun changeWayOfTransportation(way: Transporatation){
+    fun changeWayOfTransportation(way: Transportation){
         wayOfTransportation.value = way
     }
 

@@ -13,7 +13,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import com.example.team11.Place
 import com.example.team11.R
-import com.example.team11.Transporatation
+import com.example.team11.Transportation
 import com.mapbox.android.core.permissions.PermissionsListener
 import com.mapbox.android.core.permissions.PermissionsManager
 import com.mapbox.api.directions.v5.DirectionsCriteria
@@ -49,7 +49,7 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
     private var permissionManager = PermissionsManager(this)
     private lateinit var mapboxMap: MapboxMap
     private val ROUTE_SOURCE_ID = "ROUTE_SOURCE_ID"
-    private var way: Transporatation? = null
+    private var way: Transportation? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,13 +64,13 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
 
         //Observerer stedet som er valgt
         viewModel.place!!.observe(this, Observer { place ->
-            viewModel.wayOfTransporatation!!.observe(this, Observer { way->
+            viewModel.wayOfTransportation!!.observe(this, Observer { way->
                 aboutDirectionText.text = when(way) {
-                    Transporatation.BIKE -> getString(
+                    Transportation.BIKE -> getString(
                         R.string.bikeDirection, place.name)
-                    Transporatation.CAR -> getString(
+                    Transportation.CAR -> getString(
                         R.string.carDirection, place.name)
-                    Transporatation.WALK -> getString(
+                    Transportation.WALK -> getString(
                         R.string.walkDirection, place.name)
                 }
                 this.way = way
@@ -158,9 +158,9 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
         val originLocation = mapboxMap.locationComponent.lastKnownLocation ?: return
         val originPoint = Point.fromLngLat(originLocation.longitude, originLocation.latitude)
         val profile = when(way){
-            Transporatation.BIKE -> DirectionsCriteria.PROFILE_CYCLING
-            Transporatation.CAR -> DirectionsCriteria.PROFILE_DRIVING
-            Transporatation.WALK -> DirectionsCriteria.PROFILE_WALKING
+            Transportation.BIKE -> DirectionsCriteria.PROFILE_CYCLING
+            Transportation.CAR -> DirectionsCriteria.PROFILE_DRIVING
+            Transportation.WALK -> DirectionsCriteria.PROFILE_WALKING
             else -> DirectionsCriteria.PROFILE_CYCLING
         }
 
