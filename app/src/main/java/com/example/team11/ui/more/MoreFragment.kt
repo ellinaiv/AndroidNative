@@ -1,11 +1,13 @@
 package com.example.team11.ui.more
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.team11.PersonalPreference
 import com.example.team11.R
@@ -37,8 +39,8 @@ class MoreFragment : Fragment() {
             if (aboutAppClicked) {
                 aboutAppClicked = false
             } else {
+                aboutAppTitle.setTextColor(ContextCompat.getColor(this.context!!, R.color.whiteTextColor))
                 aboutAppText.visibility = View.VISIBLE
-                aboutAppView.visibility = View.VISIBLE
                 aboutAppTitle.background =
                     resources.getDrawable(R.drawable.about_rectangle_clicked, null)
                 aboutAppClicked = true;
@@ -83,11 +85,12 @@ class MoreFragment : Fragment() {
         aboutAPIText.visibility = View.GONE
         seekBarLayout.visibility = View.GONE
 
+
         aboutAppTitle.background = resources.getDrawable(R.drawable.about_rectangle, null)
         aboutAPITitle.background = resources.getDrawable(R.drawable.about_rectangle, null)
         settingsText.background = resources.getDrawable(R.drawable.about_rectangle, null)
 
-        aboutAppView.visibility = View.GONE
+        aboutAppTitle.setTextColor(ContextCompat.getColor(this.context!!, R.color.mainTextColor))
         aboutAPIView.visibility = View.GONE
         settingsView.visibility = View.GONE
     }

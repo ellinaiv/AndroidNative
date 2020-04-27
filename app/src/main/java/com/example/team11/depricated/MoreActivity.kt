@@ -27,7 +27,6 @@ class MoreActivity : AppCompatActivity() {
                 aboutAppClicked = false
             } else {
                 aboutAppText.visibility = View.VISIBLE
-                aboutAppView.visibility = View.VISIBLE
                 aboutAppTitle.background = resources.getDrawable(R.drawable.about_rectangle_clicked, null)
                 aboutAppClicked = true;
             }
@@ -71,7 +70,6 @@ class MoreActivity : AppCompatActivity() {
         aboutAPITitle.background = resources.getDrawable(R.drawable.about_rectangle, null)
         settingsText.background = resources.getDrawable(R.drawable.about_rectangle, null)
 
-        aboutAppView.visibility = View.GONE
         aboutAPIView.visibility = View.GONE
         settingsView.visibility = View.GONE
     }

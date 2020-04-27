@@ -21,6 +21,15 @@
     <string name="aboutAPI">Om API</string>
     <string name="settingsTitle">Innstillinger</string>
     <string name="waterPreference">Preferanser for vanntemperatur</string>
+    <string name="aboutAppText"> !Insert app-navn! er appen for deg som er glad i å bade i Oslo! Her har
+        vi samlet relevant informasjon om værforhold, vanntemperatur og reisevei til forskjellige \'
+        badeplasser på ett sted, for at det skal være enklere å ta et informert valg om hvilken
+        badeplass som passer best for deg.
+
+        \n\nAppen er designet og utviklet av Ellina Ivleva, Johanna P. Haarseth, Maria Løvland Johansson,
+        Marlen Jarholt, Melanie Østbøll og Silje H. Lund. Appen er produktet av teamarbeidet i
+        IN2000 - Software Engineering med prosjektarbeid ved Institutt for Informatikk,
+        Universitetet i Oslo, våren 2020.</string>
     <string name="LoremImpsum">Lorem Ipsum is simply dummy text of the printing and typesetting industry.
         Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown
         printer took a galley of type and scrambled it to make a type specimen book. It has survived
