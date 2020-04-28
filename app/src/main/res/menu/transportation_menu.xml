@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/buttonWalk"
+        android:icon="@drawable/directions_walk"
+        android:title="Gå" />
+    <item android:id="@+id/buttonBike"
+        android:icon="@drawable/directions_bike"
+        android:title="Sykle" />
+    <item android:id="@+id/buttonCar"
+        android:icon="@drawable/directions_car"
+        android:title="Bil" />
+</menu>

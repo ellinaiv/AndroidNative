@@ -62,6 +62,81 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/topBar"
+        android:layout_margin="12dp"
+
+        app:cardCornerRadius="12dp"
+        android:padding="12dp"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+
+            android:background="@color/pinkIconColor"
+            android:padding="6dp">
+
+            <ToggleButton
+                android:id="@+id/toggleWalk"
+                android:layout_width="34dp"
+                android:layout_height="34dp"
+
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_margin="4dp"
+
+                android:background="@drawable/toggle_direction_walk"
+                android:textOn=""
+                android:textOff=""
+                />
+
+            <ToggleButton
+                android:id="@+id/toggleBike"
+                android:layout_width="34dp"
+                android:layout_height="34dp"
+
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/toggleWalk"
+                android:layout_margin="4dp"
+
+                android:background="@drawable/toggle_direction_bike"
+                android:textOn=""
+                android:textOff=""
+                />
+
+            <ToggleButton
+                android:id="@+id/toggleCar"
+                android:layout_width="34dp"
+                android:layout_height="34dp"
+
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/toggleBike"
+                android:layout_margin="4dp"
+
+                android:background="@drawable/toggle_direction_car"
+                android:textOn=""
+                android:textOff=""
+                />
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+
+    <androidx.cardview.widget.CardView
         android:id="@+id/layoutAboutRoute"
 
         android:layout_width="match_parent"
@@ -72,7 +147,6 @@
         app:layout_constraintRight_toRightOf="parent"
         android:layout_margin="12dp"
 
-        android:background="@color/backgroundCardsLight"
         app:cardCornerRadius="12dp"
 
         android:visibility="gone">
@@ -86,6 +160,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
 
+            android:background="@color/backgroundCardsLight"
             android:padding="18dp">
 
             <TextView
