@@ -1,17 +1,19 @@
-package com.example.team11
+package com.example.team11.ui.place
 
 import android.content.Intent
 import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.ToggleButton
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
-import com.example.team11.viewmodels.PlaceActivityViewModel
+import com.example.team11.Place
+import com.example.team11.R
+import com.example.team11.Transportation
+import com.example.team11.ui.direction.DirectionActivity
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.mapboxsdk.Mapbox
 import com.mapbox.mapboxsdk.camera.CameraPosition
@@ -22,7 +24,6 @@ import com.mapbox.mapboxsdk.maps.Style
 import com.mapbox.mapboxsdk.style.layers.PropertyFactory
 import com.mapbox.mapboxsdk.style.layers.SymbolLayer
 import com.mapbox.mapboxsdk.style.sources.GeoJsonSource
-import kotlinx.android.synthetic.main.activity_place.*
 
 class PlaceActivity : AppCompatActivity() {
     private val viewModel: PlaceActivityViewModel by viewModels{ PlaceActivityViewModel.InstanceCreator() }
@@ -73,19 +74,19 @@ class PlaceActivity : AppCompatActivity() {
 
         directionBikeButton.setOnClickListener {
             val intent = Intent(this, DirectionActivity::class.java)
-            viewModel.changeWayOfTransportation(Transporatation.BIKE)
+            viewModel.changeWayOfTransportation(Transportation.BIKE)
             startActivity(intent)
         }
 
         directionCarButton.setOnClickListener {
             val intent = Intent(this, DirectionActivity::class.java)
-            viewModel.changeWayOfTransportation(Transporatation.CAR)
+            viewModel.changeWayOfTransportation(Transportation.CAR)
             startActivity(intent)
         }
 
         directionWalkButton.setOnClickListener {
             val intent = Intent(this, DirectionActivity::class.java)
-            viewModel.changeWayOfTransportation(Transporatation.WALK)
+            viewModel.changeWayOfTransportation(Transportation.WALK)
             startActivity(intent)
         }
 

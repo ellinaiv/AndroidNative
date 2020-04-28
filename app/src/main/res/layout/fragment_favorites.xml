@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.favorites.FavoritesFragment">
+    android:layout_marginBottom="?attr/actionBarSize"
+    tools:context=".ui.favorites.FavoritesFragment"
+    >
 
     <TextView
         android:id="@+id/textFavorite"
@@ -29,6 +31,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbars="vertical"
+        android:paddingBottom="?attr/actionBarSize"
         app:layout_constraintTop_toBottomOf="@+id/textFavorite"
         />
 
