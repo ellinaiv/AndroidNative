@@ -6,7 +6,7 @@ import com.example.team11.ApiClient
 import com.example.team11.valueObjects.Forecast
 import com.example.team11.Place
 import com.example.team11.Transportation
-import com.example.team11.WeatherForecast
+import com.example.team11.valueObjects.WeatherForecast
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.coroutines.awaitString
 import com.google.gson.Gson
@@ -216,7 +216,6 @@ class PlaceRepository private constructor() {
 
     fun getWeather(place: Place): String? {
         val tag = "tagWeather1"
-        val data = MutableLiveData<WeatherForecast>()
         val temp = null;
 
         val call= ApiClient.build()?.getWeather(place.lat, place.lng)
@@ -225,7 +224,7 @@ class PlaceRepository private constructor() {
             override fun onResponse(call: Call<WeatherForecast>, response: Response<WeatherForecast>) {
                 if (response.isSuccessful){
                     Log.v(tag, response.body().toString())
-                    val temp = response.body()?.weatherForecastTimeSlot?.get(0)?.types?.instantWeatherForecast?.details?.temp
+                    val temp = response.body()?.weatherForecastTimeSlotList?.list?.get(0)?.types?.instantWeatherForecast?.details?.temp
                     Log.v(tag, temp.toString())
                 }
             }

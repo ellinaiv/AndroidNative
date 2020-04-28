@@ -1,7 +1,6 @@
-package com.example.team11
+package com.example.team11.valueObjects
 
 import com.google.gson.annotations.SerializedName
-import java.sql.Time
 
 // TODO("Burde disse ligge i SeaCurrent og vi kaller den APIModels? Eller burde vi har to ulike filer?")
 
@@ -56,7 +55,14 @@ data class WeatherRain(val unit: String, val value: String, val minValue: String
 
 data class WeatherForecast(
     @SerializedName("properties")
-    val weatherForecastTimeSlot: List<WeatherForecastTimeSlot>
+    val weatherForecastTimeSlotList: WeatherForecastTimeSlotList
+
+)
+
+data class WeatherForecastTimeSlotList(
+    @SerializedName("timeseries")
+    val list: List<WeatherForecastTimeSlot>
+
 )
 
 data class WeatherForecastTimeSlot(
