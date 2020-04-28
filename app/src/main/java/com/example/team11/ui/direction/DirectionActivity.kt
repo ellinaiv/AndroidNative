@@ -7,11 +7,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ImageButton
-import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.cardview.widget.CardView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import com.example.team11.Place
@@ -62,8 +59,8 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
         Mapbox.getInstance(this, getString(R.string.access_token))
         setContentView(R.layout.activity_direction)
         supportActionBar!!.hide()
-        val backButton = findViewById<ImageButton>(R.id.backButton)
-        backButton.setOnClickListener {
+
+        buttonBack.setOnClickListener {
             finish()
         }
 
@@ -72,6 +69,10 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
             viewModel.wayOfTransportation!!.observe(this, Observer { way->
                 this.way = way
                 makeMap(place, savedInstanceState)
+
+                buttonRefresh.setOnClickListener {
+                    makeMap(place, savedInstanceState)
+                }
             })
         })
     }

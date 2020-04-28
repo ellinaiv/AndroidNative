@@ -39,6 +39,7 @@
     <string name="infoBikeButton">Vis sykkelvei til badestedet</string>
     <string name="infoCarButton">Vis bilvei til badestedet</string>
     <string name="infoWalkButton">Vis gangvei til badestedet</string>
+    <string name="infoRefreshButton">Oppdater rute</string>
 
     <!--    content description for images-->
     <string name="waterIcon">Badevann ikon</string>
