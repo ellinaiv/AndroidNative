@@ -97,6 +97,8 @@
                 android:fontFamily="@font/roboto_medium"
                 android:maxLines="1"
 
+                android:paddingBottom="4dp"
+
                 android:textSize="18sp"
                 android:textColor="@color/mainTextColor"/>
 

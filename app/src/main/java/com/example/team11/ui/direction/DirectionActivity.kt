@@ -42,6 +42,7 @@ import com.mapbox.mapboxsdk.style.layers.Property
 import com.mapbox.mapboxsdk.style.layers.PropertyFactory
 import com.mapbox.mapboxsdk.style.layers.SymbolLayer
 import com.mapbox.mapboxsdk.style.sources.GeoJsonSource
+import kotlinx.android.synthetic.main.activity_direction.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -112,7 +113,7 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
         routeLayer.setProperties(
             PropertyFactory.lineCap(Property.LINE_CAP_ROUND),
             PropertyFactory.lineJoin(Property.LINE_JOIN_ROUND),
-            PropertyFactory.lineWidth(5f),
+            PropertyFactory.lineWidth(3f),
             PropertyFactory.lineColor(ContextCompat
                 .getColor(this, R.color.pinkIconColor))
         )
@@ -185,11 +186,6 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
 
                 val currentRoute = response.body()!!.routes()[0]
 
-                val layoutAboutRoute = findViewById<CardView>(R.id.layoutAboutRoute)
-                val textTitleRoute = findViewById<TextView>(R.id.textTitleRoute)
-                val textDistance = findViewById<TextView>(R.id.textDistance)
-                val textTime = findViewById<TextView>(R.id.textTime)
-
                 val stringD = "Lengde: " + viewModel.convertToCorrectDistance(currentRoute.distance())
                 val stringT = "\nTid: " + viewModel.convertTime(currentRoute.duration())
 
@@ -222,13 +218,16 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
      */
     @SuppressLint("MissingPermission")
     private fun enableLocationComponent(style: Style){
-        Log.d(tag, "enableLocationCOmponent")
+        Log.d(tag, "enableLocationComponent")
         if(PermissionsManager.areLocationPermissionsGranted(this)){
+            //grunnet et problem med emulatorer vil ikke foregroundDrawable bli svart på kartet,
+            //skal fungere som normalt på et vanlig device
             val customLocationComponentOptions =
                 LocationComponentOptions.builder(this)
                     .trackingGesturesManagement(true)
+                    .foregroundDrawable(R.drawable.start_position)
                     .accuracyColor(ContextCompat.getColor(this@DirectionActivity,
-                        R.color.mapbox_blue
+                        R.color.colorPrimary
                     ))
                     .build()
 

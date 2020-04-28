@@ -29,7 +29,7 @@
         Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker
         including versions of Lorem Ipsum.</string>
     <string name="titleRoute">Fra <b>din posisjon</b> til <b>%1$s</b></string>
-    <string name="distance">Distance:</string>
+    <string name="distance">Distanse:</string>
     <string name="time">Beregnet resietid:</string>
 
     <!--    buttons-->
