@@ -64,18 +64,68 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
             finish()
         }
 
+        toggleButtonEvents()
+        var first = true;
+
         //Observerer stedet som er valgt
         viewModel.place!!.observe(this, Observer { place ->
             viewModel.wayOfTransportation!!.observe(this, Observer { way->
                 this.way = way
+                if(first){
+                    first = false
+                    when(way){
+                        Transportation.BIKE -> toggleBike.isChecked = true
+                        Transportation.WALK -> toggleWalk.isChecked = true
+                        Transportation.CAR -> toggleCar.isChecked = true
+                        else -> toggleBike.isChecked = true
+                    }
+                }
                 makeMap(place, savedInstanceState)
-
                 buttonRefresh.setOnClickListener {
                     makeMap(place, savedInstanceState)
                 }
             })
         })
     }
+
+    private fun toggleButtonEvents(){
+        toggleWalk.setOnCheckedChangeListener { _, isChecked ->
+            if(toggleWalk.isPressed){
+                if(isChecked){
+                    restartToggleButtons()
+                    viewModel.changeWayOfTransportation(Transportation.WALK)
+                }
+                toggleWalk.isChecked = true
+            }
+        }
+
+        toggleBike.setOnCheckedChangeListener { _, isChecked ->
+            if(toggleBike.isPressed){
+                if(isChecked){
+                    restartToggleButtons()
+                    viewModel.changeWayOfTransportation(Transportation.BIKE)
+                }
+                toggleBike.isChecked = true
+            }
+        }
+
+        toggleCar.setOnCheckedChangeListener { _, isChecked ->
+            if(toggleCar.isPressed){
+                if(isChecked){
+                    restartToggleButtons()
+                    viewModel.changeWayOfTransportation(Transportation.CAR)
+                }
+                toggleCar.isChecked = true
+            }
+        }
+    }
+
+    private fun restartToggleButtons(){
+        toggleWalk.isChecked = false
+        toggleBike.isChecked = false
+        toggleCar.isChecked = false
+    }
+
 
     /**
      * Lager kartet, tegner opp destionasjon og lokasjon. Viser rute, og zoomer inn på destinasjon
