@@ -2,17 +2,21 @@
 <resources>
 <!--    app colors-->
     <color name="colorPrimary">#22AAAF</color>
-    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorPrimaryDark">#22AAAF</color>
     <color name="colorAccent">#D81B60</color>
 
 <!--    text colors-->
     <color name="mainTextColor">#000000</color>
     <color name="subTextColor">#424242</color>
 
+<!--    Cardviews -->
+    <color name="backgroundCardView">#FFFFFF</color>
+    <color name="strokeCardview">#22AAAF</color>
+
 <!--    backgrounds-->
-    <color name="backgroundCardsLight">#F4F4F4</color>
-    <color name="backgroundCardsDark">#C4C4C4</color>
-    <color name="backgroundBorder">#919191</color>
+    <color name="backgroundCardsLight">#F8F8F7</color>
+    <color name="backgroundCardsDark">#F8F8F7</color>
+    <color name="backgroundBorder">#22AAAF</color>
     <color name="backgroundClicked">#D3D3D3</color>
 
 <!--    other colors-->
@@ -20,4 +24,5 @@
     <color name="warmRed">#FF4040</color>
     <color name="seekThumb">#6A6969</color>
     <color name="pinkIconColor">#F08C8E</color>
+    <color name="searchIconsColor">#909090</color>
 </resources>
