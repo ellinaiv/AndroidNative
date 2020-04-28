@@ -25,31 +25,33 @@
         />
 
     <ImageView
-        android:id="@+id/emptyListShark"
+        android:id="@+id/imageEmptyListShark"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
         android:adjustViewBounds="true"
         android:gravity="center"
         android:scaleType="fitXY"
-
-        android:src="@drawable/empty_favorites_shark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+
+        android:src="@drawable/empty_favorites_shark"/>
 
     <TextView
+        android:id="@+id/textNoFavorites"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAlignment="center"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginTop="20dp"
 
-        android:text="Du har ikke lagt til noen favorittbadeplasser enda!"
-        app:layout_constraintTop_toBottomOf="@id/emptyListShark" />
+        android:layout_marginTop="20dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imageEmptyListShark"
+
+        android:text="@string/noFavorites"
+        android:textAlignment="center"
+        />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"

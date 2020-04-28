@@ -8,16 +8,17 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_viewPlaces"
-        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_width="match_parent"
         android:scrollbars="vertical"
         app:layout_constraintTop_toBottomOf="@+id/searchLayer"
         />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/searchLayer"
-        android:layout_width="match_parent"
         android:layout_height="48dp"
+        android:layout_width="match_parent"
+
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/recycler_viewPlaces"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -27,47 +28,47 @@
         >
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/searchImage"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
 
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
 
             android:src="@drawable/search"/>
 
         <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
             android:id="@+id/filterButton"
-
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
+            android:background="@color/backgroundCardsDark"
             android:padding="4dp"
 
-            android:src="@drawable/filter_list"
-            android:background="@color/backgroundCardsDark"
-            />
+            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+
+            android:src="@drawable/filter_list" />
 
         <EditText
             android:id="@+id/searchText"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
 
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/filterButton"
-            app:layout_constraintLeft_toRightOf="@+id/searchImage"
-
-            android:maxLines="1"
+            android:background="@android:color/transparent"
             android:ellipsize="end"
+            android:maxLines="1"
+            android:padding="4dp"
             android:textCursorDrawable="@null"
             android:textColor="@color/mainTextColor"
-            android:padding="4dp"
-            android:background="@android:color/transparent"
-            />
+
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/searchImage"
+            app:layout_constraintRight_toLeftOf="@+id/filterButton"
+            app:layout_constraintTop_toTopOf="parent"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
