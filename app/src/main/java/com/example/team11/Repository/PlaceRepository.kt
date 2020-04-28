@@ -3,7 +3,7 @@ package com.example.team11.Repository
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.team11.valueObjects.Forecast
-import com.example.team11.Place
+import com.example.team11.database.entity.Place
 import com.example.team11.Transportation
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.coroutines.awaitString
@@ -136,7 +136,14 @@ class PlaceRepository private constructor() {
                         xpp.next()
                         long = xpp.text
                         xpp.next()
-                        places.add(Place(id++, name, lat.toDouble(), long.toDouble()))
+                        places.add(
+                            Place(
+                                id++,
+                                name,
+                                lat.toDouble(),
+                                long.toDouble()
+                            )
+                        )
                     }
 
                     eventType = xpp.next()

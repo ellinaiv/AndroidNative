@@ -3,7 +3,7 @@ package com.example.team11.viewmodels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.team11.Place
+import com.example.team11.database.entity.Place
 import com.example.team11.Repository.PlaceRepository
 
 class PersonalPreferenceViewModel: ViewModel() {

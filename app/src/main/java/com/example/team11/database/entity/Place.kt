@@ -1,9 +1,10 @@
-package com.example.team11
+package com.example.team11.database.entity
+import com.example.team11.PersonalPreference
 import com.google.android.gms.maps.model.LatLng
 import java.io.Serializable
 import kotlin.random.Random
 
-
+@Entity
 class Place(val id: Int, val name: String, val lat: Double, val lng: Double,
             var favorite: Boolean = false, var temp: Int = Random.nextInt(0, 35)): Serializable {
     /**

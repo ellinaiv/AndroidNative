@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import com.example.team11.*
+import com.example.team11.database.entity.Place
 import com.example.team11.ui.bottomNavigation.MainActivity
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserFactory

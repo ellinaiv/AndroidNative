@@ -3,7 +3,7 @@ package com.example.team11.ui.placesList
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.team11.Place
+import com.example.team11.database.entity.Place
 import com.example.team11.Repository.PlaceRepository
 
 

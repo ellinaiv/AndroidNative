@@ -9,7 +9,7 @@ import android.widget.*
 import androidx.cardview.widget.CardView
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
-import com.example.team11.Place
+import com.example.team11.database.entity.Place
 import com.example.team11.R
 import com.example.team11.ui.place.PlaceActivity
 import com.example.team11.viewmodels.FavoritesFragmentViewModel

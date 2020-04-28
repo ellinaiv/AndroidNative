@@ -12,7 +12,7 @@ import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.example.team11.Place
+import com.example.team11.database.entity.Place
 import com.example.team11.ui.place.PlaceActivity
 import com.example.team11.R
 import com.mapbox.geojson.Feature

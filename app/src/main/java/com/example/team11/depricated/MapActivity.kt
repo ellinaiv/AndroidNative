@@ -22,7 +22,7 @@ import com.mapbox.mapboxsdk.style.layers.PropertyFactory
 import com.mapbox.mapboxsdk.style.layers.SymbolLayer
 import com.mapbox.mapboxsdk.style.sources.GeoJsonSource
 import androidx.lifecycle.Observer
-import com.example.team11.Place
+import com.example.team11.database.entity.Place
 import com.example.team11.R
 import com.example.team11.ui.place.PlaceActivity
 import com.mapbox.geojson.Feature

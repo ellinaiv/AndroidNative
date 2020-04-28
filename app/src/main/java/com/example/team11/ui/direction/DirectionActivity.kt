@@ -12,7 +12,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
-import com.example.team11.Place
+import com.example.team11.database.entity.Place
 import com.example.team11.R
 import com.example.team11.Transportation
 import com.mapbox.android.core.permissions.PermissionsListener

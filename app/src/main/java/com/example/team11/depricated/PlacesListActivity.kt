@@ -9,7 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.team11.ui.placesList.ListAdapter
-import com.example.team11.Place
+import com.example.team11.database.entity.Place
 import com.example.team11.R
 import kotlinx.android.synthetic.main.activity_places_list.*
 

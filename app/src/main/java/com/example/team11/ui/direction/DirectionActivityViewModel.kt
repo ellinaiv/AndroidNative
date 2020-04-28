@@ -3,7 +3,7 @@ package com.example.team11.ui.direction
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.team11.Place
+import com.example.team11.database.entity.Place
 import com.example.team11.Repository.PlaceRepository
 import com.example.team11.Transportation
 import com.mapbox.geojson.Feature
