@@ -5,7 +5,7 @@
         android:viewportHeight="24.0">
     <group>
         <path android:fillAlpha=".9"
-            android:fillColor="@android:color/white"
+            android:fillColor="#fff"
             android:pathData="M5,0L26,0A5,5 0,0 1,31 5L31,26A5,5 0,0 1,26 31L5,31A5,5 0,0 1,0 26L0,5A5,5 0,0 1,5 0z"/>
         <path
         android:fillColor="@color/pinkIconColor"
