@@ -16,7 +16,7 @@
         android:theme="@style/AppTheme">
         <!-- android:theme="@style/Theme.AppCompat.Light.NoActionBar"-->
         <activity android:name=".deprecated.MapActivity" />
-        <activity android:name=".ui.direction.DirectionActivity" />
+        <activity android:name=".ui.directions.DirectionsActivity" />
         <activity android:name=".deprecated.MoreActivity" />
         <activity android:name=".ui.place.PlaceActivity" />
         <activity android:name=".deprecated.PlacesListActivity" />

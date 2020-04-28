@@ -28,6 +28,8 @@
         unchanged. It was popularised in the 1960s with the release of Letraset sheets containing
         Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker
         including versions of Lorem Ipsum.</string>
+    <string name="hourForecast">Timesvarsel</string>
+    <string name="longForecast">Langtidsvarsel</string>
 
     <!--    buttons-->
     <string name="back">Trykk her for å gå tilbake</string>
@@ -36,6 +38,8 @@
     <string name="infoBikeButton">Vis sykkelvei til badestedet</string>
     <string name="infoCarButton">Vis bilvei til badestedet</string>
     <string name="infoWalkButton">Vis gangvei til badestedet</string>
+    <string name="infoCurrents">Vis informasjon om måling av havstrømninger</string>
+    <string name="infoUV">Vis informasjon om måling av UV-stråling</string>
 
     <!--    content description for images-->
     <string name="waterIcon">Badevann ikon</string>

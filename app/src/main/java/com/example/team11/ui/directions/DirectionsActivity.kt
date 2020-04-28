@@ -1,4 +1,4 @@
-package com.example.team11.ui.direction
+package com.example.team11.ui.directions
 
 import android.annotation.SuppressLint
 import android.graphics.BitmapFactory
@@ -43,9 +43,9 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class DirectionActivity : AppCompatActivity() , PermissionsListener {
+class DirectionsActivity : AppCompatActivity() , PermissionsListener {
 
-    private val viewModel: DirectionActivityViewModel by viewModels{ DirectionActivityViewModel.InstanceCreator() }
+    private val viewModel: DirectionsActivityViewModel by viewModels{ DirectionsActivityViewModel.InstanceCreator() }
     private var permissionManager = PermissionsManager(this)
     private lateinit var mapboxMap: MapboxMap
     private val ROUTE_SOURCE_ID = "ROUTE_SOURCE_ID"
@@ -130,7 +130,7 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
         val ICON_ID_RED = "ICON_ID_RED"
         val geoId = "GEO_ID"
         val icon = BitmapFactory.decodeResource(
-            this@DirectionActivity.resources,
+            this@DirectionsActivity.resources,
             R.drawable.mapbox_marker_icon_default
         )
         style.addImage(ICON_ID_RED, icon)
@@ -179,7 +179,7 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
         client.enqueueCall(object : Callback<DirectionsResponse> {
             override fun onResponse(call: Call<DirectionsResponse>, response: Response<DirectionsResponse>) {
                 if(response.body() == null || response.body()!!.routes().size < 1){
-                    Toast.makeText(this@DirectionActivity, "No routes found", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@DirectionsActivity, "No routes found", Toast.LENGTH_SHORT).show()
                     return
                 }
 
@@ -196,7 +196,7 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
             }
 
             override fun onFailure(call: Call<DirectionsResponse>, t: Throwable) {
-                Toast.makeText(this@DirectionActivity, "Error: " + t.message, Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@DirectionsActivity, "Error: " + t.message, Toast.LENGTH_SHORT).show()
             }
 
         })
@@ -212,7 +212,7 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
             val customLocationComponentOptions =
                 LocationComponentOptions.builder(this)
                     .trackingGesturesManagement(true)
-                    .accuracyColor(ContextCompat.getColor(this@DirectionActivity,
+                    .accuracyColor(ContextCompat.getColor(this@DirectionsActivity,
                         R.color.mapbox_blue
                     ))
                     .build()
