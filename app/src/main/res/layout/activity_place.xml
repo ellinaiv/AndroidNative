@@ -107,10 +107,10 @@
                 android:layout_width="44dp"
                 android:layout_height="44dp"
                 android:layout_marginEnd="14dp"
-                android:contentDescription="@string/weather_icon"
                 app:layout_constraintBottom_toBottomOf="@+id/imageWater"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/imageWater"
+                android:contentDescription="@string/weather_icon"
                 app:srcCompat="@drawable/sun" />
 
             <TextView
@@ -149,11 +149,11 @@
 
             <TextView
                 android:id="@+id/textCurrentsResult"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:text="Lite"
                 android:textColor="#228B22"
                 android:textSize="20sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginEnd="12dp"
                 app:layout_constraintBottom_toBottomOf="@+id/textCurrents"
                 app:layout_constraintEnd_toStartOf="@+id/buttonInfoCurrents"
@@ -658,7 +658,7 @@
                 android:textSize="20sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="52dp"
+                android:layout_marginBottom="56dp"
                 android:layout_marginTop="24dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
