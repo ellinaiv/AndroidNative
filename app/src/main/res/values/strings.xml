@@ -77,5 +77,7 @@
     <string name="title_mer">MER</string>
     <string name="title_list">LISTE</string>
     <string name="title_map">KART</string>
+    <string name="noMap">Klarte ikke å tegne opp ruten</string>
+    
 
 </resources>

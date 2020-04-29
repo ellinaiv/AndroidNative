@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.ImageButton
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
@@ -48,11 +47,15 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
 
     private val viewModel: DirectionActivityViewModel by viewModels{ DirectionActivityViewModel.InstanceCreator() }
     private var permissionManager = PermissionsManager(this)
-    private lateinit var mapboxMap: MapboxMap
+    private var mapboxMap: MapboxMap? = null
     private var mapView: MapView? = null
-    private val ROUTE_SOURCE_ID = "ROUTE_SOURCE_ID"
+    private val routeSourceId = "ROUTE_SOURCE_ID"
     private var way: Transportation? = null
     private var tag = "TAG"
+    private var buttonWalkClicked = false
+    private var buttonBikeClicked = false
+    private var buttonCarClicked = false
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,66 +67,84 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
             finish()
         }
 
-        toggleButtonEvents()
-        var first = true;
+        buttonEvents()
+        var first = true
 
         //Observerer stedet som er valgt
         viewModel.place!!.observe(this, Observer { place ->
+            makeMap(place, savedInstanceState)
             viewModel.wayOfTransportation!!.observe(this, Observer { way->
                 this.way = way
                 if(first){
                     first = false
-                    when(way){
-                        Transportation.BIKE -> toggleBike.isChecked = true
-                        Transportation.WALK -> toggleWalk.isChecked = true
-                        Transportation.CAR -> toggleCar.isChecked = true
-                        else -> toggleBike.isChecked = true
+                    when(way!!){
+                        Transportation.WALK -> {
+                            buttonWalk.setImageResource(R.drawable.directions_walk_pink)
+                            buttonWalk.setBackgroundResource(R.drawable.background)
+                        }
+                        Transportation.BIKE->{
+                            buttonBike.setImageResource(R.drawable.directions_bike_pink)
+                            buttonBike.setBackgroundResource(R.drawable.background)
+                        }
+                        Transportation.CAR->{
+                            buttonCar.setImageResource(R.drawable.directions_car_pink)
+                            buttonCar.setBackgroundResource(R.drawable.background)
+                        }
                     }
+                }else{
+                    makeRoute()
                 }
-                makeMap(place, savedInstanceState)
                 buttonRefresh.setOnClickListener {
-                    makeMap(place, savedInstanceState)
+                    makeRoute()
                 }
             })
         })
     }
 
-    private fun toggleButtonEvents(){
-        toggleWalk.setOnCheckedChangeListener { _, isChecked ->
-            if(toggleWalk.isPressed){
-                if(isChecked){
-                    restartToggleButtons()
-                    viewModel.changeWayOfTransportation(Transportation.WALK)
-                }
-                toggleWalk.isChecked = true
+    private fun buttonEvents(){
+        buttonWalk.setOnClickListener {
+            if(! buttonWalkClicked){
+                restartButtons()
+                buttonWalkClicked = true
+                buttonWalk.setImageResource(R.drawable.directions_walk_pink)
+                buttonWalk.setBackgroundResource(R.drawable.background)
+                viewModel.changeWayOfTransportation(Transportation.WALK)
             }
         }
 
-        toggleBike.setOnCheckedChangeListener { _, isChecked ->
-            if(toggleBike.isPressed){
-                if(isChecked){
-                    restartToggleButtons()
-                    viewModel.changeWayOfTransportation(Transportation.BIKE)
-                }
-                toggleBike.isChecked = true
+        buttonBike.setOnClickListener {
+            if(!buttonBikeClicked){
+                restartButtons()
+                buttonBikeClicked = true
+                buttonBike.setImageResource(R.drawable.directions_bike_pink)
+                buttonBike.setBackgroundResource(R.drawable.background)
+                viewModel.changeWayOfTransportation(Transportation.BIKE)
             }
         }
 
-        toggleCar.setOnCheckedChangeListener { _, isChecked ->
-            if(toggleCar.isPressed){
-                if(isChecked){
-                    restartToggleButtons()
-                    viewModel.changeWayOfTransportation(Transportation.CAR)
-                }
-                toggleCar.isChecked = true
+        buttonCar.setOnClickListener {
+            if(! buttonCarClicked){
+                restartButtons()
+                buttonCarClicked = true
+                buttonCar.setImageResource(R.drawable.directions_car_pink)
+                buttonCar.setBackgroundResource(R.drawable.background)
+                viewModel.changeWayOfTransportation(Transportation.CAR)
             }
         }
     }
 
-    private fun restartToggleButtons(){
-        toggleWalk.isChecked = false
-        toggleBike.isChecked = false
-        toggleCar.isChecked = false
+    private fun restartButtons(){
+        buttonWalk.setBackgroundColor(resources.getColor(R.color.pinkIconColor, null))
+        buttonBike.setBackgroundColor(resources.getColor(R.color.pinkIconColor, null))
+        buttonCar.setBackgroundColor(resources.getColor(R.color.pinkIconColor, null))
+
+        buttonWalk.setImageResource(R.drawable.directions_walk_white)
+        buttonBike.setImageResource(R.drawable.directions_bike_white)
+        buttonCar.setImageResource(R.drawable.directions_car_white)
+
+        buttonWalkClicked = false
+        buttonBikeClicked = false
+        buttonCarClicked = false
     }
 
 
@@ -133,14 +154,14 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
      * @param savedInstanceState: mapView trenger denne til onCreate metoden sin
      */
     private fun makeMap(place: Place, savedInstanceState: Bundle?) {
-        Log.d(tag, "makemap")
         mapView = findViewById<MapView>(R.id.mapView)
         mapView?.onCreate(savedInstanceState)
         mapView?.getMapAsync { mapboxMap ->
             this.mapboxMap = mapboxMap
+            Log.d(tag, mapboxMap.toString())
             mapboxMap.setStyle(Style.MAPBOX_STREETS)
             mapboxMap.getStyle { style ->
-                style.addSource(GeoJsonSource(ROUTE_SOURCE_ID))
+                style.addSource(GeoJsonSource(routeSourceId))
                 makeRouteLayer(style)
                 addDestinationMarker(place, style)
                 val position = CameraPosition.Builder()
@@ -148,9 +169,15 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
                     .zoom(10.0)
                     .build()
                 mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(position), 2)
+                enableLocationComponent(style)
             }
         }
-        Log.d(tag, "makemapDONE")
+    }
+
+    private fun makeRoute(){
+        mapboxMap?.getStyle {style ->
+            enableLocationComponent(style)
+        } ?: Toast.makeText(this, getString(R.string.noMap) , Toast.LENGTH_SHORT).show()
     }
 
     /**
@@ -158,9 +185,7 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
      * @param style: stilen kartet skal tegnes oppå
      */
     private fun makeRouteLayer(style: Style){
-        enableLocationComponent(style)
-        val routeLayer = LineLayer("ROUTE_LAYER_ID", ROUTE_SOURCE_ID)
-
+        val routeLayer = LineLayer("ROUTE_LAYER_ID", routeSourceId)
         routeLayer.setProperties(
             PropertyFactory.lineCap(Property.LINE_CAP_ROUND),
             PropertyFactory.lineJoin(Property.LINE_JOIN_ROUND),
@@ -168,7 +193,6 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
             PropertyFactory.lineColor(ContextCompat
                 .getColor(this, R.color.pinkIconColor))
         )
-
         style.addLayer(routeLayer)
     }
 
@@ -178,13 +202,13 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
      * @param style: stilen pinnen skla plaseres på
      */
     private fun addDestinationMarker(place: Place, style: Style){
-        val ICON_ID_RED = "ICON_ID_RED"
+        val iconIdRed = "ICON_ID_RED"
         val geoId = "GEO_ID"
         val icon = BitmapFactory.decodeResource(
             this@DirectionActivity.resources,
             R.drawable.mapbox_marker_icon_default
         )
-        style.addImage(ICON_ID_RED, icon)
+        style.addImage(iconIdRed, icon)
 
         val feature = viewModel.getFeature(place)
         val geoJsonSource = GeoJsonSource(geoId, FeatureCollection.fromFeatures(
@@ -193,7 +217,7 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
 
         val symbolLayer = SymbolLayer("SYMBOL_LAYER_ID", geoId)
         symbolLayer.withProperties(
-            PropertyFactory.iconImage(ICON_ID_RED),
+            PropertyFactory.iconImage(iconIdRed),
             PropertyFactory.iconAllowOverlap(true),
             PropertyFactory.iconIgnorePlacement(true)
         )
@@ -207,7 +231,7 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
     private fun getRoute(place: Place){
         //hentet stedet vi skal bruke
         Log.d(tag, "getPlace")
-        val originLocation = mapboxMap.locationComponent.lastKnownLocation ?: return
+        val originLocation = mapboxMap!!.locationComponent.lastKnownLocation ?: return
         val originPoint = Point.fromLngLat(originLocation.longitude, originLocation.latitude)
         val profile = when(way){
             Transportation.BIKE -> DirectionsCriteria.PROFILE_CYCLING
@@ -237,9 +261,6 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
 
                 val currentRoute = response.body()!!.routes()[0]
 
-                val stringD = "Lengde: " + viewModel.convertToCorrectDistance(currentRoute.distance())
-                val stringT = "\nTid: " + viewModel.convertTime(currentRoute.duration())
-
                 textTitleRoute.text = getString(R.string.titleRoute, place.name)
                 textDistance.text = viewModel.convertToCorrectDistance(currentRoute.distance())
                 textTime.text = viewModel.convertTime(currentRoute.duration())
@@ -247,8 +268,8 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
 
 
 
-                mapboxMap.getStyle { style ->
-                    val source = style.getSourceAs<GeoJsonSource>(ROUTE_SOURCE_ID)
+                mapboxMap!!.getStyle { style ->
+                    val source = style.getSourceAs<GeoJsonSource>(routeSourceId)
                     source?.setGeoJson(
                         LineString.fromPolyline(currentRoute.geometry()!!,
                             Constants.PRECISION_6
@@ -287,7 +308,7 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
                     .locationComponentOptions(customLocationComponentOptions)
                     .build()
 
-            mapboxMap.locationComponent.apply {
+            mapboxMap!!.locationComponent.apply {
                 activateLocationComponent(locationComponentActivityOptions)
                 isLocationComponentEnabled = true
                 cameraMode = CameraMode.TRACKING
@@ -310,7 +331,7 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
 
     override fun onPermissionResult(granted: Boolean) {
         if(granted){
-            enableLocationComponent(mapboxMap.style!!)
+            enableLocationComponent(mapboxMap!!.style!!)
             getRoute(viewModel.place!!.value!!)
         }else{
             Toast.makeText(this, getString(R.string.ikkeViseVei), Toast.LENGTH_LONG).show()

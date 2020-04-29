@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/buttonWalk"
-        android:icon="@drawable/directions_walk"
+        android:icon="@drawable/directions_walk_pink"
         android:title="Gå" />
     <item android:id="@+id/buttonBike"
-        android:icon="@drawable/directions_bike"
+        android:icon="@drawable/directions_bike_pink"
         android:title="Sykle" />
     <item android:id="@+id/buttonCar"
-        android:icon="@drawable/directions_car"
+        android:icon="@drawable/directions_car_pink"
         android:title="Bil" />
 </menu>

@@ -494,7 +494,7 @@
                     android:layout_height="wrap_content"
 
                     android:padding="6dp"
-                    android:src="@drawable/directions_bike"
+                    android:src="@drawable/directions_bike_pink"
                     android:background="@android:color/transparent"
                     android:contentDescription="@string/infoBikeButton"
 
@@ -513,7 +513,7 @@
                     android:layout_height="wrap_content"
 
                     android:padding="6dp"
-                    android:src="@drawable/directions_car"
+                    android:src="@drawable/directions_car_pink"
                     android:background="@android:color/transparent"
                     android:contentDescription="@string/infoCarButton"
 
@@ -531,7 +531,7 @@
                     android:layout_height="wrap_content"
 
                     android:padding="6dp"
-                    android:src="@drawable/directions_walk"
+                    android:src="@drawable/directions_walk_pink"
                     android:background="@android:color/transparent"
                     android:contentDescription="@string/infoWalkButton"
 
