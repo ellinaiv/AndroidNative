@@ -143,7 +143,7 @@
                 mapbox:layout_constraintRight_toLeftOf="parent"
                 mapbox:layout_constraintTop_toTopOf="parent"
 
-                android:contentDescription="@string/weatherIcon" />
+                android:contentDescription="@string/weather_icon" />
 
             <TextView
                 android:layout_height="wrap_content"
@@ -193,7 +193,7 @@
                 mapbox:layout_constraintRight_toLeftOf="parent"
                 mapbox:layout_constraintTop_toTopOf="parent"
 
-                android:contentDescription="@string/waterTempIcon" />
+                android:contentDescription="@string/water_temp_icon" />
 
             <TextView
                 android:layout_height="wrap_content"

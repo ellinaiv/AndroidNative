@@ -7,16 +7,15 @@
 
     <!--    textViews-->
     <string name="tempC">%1$d °C</string>
-    <string name="facilities">Fasiliteter</string>
-    <string name="placeName">Badeplass</string>
-    <string name="popularTimes">Populære tidspunkter</string>
-    <string name="currents">Havstrømninger</string>
-    <string name="uv">UV-stråling</string>
-    <string name="waterQuality">Vannkvalitet</string>
     <string name="notAvailable">Ikke tilgjengelig</string>
-    <string name="weatherForecast">Værvarsel</string>
-    <string name="publicTransportLink">Finn reise på ruter.no</string>
-    <string name="infoChooseRouteType">Vis rute til badeplass:</string>
+    <string name="place_name">Badeplass</string>
+    <string name="place_currents">Havstrømninger</string>
+    <string name="place_uv">UV-stråling</string>
+    <string name="place_forecast">Værvarsel</string>
+    <string name="place_hour_forecast">Timesvarsel</string>
+    <string name="place_long_forecast">Langtidsvarsel</string>
+    <string name="place_public_transport_link">Finn reise på ruter.no</string>
+    <string name="place_select_route_type">Vis rute til badeplass:</string>
     <string name="aboutApp">Om appen</string>
     <string name="aboutAPI">Om API</string>
     <string name="settingsTitle">Innstillinger</string>
@@ -28,26 +27,19 @@
         unchanged. It was popularised in the 1960s with the release of Letraset sheets containing
         Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker
         including versions of Lorem Ipsum.</string>
-    <string name="hourForecast">Timesvarsel</string>
-    <string name="longForecast">Langtidsvarsel</string>
 
-    <!--    buttons-->
-    <string name="back">Trykk her for å gå tilbake</string>
-    <string name="directionButton">Trykk her for å vise sykkelvei</string>
-    <string name="moreInfoPlace">Trykk her for mer informasjon om stranda</string>
-    <string name="infoBikeButton">Vis sykkelvei til badestedet</string>
-    <string name="infoCarButton">Vis bilvei til badestedet</string>
-    <string name="infoWalkButton">Vis gangvei til badestedet</string>
-    <string name="infoCurrents">Vis informasjon om måling av havstrømninger</string>
-    <string name="infoUV">Vis informasjon om måling av UV-stråling</string>
+    <!--    content description for buttons-->
+    <string name="button_back">Trykk her for å gå tilbake</string>
+    <string name="place_button_bike">Vis sykkelvei til badestedet</string>
+    <string name="place_button_car">Vis bilvei til badestedet</string>
+    <string name="place_button_walk">Vis gangvei til badestedet</string>
+    <string name="place_button_info_currents">Vis informasjon om måling av havstrømninger</string>
+    <string name="place_button_info_uv">Vis informasjon om måling av UV-stråling</string>
 
     <!--    content description for images-->
-    <string name="waterIcon">Badevann ikon</string>
-    <string name="toiletIcon">Badeplassen har toalett</string>
-    <string name="wheelchairIcon">Badeplassen er tilrettelagt for fremkommelighet med rullestol</string>
-    <string name="popularTimesGraph">Graf som viser antall besøkende fordelt på ulike tider</string>
-    <string name="weatherIcon">Ikon som viser været</string>
-    <string name="waterTempIcon">ikon som viser om vanntemperaturen er varm eller kald i forhold til gjeldende preferanser</string>
+    <string name="water_icon">Badevann ikon</string>
+    <string name="weather_icon">Ikon som viser været</string>
+    <string name="water_temp_icon">ikon som viser om vanntemperaturen er varm eller kald i forhold til gjeldende preferanser</string>
 
     <!--    map stuff-->
     <string name="access_token">sk.eyJ1IjoiamFyaG9sdCIsImEiOiJjazg0ZDBsMHkwMTN4M2prNzJpcHZnMXFkIn0.k3JYH8gx2QewGmE4Vf2GsQ</string>
