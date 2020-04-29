@@ -159,7 +159,7 @@ class MapActivity : AppCompatActivity(), MapboxMap.OnMapClickListener {
      * @param place: Stedet som skal ha informasjonen sin på display
      */
     private fun showPlace(place: Place){
-        val nameTextView = findViewById<TextView>(R.id.namePlace)
+        val nameTextView = findViewById<TextView>(R.id.textPlaceName)
         val placeViewHolder = findViewById<ConstraintLayout>(R.id.placeViewHolder)
         val tempAirText = findViewById<TextView>(R.id.tempAirText)
         val tempWaterText = findViewById<TextView>(R.id.tempWaterText)

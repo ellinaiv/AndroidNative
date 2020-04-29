@@ -31,12 +31,12 @@
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/water"
+            app:layout_constraintRight_toLeftOf="@+id/imageWater"
             app:layout_constraintTop_toTopOf="parent" />
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/water"
+            android:id="@+id/imageWater"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -55,7 +55,7 @@
                 android:maxWidth="42dp"
                 android:adjustViewBounds="true"
 
-                app:layout_constraintBottom_toTopOf="@id/tempWater"
+                app:layout_constraintBottom_toTopOf="@id/textTempWater"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
@@ -63,7 +63,7 @@
                 android:src="@drawable/water_blue" />
 
             <TextView
-                android:id="@+id/tempWater"
+                android:id="@+id/textTempWater"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
@@ -102,7 +102,7 @@
                 android:maxWidth="43dp"
                 android:adjustViewBounds="true"
 
-                app:layout_constraintBottom_toTopOf="@+id/tempAir"
+                app:layout_constraintBottom_toTopOf="@+id/textTempAir"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
@@ -110,7 +110,7 @@
                 android:src="@drawable/sun"/>
 
             <TextView
-                android:id="@+id/tempAir"
+                android:id="@+id/textTempAir"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"

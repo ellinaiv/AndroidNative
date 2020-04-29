@@ -31,8 +31,8 @@ class ListAdapter(private val myDataset: List<Place>, val context: Context,
 
         init {
             itemName = itemView.findViewById(R.id.name)
-            itemTempAir = itemView.findViewById(R.id.tempAir)
-            itemTempWater = itemView.findViewById(R.id.tempWater)
+            itemTempAir = itemView.findViewById(R.id.textTempAir)
+            itemTempWater = itemView.findViewById(R.id.textTempWater)
         }
 
     }

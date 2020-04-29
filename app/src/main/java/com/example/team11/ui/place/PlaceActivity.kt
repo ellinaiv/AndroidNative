@@ -54,14 +54,14 @@ class PlaceActivity : AppCompatActivity() {
      * @param savedInstanceState: mapView trenger denne i makeMap
      */
     private fun makeAboutPage(place: Place, savedInstanceState: Bundle?) {
-        val backButton = findViewById<ImageButton>(R.id.backButton)
+        val backButton = findViewById<ImageButton>(R.id.buttonBack)
         val toggleFavorite = findViewById<ToggleButton>(R.id.toggleFavourite)
-        val namePlace = findViewById<TextView>(R.id.namePlace)
-        val tempWater = findViewById<TextView>(R.id.tempWater)
-        val directionsBikeButton = findViewById<ImageButton>(R.id.directionsButtonBike)
-        val directionsCarButton = findViewById<ImageButton>(R.id.directionsButtonCar)
-        val directionsWalkButton = findViewById<ImageButton>(R.id.directionsButtonWalk)
-        val publicTransportLink = findViewById<TextView>(R.id.link_publicTransport)
+        val namePlace = findViewById<TextView>(R.id.textPlaceName)
+        val tempWater = findViewById<TextView>(R.id.textTempWater)
+        val directionsBikeButton = findViewById<ImageButton>(R.id.buttonBike)
+        val directionsCarButton = findViewById<ImageButton>(R.id.buttonCar)
+        val directionsWalkButton = findViewById<ImageButton>(R.id.buttonWalk)
+        val publicTransportLink = findViewById<TextView>(R.id.textPublicTransportLink)
 
         toggleFavorite.isChecked = place.favorite
 

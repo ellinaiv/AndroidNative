@@ -56,7 +56,7 @@ class DirectionsActivity : AppCompatActivity() , PermissionsListener {
         Mapbox.getInstance(this, getString(R.string.access_token))
         setContentView(R.layout.activity_direction)
         supportActionBar!!.hide()
-        val backButton = findViewById<ImageButton>(R.id.backButton)
+        val backButton = findViewById<ImageButton>(R.id.buttonBack)
         val aboutDirectionText = findViewById<TextView>(R.id.aboutDirectionText)
         backButton.setOnClickListener {
             finish()

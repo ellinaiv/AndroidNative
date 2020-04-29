@@ -160,7 +160,7 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
             false -> tempWaterImage.setImageResource(R.drawable.water_blue)
         }
 
-        namePlace.text = place.name
+        textPlaceName.text = place.name
         tempAirText.text = getString(R.string.notAvailable)
         tempWaterText.text = getString(R.string.tempC, place.temp)
 
