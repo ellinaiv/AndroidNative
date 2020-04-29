@@ -68,14 +68,14 @@ class DirectionActivityViewModel: ViewModel() {
         }
         val minutes = ((hoursAndMinutes - hours)*60).roundToInt()
         if(hours == 0){
-            return "$minutes minutter"
+            return "$minutes minutte(r)"
         }
 
         if(minutes == 0){
-            return "$hours timer"
+            return "$hours time(r)"
         }
 
-        return "$hours timer og $minutes minutter"
+        return "$hours time(r) og $minutes minutte(r)"
 
     }
 

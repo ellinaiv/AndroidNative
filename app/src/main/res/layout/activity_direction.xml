@@ -61,12 +61,23 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/topBarBorder"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/topBar"
+
+        android:background="@color/topBarBorder"/>
+
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/topBar"
+        app:layout_constraintTop_toBottomOf="@id/topBarBorder"
         android:layout_margin="12dp"
 
         app:cardCornerRadius="12dp"
@@ -83,10 +94,11 @@
             app:layout_constraintTop_toTopOf="parent"
 
             android:background="@color/pinkIconColor"
-            android:padding="6dp">
+            android:padding="4dp">
 
             <ImageButton
                 android:id="@+id/buttonWalk"
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
@@ -96,12 +108,13 @@
                 android:layout_margin="4dp"
 
                 android:scaleType="fitXY"
-                android:maxWidth="32dp"
+                android:maxWidth="38dp"
                 android:adjustViewBounds="true"
 
+                android:padding="4dp"
                 android:src="@drawable/directions_walk_white"
                 android:background="@color/pinkIconColor"
-                />
+                android:contentDescription="@string/infoWalkButton" />
 
             <ImageButton
                 android:id="@+id/buttonBike"
@@ -114,12 +127,13 @@
                 android:layout_margin="4dp"
 
                 android:scaleType="fitXY"
-                android:maxWidth="32dp"
+                android:maxWidth="38dp"
                 android:adjustViewBounds="true"
 
+                android:padding="4dp"
                 android:src="@drawable/directions_bike_white"
                 android:background="@color/pinkIconColor"
-                />
+                android:contentDescription="@string/infoBikeButton" />
 
             <ImageButton
                 android:id="@+id/buttonCar"
@@ -133,12 +147,13 @@
                 android:layout_margin="4dp"
 
                 android:scaleType="fitXY"
-                android:maxWidth="32dp"
+                android:maxWidth="38dp"
                 android:adjustViewBounds="true"
 
+                android:padding="4dp"
                 android:src="@drawable/directions_car_white"
                 android:background="@color/pinkIconColor"
-                />
+                android:contentDescription="@string/infoCarButton" />
 
 
 

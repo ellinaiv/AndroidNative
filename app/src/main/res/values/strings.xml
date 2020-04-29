@@ -66,9 +66,6 @@
     <string name="access_token">sk.eyJ1IjoiamFyaG9sdCIsImEiOiJjazg0ZDBsMHkwMTN4M2prNzJpcHZnMXFkIn0.k3JYH8gx2QewGmE4Vf2GsQ</string>
     <string name="ikkeViseVei">Kan ikke vise vei uten lokasjon</string>
     <string name="viTrengerPosFordi">Kan ikke vise veien til badeplassen uten din posisjon</string>
-    <string name="bikeDirection">Sykkelvei til %1$s</string>
-    <string name="carDirection">Bilvei til %1$s</string>
-    <string name="walkDirection">Gangvei til %1$s</string>
     <string name="title_activity_bottom_navigation">BottomNavigation</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>

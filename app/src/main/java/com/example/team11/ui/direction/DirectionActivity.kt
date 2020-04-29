@@ -67,7 +67,7 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
             finish()
         }
 
-        buttonEvents()
+        buttonTransportationEvents()
         var first = true
 
         //Observerer stedet som er valgt
@@ -101,10 +101,13 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
         })
     }
 
-    private fun buttonEvents(){
+    /**
+     * Setter evenetene til de ulike transport-knappene
+     */
+    private fun buttonTransportationEvents(){
         buttonWalk.setOnClickListener {
             if(! buttonWalkClicked){
-                restartButtons()
+                resetTransportationButtons()
                 buttonWalkClicked = true
                 buttonWalk.setImageResource(R.drawable.directions_walk_pink)
                 buttonWalk.setBackgroundResource(R.drawable.background)
@@ -114,7 +117,7 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
 
         buttonBike.setOnClickListener {
             if(!buttonBikeClicked){
-                restartButtons()
+                resetTransportationButtons()
                 buttonBikeClicked = true
                 buttonBike.setImageResource(R.drawable.directions_bike_pink)
                 buttonBike.setBackgroundResource(R.drawable.background)
@@ -124,7 +127,7 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
 
         buttonCar.setOnClickListener {
             if(! buttonCarClicked){
-                restartButtons()
+                resetTransportationButtons()
                 buttonCarClicked = true
                 buttonCar.setImageResource(R.drawable.directions_car_pink)
                 buttonCar.setBackgroundResource(R.drawable.background)
@@ -133,7 +136,10 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
         }
     }
 
-    private fun restartButtons(){
+    /**
+     * Setter alle transport-knappene tilbake til sin orginale tilstand (mtp. design)
+     */
+    private fun resetTransportationButtons(){
         buttonWalk.setBackgroundColor(resources.getColor(R.color.pinkIconColor, null))
         buttonBike.setBackgroundColor(resources.getColor(R.color.pinkIconColor, null))
         buttonCar.setBackgroundColor(resources.getColor(R.color.pinkIconColor, null))
@@ -147,6 +153,28 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
         buttonCarClicked = false
     }
 
+    /**
+     * Sammen med enableButtons brukes denne funksjon som en måte å bregense kall på mapbox,
+     * så man får kun lov til å trykk når ett annet kall ikke kjører
+     */
+    private fun disableButtons(){
+        buttonWalk.isEnabled = false
+        buttonBike.isEnabled = false
+        buttonCar.isEnabled = false
+        buttonRefresh.isEnabled = false
+    }
+
+    /**
+     * Sammen med disaableButtons brukes denne funksjon som en måte å bregense kall på mapbox,
+     * så man får kun lov til å trykk når ett annet kall ikke kjører
+     */
+    private fun enableButtons(){
+        buttonWalk.isEnabled = true
+        buttonBike.isEnabled = true
+        buttonCar.isEnabled = true
+        buttonRefresh.isEnabled = true
+    }
+
 
     /**
      * Lager kartet, tegner opp destionasjon og lokasjon. Viser rute, og zoomer inn på destinasjon
@@ -157,6 +185,7 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
         mapView = findViewById<MapView>(R.id.mapView)
         mapView?.onCreate(savedInstanceState)
         mapView?.getMapAsync { mapboxMap ->
+            disableButtons()
             this.mapboxMap = mapboxMap
             Log.d(tag, mapboxMap.toString())
             mapboxMap.setStyle(Style.MAPBOX_STREETS)
@@ -171,13 +200,21 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
                 mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(position), 2)
                 enableLocationComponent(style)
             }
+            enableButtons()
         }
     }
 
+    /**
+     * Har ansvar for å starte prosessen for å lage rute.
+     */
     private fun makeRoute(){
-        mapboxMap?.getStyle {style ->
-            enableLocationComponent(style)
-        } ?: Toast.makeText(this, getString(R.string.noMap) , Toast.LENGTH_SHORT).show()
+        mapView?.getMapAsync {
+            disableButtons()
+            it.getStyle {style ->
+                enableLocationComponent(style)
+            }
+            enableButtons()
+        }?: Toast.makeText(this, getString(R.string.noMap) , Toast.LENGTH_SHORT).show()
     }
 
     /**
