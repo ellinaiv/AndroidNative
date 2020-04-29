@@ -13,6 +13,7 @@
         android:layout_height="match_parent"
 
         app:layout_constraintTop_toBottomOf="@id/topBar"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
@@ -33,6 +34,7 @@
 
         <ImageButton
             android:id="@+id/buttonBack"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
@@ -41,8 +43,8 @@
             app:layout_constraintTop_toTopOf="parent"
 
             android:background="@color/backgroundCardsLight"
-            android:src="@drawable/arrow_left"
-            android:contentDescription="@string/back" />
+            android:contentDescription="@string/back"
+            android:src="@drawable/arrow_left"/>
 
         <ImageButton
             android:id="@+id/buttonRefresh"
@@ -56,13 +58,13 @@
 
             android:background="@color/backgroundCardsLight"
             android:contentDescription="@string/infoRefreshButton"
-            android:src="@drawable/refresh"
-            />
+            android:src="@drawable/refresh" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/topBarBorder"
+
         android:layout_width="match_parent"
         android:layout_height="1dp"
 
@@ -107,14 +109,14 @@
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_margin="4dp"
 
-                android:scaleType="fitXY"
                 android:maxWidth="38dp"
                 android:adjustViewBounds="true"
+                android:scaleType="fitXY"
 
-                android:padding="4dp"
-                android:src="@drawable/directions_walk_white"
                 android:background="@color/pinkIconColor"
-                android:contentDescription="@string/infoWalkButton" />
+                android:contentDescription="@string/infoWalkButton"
+                android:padding="4dp"
+                android:src="@drawable/directions_walk_white"/>
 
             <ImageButton
                 android:id="@+id/buttonBike"
@@ -126,14 +128,14 @@
                 app:layout_constraintTop_toBottomOf="@id/buttonWalk"
                 android:layout_margin="4dp"
 
-                android:scaleType="fitXY"
                 android:maxWidth="38dp"
                 android:adjustViewBounds="true"
+                android:scaleType="fitXY"
 
-                android:padding="4dp"
-                android:src="@drawable/directions_bike_white"
                 android:background="@color/pinkIconColor"
-                android:contentDescription="@string/infoBikeButton" />
+                android:contentDescription="@string/infoBikeButton"
+                android:padding="4dp"
+                android:src="@drawable/directions_bike_white"/>
 
             <ImageButton
                 android:id="@+id/buttonCar"
@@ -146,14 +148,14 @@
                 app:layout_constraintTop_toBottomOf="@id/buttonBike"
                 android:layout_margin="4dp"
 
-                android:scaleType="fitXY"
                 android:maxWidth="38dp"
                 android:adjustViewBounds="true"
+                android:scaleType="fitXY"
 
-                android:padding="4dp"
-                android:src="@drawable/directions_car_white"
                 android:background="@color/pinkIconColor"
-                android:contentDescription="@string/infoCarButton" />
+                android:contentDescription="@string/infoCarButton"
+                android:padding="4dp"
+                android:src="@drawable/directions_car_white"/>
 
 
 
@@ -206,17 +208,18 @@
 
                 android:paddingBottom="4dp"
 
-                android:textSize="18sp"
-                android:textColor="@color/mainTextColor"/>
+                android:textColor="@color/mainTextColor"
+                android:textSize="18sp"/>
 
             <TextView
                 android:id="@+id/titleDistance"
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
                 android:layout_column="0"
                 android:layout_row="1"
-                android:layout_marginEnd="24dp"
+                android:layout_marginEnd="12dp"
 
                 android:fontFamily="@font/roboto_medium"
                 android:text="@string/distance"
@@ -225,6 +228,7 @@
 
             <TextView
                 android:id="@+id/textDistance"
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
@@ -238,6 +242,7 @@
 
             <TextView
                 android:id="@+id/titleTime"
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
