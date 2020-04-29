@@ -108,11 +108,11 @@ data class WeatherForecastDetails(
 
 data class NextOneHourForecast(
     @SerializedName("summary")
-    val summary: WeatherForecastSummary,
+    val summary: WeatherForecastSymbol,
 
     @SerializedName("details")
     val details: WeatherForecastDetails
 )
 
-data class WeatherForecastSummary(val symbol: String)
+data class WeatherForecastSymbol(val symbol: String)
 

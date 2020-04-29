@@ -40,4 +40,6 @@ object ApiClient {
         @GET("locationforecast/2.0/.json?")
         fun getWeather(@Query("lat") lat: Double, @Query("lon") lon: Double): Call<WeatherForecast>
     }
+
+
 }
