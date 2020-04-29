@@ -1,26 +1,20 @@
 package com.example.team11.database.entity
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.example.team11.PersonalPreference
 import com.google.android.gms.maps.model.LatLng
 import java.io.Serializable
 import kotlin.random.Random
 
-@Entity
-class Place(val id: Int, val name: String, val lat: Double, val lng: Double,
-            var favorite: Boolean = false, var temp: Int = Random.nextInt(0, 35)): Serializable {
-    /**
-     * tanken er at denne kan brukes i compareTo metoden
-     * kan også være et enum, se diskusjon i PersonligPreferanse klassen
-     */
-    private var tempraturInnafor = true
-
-
-    /**
-     * Endrer tempraturInnafor slik at den er true hvis den er innafor, og false ellers
-     *  @param nyPreferanse
-    */
-    fun oppdaterTempraturInnafor(nyPreferanse: Int): Boolean{
-        TODO("ikke implementert")
-    }
+@Entity(tableName = "place")
+class Place(
+    @PrimaryKey @ColumnInfo(name = "id") val id: String,
+    val name: String,
+    val lat: Double,
+    val lng: Double,
+    var favorite: Boolean = false,
+    var temp: Int = Random.nextInt(0, 35)): Serializable {
 
     /**
      * Returerer posisjon i et latlng objekt
@@ -37,7 +31,6 @@ class Place(val id: Int, val name: String, val lat: Double, val lng: Double,
         return PersonalPreference.waterTempMid < temp
     }
 
-
     /**
      * Sammenligner en strand med en annen
      * @param other Any[Strand], kan ikke være null
@@ -46,11 +39,8 @@ class Place(val id: Int, val name: String, val lat: Double, val lng: Double,
      */
     /*
     override fun compareTo(other: Place): Int {
-        TODO("ikke implemert")
+        TODO("Slette denne metoden? ")
     }*/
-
-
-
 
     override fun toString(): String {
         return "$id:$name[$lat,$lng]"
