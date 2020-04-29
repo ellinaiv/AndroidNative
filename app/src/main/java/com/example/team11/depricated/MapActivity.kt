@@ -1,4 +1,4 @@
-package com.example.team11
+package com.example.team11.depricated
 
 import android.content.Intent
 import android.graphics.BitmapFactory
@@ -8,13 +8,11 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.EditText
-import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.doOnTextChanged
-import com.example.team11.viewmodels.MapActivityViewModel
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.mapboxsdk.Mapbox
 import com.mapbox.mapboxsdk.maps.MapView
@@ -24,6 +22,9 @@ import com.mapbox.mapboxsdk.style.layers.PropertyFactory
 import com.mapbox.mapboxsdk.style.layers.SymbolLayer
 import com.mapbox.mapboxsdk.style.sources.GeoJsonSource
 import androidx.lifecycle.Observer
+import com.example.team11.Place
+import com.example.team11.R
+import com.example.team11.ui.place.PlaceActivity
 import com.mapbox.geojson.Feature
 import com.mapbox.mapboxsdk.camera.CameraPosition
 import com.mapbox.mapboxsdk.camera.CameraUpdateFactory
@@ -40,7 +41,7 @@ class MapActivity : AppCompatActivity(), MapboxMap.OnMapClickListener {
     private lateinit var mapView: MapView
     private lateinit var mapBoxMap: MapboxMap
 
-    private val viewModel: MapActivityViewModel by viewModels{MapActivityViewModel.InstanceCreator() }
+    private val viewModel: MapActivityViewModel by viewModels{ MapActivityViewModel.InstanceCreator() }
 
     private lateinit var filterPlaces: List<Place>
 

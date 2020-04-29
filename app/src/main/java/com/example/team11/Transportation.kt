@@ -1,5 +1,5 @@
 package com.example.team11
 
-enum class Transporatation {
+enum class Transportation {
     BIKE, CAR, WALK
 }

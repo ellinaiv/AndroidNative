@@ -1,4 +1,4 @@
-package com.example.team11
+package com.example.team11.ui.bottomNavigation
 
 import android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -7,6 +7,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.team11.R
 import com.mapbox.mapboxsdk.Mapbox
 
 class MainActivity : AppCompatActivity() {
@@ -23,7 +24,9 @@ class MainActivity : AppCompatActivity() {
         Mapbox.getInstance(this, getString(R.string.access_token))
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_map, R.id.navigation_list, R.id.navigation_favorites
+                R.id.navigation_map,
+                R.id.navigation_list,
+                R.id.navigation_favorites
             )
         )
 

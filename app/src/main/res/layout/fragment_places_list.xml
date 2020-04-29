@@ -4,13 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.placesList.PlacesListFragment">
+    android:layout_marginBottom="?attr/actionBarSize"
+
+    tools:context=".ui.placesList.PlacesListFragment"
+    >
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_viewPlaces"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:scrollbars="vertical"
+        android:paddingBottom="?attr/actionBarSize"
+
         app:layout_constraintTop_toBottomOf="@+id/searchLayer"
         />
 

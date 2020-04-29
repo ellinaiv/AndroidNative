@@ -13,10 +13,11 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.team11.Place
-import com.example.team11.PlaceActivity
+import com.example.team11.ui.place.PlaceActivity
 import com.example.team11.R
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
+import com.mapbox.mapboxsdk.Mapbox
 import com.mapbox.mapboxsdk.camera.CameraPosition
 import com.mapbox.mapboxsdk.camera.CameraUpdateFactory
 import com.mapbox.mapboxsdk.geometry.LatLng
@@ -50,6 +51,7 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
         savedInstanceState: Bundle?
     ): View? {
 
+        Mapbox.getInstance(this.context!!, getString(R.string.access_token))
         mapFragmentViewModel =
             ViewModelProvider(this).get(MapFragmentViewModel::class.java)
 
@@ -243,8 +245,8 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
     }
 
     override fun onStart() {
-        super.onStart();
-        mapView?.onStart();
+        super.onStart()
+        mapView?.onStart()
     }
 
     override fun onResume() {
