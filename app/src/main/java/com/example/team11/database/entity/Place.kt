@@ -9,7 +9,7 @@ import kotlin.random.Random
 
 @Entity(tableName = "place")
 class Place(
-    @PrimaryKey @ColumnInfo(name = "id") val id: String,
+    @PrimaryKey @ColumnInfo(name = "id") val id: Int,
     val name: String,
     val lat: Double,
     val lng: Double,

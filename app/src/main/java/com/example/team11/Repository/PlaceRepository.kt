@@ -138,7 +138,7 @@ class PlaceRepository private constructor() {
                         xpp.next()
                         places.add(
                             Place(
-                                id++.toString(),
+                                id++,
                                 name,
                                 lat.toDouble(),
                                 long.toDouble()
