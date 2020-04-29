@@ -2,6 +2,7 @@ package com.example.team11.ui.place
 
 import android.content.Intent
 import android.graphics.BitmapFactory
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -53,13 +54,14 @@ class PlaceActivity : AppCompatActivity() {
      * @param savedInstanceState: mapView trenger denne i makeMap
      */
     private fun makeAboutPage(place: Place, savedInstanceState: Bundle?) {
+        val backButton = findViewById<ImageButton>(R.id.backButton)
+        val toggleFavorite = findViewById<ToggleButton>(R.id.toggleFavourite)
         val namePlace = findViewById<TextView>(R.id.namePlace)
+        val tempWater = findViewById<TextView>(R.id.tempWater)
         val directionsBikeButton = findViewById<ImageButton>(R.id.directionsButtonBike)
         val directionsCarButton = findViewById<ImageButton>(R.id.directionsButtonCar)
         val directionsWalkButton = findViewById<ImageButton>(R.id.directionsButtonWalk)
-        val tempWater = findViewById<TextView>(R.id.tempWater)
-        val backButton = findViewById<ImageButton>(R.id.backButton)
-        val toggleFavorite = findViewById<ToggleButton>(R.id.toggleFavourite)
+        val publicTransportLink = findViewById<TextView>(R.id.link_publicTransport)
 
         toggleFavorite.isChecked = place.favorite
 
@@ -94,6 +96,12 @@ class PlaceActivity : AppCompatActivity() {
         tempWater.text = getString(R.string.tempC, place.temp)
 
         makeMap(place, savedInstanceState)
+
+        publicTransportLink.setOnClickListener {
+            val openURL = Intent(android.content.Intent.ACTION_VIEW)
+            openURL.data = Uri.parse("https://www.ruter.no/")
+            startActivity(openURL)
+        }
     }
 
     /**

@@ -8,7 +8,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/topBar"
-        android:background="@color/colorPrimary"
+        android:background="@color/backgroundCardsDark"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
@@ -18,7 +18,7 @@
 
         <ImageButton
             android:id="@+id/backButton"
-            android:background="@color/colorPrimary"
+            android:background="@color/backgroundCardsDark"
             android:layout_width="40dp"
             android:layout_height="40dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -52,7 +52,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layoutInScrollView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@color/backgroundCardsLight">
 
             <TextView
                 android:id="@+id/namePlace"
@@ -81,7 +82,7 @@
 
             <TextView
                 android:id="@+id/tempWater"
-                android:gravity="center"
+                android:gravity="center_horizontal"
                 android:text="@string/tempC"
                 android:textColor="@color/mainTextColor"
                 android:layout_width="44dp"
@@ -105,7 +106,7 @@
 
             <TextView
                 android:id="@+id/tempAir"
-                android:gravity="center"
+                android:gravity="center_horizontal"
                 android:text="@string/tempC"
                 android:textColor="@color/mainTextColor"
                 android:layout_width="44dp"
