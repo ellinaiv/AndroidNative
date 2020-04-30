@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
@@ -48,8 +49,10 @@ class DirectionsActivity : AppCompatActivity() , PermissionsListener {
     private val viewModel: DirectionsActivityViewModel by viewModels{ DirectionsActivityViewModel.InstanceCreator() }
     private var permissionManager = PermissionsManager(this)
     private lateinit var mapboxMap: MapboxMap
+    private var mapView: MapView? = null
     private val ROUTE_SOURCE_ID = "ROUTE_SOURCE_ID"
     private var way: Transportation? = null
+    private var tag = "TAG"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,8 +73,8 @@ class DirectionsActivity : AppCompatActivity() , PermissionsListener {
                         R.string.bikeDirection, place.name)
                     Transportation.CAR -> getString(
                         R.string.carDirection, place.name)
-                    Transportation.WALK -> getString(
-                        R.string.walkDirection, place.name)
+                    Transportation.WALK -> getString(R.string.walkDirection, place.name)
+                    else -> getString(R.string.bikeDirection, place.name)
                 }
                 this.way = way
                 makeMap(place, savedInstanceState)
@@ -85,9 +88,10 @@ class DirectionsActivity : AppCompatActivity() , PermissionsListener {
      * @param savedInstanceState: mapView trenger denne til onCreate metoden sin
      */
     private fun makeMap(place: Place, savedInstanceState: Bundle?) {
-        val mapView = findViewById<MapView>(R.id.mapView)
-        mapView.onCreate(savedInstanceState)
-        mapView.getMapAsync { mapboxMap ->
+        Log.d(tag, "makemap")
+        mapView = findViewById<MapView>(R.id.mapView)
+        mapView?.onCreate(savedInstanceState)
+        mapView?.getMapAsync { mapboxMap ->
             this.mapboxMap = mapboxMap
             mapboxMap.setStyle(Style.MAPBOX_STREETS)
             mapboxMap.getStyle { style ->
@@ -101,6 +105,7 @@ class DirectionsActivity : AppCompatActivity() , PermissionsListener {
                 mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(position), 2)
             }
         }
+        Log.d(tag, "makemapDONE")
     }
 
     /**
@@ -155,6 +160,7 @@ class DirectionsActivity : AppCompatActivity() , PermissionsListener {
      */
     private fun getRoute(place: Place){
         //hentet stedet vi skal bruke
+        Log.d(tag, "getPlace")
         val originLocation = mapboxMap.locationComponent.lastKnownLocation ?: return
         val originPoint = Point.fromLngLat(originLocation.longitude, originLocation.latitude)
         val profile = when(way){
@@ -184,7 +190,9 @@ class DirectionsActivity : AppCompatActivity() , PermissionsListener {
                 }
 
                 val currentRoute = response.body()!!.routes()[0]
-
+                val stringD = "Lengde: " + viewModel.convertToCorrectDistance(currentRoute.distance())
+                val stringT = "\nTid: " + viewModel.convertTime(currentRoute.duration())
+                Toast.makeText(this@DirectionActivity, stringD + stringT, Toast.LENGTH_LONG).show()
 
                 mapboxMap.getStyle { style ->
                     val source = style.getSourceAs<GeoJsonSource>(ROUTE_SOURCE_ID)
@@ -204,10 +212,11 @@ class DirectionsActivity : AppCompatActivity() , PermissionsListener {
 
     /**
      * Finner lokasjonen til brukeren og bestemmer hvordan stilen runt bruker punktet skal være
-     * @param style: stilen sim skal tegnes opp
+     * @param style: stilen som skal tegnes opp
      */
     @SuppressLint("MissingPermission")
     private fun enableLocationComponent(style: Style){
+        Log.d(tag, "enableLocationCOmponent")
         if(PermissionsManager.areLocationPermissionsGranted(this)){
             val customLocationComponentOptions =
                 LocationComponentOptions.builder(this)
@@ -246,9 +255,40 @@ class DirectionsActivity : AppCompatActivity() , PermissionsListener {
     override fun onPermissionResult(granted: Boolean) {
         if(granted){
             enableLocationComponent(mapboxMap.style!!)
+            getRoute(viewModel.place!!.value!!)
         }else{
             Toast.makeText(this, getString(R.string.ikkeViseVei), Toast.LENGTH_LONG).show()
             finish()
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        mapView?.onStart()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mapView?.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mapView?.onPause()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        mapView?.onStop()
+    }
+
+    override fun onLowMemory() {
+        super.onLowMemory()
+        mapView?.onLowMemory()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mapView?.onDestroy()
     }
 }

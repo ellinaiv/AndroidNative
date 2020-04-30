@@ -243,8 +243,8 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
     }
 
     override fun onStart() {
-        super.onStart();
-        mapView?.onStart();
+        super.onStart()
+        mapView?.onStart()
     }
 
     override fun onResume() {
