@@ -2,12 +2,14 @@ package com.example.team11.ui.direction
 
 import android.annotation.SuppressLint
 import android.graphics.BitmapFactory
-import android.graphics.Color
+import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableStringBuilder
+import android.text.style.StyleSpan
 import android.util.Log
-import android.widget.ImageButton
-import android.widget.TextView
+import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
@@ -40,6 +42,7 @@ import com.mapbox.mapboxsdk.style.layers.Property
 import com.mapbox.mapboxsdk.style.layers.PropertyFactory
 import com.mapbox.mapboxsdk.style.layers.SymbolLayer
 import com.mapbox.mapboxsdk.style.sources.GeoJsonSource
+import kotlinx.android.synthetic.main.activity_direction.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -48,39 +51,135 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
 
     private val viewModel: DirectionActivityViewModel by viewModels{ DirectionActivityViewModel.InstanceCreator() }
     private var permissionManager = PermissionsManager(this)
-    private lateinit var mapboxMap: MapboxMap
+    private var mapboxMap: MapboxMap? = null
     private var mapView: MapView? = null
-    private val ROUTE_SOURCE_ID = "ROUTE_SOURCE_ID"
+    private val routeSourceId = "ROUTE_SOURCE_ID"
     private var way: Transportation? = null
     private var tag = "TAG"
+    private var buttonWalkClicked = false
+    private var buttonBikeClicked = false
+    private var buttonCarClicked = false
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Mapbox.getInstance(this, getString(R.string.access_token))
         setContentView(R.layout.activity_direction)
         supportActionBar!!.hide()
-        val backButton = findViewById<ImageButton>(R.id.backButton)
-        val aboutDirectionText = findViewById<TextView>(R.id.aboutDirectionText)
-        backButton.setOnClickListener {
+
+        buttonBack.setOnClickListener {
             finish()
         }
 
+        buttonTransportationEvents()
+        var first = true
+
         //Observerer stedet som er valgt
         viewModel.place!!.observe(this, Observer { place ->
+            makeMap(place, savedInstanceState)
+            makeTitleText(place)
             viewModel.wayOfTransportation!!.observe(this, Observer { way->
-                aboutDirectionText.text = when(way) {
-                    Transportation.BIKE -> getString(
-                        R.string.bikeDirection, place.name)
-                    Transportation.CAR -> getString(
-                        R.string.carDirection, place.name)
-                    Transportation.WALK -> getString(R.string.walkDirection, place.name)
-                    else -> getString(R.string.bikeDirection, place.name)
-                }
                 this.way = way
-                makeMap(place, savedInstanceState)
+                if(first){
+                    first = false
+                    when(way!!){
+                        Transportation.WALK -> {
+                            buttonWalk.setImageResource(R.drawable.directions_walk_pink)
+                            buttonWalk.setBackgroundResource(R.drawable.background)
+                        }
+                        Transportation.BIKE->{
+                            buttonBike.setImageResource(R.drawable.directions_bike_pink)
+                            buttonBike.setBackgroundResource(R.drawable.background)
+                        }
+                        Transportation.CAR->{
+                            buttonCar.setImageResource(R.drawable.directions_car_pink)
+                            buttonCar.setBackgroundResource(R.drawable.background)
+                        }
+                    }
+                }else{
+                    makeRoute()
+                }
+                buttonRefresh.setOnClickListener {
+                    makeRoute()
+                }
             })
         })
     }
+
+    /**
+     * Setter evenetene til de ulike transport-knappene
+     */
+    private fun buttonTransportationEvents(){
+        buttonWalk.setOnClickListener {
+            if(! buttonWalkClicked){
+                resetTransportationButtons()
+                buttonWalkClicked = true
+                buttonWalk.setImageResource(R.drawable.directions_walk_pink)
+                buttonWalk.setBackgroundResource(R.drawable.background)
+                viewModel.changeWayOfTransportation(Transportation.WALK)
+            }
+        }
+
+        buttonBike.setOnClickListener {
+            if(!buttonBikeClicked){
+                resetTransportationButtons()
+                buttonBikeClicked = true
+                buttonBike.setImageResource(R.drawable.directions_bike_pink)
+                buttonBike.setBackgroundResource(R.drawable.background)
+                viewModel.changeWayOfTransportation(Transportation.BIKE)
+            }
+        }
+
+        buttonCar.setOnClickListener {
+            if(! buttonCarClicked){
+                resetTransportationButtons()
+                buttonCarClicked = true
+                buttonCar.setImageResource(R.drawable.directions_car_pink)
+                buttonCar.setBackgroundResource(R.drawable.background)
+                viewModel.changeWayOfTransportation(Transportation.CAR)
+            }
+        }
+    }
+
+    /**
+     * Setter alle transport-knappene tilbake til sin orginale tilstand (mtp. design)
+     */
+    private fun resetTransportationButtons(){
+        buttonWalk.setBackgroundColor(resources.getColor(R.color.pinkIconColor, null))
+        buttonBike.setBackgroundColor(resources.getColor(R.color.pinkIconColor, null))
+        buttonCar.setBackgroundColor(resources.getColor(R.color.pinkIconColor, null))
+
+        buttonWalk.setImageResource(R.drawable.directions_walk_white)
+        buttonBike.setImageResource(R.drawable.directions_bike_white)
+        buttonCar.setImageResource(R.drawable.directions_car_white)
+
+        buttonWalkClicked = false
+        buttonBikeClicked = false
+        buttonCarClicked = false
+    }
+
+    /**
+     * Sammen med enableButtons brukes denne funksjon som en måte å bregense kall på mapbox,
+     * så man får kun lov til å trykk når ett annet kall ikke kjører
+     */
+    private fun disableButtons(){
+        buttonWalk.isEnabled = false
+        buttonBike.isEnabled = false
+        buttonCar.isEnabled = false
+        buttonRefresh.isEnabled = false
+    }
+
+    /**
+     * Sammen med disaableButtons brukes denne funksjon som en måte å bregense kall på mapbox,
+     * så man får kun lov til å trykk når ett annet kall ikke kjører
+     */
+    private fun enableButtons(){
+        buttonWalk.isEnabled = true
+        buttonBike.isEnabled = true
+        buttonCar.isEnabled = true
+        buttonRefresh.isEnabled = true
+    }
+
 
     /**
      * Lager kartet, tegner opp destionasjon og lokasjon. Viser rute, og zoomer inn på destinasjon
@@ -88,24 +187,45 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
      * @param savedInstanceState: mapView trenger denne til onCreate metoden sin
      */
     private fun makeMap(place: Place, savedInstanceState: Bundle?) {
-        Log.d(tag, "makemap")
-        mapView = findViewById<MapView>(R.id.mapView)
+        mapView = findViewById(R.id.mapView)
         mapView?.onCreate(savedInstanceState)
         mapView?.getMapAsync { mapboxMap ->
+            disableButtons()
             this.mapboxMap = mapboxMap
+            Log.d(tag, mapboxMap.toString())
             mapboxMap.setStyle(Style.MAPBOX_STREETS)
-            mapboxMap.getStyle { style ->
-                style.addSource(GeoJsonSource(ROUTE_SOURCE_ID))
-                makeRouteLayer(style)
-                addDestinationMarker(place, style)
-                val position = CameraPosition.Builder()
-                    .target(LatLng(place.lat, place.lng))
-                    .zoom(10.0)
-                    .build()
-                mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(position), 2)
+            try {
+                mapboxMap.getStyle { style ->
+                    style.addSource(GeoJsonSource(routeSourceId))
+                    makeRouteLayer(style)
+                    addDestinationMarker(place, style)
+                    val position = CameraPosition.Builder()
+                        .target(LatLng(place.lat, place.lng))
+                        .zoom(10.0)
+                        .build()
+                    mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(position), 2)
+                    enableLocationComponent(style)
+                }
+            }finally {
+                enableButtons()
             }
         }
-        Log.d(tag, "makemapDONE")
+    }
+
+    /**
+     * Har ansvar for å starte prosessen for å lage rute.
+     */
+    private fun makeRoute(){
+        mapView?.getMapAsync {
+            try{
+                disableButtons()
+                it.getStyle {style ->
+                    enableLocationComponent(style)
+                }
+            }finally {
+                enableButtons()
+            }
+        }?: Toast.makeText(this, getString(R.string.noMap) , Toast.LENGTH_SHORT).show()
     }
 
     /**
@@ -113,16 +233,14 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
      * @param style: stilen kartet skal tegnes oppå
      */
     private fun makeRouteLayer(style: Style){
-        enableLocationComponent(style)
-        val routeLayer = LineLayer("ROUTE_LAYER_ID", ROUTE_SOURCE_ID)
-
+        val routeLayer = LineLayer("ROUTE_LAYER_ID", routeSourceId)
         routeLayer.setProperties(
             PropertyFactory.lineCap(Property.LINE_CAP_ROUND),
             PropertyFactory.lineJoin(Property.LINE_JOIN_ROUND),
-            PropertyFactory.lineWidth(5f),
-            PropertyFactory.lineColor(Color.parseColor("#009688"))
+            PropertyFactory.lineWidth(3f),
+            PropertyFactory.lineColor(ContextCompat
+                .getColor(this, R.color.pinkIconColor))
         )
-
         style.addLayer(routeLayer)
     }
 
@@ -132,13 +250,13 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
      * @param style: stilen pinnen skla plaseres på
      */
     private fun addDestinationMarker(place: Place, style: Style){
-        val ICON_ID_RED = "ICON_ID_RED"
+        val iconIdRed = "ICON_ID_RED"
         val geoId = "GEO_ID"
         val icon = BitmapFactory.decodeResource(
             this@DirectionActivity.resources,
-            R.drawable.mapbox_marker_icon_default
+            R.drawable.marker_place
         )
-        style.addImage(ICON_ID_RED, icon)
+        style.addImage(iconIdRed, icon)
 
         val feature = viewModel.getFeature(place)
         val geoJsonSource = GeoJsonSource(geoId, FeatureCollection.fromFeatures(
@@ -147,11 +265,37 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
 
         val symbolLayer = SymbolLayer("SYMBOL_LAYER_ID", geoId)
         symbolLayer.withProperties(
-            PropertyFactory.iconImage(ICON_ID_RED),
+            PropertyFactory.iconImage(iconIdRed),
             PropertyFactory.iconAllowOverlap(true),
             PropertyFactory.iconIgnorePlacement(true)
         )
         style.addLayer(symbolLayer)
+    }
+
+    /**
+     * Lager tittelen til reiseveien, og legger til tykk skrift
+     * @param place stedet som er destinasjonen
+     */
+    private fun makeTitleText(place: Place){
+        val aboutDirection = SpannableStringBuilder(" " + getString(R.string.yourPosition) + " ")
+        aboutDirection.setSpan(
+            StyleSpan(Typeface.BOLD),
+            0,
+            aboutDirection.length,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+        val destination = SpannableStringBuilder(" " + place.name)
+        destination.setSpan(
+            StyleSpan(Typeface.BOLD),
+            0,
+            destination.length,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+        aboutDirection.insert(0, getString(R.string.from))
+        aboutDirection.insert(aboutDirection.length, getString(R.string.to))
+        aboutDirection.insert(aboutDirection.length, destination)
+
+        textTitleRoute.text =  aboutDirection
     }
 
     /**
@@ -161,7 +305,7 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
     private fun getRoute(place: Place){
         //hentet stedet vi skal bruke
         Log.d(tag, "getPlace")
-        val originLocation = mapboxMap.locationComponent.lastKnownLocation ?: return
+        val originLocation = mapboxMap!!.locationComponent.lastKnownLocation ?: return
         val originPoint = Point.fromLngLat(originLocation.longitude, originLocation.latitude)
         val profile = when(way){
             Transportation.BIKE -> DirectionsCriteria.PROFILE_CYCLING
@@ -190,12 +334,15 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
                 }
 
                 val currentRoute = response.body()!!.routes()[0]
-                val stringD = "Lengde: " + viewModel.convertToCorrectDistance(currentRoute.distance())
-                val stringT = "\nTid: " + viewModel.convertTime(currentRoute.duration())
-                Toast.makeText(this@DirectionActivity, stringD + stringT, Toast.LENGTH_LONG).show()
 
-                mapboxMap.getStyle { style ->
-                    val source = style.getSourceAs<GeoJsonSource>(ROUTE_SOURCE_ID)
+                textDistance.text = viewModel.convertToCorrectDistance(currentRoute.distance())
+                textTime.text = viewModel.convertTime(currentRoute.duration())
+                layoutAboutRoute.visibility = View.VISIBLE
+
+
+
+                mapboxMap!!.getStyle { style ->
+                    val source = style.getSourceAs<GeoJsonSource>(routeSourceId)
                     source?.setGeoJson(
                         LineString.fromPolyline(currentRoute.geometry()!!,
                             Constants.PRECISION_6
@@ -216,13 +363,16 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
      */
     @SuppressLint("MissingPermission")
     private fun enableLocationComponent(style: Style){
-        Log.d(tag, "enableLocationCOmponent")
+        Log.d(tag, "enableLocationComponent")
         if(PermissionsManager.areLocationPermissionsGranted(this)){
+            //grunnet et problem med emulatorer vil ikke foregroundDrawable bli svart på kartet,
+            //skal fungere som normalt på et vanlig device
             val customLocationComponentOptions =
                 LocationComponentOptions.builder(this)
                     .trackingGesturesManagement(true)
+                    .foregroundDrawable(R.drawable.start_position)
                     .accuracyColor(ContextCompat.getColor(this@DirectionActivity,
-                        R.color.mapbox_blue
+                        R.color.colorPrimary
                     ))
                     .build()
 
@@ -231,7 +381,7 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
                     .locationComponentOptions(customLocationComponentOptions)
                     .build()
 
-            mapboxMap.locationComponent.apply {
+            mapboxMap!!.locationComponent.apply {
                 activateLocationComponent(locationComponentActivityOptions)
                 isLocationComponentEnabled = true
                 cameraMode = CameraMode.TRACKING
@@ -254,7 +404,7 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
 
     override fun onPermissionResult(granted: Boolean) {
         if(granted){
-            enableLocationComponent(mapboxMap.style!!)
+            enableLocationComponent(mapboxMap!!.style!!)
             getRoute(viewModel.place!!.value!!)
         }else{
             Toast.makeText(this, getString(R.string.ikkeViseVei), Toast.LENGTH_LONG).show()

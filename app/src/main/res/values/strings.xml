@@ -21,6 +21,7 @@
     <string name="aboutAPI">Om API</string>
     <string name="settingsTitle">Innstillinger</string>
     <string name="waterPreference">Preferanser for vanntemperatur</string>
+    <string name="noFavorites">Du har ikke lagt til noen favorittbadeplasser enda!</string>
     <string name="aboutAppText"> !Insert app-navn! er appen for deg som er glad i å bade i Oslo! Her har
         vi samlet relevant informasjon om værforhold, vanntemperatur og reisevei til forskjellige \
         badeplasser på ett sted, for at det skal være enklere å ta et informert valg om hvilken
@@ -40,7 +41,12 @@
         til en badeplass.
         \n\n<b>Oslo Kommune</b>
         \nAppen benytter API-er fra Oslo Kommune for data om ulike badeplasser og badetemperatur.
-</string>
+    </string>
+    <string name="from">Fra</string>
+    <string name="to"> til</string>
+    <string name="yourPosition">din posisjon</string>
+    <string name="distance">Distanse:</string>
+    <string name="time">Beregnet resietid:</string>
 
     <!--    buttons-->
     <string name="back">Trykk her for å gå tilbake</string>
@@ -49,6 +55,7 @@
     <string name="infoBikeButton">Vis sykkelvei til badestedet</string>
     <string name="infoCarButton">Vis bilvei til badestedet</string>
     <string name="infoWalkButton">Vis gangvei til badestedet</string>
+    <string name="infoRefreshButton">Oppdater rute</string>
 
     <!--    content description for images-->
     <string name="waterIcon">Badevann ikon</string>
@@ -62,9 +69,6 @@
     <string name="access_token">sk.eyJ1IjoiamFyaG9sdCIsImEiOiJjazg0ZDBsMHkwMTN4M2prNzJpcHZnMXFkIn0.k3JYH8gx2QewGmE4Vf2GsQ</string>
     <string name="ikkeViseVei">Kan ikke vise vei uten lokasjon</string>
     <string name="viTrengerPosFordi">Kan ikke vise veien til badeplassen uten din posisjon</string>
-    <string name="bikeDirection">Sykkelvei til %1$s</string>
-    <string name="carDirection">Bilvei til %1$s</string>
-    <string name="walkDirection">Gangvei til %1$s</string>
     <string name="title_activity_bottom_navigation">BottomNavigation</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
@@ -73,5 +77,7 @@
     <string name="title_mer">MER</string>
     <string name="title_list">LISTE</string>
     <string name="title_map">KART</string>
+    <string name="noMap">Klarte ikke å tegne opp ruten</string>
+    
 
 </resources>
