@@ -19,4 +19,5 @@
     <color name="coldBlue">#0BA1F5</color>
     <color name="warmRed">#F73030</color>
     <color name="seekThumb">#6A6969</color>
+    <color name="transparent">#00FFFFFF</color>
 </resources>

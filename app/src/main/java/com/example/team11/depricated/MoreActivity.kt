@@ -85,7 +85,7 @@ class MoreActivity : AppCompatActivity() {
      * Logikken til seek baren ligger her
      */
     private fun makeSeekBar(){
-        seek_bar.progress = PersonalPreference.waterTempMid
+        seekBarWater.progress = PersonalPreference.waterTempMid
         val degreeLow = getString(
             R.string.tempC,
             PersonalPreference.waterTempLow
@@ -96,15 +96,15 @@ class MoreActivity : AppCompatActivity() {
         )
         textTempLow.text = degreeLow
         textTempHigh.text = degreeHigh
-        seek_bar.max = PersonalPreference.waterTempHigh
+        seekBarWater.max = PersonalPreference.waterTempHigh
 
-        seek_bar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+        seekBarWater.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seek: SeekBar,
                                            progress: Int, fromUser: Boolean) {
                 val value = (progress * (seek.width - 2 * seek.thumbOffset)) / seek.max
                 val degreeMid = getString(R.string.tempC, progress)
                 textTempMid.text = degreeMid
-                textTempMid.x = seek_bar.x + value;
+                textTempMid.x = seekBarWater.x + value;
             }
 
             override fun onStartTrackingTouch(seek: SeekBar) {
