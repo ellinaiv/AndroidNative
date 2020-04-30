@@ -96,7 +96,7 @@
                 android:gravity="start"
 
                 android:fontFamily="@font/raleway_medium"
-                android:text="Filtrering"
+                android:text="@string/titleFilter"
                 android:textColor="@color/mainTextColor"
                 android:textSize="24sp"/>
 
@@ -115,7 +115,7 @@
                 android:text="@string/waterPreference"
 
                 android:textColor="@color/mainTextColor"
-                android:textSize="12sp"
+                android:textSize="14sp"
                 />
 
             <SeekBar
@@ -126,7 +126,7 @@
                 app:layout_constraintTop_toBottomOf="@id/settingsTempWater"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                android:layout_marginTop="22dp"
+                android:layout_marginTop="32dp"
 
                 android:paddingStart="9dp"
                 android:paddingEnd="9dp"
@@ -143,14 +143,16 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
 
+                app:layout_constraintBottom_toTopOf="@id/seekBarWater"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+
+
                 android:textSize="12sp"
                 android:textColor="@color/mainTextColor"
                 android:translationZ="80dp"
                 android:fontFamily="@font/roboto_medium"
 
-                app:layout_constraintTop_toBottomOf="@id/seekBarWater"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 android:background="@color/transparent"
                 />
 
@@ -194,7 +196,7 @@
                 android:gravity="start"
 
                 android:fontFamily="@font/roboto_medium"
-                android:text="Vis bare badeplasser med:"
+                android:text="@string/showPlacesWater"
                 android:textColor="@color/mainTextColor"
                 android:textSize="12sp"/>
 
@@ -231,7 +233,7 @@
                     android:layout_marginStart="15dp"
 
                     android:fontFamily="@font/roboto_medium"
-                    android:text="Kaldt vann"
+                    android:text="@string/coldWater"
                     android:textColor="@color/coldBlue"
                     android:textSize="12sp"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -268,7 +270,7 @@
                     android:layout_marginStart="15dp"
 
                     android:fontFamily="@font/roboto_medium"
-                    android:text="Varmt vann"
+                    android:text="@string/warmWater"
                     android:textColor="@color/warmRed"
                     android:textSize="12sp"/>
 
@@ -288,10 +290,10 @@
                 android:layout_marginTop="48dp"
                 android:gravity="start"
 
-                android:text="Preferanser for lufttempratur"
+                android:text="@string/preferenceAir"
 
                 android:textColor="@color/mainTextColor"
-                android:textSize="12sp"
+                android:textSize="14sp"
                 />
 
             <SeekBar
@@ -301,7 +303,7 @@
 
                 app:layout_constraintTop_toBottomOf="@id/settingsAir"
                 app:layout_constraintLeft_toLeftOf="parent"
-                android:layout_marginTop="22dp"
+                android:layout_marginTop="32dp"
                 android:paddingStart="9dp"
                 android:paddingEnd="9dp"
 
@@ -322,7 +324,7 @@
                 android:translationZ="80dp"
                 android:fontFamily="@font/roboto_medium"
 
-                app:layout_constraintTop_toBottomOf="@id/seekBarAir"
+                app:layout_constraintBottom_toTopOf="@id/seekBarAir"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:background="@color/transparent"
@@ -368,7 +370,7 @@
                 android:gravity="start"
 
                 android:fontFamily="@font/roboto_medium"
-                android:text="Vis bare badeplasser med:"
+                android:text="@string/showPlacesWater"
                 android:textColor="@color/mainTextColor"
                 android:textSize="12sp"/>
 
@@ -405,7 +407,7 @@
                     android:layout_marginStart="15dp"
 
                     android:fontFamily="@font/roboto_medium"
-                    android:text="Kaldt vann"
+                    android:text="@string/coldAir"
                     android:textColor="@color/coldBlue"
                     android:textSize="12sp"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -443,7 +445,7 @@
                     android:layout_marginStart="15dp"
 
                     android:fontFamily="@font/roboto_medium"
-                    android:text="Høt luftempratur"
+                    android:text="@string/hotAir"
                     android:textColor="@color/warmRed"
                     android:textSize="12sp"/>
 
@@ -460,7 +462,7 @@
                 android:layout_marginTop="42dp"
 
                 android:fontFamily="@font/roboto_medium"
-                android:text="Fargene på kartet representerer:"
+                android:text="@string/representationMap"
                 android:textColor="@color/mainTextColor"/>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -482,7 +484,7 @@
                     app:layout_constraintTop_toTopOf="parent"
 
                     android:fontFamily="@font/roboto_medium"
-                    android:text="Lufttempratur"
+                    android:text="@string/airTemp"
                     android:textColor="@color/mainTextColor"
                     android:textSize="12sp"/>
 
@@ -512,7 +514,7 @@
                     app:layout_constraintTop_toTopOf="parent"
 
                     android:fontFamily="@font/roboto_medium"
-                    android:text="Vanntempratur"
+                    android:text="@string/waterTemp"
                     android:textColor="@color/mainTextColor"
                     android:textSize="12sp"/>
 
@@ -545,7 +547,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
 
             android:background="@color/colorPrimary"
-            android:text="legg til filter"
+            android:text="@string/addFilter"
             android:textColor="@android:color/white"
             android:textSize="12dp"
             />
@@ -562,7 +564,7 @@
 
             android:background="@color/colorPrimary"
 
-            android:text="Nullstill"
+            android:text="@string/reset"
             android:textColor="@android:color/white"
             android:textSize="12dp"
             />

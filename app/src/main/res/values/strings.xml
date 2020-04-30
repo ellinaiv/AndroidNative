@@ -28,6 +28,17 @@
         unchanged. It was popularised in the 1960s with the release of Letraset sheets containing
         Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker
         including versions of Lorem Ipsum.</string>
+    <string name="titleFilter">Filtrering</string>
+    <string name="showPlacesWater">Vis bare badeplasser med:</string>
+    <string name="coldWater">Kladt vann</string>
+    <string name="warmWater">Varmt vann</string>
+    <string name="preferenceAir">Preferanser for lufttempratur</string>
+    <string name="showPlacesAir">Vis bare badeplasser med:</string>
+    <string name="coldAir">Lav luftempratur</string>
+    <string name="hotAir">Høy luftempratur</string>
+    <string name="representationMap">Fargene på kartet representerer:</string>
+    <string name="airTemp">Lufttempratur</string>
+    <string name="waterTemp">Vanntempratur</string>
 
     <!--    buttons-->
     <string name="back">Trykk her for å gå tilbake</string>
@@ -36,6 +47,8 @@
     <string name="infoBikeButton">Vis sykkelvei til badestedet</string>
     <string name="infoCarButton">Vis bilvei til badestedet</string>
     <string name="infoWalkButton">Vis gangvei til badestedet</string>
+    <string name="reset">Nullstill</string>
+    <string name="addFilter">Legg til filter</string>
 
     <!--    content description for images-->
     <string name="waterIcon">Badevann ikon</string>

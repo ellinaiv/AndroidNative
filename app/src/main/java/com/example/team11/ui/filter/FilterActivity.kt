@@ -28,6 +28,7 @@ class FilterActivity : AppCompatActivity() {
 
         buttonFilter.setOnClickListener {
             setFilter()
+            finish()
         }
 
         viewModel.personalPreferences!!.observe(this, Observer {personalPreferences ->
