@@ -69,7 +69,7 @@
         android:id="@+id/settingsTempWater"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/raleway_medium"
+        android:fontFamily="@font/roboto_medium"
 
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -146,6 +146,64 @@
         app:layout_constraintTop_toBottomOf="@+id/seekBarWater"
         app:layout_constraintEnd_toEndOf="parent"
         />
+
+    <TextView
+        android:id="@+id/textShowWater"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textTempLow"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="24dp"
+        android:gravity="start"
+
+        android:fontFamily="@font/roboto_medium"
+        android:text="Vis bare badeplasser med:"
+        android:textColor="@color/mainTextColor"
+        android:textSize="12sp"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textShowWater"
+        android:layout_marginTop="14dp"
+        android:layout_marginStart="32dp"
+        android:foregroundGravity="left">
+
+        <CheckBox
+            android:id="@+id/checkBoxColdWater"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+
+            android:button="@null"
+
+            android:background="@drawable/check_box_selector"/>
+
+        <TextView
+            android:id="@+id/textColdWater"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/checkBoxColdWater"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="15dp"
+
+            android:fontFamily="@font/roboto_medium"
+            android:text="Kaldt vann"
+            android:textColor="@color/coldBlue"
+            android:textSize="12sp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
