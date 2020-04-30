@@ -5,7 +5,8 @@ import kotlin.random.Random
 
 
 class Place(val id: Int, val name: String, val lat: Double, val lng: Double,
-            var favorite: Boolean = false, var temp: Int = Random.nextInt(0, 35)): Serializable {
+            var favorite: Boolean = false, var tempWater: Int = Random.nextInt(0, 35),
+            var tempAir: Int = Random.nextInt(-30, 35) ): Serializable {
     /**
      * tanken er at denne kan brukes i compareTo metoden
      * kan også være et enum, se diskusjon i PersonligPreferanse klassen

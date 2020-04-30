@@ -2,7 +2,6 @@ package com.example.team11.ui.filter
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.SeekBar
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
@@ -75,7 +74,7 @@ class FilterActivity : AppCompatActivity() {
                 val value = (progress * (seek.width - 2 * seek.thumbOffset)) / seek.max
                 val degreeMid = getString(R.string.tempC, progress)
                 textTempMidWater.text = degreeMid
-                textTempMidWater.x = seekBarWater.x + value;
+                textTempMidWater.x = seekBarWater.x + value
             }
 
             override fun onStartTrackingTouch(seek: SeekBar) {

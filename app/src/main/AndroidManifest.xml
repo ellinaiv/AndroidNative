@@ -14,13 +14,11 @@
         android:theme="@style/AppTheme">
         <activity android:name=".ui.filter.FilterActivity"></activity>
         <!-- android:theme="@style/Theme.AppCompat.Light.NoActionBar" -->
-        <activity android:name=".depricated.MapActivity" />
         <activity android:name=".ui.direction.DirectionActivity" />
         <activity android:name=".depricated.MoreActivity" />
         <activity android:name=".ui.place.PlaceActivity" />
         <activity android:name=".depricated.PlacesListActivity" />
         <activity android:name=".depricated.FavoritePlacesActivity" />
-        <activity android:name=".depricated.MainActivityOld" />
         <activity android:name=".ui.bottomNavigation.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
+import com.example.team11.PersonalPreference
 import com.example.team11.Place
 import com.example.team11.Repository.PlaceRepository
 import com.mapbox.geojson.Feature
@@ -11,6 +12,7 @@ import com.mapbox.geojson.Point
 
 class MapFragmentViewModel: ViewModel() {
     var places: MutableLiveData<List<Place>>? = null
+    var personalPreference: MutableLiveData<PersonalPreference>? = null
     private var placeRepository: PlaceRepository? = null
 
     /**
@@ -20,6 +22,7 @@ class MapFragmentViewModel: ViewModel() {
         if(places == null){
             placeRepository = PlaceRepository.getInstance()
             places = placeRepository!!.getPlaces()
+            personalPreference = placeRepository!!.getPersonalPreferences()
         }
     }
 
@@ -43,6 +46,16 @@ class MapFragmentViewModel: ViewModel() {
         }else{
             Log.d("ViewModelTag", "finner ikke Placerepository ")
         }
+    }
+
+    fun isPlaceWarm(place: Place): Boolean{
+        val personalPreferenceValue = personalPreference!!.value!!
+        if(personalPreferenceValue.showBasedOnWater){
+            if(personalPreferenceValue.waterTempMid <= place.tempWater) return true
+            return false
+        }
+        if(personalPreferenceValue.airTempMid <= place.tempAir) return true
+        return false
     }
 
 

@@ -16,6 +16,7 @@ import java.io.StringReader
 
 class PlaceRepository private constructor() {
 
+    private var allPlaces = mutableListOf<Place>()
     private var places = MutableLiveData<List<Place>>()
     private val urlAPI = "http://oslokommune.msolution.no/friluft/badetemperaturer.jsp"
     private var currentPlace = MutableLiveData<Place>()
@@ -46,6 +47,24 @@ class PlaceRepository private constructor() {
 
     fun updatePersonalPreference(newPersonalPreference: PersonalPreference){
         personalPreferences.value =  newPersonalPreference
+        updatePlaces()
+    }
+
+    private fun updatePlaces(){
+        val pp = personalPreferences.value!!
+        places.value = allPlaces.filter { place ->
+            isTempAirOk(pp, place) and isTempWaterOk(pp, place)
+        }
+    }
+
+    private fun isTempWaterOk(pp: PersonalPreference, place: Place): Boolean{
+        return ((pp.showWaterWarm and (place.tempWater >= pp.waterTempMid))
+                or (pp.showWaterCold and (place.tempWater < pp.waterTempMid)))
+    }
+
+    private fun isTempAirOk(pp: PersonalPreference, place: Place): Boolean{
+        return ((pp.showAirWarm and (place.tempAir >= pp.airTempMid))
+                or (pp.showAirCold and (place.tempAir < pp.airTempMid)))
     }
 
     /**
@@ -63,8 +82,7 @@ class PlaceRepository private constructor() {
      * Oppdaterer favoritt stedene
      */
     fun updateFavoritePlaces(){
-        if(places.value == null) return
-        favoritePlaces.value = places.value!!.filter { place ->  place.favorite}
+        allPlaces.filter { place ->  place.favorite}
     }
 
     /**
@@ -73,7 +91,9 @@ class PlaceRepository private constructor() {
      */
     fun getPlaces(): MutableLiveData<List<Place>>{
         if (places.value == null){
-            places.value = fetchPlaces(urlAPI)
+            allPlaces = fetchPlaces(urlAPI)
+            places.value = allPlaces
+            updatePlaces()
         }
         return places
     }
