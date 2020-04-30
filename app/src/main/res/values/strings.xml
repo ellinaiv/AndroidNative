@@ -41,7 +41,9 @@
         \n\n<b>Oslo Kommune</b>
         \nAppen benytter API-er fra Oslo Kommune for data om ulike badeplasser og badetemperatur.
     </string>
-    <string name="titleRoute">Fra <b>din posisjon</b> til <b>%1$s</b></string>
+    <string name="from">Fra</string>
+    <string name="to"> til</string>
+    <string name="yourPosition">din posisjon</string>
     <string name="distance">Distanse:</string>
     <string name="time">Beregnet resietid:</string>
 

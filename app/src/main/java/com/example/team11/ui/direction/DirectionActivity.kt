@@ -2,8 +2,12 @@ package com.example.team11.ui.direction
 
 import android.annotation.SuppressLint
 import android.graphics.BitmapFactory
+import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableStringBuilder
+import android.text.style.StyleSpan
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -73,6 +77,7 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
         //Observerer stedet som er valgt
         viewModel.place!!.observe(this, Observer { place ->
             makeMap(place, savedInstanceState)
+            makeTitleText(place)
             viewModel.wayOfTransportation!!.observe(this, Observer { way->
                 this.way = way
                 if(first){
@@ -262,6 +267,32 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
     }
 
     /**
+     * Lager tittelen til reiseveien, og legger til tykk skrift
+     * @param place stedet som er destinasjonen
+     */
+    private fun makeTitleText(place: Place){
+        val aboutDirection = SpannableStringBuilder(" " + getString(R.string.yourPosition) + " ")
+        aboutDirection.setSpan(
+            StyleSpan(Typeface.BOLD),
+            0,
+            aboutDirection.length,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+        val destination = SpannableStringBuilder(" " + place.name)
+        destination.setSpan(
+            StyleSpan(Typeface.BOLD),
+            0,
+            destination.length,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+        aboutDirection.insert(0, getString(R.string.from))
+        aboutDirection.insert(aboutDirection.length, getString(R.string.to))
+        aboutDirection.insert(aboutDirection.length, destination)
+
+        textTitleRoute.text =  aboutDirection
+    }
+
+    /**
      * Lager ruten, og tegner den på kartet
      * @param place: stedet, osm er destinasjonen
      */
@@ -298,7 +329,6 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
 
                 val currentRoute = response.body()!!.routes()[0]
 
-                textTitleRoute.text = getString(R.string.titleRoute, place.name)
                 textDistance.text = viewModel.convertToCorrectDistance(currentRoute.distance())
                 textTime.text = viewModel.convertTime(currentRoute.duration())
                 layoutAboutRoute.visibility = View.VISIBLE
