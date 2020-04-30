@@ -187,25 +187,28 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
      * @param savedInstanceState: mapView trenger denne til onCreate metoden sin
      */
     private fun makeMap(place: Place, savedInstanceState: Bundle?) {
-        mapView = findViewById<MapView>(R.id.mapView)
+        mapView = findViewById(R.id.mapView)
         mapView?.onCreate(savedInstanceState)
         mapView?.getMapAsync { mapboxMap ->
             disableButtons()
             this.mapboxMap = mapboxMap
             Log.d(tag, mapboxMap.toString())
             mapboxMap.setStyle(Style.MAPBOX_STREETS)
-            mapboxMap.getStyle { style ->
-                style.addSource(GeoJsonSource(routeSourceId))
-                makeRouteLayer(style)
-                addDestinationMarker(place, style)
-                val position = CameraPosition.Builder()
-                    .target(LatLng(place.lat, place.lng))
-                    .zoom(10.0)
-                    .build()
-                mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(position), 2)
-                enableLocationComponent(style)
+            try {
+                mapboxMap.getStyle { style ->
+                    style.addSource(GeoJsonSource(routeSourceId))
+                    makeRouteLayer(style)
+                    addDestinationMarker(place, style)
+                    val position = CameraPosition.Builder()
+                        .target(LatLng(place.lat, place.lng))
+                        .zoom(10.0)
+                        .build()
+                    mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(position), 2)
+                    enableLocationComponent(style)
+                }
+            }finally {
+                enableButtons()
             }
-            enableButtons()
         }
     }
 
@@ -214,11 +217,14 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
      */
     private fun makeRoute(){
         mapView?.getMapAsync {
-            disableButtons()
-            it.getStyle {style ->
-                enableLocationComponent(style)
+            try{
+                disableButtons()
+                it.getStyle {style ->
+                    enableLocationComponent(style)
+                }
+            }finally {
+                enableButtons()
             }
-            enableButtons()
         }?: Toast.makeText(this, getString(R.string.noMap) , Toast.LENGTH_SHORT).show()
     }
 
