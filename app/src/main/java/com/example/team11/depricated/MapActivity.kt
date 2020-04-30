@@ -161,8 +161,8 @@ class MapActivity : AppCompatActivity(), MapboxMap.OnMapClickListener {
     private fun showPlace(place: Place){
         val nameTextView = findViewById<TextView>(R.id.namePlace)
         val placeViewHolder = findViewById<ConstraintLayout>(R.id.placeViewHolder)
-        val tempAirText = findViewById<TextView>(R.id.tempAirText)
-        val tempWaterText = findViewById<TextView>(R.id.tempWaterText)
+        val tempAirText = findViewById<TextView>(R.id.tempAir)
+        val tempWaterText = findViewById<TextView>(R.id.tempWater)
         val tempWaterImage = findViewById<ImageView>(R.id.tempWaterImage)
 
 

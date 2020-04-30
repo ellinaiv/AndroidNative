@@ -162,9 +162,9 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
             false -> tempWaterImage.setImageResource(R.drawable.water_blue)
         }
 
-        namePlace.text = place.name
-        tempAirText.text = getString(R.string.notAvailable)
-        tempWaterText.text = getString(R.string.tempC, place.temp)
+        name.text = place.name
+        tempAir.text = getString(R.string.notAvailable)
+        tempWater.text = getString(R.string.tempC, place.temp)
 
         //zoomer til stedet på kartet
         val position = CameraPosition.Builder()
@@ -178,7 +178,9 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
             val intent = Intent(context!!, PlaceActivity::class.java)
             startActivity(intent)
         }
+        Log.d("map", placeViewHolder.visibility.toString())
         placeViewHolder.visibility = View.VISIBLE
+        Log.d("map", placeViewHolder.visibility.toString())
     }
 
     /**
