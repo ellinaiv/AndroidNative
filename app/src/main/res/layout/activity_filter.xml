@@ -65,176 +65,493 @@
         android:textColor="@color/mainTextColor"
         android:textSize="24sp"/>
 
-    <TextView
-        android:id="@+id/settingsTempWater"
+
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/roboto_medium"
 
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textFilter"
-        android:layout_marginStart="32dp"
+        app:layout_constraintBottom_toTopOf="@id/buttons"
+
         android:layout_marginTop="22dp"
-        android:gravity="start"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp">
 
-        android:text="@string/waterPreference"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        android:textColor="@color/mainTextColor"
-        android:textSize="12sp"
-        />
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="183dp" />
 
-    <SeekBar
-        android:id="@+id/seekBarWater"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+            <TextView
+                android:id="@+id/settingsTempWater"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_medium"
 
-        app:layout_constraintTop_toBottomOf="@id/settingsTempWater"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="22dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:gravity="start"
 
-        android:progressTint="@color/coldBlue"
-        android:thumbTint="@color/seekThumb"
-        android:progressBackgroundTint="@color/warmRed"
-        android:progressBackgroundTintMode="src_over"
-        />
+                android:text="@string/waterPreference"
 
-    <TextView
-        android:id="@+id/textTempMid"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+                android:textColor="@color/mainTextColor"
+                android:textSize="12sp"
+                />
 
-        android:textSize="12sp"
-        android:textColor="@color/mainTextColor"
-        android:translationZ="80dp"
-        android:fontFamily="@font/roboto_medium"
+            <SeekBar
+                android:id="@+id/seekBarWater"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
 
-        app:layout_constraintTop_toBottomOf="@id/seekBarWater"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:background="@color/transparent"
-        />
+                app:layout_constraintTop_toBottomOf="@id/settingsTempWater"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginTop="22dp"
 
-    <TextView
-        android:id="@+id/textTempLow"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:layout_marginStart="32dp"
+                android:progressTint="@color/coldBlue"
+                android:thumbTint="@color/seekThumb"
+                android:progressBackgroundTint="@color/warmRed"
+                android:progressBackgroundTintMode="src_over"
+                />
 
-        android:textSize="12sp"
-        android:textColor="@color/mainTextColor"
-        android:fontFamily="@font/roboto_medium"
+            <TextView
+                android:id="@+id/textTempMid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
 
-        app:layout_constraintTop_toBottomOf="@id/seekBarWater"
-        app:layout_constraintStart_toStartOf="parent"
-        />
+                android:textSize="12sp"
+                android:textColor="@color/mainTextColor"
+                android:translationZ="80dp"
+                android:fontFamily="@font/roboto_medium"
 
-    <TextView
-        android:id="@+id/textTempHigh"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+                app:layout_constraintTop_toBottomOf="@id/seekBarWater"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:background="@color/transparent"
+                />
 
-        android:textSize="12sp"
-        android:textColor="@color/mainTextColor"
-        android:fontFamily="@font/roboto_medium"
+            <TextView
+                android:id="@+id/textTempLow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
 
-        app:layout_constraintTop_toBottomOf="@+id/seekBarWater"
-        app:layout_constraintEnd_toEndOf="parent"
-        />
+                android:textSize="12sp"
+                android:textColor="@color/mainTextColor"
+                android:fontFamily="@font/roboto_medium"
 
-    <TextView
-        android:id="@+id/textShowWater"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/seekBarWater"
+                app:layout_constraintStart_toStartOf="parent"
+                />
 
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textTempLow"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="24dp"
-        android:gravity="start"
+            <TextView
+                android:id="@+id/textTempHigh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
 
-        android:fontFamily="@font/roboto_medium"
-        android:text="Vis bare badeplasser med:"
-        android:textColor="@color/mainTextColor"
-        android:textSize="12sp"/>
+                android:textSize="12sp"
+                android:textColor="@color/mainTextColor"
+                android:fontFamily="@font/roboto_medium"
+
+                app:layout_constraintTop_toBottomOf="@+id/seekBarWater"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
+            <TextView
+                android:id="@+id/textShowWater"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textTempLow"
+                android:layout_marginTop="24dp"
+                android:gravity="start"
+
+                android:fontFamily="@font/roboto_medium"
+                android:text="Vis bare badeplasser med:"
+                android:textColor="@color/mainTextColor"
+                android:textSize="12sp"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/coldWater"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textShowWater"
+                android:layout_marginTop="14dp"
+                >
+                <CheckBox
+                    android:id="@+id/checkBoxColdWater"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+
+                    android:button="@null"
+
+                    android:background="@drawable/check_box_selector"/>
+
+                <TextView
+                    android:id="@+id/textColdWater"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toRightOf="@id/checkBoxColdWater"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginStart="15dp"
+
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="Kaldt vann"
+                    android:textColor="@color/coldBlue"
+                    android:textSize="12sp"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                app:layout_constraintLeft_toRightOf="@id/guideline"
+                app:layout_constraintTop_toBottomOf="@id/textShowWater"
+                android:layout_marginTop="14dp">
+
+                <CheckBox
+                    android:id="@+id/checkBoxWarmWater"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+
+                    android:button="@null"
+
+                    android:background="@drawable/check_box_selector"/>
+
+                <TextView
+                    android:id="@+id/textWarmWater"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toRightOf="@+id/checkBoxWarmWater"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginStart="15dp"
+
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="Varmt vann"
+                    android:textColor="@color/warmRed"
+                    android:textSize="12sp"/>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <TextView
+                android:id="@+id/settingsAir"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_medium"
+
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/coldWater"
+                android:layout_marginTop="48dp"
+                android:gravity="start"
+
+                android:text="Preferanser for lufttempratur"
+
+                android:textColor="@color/mainTextColor"
+                android:textSize="12sp"
+                />
+
+            <SeekBar
+                android:id="@+id/seekBarAir"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                app:layout_constraintTop_toBottomOf="@id/settingsAir"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginTop="22dp"
+
+                android:progressTint="@color/coldBlue"
+                android:thumbTint="@color/seekThumb"
+                android:progressBackgroundTint="@color/warmRed"
+                android:progressBackgroundTintMode="src_over"
+                />
+
+            <TextView
+                android:id="@+id/textTempMidAir"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+
+                android:textSize="12sp"
+                android:textColor="@color/mainTextColor"
+                android:translationZ="80dp"
+                android:fontFamily="@font/roboto_medium"
+
+                app:layout_constraintTop_toBottomOf="@id/seekBarAir"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:background="@color/transparent"
+                />
+
+            <TextView
+                android:id="@+id/textTempLowAir"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+
+                android:textSize="12sp"
+                android:textColor="@color/mainTextColor"
+                android:fontFamily="@font/roboto_medium"
+
+                app:layout_constraintTop_toBottomOf="@id/seekBarAir"
+                app:layout_constraintStart_toStartOf="parent"
+                />
+
+            <TextView
+                android:id="@+id/textTempHighAir"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+
+                android:textSize="12sp"
+                android:textColor="@color/mainTextColor"
+                android:fontFamily="@font/roboto_medium"
+
+                app:layout_constraintTop_toBottomOf="@+id/seekBarAir"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
+            <TextView
+                android:id="@+id/textShowAir"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textTempLowAir"
+                android:layout_marginTop="24dp"
+                android:gravity="start"
+
+                android:fontFamily="@font/roboto_medium"
+                android:text="Vis bare badeplasser med:"
+                android:textColor="@color/mainTextColor"
+                android:textSize="12sp"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/coldAir"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textShowAir"
+                android:layout_marginTop="14dp"
+                >
+                <CheckBox
+                    android:id="@+id/checkBoxColdAir"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+
+                    android:button="@null"
+
+                    android:background="@drawable/check_box_selector"/>
+
+                <TextView
+                    android:id="@+id/textColdAir"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toRightOf="@id/checkBoxColdAir"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginStart="15dp"
+
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="Kaldt vann"
+                    android:textColor="@color/coldBlue"
+                    android:textSize="12sp"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/warmAir"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                app:layout_constraintLeft_toRightOf="@id/guideline"
+                app:layout_constraintTop_toBottomOf="@id/textShowAir"
+                android:layout_marginTop="14dp">
+
+                <CheckBox
+                    android:id="@+id/checkBoxWarmAir"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+
+                    android:button="@null"
+
+                    android:background="@drawable/check_box_selector"/>
+
+                <TextView
+                    android:id="@+id/textWarmAir"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toRightOf="@+id/checkBoxWarmAir"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginStart="15dp"
+
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="Høt luftempratur"
+                    android:textColor="@color/warmRed"
+                    android:textSize="12sp"/>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/textRepresentation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/coldAir"
+                android:layout_marginTop="42dp"
+
+                android:fontFamily="@font/roboto_medium"
+                android:text="Fargene på kartet representerer:"
+                android:textColor="@color/mainTextColor"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textRepresentation"
+                android:layout_marginEnd="32dp"
+                android:layout_marginTop="15dp">
+
+                <TextView
+                    android:id="@+id/airRepresentation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="Lufttempratur"
+                    android:textColor="@color/mainTextColor"
+                    android:textSize="12sp"/>
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/switchRepresentation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toRightOf="@id/airRepresentation"
+                    app:layout_constraintRight_toLeftOf="@id/waterRepresentation"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="4dp"
+
+                    android:theme="@style/switchStyle"
+
+                    />
+
+                <TextView
+                    android:id="@+id/waterRepresentation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="Vanntempratur"
+                    android:textColor="@color/mainTextColor"
+                    android:textSize="12sp"/>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
+        android:id="@+id/buttons"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textShowWater"
-        android:layout_marginTop="14dp"
-        android:layout_marginStart="32dp"
-        android:foregroundGravity="left">
+        app:layout_constraintRight_toRightOf="parent"
 
-        <CheckBox
-            android:id="@+id/checkBoxColdWater"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="24dp">
+
+        <Button
+            android:id="@+id/buttonFilter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/buttonReset"
+            app:layout_constraintBottom_toBottomOf="parent"
 
-            android:button="@null"
+            android:background="@color/colorPrimary"
+            android:text="legg til filter"
+            android:textColor="@android:color/white"
+            android:textSize="12dp"
+            />
 
-            android:background="@drawable/check_box_selector"/>
-
-        <TextView
-            android:id="@+id/textColdWater"
+        <Button
+            android:id="@+id/buttonReset"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@+id/checkBoxColdWater"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginStart="15dp"
-
-            android:fontFamily="@font/roboto_medium"
-            android:text="Kaldt vann"
-            android:textColor="@color/coldBlue"
-            android:textSize="12sp"/>
-
-        <CheckBox
-            android:id="@+id/checkBoxWarmWater"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
+            app:layout_constraintLeft_toRightOf="@id/buttonFilter"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/textColdWater"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginStart="54dp"
 
-            android:button="@null"
+            android:background="@color/colorPrimary"
 
-            android:background="@drawable/check_box_selector"/>
-
-        <TextView
-            android:id="@+id/textWarmWater"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@+id/checkBoxWarmWater"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginStart="15dp"
-
-            android:fontFamily="@font/roboto_medium"
-            android:text="Varmt vann"
-            android:textColor="@color/warmRed"
-            android:textSize="12sp"/>
-
-
-
+            android:text="Nullstill"
+            android:textColor="@android:color/white"
+            android:textSize="12dp"
+            />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
