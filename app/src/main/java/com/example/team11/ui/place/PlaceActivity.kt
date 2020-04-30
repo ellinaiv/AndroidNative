@@ -6,10 +6,13 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.ToggleButton
 import androidx.activity.viewModels
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.Observer
 import com.example.team11.Place
 import com.example.team11.R
@@ -58,21 +61,63 @@ class PlaceActivity : AppCompatActivity() {
         val toggleFavorite = findViewById<ToggleButton>(R.id.toggleFavourite)
         val namePlace = findViewById<TextView>(R.id.textPlaceName)
         val tempWater = findViewById<TextView>(R.id.textTempWater)
+        val currentsInfo = findViewById<ImageButton>(R.id.buttonCurrentsInfo)
+        val layoutCurrentsInfo = findViewById<ConstraintLayout>(R.id.layoutCurrentsInfo)
+        val currentsCloseInfo = findViewById<ImageButton>(R.id.buttonCurrentsCloseInfo)
+        val currentsInfoMore = findViewById<TextView>(R.id.linkCurrentsInfoMore)
+        val uvInfo = findViewById<ImageButton>(R.id.buttonUVInfo)
+        val layoutUVInfo = findViewById<ConstraintLayout>(R.id.layoutUVInfo)
+        val uvCloseInfo = findViewById<ImageButton>(R.id.buttonUVCloseInfo)
+        val uvInfoMore = findViewById<TextView>(R.id.linkUVInfoMore)
         val directionsBikeButton = findViewById<ImageButton>(R.id.buttonBike)
         val directionsCarButton = findViewById<ImageButton>(R.id.buttonCar)
         val directionsWalkButton = findViewById<ImageButton>(R.id.buttonWalk)
-        val publicTransportLink = findViewById<TextView>(R.id.textPublicTransportLink)
+        val publicTransportLink = findViewById<TextView>(R.id.linkPublicTransport)
 
         toggleFavorite.isChecked = place.favorite
+
+        backButton.setOnClickListener {
+            finish()
+        }
 
         toggleFavorite.setOnCheckedChangeListener { _, isChecked ->
             place.favorite = isChecked
             viewModel.updateFavoritePlaces()
         }
 
-        backButton.setOnClickListener {
-            finish()
+
+
+        currentsInfo.setOnClickListener {
+            if (layoutUVInfo.visibility == VISIBLE) {
+                layoutUVInfo.visibility = GONE
+            }
+            layoutCurrentsInfo.visibility = VISIBLE
         }
+
+        currentsCloseInfo.setOnClickListener {
+            layoutCurrentsInfo.visibility = GONE
+        }
+
+        currentsInfoMore.setOnClickListener {
+            //TODO
+        }
+
+        uvInfo.setOnClickListener {
+            if (layoutCurrentsInfo.visibility == VISIBLE) {
+                layoutCurrentsInfo.visibility = GONE
+            }
+            layoutUVInfo.visibility = VISIBLE
+        }
+
+        uvCloseInfo.setOnClickListener {
+            layoutUVInfo.visibility = GONE
+        }
+
+        uvInfoMore.setOnClickListener {
+            //TODO
+        }
+
+
 
         directionsBikeButton.setOnClickListener {
             val intent = Intent(this, DirectionsActivity::class.java)
@@ -98,7 +143,7 @@ class PlaceActivity : AppCompatActivity() {
         makeMap(place, savedInstanceState)
 
         publicTransportLink.setOnClickListener {
-            val openURL = Intent(android.content.Intent.ACTION_VIEW)
+            val openURL = Intent(Intent.ACTION_VIEW)
             openURL.data = Uri.parse("https://www.ruter.no/")
             startActivity(openURL)
         }

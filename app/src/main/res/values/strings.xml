@@ -8,14 +8,28 @@
     <!--    textViews-->
     <string name="tempC">%1$d °C</string>
     <string name="notAvailable">Ikke tilgjengelig</string>
+
     <string name="place_name">Badeplass</string>
     <string name="place_currents">Havstrømninger</string>
+    <string name="place_info_weak_title">Svak</string>
+    <string name="place_info_moderate_title">Moderat</string>
+    <string name="place_info_strong_title">Sterk</string>
+    <string name="place_currents_info_title">Informasjon om havstrømninger</string>
+    <string name="place_currents_info_weak">TODO</string>
+    <string name="place_currents_info_moderate">TODO</string>
+    <string name="place_currents_info_strong">TODO</string>
     <string name="place_uv">UV-stråling</string>
+    <string name="place_uv_info_title">Informasjon om UV-stråling</string>
+    <string name="place_uv_info_weak">TODO</string>
+    <string name="place_uv_info_moderate">TODO</string>
+    <string name="place_uv_info_strong">TODO</string>
+    <string name="place_info_more"><u>Les mer...</u></string>
     <string name="place_forecast">Værvarsel</string>
     <string name="place_hour_forecast">Timesvarsel</string>
     <string name="place_long_forecast">Langtidsvarsel</string>
-    <string name="place_public_transport_link">Finn reise på ruter.no</string>
+    <string name="place_public_transport_link"><u>Finn reise på ruter.no</u></string>
     <string name="place_select_route_type">Vis rute til badeplass:</string>
+
     <string name="aboutApp">Om appen</string>
     <string name="aboutAPI">Om API</string>
     <string name="settingsTitle">Innstillinger</string>

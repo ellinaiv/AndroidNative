@@ -91,12 +91,11 @@
 
             <TextView
                 android:id="@+id/textTempWater"
-                android:gravity="center_horizontal"
+                android:gravity="center"
                 android:text="@string/tempC"
                 android:textColor="@color/mainTextColor"
                 android:layout_width="44dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 app:layout_constraintBottom_toBottomOf="@+id/textTempAir"
                 app:layout_constraintEnd_toEndOf="@+id/imageWater"
                 app:layout_constraintStart_toStartOf="@+id/imageWater"
@@ -115,12 +114,11 @@
 
             <TextView
                 android:id="@+id/textTempAir"
-                android:gravity="center_horizontal"
+                android:gravity="center"
                 android:text="@string/tempC"
                 android:textColor="@color/mainTextColor"
                 android:layout_width="44dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 app:layout_constraintEnd_toEndOf="@+id/imageWeather"
                 app:layout_constraintStart_toStartOf="@+id/imageWeather"
                 app:layout_constraintTop_toBottomOf="@+id/imageWeather" />
@@ -150,19 +148,19 @@
             <TextView
                 android:id="@+id/textCurrentsResult"
                 android:text="Lite"
-                android:textColor="#228B22"
+                android:textColor="#029322"
                 android:textSize="20sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="12dp"
                 app:layout_constraintBottom_toBottomOf="@+id/textCurrents"
-                app:layout_constraintEnd_toStartOf="@+id/buttonInfoCurrents"
+                app:layout_constraintEnd_toStartOf="@+id/buttonCurrentsInfo"
                 app:layout_constraintTop_toTopOf="@+id/textCurrents" />
 
             <TextView
                 android:id="@+id/textUVResult"
                 android:text="Sterk"
-                android:textColor="#8B0000"
+                android:textColor="#FF0000"
                 android:textSize="20sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -171,28 +169,28 @@
                 app:layout_constraintTop_toTopOf="@+id/textUV" />
 
             <ImageButton
-                android:id="@+id/buttonInfoCurrents"
+                android:id="@+id/buttonCurrentsInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="14dp"
                 android:background="@color/backgroundCardsLight"
+                android:contentDescription="@string/place_button_info_currents"
+                android:src="@drawable/info"
                 app:layout_constraintBottom_toBottomOf="@+id/textCurrentsResult"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/textCurrentsResult"
-                android:contentDescription="@string/place_button_info_currents"
-                android:src="@drawable/info"/>
+                app:layout_constraintTop_toTopOf="@+id/textCurrentsResult" />
 
             <ImageButton
                 android:id="@+id/buttonUVInfo"
-                android:background="@color/backgroundCardsLight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="14dp"
-                app:layout_constraintBottom_toBottomOf="@+id/textUVResult"
-                app:layout_constraintStart_toEndOf="@+id/textUVResult"
-                app:layout_constraintTop_toTopOf="@+id/textUVResult"
+                android:background="@color/backgroundCardsLight"
                 android:contentDescription="@string/place_button_info_uv"
-                android:src="@drawable/info"/>
+                android:src="@drawable/info"
+                app:layout_constraintBottom_toBottomOf="@+id/textUVResult"
+                app:layout_constraintEnd_toEndOf="@+id/buttonCurrentsInfo"
+                app:layout_constraintStart_toStartOf="@+id/buttonCurrentsInfo"
+                app:layout_constraintTop_toTopOf="@+id/textUVResult" />
 
             <TextView
                 android:id="@+id/textForecast"
@@ -212,14 +210,14 @@
                 android:textSize="16sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="28dp"
+                android:layout_marginTop="18dp"
                 app:layout_constraintStart_toStartOf="@+id/textForecast"
                 app:layout_constraintTop_toBottomOf="@+id/textForecast" />
 
             <TextView
                 android:id="@+id/text1Hour"
                 android:gravity="center"
-                android:text="1 time"
+                android:text="kl. 14"
                 android:textColor="@color/mainTextColor"
                 android:textSize="16sp"
                 android:layout_width="wrap_content"
@@ -230,49 +228,49 @@
 
             <TextView
                 android:id="@+id/text2Hours"
-                android:gravity="center"
-                android:text="2 timer"
-                android:textColor="@color/mainTextColor"
-                android:textSize="16sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
+                android:layout_marginStart="40dp"
+                android:gravity="center"
+                android:text="kl. 15"
+                android:textColor="@color/mainTextColor"
+                android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@+id/text1Hour"
                 app:layout_constraintStart_toEndOf="@+id/text1Hour" />
 
             <TextView
                 android:id="@+id/text3Hours"
                 android:gravity="center"
-                android:text="3 timer"
+                android:text="kl. 16"
                 android:textColor="@color/mainTextColor"
                 android:textSize="16sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
+                android:layout_marginStart="40dp"
                 app:layout_constraintBottom_toBottomOf="@+id/text2Hours"
                 app:layout_constraintStart_toEndOf="@+id/text2Hours" />
 
             <TextView
                 android:id="@+id/text4Hours"
                 android:gravity="center"
-                android:text="4 timer"
+                android:text="kl. 17"
                 android:textColor="@color/mainTextColor"
                 android:textSize="16sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
+                android:layout_marginStart="40dp"
                 app:layout_constraintBottom_toBottomOf="@+id/text3Hours"
                 app:layout_constraintStart_toEndOf="@+id/text3Hours" />
 
             <TextView
                 android:id="@+id/text5Hours"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
                 android:gravity="center"
-                android:text="5 timer"
+                android:text="kl. 18"
                 android:textColor="@color/mainTextColor"
                 android:textSize="16sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
                 app:layout_constraintBottom_toBottomOf="@+id/text4Hours"
                 app:layout_constraintStart_toEndOf="@+id/text4Hours" />
 
@@ -394,7 +392,7 @@
                 android:textSize="16sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="26dp"
                 app:layout_constraintStart_toStartOf="@+id/textHourForecast"
                 app:layout_constraintTop_toBottomOf="@+id/textTemp1Hour" />
 
@@ -651,20 +649,262 @@
                 app:layout_constraintStart_toStartOf="@+id/layoutDirections"
                 app:layout_constraintTop_toBottomOf="@+id/layoutDirections" />
 
+            <ImageView
+                android:id="@+id/imagePublicTransport"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="56dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/mapView"
+                app:layout_constraintTop_toBottomOf="@+id/mapView"
+                android:src="@drawable/directions_public"/>
+
+
             <TextView
-                android:id="@+id/textPublicTransportLink"
+                android:id="@+id/linkPublicTransport"
                 android:text="@string/place_public_transport_link"
                 android:textColor="@color/colorPrimary"
                 android:textSize="20sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="56dp"
-                android:layout_marginTop="24dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginStart="8dp"
+                app:layout_constraintBottom_toBottomOf="@+id/imagePublicTransport"
+                app:layout_constraintStart_toEndOf="@+id/imagePublicTransport"
+                app:layout_constraintTop_toTopOf="@+id/imagePublicTransport"
+                android:clickable="true"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layoutCurrentsInfo"
+                android:background="@drawable/outline_rounded"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="30dp"
+                android:paddingHorizontal="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/mapView"
-                android:linksClickable="true"/>
+                app:layout_constraintTop_toTopOf="@+id/buttonCurrentsInfo"
+                android:visibility="gone">
+
+                <ImageButton
+                    android:id="@+id/buttonCurrentsCloseInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/backgroundCardsDark"
+                    android:layout_marginTop="16dp"
+                    android:src="@drawable/xclose"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/textCurrentsInfoTitle"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textCurrentsInfoTitle"
+                    android:text="@string/place_currents_info_title"
+                    android:textColor="@color/mainTextColor"
+                    android:textSize="20sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintEnd_toStartOf="@+id/buttonCurrentsCloseInfo"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <TextView
+                    android:id="@+id/textCurrentsInfoWeakTitle"
+                    android:text="@string/place_info_weak_title"
+                    android:textColor="#029322"
+                    android:textSize="18sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    app:layout_constraintStart_toStartOf="@+id/textCurrentsInfoTitle"
+                    app:layout_constraintTop_toBottomOf="@+id/textCurrentsInfoTitle"/>
+
+                <TextView
+                    android:id="@+id/textCurrentsInfoWeak"
+                    android:text="@string/place_currents_info_weak"
+                    android:textColor="@color/mainTextColor"
+                    android:textSize="14sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    app:layout_constraintStart_toStartOf="@+id/textCurrentsInfoWeakTitle"
+                    app:layout_constraintTop_toBottomOf="@+id/textCurrentsInfoWeakTitle"/>
+
+                <TextView
+                    android:id="@+id/textCurrentsInfoModerateTitle"
+                    android:text="@string/place_info_moderate_title"
+                    android:textColor="#FF9F2E"
+                    android:textSize="18sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    app:layout_constraintStart_toStartOf="@+id/textCurrentsInfoWeak"
+                    app:layout_constraintTop_toBottomOf="@+id/textCurrentsInfoWeak"/>
+
+                <TextView
+                    android:id="@+id/textCurrentsInfoModerate"
+                    android:text="@string/place_currents_info_moderate"
+                    android:textColor="@color/mainTextColor"
+                    android:textSize="14sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    app:layout_constraintStart_toStartOf="@+id/textCurrentsInfoModerateTitle"
+                    app:layout_constraintTop_toBottomOf="@+id/textCurrentsInfoModerateTitle"/>
+
+                <TextView
+                    android:id="@+id/textCurrentsInfoStrongTitle"
+                    android:text="@string/place_info_strong_title"
+                    android:textColor="#FF0000"
+                    android:textSize="18sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    app:layout_constraintStart_toStartOf="@+id/textCurrentsInfoModerate"
+                    app:layout_constraintTop_toBottomOf="@+id/textCurrentsInfoModerate"/>
+
+                <TextView
+                    android:id="@+id/textCurrentsInfoStrong"
+                    android:text="@string/place_currents_info_strong"
+                    android:textColor="@color/mainTextColor"
+                    android:textSize="14sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    app:layout_constraintStart_toStartOf="@+id/textCurrentsInfoStrongTitle"
+                    app:layout_constraintTop_toBottomOf="@+id/textCurrentsInfoStrongTitle" />
+
+                <TextView
+                    android:id="@+id/linkCurrentsInfoMore"
+                    android:text="@string/place_info_more"
+                    android:textColor="@color/mainTextColor"
+                    android:textSize="15sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="24dp"
+                    android:layout_marginTop="24dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textCurrentsInfoStrong"
+                    android:clickable="true"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layoutUVInfo"
+                android:background="@drawable/outline_rounded"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="30dp"
+                android:paddingHorizontal="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/buttonUVInfo"
+                android:visibility="gone">
+
+                <ImageButton
+                    android:id="@+id/buttonUVCloseInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/backgroundCardsDark"
+                    android:layout_marginTop="16dp"
+                    android:src="@drawable/xclose"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textUVInfoTitle"
+                    android:text="@string/place_uv_info_title"
+                    android:textColor="@color/mainTextColor"
+                    android:textSize="20sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <TextView
+                    android:id="@+id/textUVInfoWeakTitle"
+                    android:text="@string/place_info_weak_title"
+                    android:textColor="#029322"
+                    android:textSize="18sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    app:layout_constraintStart_toStartOf="@+id/textUVInfoTitle"
+                    app:layout_constraintTop_toBottomOf="@+id/textUVInfoTitle"/>
+
+                <TextView
+                    android:id="@+id/textUVInfoWeak"
+                    android:text="@string/place_uv_info_weak"
+                    android:textColor="@color/mainTextColor"
+                    android:textSize="14sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    app:layout_constraintStart_toStartOf="@+id/textUVInfoWeakTitle"
+                    app:layout_constraintTop_toBottomOf="@+id/textUVInfoWeakTitle"/>
+
+                <TextView
+                    android:id="@+id/textUVInfoModerateTitle"
+                    android:text="@string/place_info_moderate_title"
+                    android:textColor="#FF9F2E"
+                    android:textSize="18sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    app:layout_constraintStart_toStartOf="@+id/textUVInfoWeak"
+                    app:layout_constraintTop_toBottomOf="@+id/textUVInfoWeak"/>
+
+                <TextView
+                    android:id="@+id/textUVInfoModerate"
+                    android:text="@string/place_uv_info_moderate"
+                    android:textColor="@color/mainTextColor"
+                    android:textSize="14sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    app:layout_constraintStart_toStartOf="@+id/textUVInfoModerateTitle"
+                    app:layout_constraintTop_toBottomOf="@+id/textUVInfoModerateTitle"/>
+
+                <TextView
+                    android:id="@+id/textUVInfoStrongTitle"
+                    android:text="@string/place_info_strong_title"
+                    android:textColor="#FF0000"
+                    android:textSize="18sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    app:layout_constraintStart_toStartOf="@+id/textUVInfoModerate"
+                    app:layout_constraintTop_toBottomOf="@+id/textUVInfoModerate"/>
+
+                <TextView
+                    android:id="@+id/textUVInfoStrong"
+                    android:text="@string/place_uv_info_strong"
+                    android:textColor="@color/mainTextColor"
+                    android:textSize="14sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    app:layout_constraintStart_toStartOf="@+id/textUVInfoStrongTitle"
+                    app:layout_constraintTop_toBottomOf="@+id/textUVInfoStrongTitle" />
+
+                <TextView
+                    android:id="@+id/linkUVInfoMore"
+                    android:text="@string/place_info_more"
+                    android:textColor="@color/mainTextColor"
+                    android:textSize="15sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="24dp"
+                    android:layout_marginTop="24dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textUVInfoStrong"
+                    android:clickable="true"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
