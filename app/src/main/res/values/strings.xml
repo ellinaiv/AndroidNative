@@ -21,6 +21,7 @@
     <string name="aboutAPI">Om API</string>
     <string name="settingsTitle">Innstillinger</string>
     <string name="waterPreference">Preferanser for vanntemperatur</string>
+    <string name="noFavorites">Du har ikke lagt til noen favorittbadeplasser enda!</string>
     <string name="aboutAppText"> !Insert app-navn! er appen for deg som er glad i å bade i Oslo! Her har
         vi samlet relevant informasjon om værforhold, vanntemperatur og reisevei til forskjellige \
         badeplasser på ett sted, for at det skal være enklere å ta et informert valg om hvilken
