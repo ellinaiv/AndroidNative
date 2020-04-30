@@ -1,4 +1,4 @@
-package com.example.team11.userInterface
+package com.example.team11.depricated
 
 import android.content.Intent
 import android.graphics.BitmapFactory
@@ -13,7 +13,6 @@ import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.doOnTextChanged
-import com.example.team11.viewmodels.MapActivityViewModel
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.mapboxsdk.Mapbox
 import com.mapbox.mapboxsdk.maps.MapView
@@ -25,6 +24,7 @@ import com.mapbox.mapboxsdk.style.sources.GeoJsonSource
 import androidx.lifecycle.Observer
 import com.example.team11.Place
 import com.example.team11.R
+import com.example.team11.ui.place.PlaceActivity
 import com.mapbox.geojson.Feature
 import com.mapbox.mapboxsdk.camera.CameraPosition
 import com.mapbox.mapboxsdk.camera.CameraUpdateFactory
@@ -41,7 +41,7 @@ class MapActivity : AppCompatActivity(), MapboxMap.OnMapClickListener {
     private lateinit var mapView: MapView
     private lateinit var mapBoxMap: MapboxMap
 
-    private val viewModel: MapActivityViewModel by viewModels{MapActivityViewModel.InstanceCreator() }
+    private val viewModel: MapActivityViewModel by viewModels{ MapActivityViewModel.InstanceCreator() }
 
     private lateinit var filterPlaces: List<Place>
 
@@ -49,9 +49,11 @@ class MapActivity : AppCompatActivity(), MapboxMap.OnMapClickListener {
         super.onCreate(savedInstanceState)
         Mapbox.getInstance(this, getString(R.string.access_token))
         setContentView(R.layout.activity_map)
+        Log.d("TAG", "HEI")
         mapView = this.findViewById(R.id.mapView)
+        Log.d("TAG", mapView.toString())
         mapView.onCreate(savedInstanceState)
-        listOfLayerId = mutableListOf<String>()
+        listOfLayerId = mutableListOf()
 
         viewModel.places!!.observe(this, Observer { places ->
             /*
@@ -162,7 +164,6 @@ class MapActivity : AppCompatActivity(), MapboxMap.OnMapClickListener {
         val tempAirText = findViewById<TextView>(R.id.tempAirText)
         val tempWaterText = findViewById<TextView>(R.id.tempWaterText)
         val tempWaterImage = findViewById<ImageView>(R.id.tempWaterImage)
-
 
 
         when(place.isWarm()){

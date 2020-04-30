@@ -1,4 +1,4 @@
-package com.example.team11.userInterface
+package com.example.team11.ui.place
 
 import android.content.Intent
 import android.graphics.BitmapFactory
@@ -10,12 +10,10 @@ import android.widget.TextView
 import android.widget.ToggleButton
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
-import com.example.team11.PersonalPreference
 import com.example.team11.Place
 import com.example.team11.R
-import com.example.team11.Repository.PlaceRepository
-import com.example.team11.Transporatation
-import com.example.team11.viewmodels.PlaceActivityViewModel
+import com.example.team11.Transportation
+import com.example.team11.ui.direction.DirectionActivity
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.mapboxsdk.Mapbox
 import com.mapbox.mapboxsdk.camera.CameraPosition
@@ -35,12 +33,12 @@ class PlaceActivity : AppCompatActivity() {
         Mapbox.getInstance(this, getString(R.string.access_token))
         setContentView(R.layout.activity_place)
         Log.d("tagPlace", "kommet inn ")
+        supportActionBar!!.hide()
 
         //Observerer stedet som er valgt
         viewModel.place!!.observe(this, Observer { place ->
             //Skriver ut slik at vi kan se om vi har riktig badestrand
             Log.d("tagPlace", place.toString())
-            PlaceRepository.getInstance().getWeather(place)
             makeAboutPage(place, savedInstanceState)
         })
 
@@ -76,25 +74,24 @@ class PlaceActivity : AppCompatActivity() {
 
         directionBikeButton.setOnClickListener {
             val intent = Intent(this, DirectionActivity::class.java)
-            viewModel.changeWayOfTransportation(Transporatation.BIKE)
+            viewModel.changeWayOfTransportation(Transportation.BIKE)
             startActivity(intent)
         }
 
         directionCarButton.setOnClickListener {
             val intent = Intent(this, DirectionActivity::class.java)
-            viewModel.changeWayOfTransportation(Transporatation.CAR)
+            viewModel.changeWayOfTransportation(Transportation.CAR)
             startActivity(intent)
         }
 
         directionWalkButton.setOnClickListener {
             val intent = Intent(this, DirectionActivity::class.java)
-            viewModel.changeWayOfTransportation(Transporatation.WALK)
+            viewModel.changeWayOfTransportation(Transportation.WALK)
             startActivity(intent)
         }
 
         namePlace.text = place.name
-        tempWater.text = String.format(getString(R.string.tempC),
-            PersonalPreference.waterTempMid, place.temp)
+        tempWater.text = getString(R.string.tempC, place.temp)
 
         makeMap(place, savedInstanceState)
     }

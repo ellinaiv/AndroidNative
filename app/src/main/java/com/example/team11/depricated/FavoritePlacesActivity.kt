@@ -1,4 +1,4 @@
-package com.example.team11.userInterface
+package com.example.team11.depricated
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -6,8 +6,8 @@ import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.team11.ui.placesList.ListAdapter
 import com.example.team11.R
-import com.example.team11.viewmodels.FavoritePlacesActivityViewModel
 import kotlinx.android.synthetic.main.activity_places_list.*
 
 class FavoritePlacesActivity : AppCompatActivity() {

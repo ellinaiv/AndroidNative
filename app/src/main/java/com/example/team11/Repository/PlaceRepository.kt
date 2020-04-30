@@ -2,12 +2,13 @@ package com.example.team11.Repository
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.example.team11.*
-import com.example.team11.api.ApiClient
 import com.example.team11.valueObjects.OceanForecast
-import com.example.team11.valueObjects.WeatherForecast
+import com.example.team11.Place
+import com.example.team11.Transportation
+import com.example.team11.api.ApiClient
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.coroutines.awaitString
+import com.google.gson.Gson
 import kotlinx.coroutines.runBlocking
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserFactory
@@ -21,13 +22,12 @@ class PlaceRepository private constructor() {
     private var places = MutableLiveData<List<Place>>()
     private val urlAPI = "http://oslokommune.msolution.no/friluft/badetemperaturer.jsp"
     private var currentPlace = MutableLiveData<Place>()
-    private var wayOfTransportation = MutableLiveData<Transporatation>()
+    private var wayOfTransportation = MutableLiveData<Transportation>()
     private var favoritePlaces = MutableLiveData<List<Place>>()
 
     //Kotlin sin static
     companion object {
-        @Volatile
-        private var instance: PlaceRepository? = null
+        @Volatile private var instance: PlaceRepository? = null
 
         /**
          * getInstance: henter PlaceRepository objekt, hvis det ikke finnes noen
@@ -35,8 +35,8 @@ class PlaceRepository private constructor() {
          * @return PlaceRepository
          */
         fun getInstance() =
-            instance ?: synchronized(this) {
-                instance ?: PlaceRepository().also { instance = it }
+            instance ?: synchronized(this){
+                instance?: PlaceRepository().also { instance = it}
             }
     }
 
@@ -44,8 +44,8 @@ class PlaceRepository private constructor() {
      * Returnerer en liste med favoritt stedene til en bruker
      * @return MutableLiceData<List<Place>> liste med brukerens favoritt steder
      */
-    fun getFavoritePlaces(): MutableLiveData<List<Place>> {
-        if (favoritePlaces.value == null) {
+    fun getFavoritePlaces(): MutableLiveData<List<Place>>{
+        if(favoritePlaces.value == null){
             favoritePlaces.value = emptyList()
         }
         return favoritePlaces
@@ -54,28 +54,28 @@ class PlaceRepository private constructor() {
     /**
      * Oppdaterer favoritt stedene
      */
-    fun updateFavoritePlaces() {
-        if (places.value == null) return
-        favoritePlaces.value = places.value!!.filter { place -> place.favorite }
+    fun updateFavoritePlaces(){
+        if(places.value == null) return
+        favoritePlaces.value = places.value!!.filter { place ->  place.favorite}
     }
 
     /**
      * getPlaces funksjonen henter en liste til viewModel med badesteder
      * @return: MutableLiveData<List<Place>>, liste med badesteder
      */
-    fun getPlaces(): MutableLiveData<List<Place>> {
-        if (places.value == null) {
+    fun getPlaces(): MutableLiveData<List<Place>>{
+        if (places.value == null){
             places.value = fetchPlaces(urlAPI)
         }
-        return places
 
+        return places
     }
 
     /**
      * endrer currentplace
      * @param place: Stedet som skal endres til å være currentPlace
      */
-    fun changeCurrentPlace(place: Place) {
+    fun changeCurrentPlace(place: Place){
         Log.d("tagRepository", "current endra")
         currentPlace.value = place
     }
@@ -90,7 +90,7 @@ class PlaceRepository private constructor() {
      * Endrer måten brukeren ønsker å komme seg til en strand
      * @param way: måten brukeren ønsker å komme seg til stranden
      */
-    fun changeWayOfTransportation(way: Transporatation) {
+    fun changeWayOfTransportation(way: Transportation){
         wayOfTransportation.value = way
     }
 
@@ -108,10 +108,10 @@ class PlaceRepository private constructor() {
      * @return: ArrayList<Place>, liste med badesteder
      */
 
-    private fun fetchPlaces(url: String): ArrayList<Place> {
+    private fun fetchPlaces(url : String) : ArrayList<Place>{
         val places = arrayListOf<Place>()
         val tag = "getData() ---->"
-        runBlocking {
+        runBlocking{
 
             try {
 
@@ -151,6 +151,9 @@ class PlaceRepository private constructor() {
                 Log.e(tag, e.message.toString())
             }
         }
+        for (i in places){
+            getSeaCurrentSpeed(i)
+        }
         return places
     }
 
@@ -174,7 +177,7 @@ class PlaceRepository private constructor() {
         val call=
             ApiClient.build()?.getSeaSpeed(place.lat, place.lng)
 
-        call?.enqueue(object : Callback<OceanForecast>{
+        call?.enqueue(object : Callback<OceanForecast> {
             override fun onResponse(call: Call<OceanForecast>, response: Response<OceanForecast>) {
                 if (response.isSuccessful){
                     val oceanForecasts = response.body()?.OceanForecastLayers
@@ -183,6 +186,7 @@ class PlaceRepository private constructor() {
                         // Verdien til speed blir bare endret dersom seaSpeed.content != null
                         response.body()?.OceanForecastLayers?.get(1)?.OceanForecastDetails?.seaSpeed?.content?.toDouble()
                             ?.let { speed = it }
+                        Log.d(tag, place.toString())
                         Log.d(tag, speed.toString())
                     }
                 }
@@ -194,37 +198,16 @@ class PlaceRepository private constructor() {
         return speed
     }
 
+
     /**
-     * Henter forecast til et sted fra met sitt api.
-     * @param place stranden man ønsker forecast for
-     * @return livedata
-     *
+     * En metode som lager url som skal, man skal hente json elemente på, når
+     * det kommer til havstrømninger.
+     * @param place: stedet som skal hente ut verdien.
+     * @return nettsiden man kan hente ut json elementene fra
      */
-
-    fun getWeather(place: Place): String? {
-        val tag = "tagWeather1"
-        val data = MutableLiveData<WeatherForecast>()
-        val temp = null;
-
-        val call=
-            ApiClient.build()?.getWeather(place.lat, place.lng)
-
-        call?.enqueue(object : Callback<WeatherForecast>{
-            override fun onResponse(call: Call<WeatherForecast>, response: Response<WeatherForecast>) {
-                if (response.isSuccessful){
-                    Log.v(tag, response.body().toString())
-                    val temp = response.body()?.weatherForecastTimeSlot?.get(0)?.types?.instantWeatherForecast?.details?.temp
-                    Log.v(tag, temp.toString())
-                }
-            }
-            override fun onFailure(call: Call<WeatherForecast>, t: Throwable) {
-                Log.v(tag, "error")
-            }
-        })
-        return temp
+    private fun getSpeedUrl(place: Place): String{
+        return "http://in2000-apiproxy.ifi.uio.no/weatherapi/oceanforecast/0.9/.json?lat=${place.lat}&lon=${place.lng}"
     }
-
-
 }
 
 
