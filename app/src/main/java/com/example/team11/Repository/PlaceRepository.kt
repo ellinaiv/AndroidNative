@@ -2,6 +2,7 @@ package com.example.team11.Repository
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.example.team11.PersonalPreference
 import com.example.team11.valueObjects.Forecast
 import com.example.team11.Place
 import com.example.team11.Transportation
@@ -20,6 +21,7 @@ class PlaceRepository private constructor() {
     private var currentPlace = MutableLiveData<Place>()
     private var wayOfTransportation = MutableLiveData<Transportation>()
     private var favoritePlaces = MutableLiveData<List<Place>>()
+    private var personalPreferences = MutableLiveData<PersonalPreference>()
 
     //Kotlin sin static
     companion object {
@@ -32,8 +34,18 @@ class PlaceRepository private constructor() {
          */
         fun getInstance() =
             instance ?: synchronized(this){
-                instance?: PlaceRepository().also { instance = it}
+                instance?: PlaceRepository().also {
+                    instance = it
+                    it.personalPreferences.value = PersonalPreference()
+                    it.wayOfTransportation.value = Transportation.BIKE
+                }
             }
+    }
+
+    fun getPersonalPreferences() = personalPreferences
+
+    fun updatePersonalPreference(newPersonalPreference: PersonalPreference){
+        personalPreferences.value =  newPersonalPreference
     }
 
     /**

@@ -28,14 +28,6 @@ class Place(val id: Int, val name: String, val lat: Double, val lng: Double,
 
     fun getLatLng():LatLng = LatLng(lat, lng)
 
-    /**
-     * Sjekker om dette stedet er varmt
-     * @return boolean
-     */
-    fun isWarm(): Boolean{
-        return PersonalPreference.waterTempMid < temp
-    }
-
 
     /**
      * Sammenligner en strand med en annen

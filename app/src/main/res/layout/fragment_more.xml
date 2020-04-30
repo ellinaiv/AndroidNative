@@ -224,7 +224,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
 
-                    app:layout_constraintTop_toBottomOf="@id/textTempHigh"
+                    app:layout_constraintTop_toBottomOf="@id/textTempHighWater"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
 
@@ -235,7 +235,7 @@
                     />
 
                 <TextView
-                    android:id="@+id/textTempMid"
+                    android:id="@+id/textTempMidWater"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
@@ -254,7 +254,7 @@
 
 
                 <TextView
-                    android:id="@+id/textTempLow"
+                    android:id="@+id/textTempLowWater"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
@@ -268,7 +268,7 @@
                     />
 
                 <TextView
-                    android:id="@+id/textTempHigh"
+                    android:id="@+id/textTempHighWater"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"

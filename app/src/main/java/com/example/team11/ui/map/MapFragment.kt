@@ -163,12 +163,9 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
      * @param place: Stedet som skal ha informasjonen sin på display
      */
     private fun showPlace(place: Place){
-
-        when(place.isWarm()){
-            true -> tempWaterImage.setImageResource(R.drawable.water_red)
-            false -> tempWaterImage.setImageResource(R.drawable.water_blue)
-        }
-
+        //fiks logikk når klart her!
+        tempWaterImage.setImageResource(R.drawable.water_red)
+        //tempWaterImage.setImageResource(R.drawable.water_blue)
         namePlace.text = place.name
         tempAirText.text = getString(R.string.notAvailable)
         tempWaterText.text = getString(R.string.tempC, place.temp)
@@ -236,10 +233,12 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
             arrayListOf(feature)))
         style.addSource(geoJsonSource)
 
-        val iconId = when(place.isWarm()){
+        /*val iconId = when(place.isWarm()){
             true -> ICON_ID_RED
             false -> ICON_ID_BLUE
-        }
+        }*/
+
+        val iconId = ICON_ID_RED
 
         val symbolLayer = SymbolLayer(id, geoId)
         symbolLayer.withProperties(

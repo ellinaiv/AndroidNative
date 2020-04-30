@@ -166,10 +166,12 @@ class MapActivity : AppCompatActivity(), MapboxMap.OnMapClickListener {
         val tempWaterImage = findViewById<ImageView>(R.id.tempWaterImage)
 
 
-        when(place.isWarm()){
+        /*when(place.isWarm()){
             true -> tempWaterImage.setImageResource(R.drawable.water_red)
             false -> tempWaterImage.setImageResource(R.drawable.water_blue)
-        }
+        }*/
+
+        tempWaterImage.setImageResource(R.drawable.water_red)
 
         nameTextView.text = place.name
         tempAirText.text = getString(R.string.notAvailable)
@@ -242,10 +244,12 @@ class MapActivity : AppCompatActivity(), MapboxMap.OnMapClickListener {
             arrayListOf(feature)))
         style.addSource(geoJsonSource)
 
-        val iconId = when(place.isWarm()){
+        /*val iconId = when(place.isWarm()){
             true -> ICON_ID_RED
             false -> ICON_ID_BLUE
-        }
+        }*/
+
+        val iconId = ICON_ID_BLUE
 
         val symbolLayer = SymbolLayer(id, geoId)
         symbolLayer.withProperties(
