@@ -40,7 +40,7 @@
             android:contentDescription="@string/button_back" />
 
         <TextView
-            android:id="@+id/aboutDirectionText"
+            android:id="@+id/aboutDirectionsText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
 

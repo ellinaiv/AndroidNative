@@ -57,10 +57,10 @@ class DirectionsActivity : AppCompatActivity() , PermissionsListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Mapbox.getInstance(this, getString(R.string.access_token))
-        setContentView(R.layout.activity_direction)
+        setContentView(R.layout.activity_directions)
         supportActionBar!!.hide()
         val backButton = findViewById<ImageButton>(R.id.buttonBack)
-        val aboutDirectionText = findViewById<TextView>(R.id.aboutDirectionText)
+        val aboutDirectionsText = findViewById<TextView>(R.id.aboutDirectionsText)
         backButton.setOnClickListener {
             finish()
         }
@@ -68,13 +68,13 @@ class DirectionsActivity : AppCompatActivity() , PermissionsListener {
         //Observerer stedet som er valgt
         viewModel.place!!.observe(this, Observer { place ->
             viewModel.wayOfTransportation!!.observe(this, Observer { way->
-                aboutDirectionText.text = when(way) {
+                aboutDirectionsText.text = when(way) {
                     Transportation.BIKE -> getString(
-                        R.string.bikeDirection, place.name)
+                        R.string.bikeDirections, place.name)
                     Transportation.CAR -> getString(
-                        R.string.carDirection, place.name)
-                    Transportation.WALK -> getString(R.string.walkDirection, place.name)
-                    else -> getString(R.string.bikeDirection, place.name)
+                        R.string.carDirections, place.name)
+                    Transportation.WALK -> getString(
+                        R.string.walkDirections, place.name)
                 }
                 this.way = way
                 makeMap(place, savedInstanceState)
@@ -192,7 +192,7 @@ class DirectionsActivity : AppCompatActivity() , PermissionsListener {
                 val currentRoute = response.body()!!.routes()[0]
                 val stringD = "Lengde: " + viewModel.convertToCorrectDistance(currentRoute.distance())
                 val stringT = "\nTid: " + viewModel.convertTime(currentRoute.duration())
-                Toast.makeText(this@DirectionActivity, stringD + stringT, Toast.LENGTH_LONG).show()
+                Toast.makeText(this@DirectionsActivity, stringD + stringT, Toast.LENGTH_LONG).show()
 
                 mapboxMap.getStyle { style ->
                     val source = style.getSourceAs<GeoJsonSource>(ROUTE_SOURCE_ID)
