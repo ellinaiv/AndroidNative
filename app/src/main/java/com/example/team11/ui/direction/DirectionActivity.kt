@@ -248,7 +248,7 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
         val geoId = "GEO_ID"
         val icon = BitmapFactory.decodeResource(
             this@DirectionActivity.resources,
-            R.drawable.mapbox_marker_icon_default
+            R.drawable.marker_place
         )
         style.addImage(iconIdRed, icon)
 
