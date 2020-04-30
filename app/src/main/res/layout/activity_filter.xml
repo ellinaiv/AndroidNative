@@ -202,6 +202,37 @@
             android:textColor="@color/coldBlue"
             android:textSize="12sp"/>
 
+        <CheckBox
+            android:id="@+id/checkBoxWarmWater"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/textColdWater"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="54dp"
+
+            android:button="@null"
+
+            android:background="@drawable/check_box_selector"/>
+
+        <TextView
+            android:id="@+id/textWarmWater"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/checkBoxWarmWater"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="15dp"
+
+            android:fontFamily="@font/roboto_medium"
+            android:text="Varmt vann"
+            android:textColor="@color/warmRed"
+            android:textSize="12sp"/>
+
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
