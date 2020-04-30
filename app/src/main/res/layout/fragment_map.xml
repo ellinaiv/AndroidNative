@@ -9,13 +9,14 @@
 
     <com.mapbox.mapboxsdk.maps.MapView
         android:id="@+id/mapView"
+
         android:layout_width="match_parent"
         android:layout_height="match_parent"
 
-        mapbox:layout_constraintTop_toBottomOf="@+id/searchLayer"
         mapbox:layout_constraintBottom_toBottomOf="parent"
         mapbox:layout_constraintLeft_toLeftOf="parent"
         mapbox:layout_constraintRight_toRightOf="parent"
+        mapbox:layout_constraintTop_toBottomOf="@+id/searchLayer"
 
         mapbox:mapbox_cameraTargetLat = "59.9139"
         mapbox:mapbox_cameraTargetLng= "10.7522"
@@ -25,11 +26,13 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/searchLayer"
+
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        mapbox:layout_constraintTop_toTopOf="parent"
+
         mapbox:layout_constraintLeft_toLeftOf="parent"
         mapbox:layout_constraintRight_toRightOf="parent"
+        mapbox:layout_constraintTop_toTopOf="parent"
 
         android:background="@drawable/gradient_search"
         >
