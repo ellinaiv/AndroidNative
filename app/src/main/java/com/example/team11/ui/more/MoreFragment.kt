@@ -37,7 +37,8 @@ class MoreFragment : Fragment() {
                 textAboutApp.visibility = View.VISIBLE
                 aboutAppTitle.background =
                     resources.getDrawable(R.drawable.about_rectangle_clicked, null)
-                aboutAppClicked = true;
+                aboutAppClicked = true
+                aboutAPIClicked = false
             }
         }
 
@@ -51,6 +52,7 @@ class MoreFragment : Fragment() {
                 aboutAPITitle.background =
                     resources.getDrawable(R.drawable.about_rectangle_clicked, null)
                 aboutAPIClicked = true
+                aboutAppClicked = false
             }
         }
         return root
