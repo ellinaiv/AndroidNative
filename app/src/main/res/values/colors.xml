@@ -20,6 +20,7 @@
     <color name="backgroundBorderBlue">#22AAAF</color>
     <color name="backgroundBorderWhite">#919191</color>
     <color name="backgroundClicked">#D3D3D3</color>
+    <color name="topBarBorder">#BBB8B8</color>
 
 <!--    other colors-->
     <color name="coldBlue">#167EB9</color>
