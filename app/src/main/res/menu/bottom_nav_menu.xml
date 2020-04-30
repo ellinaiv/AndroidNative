@@ -4,23 +4,23 @@
 
     <item
         android:id="@+id/navigation_map"
-        android:icon="@drawable/ic_map_black_24dp"
+        android:icon="@drawable/map_selector"
         android:title="@string/title_map"
         />
     <item
         android:id="@+id/navigation_list"
-        android:icon="@drawable/ic_format_list_bulleted_black_24dp"
+        android:icon="@drawable/list_bulleted_selector"
         android:title="@string/title_list"
 
         />
 
     <item
         android:id="@+id/navigation_favorites"
-        android:icon="@drawable/favourite_outlined"
+        android:icon="@drawable/favorite_selector"
         android:title="@string/title_favoritter" />
     <item
         android:id="@+id/navigation_more"
-        android:icon="@drawable/ic_more_horiz_black_24dp"
+        android:icon="@drawable/more_selector"
         android:title="@string/title_mer" />
 
 </menu>

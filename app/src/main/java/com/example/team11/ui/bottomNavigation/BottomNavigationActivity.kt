@@ -22,6 +22,7 @@ class MainActivity : AppCompatActivity() {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         Mapbox.getInstance(this, getString(R.string.access_token))
+        navView.itemIconTintList = null
         val appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.navigation_map,
