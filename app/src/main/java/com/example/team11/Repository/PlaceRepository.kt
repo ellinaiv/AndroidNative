@@ -4,14 +4,19 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.team11.PersonalPreference
 import com.example.team11.valueObjects.Forecast
+import com.example.team11.valueObjects.OceanForecast
 import com.example.team11.Place
 import com.example.team11.Transportation
+import com.example.team11.api.ApiClient
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.coroutines.awaitString
 import com.google.gson.Gson
 import kotlinx.coroutines.runBlocking
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserFactory
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.io.StringReader
 
 class PlaceRepository private constructor() {
@@ -178,6 +183,11 @@ class PlaceRepository private constructor() {
                 Log.e(tag, e.message.toString())
             }
         }
+
+        // TODO("Fjerne dette og legge in dette når man trykker på et place")
+        for (i in places){
+            getSeaCurrentSpeed(i)
+        }
         return places
     }
 
@@ -194,33 +204,31 @@ class PlaceRepository private constructor() {
      * @param place stranden man ønsker å vite strømningen på
      * @return en Double. Hvis verdien < 0 er det ikke noen målinger på det stedet
      */
-    private fun fetchSeaCurrentSpeed(place: Place): Double{
-        val tag = "tagStromninger"
-        val gson = Gson()
+    private fun fetchSeaCurrentSpeed(place: Place): Double {
+        val tag = "tagFetchCurrentSeaSpeed"
         var speed = (-1).toDouble()
-        val url = getSpeedUrl(place)
-        Log.d(tag, url)
-        runBlocking {
-            try {
-                val response = Fuel.get(url).awaitString()
-                val ans = gson.fromJson(response, Forecast::class.java) as Forecast
-                ans.ocenaforcasts ?: return@runBlocking
-                val oceanForecasts = ans.ocenaforcasts.toMutableList()
-                Log.d(tag, oceanForecasts.toString())
-                if (oceanForecasts.size > 1){
-                    val cast = oceanForecasts[1]
-                    Log.d(tag, cast.toString())
-                    cast.ocenaforcast.seaSpeed ?: return@runBlocking
-                    speed = cast.ocenaforcast.seaSpeed.content.toDouble()
-                    Log.d(tag, speed.toString())
-                }else{
-                    speed = (-1).toDouble()
-                }
-            }catch (e: Exception){
-                Log.e(tag, e.message)
-            }
 
-        }
+        val call=
+            ApiClient.build()?.getSeaSpeed(place.lat, place.lng)
+
+        call?.enqueue(object : Callback<OceanForecast> {
+            override fun onResponse(call: Call<OceanForecast>, response: Response<OceanForecast>) {
+                if (response.isSuccessful){
+                    val oceanForecasts = response.body()?.OceanForecastLayers
+                    if ((oceanForecasts != null) && (oceanForecasts.size > 1)) {
+
+                        // Verdien til speed blir bare endret dersom seaSpeed.content != null
+                        response.body()?.OceanForecastLayers?.get(1)?.OceanForecastDetails?.seaSpeed?.content?.toDouble()
+                            ?.let { speed = it }
+                        Log.d(tag, place.toString())
+                        Log.d(tag, speed.toString())
+                    }
+                }
+            }
+            override fun onFailure(call: Call<OceanForecast>, t: Throwable) {
+                Log.v(tag, "error in fetchCurrentSeaSpeed")
+            }
+        })
         return speed
     }
 
