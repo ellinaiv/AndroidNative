@@ -10,13 +10,9 @@
     <color name="subTextColor">#424242</color>
     <color name="whiteTextColor">#FFFFFF</color>
 
-<!--    Cardviews -->
-    <color name="backgroundCardView">#FFFFFF</color>
-    <color name="strokeCardview">#22AAAF</color>
-
 <!--    backgrounds-->
-    <color name="backgroundCardsLight">#F8F8F7</color>
-    <color name="backgroundCardsDark">#F8F8F7</color>
+    <color name="backgroundLight">#FFFFFF</color>
+    <color name="backgroundDark">#F8F8F7</color>
     <color name="backgroundBorderBlue">#22AAAF</color>
     <color name="backgroundBorderWhite">#919191</color>
     <color name="backgroundClicked">#D3D3D3</color>

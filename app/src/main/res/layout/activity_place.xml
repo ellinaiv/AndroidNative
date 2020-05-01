@@ -8,7 +8,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layoutTopBar"
-        android:background="@color/backgroundCardsDark"
+        android:background="@color/backgroundDark"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
@@ -17,7 +17,7 @@
 
         <ImageButton
             android:id="@+id/buttonBack"
-            android:background="@color/backgroundCardsDark"
+            android:background="@color/backgroundDark"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_margin="6dp"
@@ -63,7 +63,7 @@
             android:id="@+id/layoutInScrollView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/backgroundCardsLight">
+            android:background="@color/backgroundLight">
 
             <TextView
                 android:id="@+id/textPlaceName"
@@ -173,7 +173,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="14dp"
-                android:background="@color/backgroundCardsLight"
+                android:background="@color/backgroundLight"
                 android:contentDescription="@string/place_button_info_currents"
                 android:src="@drawable/info"
                 app:layout_constraintBottom_toBottomOf="@+id/textCurrentsResult"
@@ -184,7 +184,7 @@
                 android:id="@+id/buttonUVInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/backgroundCardsLight"
+                android:background="@color/backgroundLight"
                 android:contentDescription="@string/place_button_info_uv"
                 android:src="@drawable/info"
                 app:layout_constraintBottom_toBottomOf="@+id/textUVResult"
@@ -602,7 +602,7 @@
                     android:adjustViewBounds="true"
                     android:contentDescription="@string/place_button_walk"
                     android:scaleType="fitXY"
-                    android:src="@drawable/directions_walk"/>
+                    android:src="@drawable/directions_walk_pink"/>
 
                 <ImageButton
                     android:id="@+id/buttonBike"
@@ -690,7 +690,7 @@
                     android:id="@+id/buttonCurrentsCloseInfo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@color/backgroundCardsDark"
+                    android:background="@color/backgroundDark"
                     android:layout_marginTop="16dp"
                     android:src="@drawable/xclose"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -807,7 +807,7 @@
                     android:id="@+id/buttonUVCloseInfo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@color/backgroundCardsDark"
+                    android:background="@color/backgroundDark"
                     android:layout_marginTop="16dp"
                     android:src="@drawable/xclose"
                     app:layout_constraintEnd_toEndOf="parent"
