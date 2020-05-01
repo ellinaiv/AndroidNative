@@ -43,6 +43,14 @@ class DirectionsActivityViewModel: ViewModel() {
     fun getFeature(place: Place) = Feature.fromGeometry(Point.fromLngLat(place.lng, place.lat))!!
 
     /**
+     * Endrer måten brukeren ønsker å komme seg til en strand i repository
+     * @param way: måten brukeren ønsker å komme seg til stranden
+     */
+    fun changeWayOfTransportation(way: Transportation){
+        placeRepository!!.changeWayOfTransportation(way)
+    }
+
+    /**
      * Konverter en gitt tid i sekunder til en string-representasjon
      * i form av timer og minutter. Hvis det tar 0 timer viser man kun antall minutter det
      * tar, og dersom minutter er 0 viser man det kun i timer.
