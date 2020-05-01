@@ -108,7 +108,7 @@ class PlaceRepository private constructor() {
      * Oppdaterer favoritt stedene
      */
     fun updateFavoritePlaces(){
-        allPlaces.filter { place ->  place.favorite}
+        favoritePlaces.value = allPlaces.filter { place ->  place.favorite}
     }
 
     /**
