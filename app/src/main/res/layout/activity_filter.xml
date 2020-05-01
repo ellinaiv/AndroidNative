@@ -67,7 +67,9 @@
         android:layout_marginTop="22dp"
         android:layout_marginStart="12dp"
         android:layout_marginEnd="12dp"
-        android:layout_marginBottom="22dp">
+        android:layout_marginBottom="22dp"
+
+        android:scrollbars="none">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -562,7 +564,7 @@
 
                 android:text="@string/addFilter"
                 android:textColor="@android:color/white"
-                android:textSize="12dp" />
+                android:textSize="12sp" />
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
@@ -588,7 +590,7 @@
 
                 android:text="@string/reset"
                 android:textColor="@android:color/white"
-                android:textSize="12dp"
+                android:textSize="12sp"
                 />
 
 

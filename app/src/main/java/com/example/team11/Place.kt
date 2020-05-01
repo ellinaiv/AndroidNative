@@ -29,5 +29,4 @@ class Place(val id: Int, val name: String, val lat: Double, val lng: Double,
     override fun toString(): String {
         return "$id:$name[$lat,$lng]"
     }
-
 }

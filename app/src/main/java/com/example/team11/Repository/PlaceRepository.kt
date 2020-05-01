@@ -3,14 +3,12 @@ package com.example.team11.Repository
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.team11.PersonalPreference
-import com.example.team11.valueObjects.Forecast
 import com.example.team11.valueObjects.OceanForecast
 import com.example.team11.Place
 import com.example.team11.Transportation
 import com.example.team11.api.ApiClient
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.coroutines.awaitString
-import com.google.gson.Gson
 import kotlinx.coroutines.runBlocking
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserFactory
@@ -48,13 +46,24 @@ class PlaceRepository private constructor() {
             }
     }
 
+    /**
+     * Returnerer en peker til preferansene til brukeren
+     * @return brukerens preferance
+     */
     fun getPersonalPreferences() = personalPreferences
 
+    /**
+     * Oppdaterer preferansene til brukeren
+     * @param newPersonalPreference den nye preferansen
+     */
     fun updatePersonalPreference(newPersonalPreference: PersonalPreference){
         personalPreferences.value =  newPersonalPreference
         updatePlaces()
     }
 
+    /**
+     * Oppdatere listen med steder som liste og kart bruker basert på preferanser
+     */
     private fun updatePlaces(){
         val pp = personalPreferences.value!!
         places.value = allPlaces.filter { place ->
@@ -62,11 +71,23 @@ class PlaceRepository private constructor() {
         }
     }
 
+    /**
+     * Sjekker om et gitt sted har riktig kriterier mtp vanntempratur for å vises
+     * @param pp: brukeren sine preferanser
+     * @param place stedet som skal sjekkes
+     * @return true hvis den oppfyller kriteriene false ellers
+     */
     private fun isTempWaterOk(pp: PersonalPreference, place: Place): Boolean{
         return ((pp.showWaterWarm and (place.tempWater >= pp.waterTempMid))
                 or (pp.showWaterCold and (place.tempWater < pp.waterTempMid)))
     }
 
+    /**
+     * Sjekker om et gitt sted har riktig kriterier mtp luftempratur for å vises
+     * @param pp: brukeren sine preferanser
+     * @param place stedet som skal sjekkes
+     * @return true hvis den oppfyller kriteriene false ellers
+     */
     private fun isTempAirOk(pp: PersonalPreference, place: Place): Boolean{
         return ((pp.showAirWarm and (place.tempAir >= pp.airTempMid))
                 or (pp.showAirCold and (place.tempAir < pp.airTempMid)))

@@ -114,6 +114,10 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
         }
     }
 
+    /**
+     * Fjerner alle steden på kartet
+     * @param style: stilen til kartet
+     */
     private fun removeLayers(style: Style){
         listOfLayerId.forEach { layer ->
             style.removeLayer(layer)

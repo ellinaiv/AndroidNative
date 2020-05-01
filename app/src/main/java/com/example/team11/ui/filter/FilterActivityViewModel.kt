@@ -28,10 +28,16 @@ class FilterActivityViewModel: ViewModel(){
         }
     }
 
+    /**
+     * Reseter personlige preferanser til det vi har valgt som standar
+     */
     fun resetPersonalPreference(){
         placeRepository!!.updatePersonalPreference(PersonalPreference())
     }
 
+    /**
+     * Oppdaterer repository med den nye preferansen til brukeren
+     */
     fun updatePersonalPreference(personalPreference: PersonalPreference){
         placeRepository!!.updatePersonalPreference(personalPreference)
     }

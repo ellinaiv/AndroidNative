@@ -40,6 +40,9 @@ class FilterActivity : AppCompatActivity() {
 
     }
 
+    /**
+     * Lager et nytt objekt som er den nye preferansen til brukeren
+     */
     private fun setFilter(){
         viewModel.updatePersonalPreference(
             PersonalPreference(
@@ -53,6 +56,9 @@ class FilterActivity : AppCompatActivity() {
         ))
     }
 
+    /**
+     * Setter checkBoxene slik at de samsvarer med de brukerens preferanser
+     */
     private fun makeCheckBoxes(personalPreference: PersonalPreference){
         checkBoxColdWater.isChecked = personalPreference.showWaterCold
         checkBoxWarmWater.isChecked = personalPreference.showWaterWarm
@@ -61,7 +67,9 @@ class FilterActivity : AppCompatActivity() {
     }
 
     /**
-     * Logikken til seek baren ligger her
+     * Logikken til seek barene ligger her. Legg merke til at den nedereste må bruke
+     * personalPreferance.airTempLow i en del av utreiningene sine det er fordi det ikke finnes
+     * no min instansvariabel for seekbar
      */
     private fun makeSeekBar(personalPreference: PersonalPreference){
         seekBarWater.progress = personalPreference.waterTempMid

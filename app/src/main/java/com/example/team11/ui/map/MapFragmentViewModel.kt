@@ -40,6 +40,9 @@ class MapFragmentViewModel: ViewModel() {
      */
     fun getFeature(place: Place) = Feature.fromGeometry(Point.fromLngLat(place.lng, place.lat))!!
 
+    /**
+     * Endrer hvilken strand man vil undersøke nøyere
+     */
     fun changeCurrentPlace(place: Place){
         if(placeRepository != null){
             placeRepository!!.changeCurrentPlace(place)
@@ -48,6 +51,11 @@ class MapFragmentViewModel: ViewModel() {
         }
     }
 
+    /**
+     * Sjekker om stedet er varmt, basert på brukeren sin preferance
+     * @param place: stedet som man vil finne ut om er varmt
+     * @return true hvis stedet er varmt, false hvis kaldt
+     */
     fun isPlaceWarm(place: Place): Boolean{
         val personalPreferenceValue = personalPreference!!.value!!
         if(personalPreferenceValue.showBasedOnWater){
