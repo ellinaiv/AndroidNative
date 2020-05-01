@@ -38,8 +38,6 @@ object ApiClient {
     }
 
     interface ServicesApiInterface{
-        @GET("locationforecast/2.0/.json?")
-        fun getWeather(@Query("lat") lat: Double, @Query("lon") lon: Double): Call<WeatherForecast>
 
         @GET("oceanforecast/0.9/.json?")
         fun getSeaSpeed(@Query("lat") lat: Double, @Query("lon") lon: Double): Call<OceanForecast>
