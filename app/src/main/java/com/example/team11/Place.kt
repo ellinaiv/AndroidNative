@@ -6,6 +6,8 @@ import kotlin.random.Random
 
 class Place(val id: Int, val name: String, val lat: Double, val lng: Double,
             var favorite: Boolean = false, var temp: Int = Random.nextInt(0, 35)): Serializable {
+
+    //TODO("Slette det under")
     /**
      * tanken er at denne kan brukes i compareTo metoden
      * kan også være et enum, se diskusjon i PersonligPreferanse klassen
@@ -13,6 +15,7 @@ class Place(val id: Int, val name: String, val lat: Double, val lng: Double,
     private var tempraturInnafor = true
 
 
+    //TODO("Slette det under")
     /**
      * Endrer tempraturInnafor slik at den er true hvis den er innafor, og false ellers
      *  @param nyPreferanse
@@ -20,6 +23,7 @@ class Place(val id: Int, val name: String, val lat: Double, val lng: Double,
     fun oppdaterTempraturInnafor(nyPreferanse: Int): Boolean{
         TODO("ikke implementert")
     }
+
 
     /**
      * Returerer posisjon i et latlng objekt
@@ -47,6 +51,7 @@ class Place(val id: Int, val name: String, val lat: Double, val lng: Double,
     override fun compareTo(other: Place): Int {
         TODO("ikke implemert")
     }*/
+
 
 
 

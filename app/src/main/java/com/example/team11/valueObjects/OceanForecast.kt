@@ -2,17 +2,17 @@ package com.example.team11.valueObjects
 
 import com.google.gson.annotations.SerializedName
 
-data class Forecast(
+data class OceanForecast(
     @SerializedName("mox:forecast")
-    val ocenaforcasts: Array<Layer>
+    val OceanForecastLayers: List<Layer>
 )
 
 data class Layer(
     @SerializedName("metno:OceanForecast")
-    val ocenaforcast: OceanForecast
+    val OceanForecastDetails: OceanForecastDetails
 )
 
-data class OceanForecast(
+data class OceanForecastDetails(
     @SerializedName("mox:seaCurrentSpeed")
     val seaSpeed: SeaSpeed,
 
