@@ -59,7 +59,7 @@
     <string name="to"> til</string>
     <string name="yourPosition">din posisjon</string>
     <string name="distance">Distanse:</string>
-    <string name="time">Beregnet resietid:</string>
+    <string name="time">Beregnet reisetid:</string>
 
     <!--    content description for buttons-->
     <string name="button_back">Trykk her for å gå tilbake</string>

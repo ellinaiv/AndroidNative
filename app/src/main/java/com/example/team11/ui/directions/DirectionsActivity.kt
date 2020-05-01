@@ -10,6 +10,8 @@ import android.text.SpannableStringBuilder
 import android.text.style.StyleSpan
 import android.util.Log
 import android.view.View
+import android.widget.ImageButton
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
@@ -42,7 +44,7 @@ import com.mapbox.mapboxsdk.style.layers.Property
 import com.mapbox.mapboxsdk.style.layers.PropertyFactory
 import com.mapbox.mapboxsdk.style.layers.SymbolLayer
 import com.mapbox.mapboxsdk.style.sources.GeoJsonSource
-import kotlinx.android.synthetic.main.activity_direction.*
+import kotlinx.android.synthetic.main.activity_directions.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -67,7 +69,6 @@ class DirectionsActivity : AppCompatActivity() , PermissionsListener {
         setContentView(R.layout.activity_directions)
         supportActionBar!!.hide()
         val backButton = findViewById<ImageButton>(R.id.buttonBack)
-        val aboutDirectionsText = findViewById<TextView>(R.id.aboutDirectionsText)
         backButton.setOnClickListener {
             finish()
         }

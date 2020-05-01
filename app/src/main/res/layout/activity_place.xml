@@ -43,7 +43,7 @@
             android:id="@+id/horizontalDivider"
             android:layout_width="match_parent"
             android:layout_height="2dp"
-            android:background="@color/backgroundBorder"
+            android:background="@color/topBarBorder"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
@@ -617,7 +617,7 @@
                     android:adjustViewBounds="true"
                     android:contentDescription="@string/place_button_bike"
                     android:scaleType="fitXY"
-                    android:src="@drawable/directions_bike"/>
+                    android:src="@drawable/directions_bike_pink"/>
 
                 <ImageButton
                     android:id="@+id/buttonCar"
@@ -632,7 +632,7 @@
                     android:adjustViewBounds="true"
                     android:contentDescription="@string/place_button_car"
                     android:scaleType="fitXY"
-                    android:src="@drawable/directions_car"
+                    android:src="@drawable/directions_car_pink"
                     />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
