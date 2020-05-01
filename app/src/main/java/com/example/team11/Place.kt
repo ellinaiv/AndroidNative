@@ -1,5 +1,4 @@
 package com.example.team11
-import com.example.team11.valueObjects.WeatherForecastTimeSlot
 import com.google.android.gms.maps.model.LatLng
 import java.io.Serializable
 import kotlin.random.Random
@@ -25,9 +24,6 @@ class Place(val id: Int, val name: String, val lat: Double, val lng: Double,
         TODO("ikke implementert")
     }
 
-    fun setWeatherForecast(weatherForecast: List<WeatherForecastTimeSlot>){
-
-    }
 
     /**
      * Returerer posisjon i et latlng objekt

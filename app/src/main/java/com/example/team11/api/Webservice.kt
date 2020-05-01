@@ -1,7 +1,6 @@
 package com.example.team11.api
 
 import com.example.team11.valueObjects.OceanForecast
-import com.example.team11.valueObjects.WeatherForecast
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call

@@ -64,7 +64,7 @@ class PlaceRepository private constructor() {
      * @return: MutableLiveData<List<Place>>, liste med badesteder
      */
     fun getPlaces(): MutableLiveData<List<Place>>{
-        if (places.value == null || ){
+        if (places.value == null){
             places.value = fetchPlaces(urlAPI)
         }
 
@@ -151,6 +151,8 @@ class PlaceRepository private constructor() {
                 Log.e(tag, e.message.toString())
             }
         }
+
+        // TODO("Fjerne dette og legge in dette når man trykker på et place")
         for (i in places){
             getSeaCurrentSpeed(i)
         }

@@ -26,13 +26,6 @@ allprojects {
     }
 }
 
-// TODO("Legge inn alle versjoner fra build.gradle app")
-ext {
-    retrofit2='2.3.0'
-    okhttp3='3.4.1'
-    moshi='2.6.2'
-}
-
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
