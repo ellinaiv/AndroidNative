@@ -13,7 +13,6 @@ import retrofit2.http.Query
  * Klasse som henter data fra https://in2000-apiproxy.ifi.uio.no/weatherapi/
  * @Return serviceApiInterface som inneholder de ulike metodene for å hente ulik data
  */
-
 object ApiClient {
 
     private val API_BASE_URL = "https://in2000-apiproxy.ifi.uio.no/weatherapi/"
@@ -38,7 +37,6 @@ object ApiClient {
     /**
      * Metode for http-logging, logger http-resultat, feilkoder og alle kall til API
      */
-
     private fun interceptor(): HttpLoggingInterceptor {
         val httpLoggingInterceptor = HttpLoggingInterceptor()
         httpLoggingInterceptor.level=HttpLoggingInterceptor.Level.BODY
@@ -48,7 +46,6 @@ object ApiClient {
     /**
      * Interface for de ulike metodene for å hente ulik data
      */
-
     interface ServicesApiInterface{
 
         @GET("oceanforecast/0.9/.json?")
