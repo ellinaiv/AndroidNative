@@ -18,7 +18,7 @@ class MapActivityViewModel: ViewModel() {
      */
     init {
         if(places == null){
-            placeRepository = PlaceRepository.getInstance()
+           // placeRepository = PlaceRepository.getInstance()
             places = placeRepository!!.getPlaces()
         }
     }

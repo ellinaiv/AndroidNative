@@ -1,16 +1,19 @@
 package com.example.team11.ui.direction
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.team11.database.entity.Place
 import com.example.team11.Repository.PlaceRepository
 import com.example.team11.Transportation
+import com.example.team11.util.InjectorUtils
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Point
 import kotlin.math.roundToInt
 
-class DirectionActivityViewModel: ViewModel() {
+class DirectionActivityViewModel(application: Application): AndroidViewModel(application) {
     var place: MutableLiveData<Place>? = null
     var wayOfTransportation: MutableLiveData<Transportation>? = null
     private var placeRepository: PlaceRepository? = null
@@ -21,7 +24,7 @@ class DirectionActivityViewModel: ViewModel() {
      */
     init {
         if(place == null){
-            placeRepository = PlaceRepository.getInstance()
+            placeRepository = PlaceRepository.getInstance(application.applicationContext)
             place = placeRepository!!.getCurrentPlace()
             wayOfTransportation = placeRepository!!.getWayOfTransportation()
         }

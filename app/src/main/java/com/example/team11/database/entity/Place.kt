@@ -3,11 +3,12 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.team11.PersonalPreference
+import com.example.team11.util.DbConstants
 import com.google.android.gms.maps.model.LatLng
 import java.io.Serializable
 import kotlin.random.Random
 
-@Entity(tableName = "place")
+@Entity(tableName = DbConstants.PLACE_TABLE_NAME)
 class Place(
     @PrimaryKey @ColumnInfo(name = "id") val id: Int,
     val name: String,
@@ -31,6 +32,7 @@ class Place(
         return PersonalPreference.waterTempMid < temp
     }
 
+
     /**
      * Sammenligner en strand med en annen
      * @param other Any[Strand], kan ikke være null
@@ -41,6 +43,9 @@ class Place(
     override fun compareTo(other: Place): Int {
         TODO("Slette denne metoden? ")
     }*/
+
+
+
 
     override fun toString(): String {
         return "$id:$name[$lat,$lng]"

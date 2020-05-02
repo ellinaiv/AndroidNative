@@ -1,25 +1,40 @@
 package com.example.team11.Repository
 
+import android.content.Context
+import android.os.SystemClock
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.team11.valueObjects.Forecast
 import com.example.team11.database.entity.Place
+import com.example.team11.valueObjects.OceanForecast
 import com.example.team11.Transportation
+import com.example.team11.api.ApiClient
+import com.example.team11.database.AppDatabase
+import com.example.team11.util.Converters
+import com.example.team11.util.DbConstants
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.coroutines.awaitString
-import com.google.gson.Gson
 import kotlinx.coroutines.runBlocking
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserFactory
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.io.StringReader
+import java.util.*
+import java.util.concurrent.TimeUnit
+import kotlin.collections.ArrayList
 
-class PlaceRepository private constructor() {
+class PlaceRepository private constructor(context: Context) {
 
-    private var places = MutableLiveData<List<Place>>()
+
     private val urlAPI = "http://oslokommune.msolution.no/friluft/badetemperaturer.jsp"
     private var currentPlace = MutableLiveData<Place>()
     private var wayOfTransportation = MutableLiveData<Transportation>()
     private var favoritePlaces = MutableLiveData<List<Place>>()
+    private val database: AppDatabase = AppDatabase.getInstance(context)
+    private val placeDao = database.placeDao()
+    private val metadataDao = database.metadataDao()
 
     //Kotlin sin static
     companion object {
@@ -30,40 +45,40 @@ class PlaceRepository private constructor() {
          * eller returneres det et.
          * @return PlaceRepository
          */
-        fun getInstance() =
+        fun getInstance(context: Context) =
             instance ?: synchronized(this){
-                instance?: PlaceRepository().also { instance = it}
+                instance?: PlaceRepository(context).also { instance = it}
             }
     }
 
+
     /**
      * Returnerer en liste med favoritt stedene til en bruker
-     * @return MutableLiceData<List<Place>> liste med brukerens favoritt steder
+     * @return LiveData<List<Place>> liste med brukerens favoritt steder
      */
-    fun getFavoritePlaces(): MutableLiveData<List<Place>>{
-        if(favoritePlaces.value == null){
-            favoritePlaces.value = emptyList()
-        }
-        return favoritePlaces
-    }
+    fun getFavoritePlaces() = placeDao.getFavoritePlaceList()
 
     /**
      * Oppdaterer favoritt stedene
      */
-    fun updateFavoritePlaces(){
-        if(places.value == null) return
-        favoritePlaces.value = places.value!!.filter { place ->  place.favorite}
-    }
+    fun addFavoritePlace(place: Place) = placeDao.addFavorite(place.id)
 
     /**
      * getPlaces funksjonen henter en liste til viewModel med badesteder
      * @return: MutableLiveData<List<Place>>, liste med badesteder
      */
-    fun getPlaces(): MutableLiveData<List<Place>>{
-        if (places.value == null){
-            places.value = fetchPlaces(urlAPI)
+    fun getPlaces(): LiveData<List<Place>> {
+        // TODO("Hvor ofte burde places fetches?")
+        // TODO("Kan jeg gjøre non-assertive call her? Dersom favoritePlaces.value er null burde den stoppe å sjekke på første?"
+        if (favoritePlaces.value == null || favoritePlaces.value!!.isEmpty() || shouldFetch(
+                DbConstants.PLACE_TABLE_NAME,
+                10,
+                TimeUnit.DAYS
+            )
+        ) {
+            placeDao.insertPlaceList(fetchPlaces(urlAPI))
         }
-        return places
+        return placeDao.getPlaceList()
     }
 
     /**
@@ -103,8 +118,8 @@ class PlaceRepository private constructor() {
      * @return: ArrayList<Place>, liste med badesteder
      */
 
-    private fun fetchPlaces(url : String) : ArrayList<Place>{
-        val places = arrayListOf<Place>()
+    private fun fetchPlaces(url : String) : List<Place>{
+        val places = ArrayList<Place>()
         val tag = "getData() ---->"
         runBlocking{
 
@@ -169,35 +184,34 @@ class PlaceRepository private constructor() {
      * @param place stranden man ønsker å vite strømningen på
      * @return en Double. Hvis verdien < 0 er det ikke noen målinger på det stedet
      */
-    private fun fetchSeaCurrentSpeed(place: Place): Double{
-        val tag = "tagStromninger"
-        val gson = Gson()
+    private fun fetchSeaCurrentSpeed(place: Place): Double {
+        val tag = "tagFetchCurrentSeaSpeed"
         var speed = (-1).toDouble()
-        val url = getSpeedUrl(place)
-        Log.d(tag, url)
-        runBlocking {
-            try {
-                val response = Fuel.get(url).awaitString()
-                val ans = gson.fromJson(response, Forecast::class.java) as Forecast
-                ans.ocenaforcasts ?: return@runBlocking
-                val oceanForecasts = ans.ocenaforcasts.toMutableList()
-                Log.d(tag, oceanForecasts.toString())
-                if (oceanForecasts.size > 1){
-                    val cast = oceanForecasts[1]
-                    Log.d(tag, cast.toString())
-                    cast.ocenaforcast.seaSpeed ?: return@runBlocking
-                    speed = cast.ocenaforcast.seaSpeed.content.toDouble()
-                    Log.d(tag, speed.toString())
-                }else{
-                    speed = (-1).toDouble()
-                }
-            }catch (e: Exception){
-                Log.e(tag, e.message)
-            }
 
-        }
+        val call=
+            ApiClient.build()?.getSeaSpeed(place.lat, place.lng)
+
+        call?.enqueue(object : Callback<OceanForecast> {
+            override fun onResponse(call: Call<OceanForecast>, response: Response<OceanForecast>) {
+                if (response.isSuccessful){
+                    val oceanForecasts = response.body()?.OceanForecastLayers
+                    if ((oceanForecasts != null) && (oceanForecasts.size > 1)) {
+
+                        // Verdien til speed blir bare endret dersom seaSpeed.content != null
+                        response.body()?.OceanForecastLayers?.get(1)?.OceanForecastDetails?.seaSpeed?.content?.toDouble()
+                            ?.let { speed = it }
+                        Log.d(tag, place.toString())
+                        Log.d(tag, speed.toString())
+                    }
+                }
+            }
+            override fun onFailure(call: Call<OceanForecast>, t: Throwable) {
+                Log.v(tag, "error in fetchCurrentSeaSpeed")
+            }
+        })
         return speed
     }
+
 
     /**
      * En metode som lager url som skal, man skal hente json elemente på, når
@@ -207,6 +221,23 @@ class PlaceRepository private constructor() {
      */
     private fun getSpeedUrl(place: Place): String{
         return "http://in2000-apiproxy.ifi.uio.no/weatherapi/oceanforecast/0.9/.json?lat=${place.lat}&lon=${place.lng}"
+    }
+
+    // Kode inspirert av:
+
+    private fun shouldFetch(nameDatabase: String, timeout: Int, timeUnit: TimeUnit): Boolean{
+        val dateLastFetched = metadataDao.getDateLastCached(nameDatabase)
+        val now = SystemClock.uptimeMillis()
+        val timeout = timeUnit.toMillis(timeout.toLong())
+
+        if(dateLastFetched== null){
+            return true
+        }
+        if (now - dateLastFetched > timeout) {
+            return true
+        }
+    return false
+
     }
 }
 

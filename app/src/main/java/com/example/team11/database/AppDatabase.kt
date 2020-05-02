@@ -6,15 +6,18 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.example.team11.database.dao.MetadataDao
 import com.example.team11.database.dao.PlaceDao
+import com.example.team11.database.entity.MetadataTable
 import com.example.team11.database.entity.Place
 
 /**
  * The Room database for this app
  */
-@Database(entities = [Place::class], version = 1, exportSchema = false)
+@Database(entities = [Place::class, MetadataTable::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun placeDao(): PlaceDao
+    abstract fun metadataDao(): MetadataDao
 
     companion object {
 

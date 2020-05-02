@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.team11.database.entity.Place
 import com.example.team11.Repository.PlaceRepository
+import com.example.team11.database.dao.PlaceDao
 
 class FavoritePlacesActivityViewModel: ViewModel() {
 
@@ -14,7 +15,7 @@ class FavoritePlacesActivityViewModel: ViewModel() {
 
     init {
         if(favoritePlaces == null){
-            placeRepository = PlaceRepository.getInstance()
+           // placeRepository = PlaceRepository.getInstance()
             favoritePlaces = placeRepository!!.getFavoritePlaces()
         }
     }
