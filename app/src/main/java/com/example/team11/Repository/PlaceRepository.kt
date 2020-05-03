@@ -25,7 +25,7 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
 
-class PlaceRepository private constructor(context: Context) {
+class PlaceRepository private constructor() {
 
 
     private val urlAPI = "http://oslokommune.msolution.no/friluft/badetemperaturer.jsp"
@@ -47,7 +47,7 @@ class PlaceRepository private constructor(context: Context) {
          */
         fun getInstance(context: Context) =
             instance ?: synchronized(this){
-                instance?: PlaceRepository(context).also { instance = it}
+                instance?: PlaceRepository().also { instance = it}
             }
     }
 
