@@ -2,13 +2,13 @@ package com.example.team11.Repository
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.example.team11.PersonalPreference
 import com.example.team11.valueObjects.OceanForecast
 import com.example.team11.Place
 import com.example.team11.Transportation
 import com.example.team11.api.ApiClient
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.coroutines.awaitString
-import com.google.gson.Gson
 import kotlinx.coroutines.runBlocking
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserFactory
@@ -19,11 +19,13 @@ import java.io.StringReader
 
 class PlaceRepository private constructor() {
 
+    private var allPlaces = mutableListOf<Place>()
     private var places = MutableLiveData<List<Place>>()
     private val urlAPI = "http://oslokommune.msolution.no/friluft/badetemperaturer.jsp"
     private var currentPlace = MutableLiveData<Place>()
     private var wayOfTransportation = MutableLiveData<Transportation>()
     private var favoritePlaces = MutableLiveData<List<Place>>()
+    private var personalPreferences = MutableLiveData<PersonalPreference>()
 
     //Kotlin sin static
     companion object {
@@ -36,13 +38,64 @@ class PlaceRepository private constructor() {
          */
         fun getInstance() =
             instance ?: synchronized(this){
-                instance?: PlaceRepository().also { instance = it}
+                instance?: PlaceRepository().also {
+                    instance = it
+                    it.personalPreferences.value = PersonalPreference()
+                    it.wayOfTransportation.value = Transportation.BIKE
+                }
             }
     }
 
     /**
+     * Returnerer en peker til preferansene til brukeren
+     * @return brukerens preferance
+     */
+    fun getPersonalPreferences() = personalPreferences
+
+    /**
+     * Oppdaterer preferansene til brukeren
+     * @param newPersonalPreference den nye preferansen
+     */
+    fun updatePersonalPreference(newPersonalPreference: PersonalPreference){
+        personalPreferences.value =  newPersonalPreference
+        updatePlaces()
+    }
+
+    /**
+     * Oppdatere listen med steder som liste og kart bruker basert på preferanser
+     */
+    private fun updatePlaces(){
+        val pp = personalPreferences.value!!
+        places.value = allPlaces.filter { place ->
+            isTempAirOk(pp, place) and isTempWaterOk(pp, place)
+        }
+    }
+
+    /**
+     * Sjekker om et gitt sted har riktig kriterier mtp vanntempratur for å vises
+     * @param pp: brukeren sine preferanser
+     * @param place stedet som skal sjekkes
+     * @return true hvis den oppfyller kriteriene false ellers
+     */
+    private fun isTempWaterOk(pp: PersonalPreference, place: Place): Boolean{
+        return ((pp.showWaterWarm and (place.tempWater >= pp.waterTempMid))
+                or (pp.showWaterCold and (place.tempWater < pp.waterTempMid)))
+    }
+
+    /**
+     * Sjekker om et gitt sted har riktig kriterier mtp luftempratur for å vises
+     * @param pp: brukeren sine preferanser
+     * @param place stedet som skal sjekkes
+     * @return true hvis den oppfyller kriteriene false ellers
+     */
+    private fun isTempAirOk(pp: PersonalPreference, place: Place): Boolean{
+        return ((pp.showAirWarm and (place.tempAir >= pp.airTempMid))
+                or (pp.showAirCold and (place.tempAir < pp.airTempMid)))
+    }
+
+    /**
      * Returnerer en liste med favoritt stedene til en bruker
-     * @return MutableLiceData<List<Place>> liste med brukerens favoritt steder
+     * @return MutableLiveData<List<Place>> liste med brukerens favoritt steder
      */
     fun getFavoritePlaces(): MutableLiveData<List<Place>>{
         if(favoritePlaces.value == null){
@@ -55,8 +108,7 @@ class PlaceRepository private constructor() {
      * Oppdaterer favoritt stedene
      */
     fun updateFavoritePlaces(){
-        if(places.value == null) return
-        favoritePlaces.value = places.value!!.filter { place ->  place.favorite}
+        favoritePlaces.value = allPlaces.filter { place ->  place.favorite}
     }
 
     /**
@@ -65,9 +117,10 @@ class PlaceRepository private constructor() {
      */
     fun getPlaces(): MutableLiveData<List<Place>>{
         if (places.value == null){
-            places.value = fetchPlaces(urlAPI)
+            allPlaces = fetchPlaces(urlAPI)
+            places.value = allPlaces
+            updatePlaces()
         }
-
         return places
     }
 
@@ -199,7 +252,6 @@ class PlaceRepository private constructor() {
         })
         return speed
     }
-
 
     /**
      * En metode som lager url som skal, man skal hente json elemente på, når

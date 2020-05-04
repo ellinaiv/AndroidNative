@@ -31,7 +31,6 @@ class MoreFragment : Fragment() {
         val aboutAPITitle = root.findViewById<TextView>(R.id.aboutAPITitle)
         val settingsText = root.findViewById<TextView>(R.id.settingsText)
 
-        makeSeekBar(root)
         aboutAppTitle.setOnClickListener {
             makeViewsDisappear()
             if (aboutAppClicked) {
@@ -91,45 +90,5 @@ class MoreFragment : Fragment() {
         aboutAPIView.visibility = View.GONE
         settingsView.visibility = View.GONE
     }
-
-
-    fun progressCalculation(){
-        TODO("Regne om verdien til og fra progress")
-    }
-
-    /**
-     * Logikken til seek baren ligger her
-     */
-    private fun makeSeekBar(root: View){
-        val seekBar = root.findViewById<SeekBar>(R.id.seek_bar)
-        val textTempLow = root.findViewById<TextView>(R.id.textTempLow)
-        val textTempHigh = root.findViewById<TextView>(R.id.textTempHigh)
-
-        seekBar.progress = PersonalPreference.waterTempMid
-        val degreeLow = getString(R.string.tempC, PersonalPreference.waterTempLow)
-        val degreeHigh = getString(R.string.tempC, PersonalPreference.waterTempHigh)
-        textTempLow.text = degreeLow
-        textTempHigh.text = degreeHigh
-        seekBar.max = PersonalPreference.waterTempHigh
-
-        seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(seek: SeekBar,
-                                           progress: Int, fromUser: Boolean) {
-                val value = (progress * (seek.width - 2 * seek.thumbOffset)) / seek.max
-                val degreeMid = getString(R.string.tempC, progress)
-                textTempMid.text = degreeMid
-                textTempMid.x = seekBar.x + value;
-            }
-
-            override fun onStartTrackingTouch(seek: SeekBar) {
-                // write custom code for progress is started
-            }
-
-            override fun onStopTrackingTouch(seek: SeekBar) {
-                PersonalPreference.waterTempMid = seek.progress
-            }
-        })
-    }
-
 }
 

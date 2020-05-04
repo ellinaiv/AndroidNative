@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 <!--    app colors-->
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorPrimary">#22AAAF</color>
+    <color name="colorPrimaryDark">#22AAAF</color>
     <color name="colorAccent">#D81B60</color>
 
 <!--    text colors-->
@@ -16,7 +16,8 @@
     <color name="backgroundClicked">#D3D3D3</color>
 
 <!--    other colors-->
-    <color name="coldBlue">#0BA1F5</color>
-    <color name="warmRed">#F73030</color>
+    <color name="coldBlue">#167EB9</color>
+    <color name="warmRed">#FF0000</color>
     <color name="seekThumb">#6A6969</color>
+    <color name="transparent">#00FFFFFF</color>
 </resources>
