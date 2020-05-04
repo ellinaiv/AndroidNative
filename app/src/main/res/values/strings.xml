@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Team11</string>
+    <string name="app_name">Splæsj</string>
 
     <!--    knapper for midlertidig navigering fra mainActivity (slettes sammen med koden)-->
     <string name="map">Kart</string>
