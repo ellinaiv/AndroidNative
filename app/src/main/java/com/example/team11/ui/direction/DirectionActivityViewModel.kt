@@ -28,9 +28,9 @@ class DirectionActivityViewModel(context: Context): ViewModel() {
     }
 
 
-    class InstanceCreator(private val context: Context) : ViewModelProvider.Factory {
+    class InstanceCreator(val context: Context) : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T  {
-            return modelClass.getConstructor().newInstance(context)
+            return modelClass.getConstructor(Context::class.java).newInstance(context)
         }
     }
 

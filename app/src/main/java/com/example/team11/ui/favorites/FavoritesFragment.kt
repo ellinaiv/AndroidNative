@@ -25,7 +25,7 @@ class FavoritesFragment : Fragment() {
     ): View? {
         val layoutManager = LinearLayoutManager(context)
         viewModel =
-            ViewModelProvider(this).get(FavoritesFragmentViewModel::class.java)
+            ViewModelProvider(this, FavoritesFragmentViewModel.InstanceCreator(context!!)).get(FavoritesFragmentViewModel::class.java)
 
         val root = inflater.inflate(R.layout.fragment_favorites, container, false)
         viewModel.favoritePlaces!!.observe(viewLifecycleOwner, Observer { favoritePlaces ->

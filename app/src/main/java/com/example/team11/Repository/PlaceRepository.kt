@@ -1,6 +1,7 @@
 package com.example.team11.Repository
 
 import android.content.Context
+import android.os.AsyncTask
 import android.os.SystemClock
 import android.util.Log
 import androidx.annotation.WorkerThread
@@ -82,9 +83,8 @@ class PlaceRepository private constructor(context: Context) {
         return placeDao.getPlaceList()
     }
 
-    @WorkerThread
     fun cachePlacesDb(places: List<Place>){
-        placeDao.insertPlaceList(places)
+        AsyncTask.execute { placeDao.insertPlaceList(places) }
     }
 
     /**

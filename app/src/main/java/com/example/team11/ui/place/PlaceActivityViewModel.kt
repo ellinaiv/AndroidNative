@@ -1,5 +1,6 @@
 package com.example.team11.ui.place
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,7 +11,7 @@ import com.example.team11.Transportation
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Point
 
-class PlaceActivityViewModel: ViewModel() {
+class PlaceActivityViewModel(context: Context): ViewModel() {
 
     var place: LiveData<Place>? = null
     private var placeRepository: PlaceRepository? = null
@@ -20,15 +21,15 @@ class PlaceActivityViewModel: ViewModel() {
      */
     init {
         if(place == null){
-            //placeRepository = PlaceRepository.getInstance()
+            placeRepository = PlaceRepository.getInstance(context)
             place = placeRepository!!.getCurrentPlace()
         }
     }
 
 
-    class InstanceCreator : ViewModelProvider.Factory {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return modelClass.getConstructor().newInstance()
+    class InstanceCreator(val context: Context) : ViewModelProvider.Factory {
+        override fun <T : ViewModel?> create(modelClass: Class<T>): T  {
+            return modelClass.getConstructor(Context::class.java).newInstance(context)
         }
     }
 
