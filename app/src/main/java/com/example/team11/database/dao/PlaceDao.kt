@@ -1,6 +1,7 @@
 package com.example.team11.database.dao
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.room.*
 import com.example.team11.database.entity.Place
 

@@ -1,5 +1,6 @@
 package com.example.team11.viewmodels
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -8,13 +9,13 @@ import com.example.team11.Repository.PlaceRepository
 
 class PersonalPreferenceViewModel: ViewModel() {
 
-    var places: MutableLiveData<List<Place>>? = null
+    var places: LiveData<List<Place>>? = null
     private var placeRepository: PlaceRepository? = null
 
     init {
         if(places == null){
-            placeRepository = PlaceRepository.getInstance()
-            places = placeRepository!!.getPlaces()
+            //placeRepository = PlaceRepository.getInstance()
+            //places = placeRepository!!.getPlaces()
         }
     }
     class InstanceCreator : ViewModelProvider.Factory {

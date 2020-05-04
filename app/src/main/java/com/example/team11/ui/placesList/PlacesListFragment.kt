@@ -24,8 +24,9 @@ class PlacesListFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        //TODO("Context i fragment kan være null før onAttach() og etter onDetach(), men burde være ganske safe i oncreat, litt usikker på om jeg burde bruke !! her.")
         placesListViewModel =
-            ViewModelProvider(this).get(PlacesListFragmentViewModel::class.java)
+            ViewModelProvider(this, PlacesListFragmentViewModel.InstanceCreator(context!!)).get(PlacesListFragmentViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_places_list, container, false)
         val layoutManager = LinearLayoutManager(context)
 

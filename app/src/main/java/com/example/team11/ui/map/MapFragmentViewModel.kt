@@ -1,6 +1,8 @@
 package com.example.team11.ui.map
 
+import android.content.Context
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
@@ -9,8 +11,8 @@ import com.example.team11.Repository.PlaceRepository
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Point
 
-class MapFragmentViewModel: ViewModel() {
-    var places: MutableLiveData<List<Place>>? = null
+class MapFragmentViewModel(context: Context): ViewModel() {
+    var places: LiveData<List<Place>>? = null
     private var placeRepository: PlaceRepository? = null
 
     /**
@@ -18,14 +20,14 @@ class MapFragmentViewModel: ViewModel() {
      */
     init {
         if(places == null){
-            placeRepository = PlaceRepository.getInstance()
+            placeRepository = PlaceRepository.getInstance(context)
             places = placeRepository!!.getPlaces()
         }
     }
 
-    class InstanceCreator : ViewModelProvider.Factory {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return modelClass.getConstructor().newInstance()
+    class InstanceCreator(val context: Context) : ViewModelProvider.Factory {
+        override fun <T : ViewModel?> create(modelClass: Class<T>): T  {
+            return modelClass.getConstructor(Context::class.java).newInstance(context)
         }
     }
 

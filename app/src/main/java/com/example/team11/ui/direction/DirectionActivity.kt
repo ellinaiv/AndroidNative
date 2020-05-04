@@ -46,7 +46,9 @@ import retrofit2.Response
 
 class DirectionActivity : AppCompatActivity() , PermissionsListener {
 
-    private val viewModel: DirectionActivityViewModel by viewModels{ DirectionActivityViewModel.InstanceCreator() }
+    private val viewModel: DirectionActivityViewModel by viewModels{ DirectionActivityViewModel.InstanceCreator(
+        applicationContext
+    ) }
     private var permissionManager = PermissionsManager(this)
     private lateinit var mapboxMap: MapboxMap
     private var mapView: MapView? = null

@@ -3,6 +3,7 @@ package com.example.team11.Repository
 import android.content.Context
 import android.os.SystemClock
 import android.util.Log
+import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.team11.database.entity.Place
@@ -25,7 +26,7 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
 
-class PlaceRepository private constructor() {
+class PlaceRepository private constructor(context: Context) {
 
 
     private val urlAPI = "http://oslokommune.msolution.no/friluft/badetemperaturer.jsp"
@@ -47,7 +48,7 @@ class PlaceRepository private constructor() {
          */
         fun getInstance(context: Context) =
             instance ?: synchronized(this){
-                instance?: PlaceRepository().also { instance = it}
+                instance?: PlaceRepository(context).also { instance = it}
             }
     }
 
@@ -76,9 +77,14 @@ class PlaceRepository private constructor() {
                 TimeUnit.DAYS
             )
         ) {
-            placeDao.insertPlaceList(fetchPlaces(urlAPI))
+            cachePlacesDb(fetchPlaces(urlAPI))
         }
         return placeDao.getPlaceList()
+    }
+
+    @WorkerThread
+    fun cachePlacesDb(places: List<Place>){
+        placeDao.insertPlaceList(places)
     }
 
     /**
@@ -228,12 +234,12 @@ class PlaceRepository private constructor() {
     private fun shouldFetch(nameDatabase: String, timeout: Int, timeUnit: TimeUnit): Boolean{
         val dateLastFetched = metadataDao.getDateLastCached(nameDatabase)
         val now = SystemClock.uptimeMillis()
-        val timeout = timeUnit.toMillis(timeout.toLong())
+        val timeoutMilli = timeUnit.toMillis(timeout.toLong())
 
         if(dateLastFetched== null){
             return true
         }
-        if (now - dateLastFetched > timeout) {
+        if (now - dateLastFetched > timeoutMilli) {
             return true
         }
     return false

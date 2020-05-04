@@ -1,5 +1,6 @@
 package com.example.team11.ui.place
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -11,7 +12,7 @@ import com.mapbox.geojson.Point
 
 class PlaceActivityViewModel: ViewModel() {
 
-    var place: MutableLiveData<Place>? = null
+    var place: LiveData<Place>? = null
     private var placeRepository: PlaceRepository? = null
 
     /**
@@ -19,7 +20,7 @@ class PlaceActivityViewModel: ViewModel() {
      */
     init {
         if(place == null){
-            placeRepository = PlaceRepository.getInstance()
+            //placeRepository = PlaceRepository.getInstance()
             place = placeRepository!!.getCurrentPlace()
         }
     }
@@ -37,7 +38,7 @@ class PlaceActivityViewModel: ViewModel() {
      * hjertetoggelknappen blir trykket på
      */
     fun updateFavoritePlaces(){
-        placeRepository!!.updateFavoritePlaces()
+        //placeRepository!!.updateFavoritePlaces()
     }
 
     /**

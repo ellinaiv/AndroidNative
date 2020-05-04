@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.team11.database.entity.Place
@@ -49,9 +50,9 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
+        //TODO("Context i fragment kan være null før onAttach() og etter onDetach(), men burde være ganske safe i oncreat, litt usikker på om jeg burde bruke !! her.")
         mapFragmentViewModel =
-            ViewModelProvider(this).get(MapFragmentViewModel::class.java)
+            ViewModelProvider(this, MapFragmentViewModel.InstanceCreator(context!!)).get(MapFragmentViewModel::class.java)
 
         val root = inflater.inflate(R.layout.fragment_map, container, false)
         mapFragmentViewModel.places!!.observe(viewLifecycleOwner, Observer {places->
