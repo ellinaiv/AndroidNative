@@ -33,7 +33,7 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
     private val iconIdRed = "ICON_ID_RED"
     private val iconIdBlue = "ICON_ID_BLUE "
     private val geojsonId = "GEOJSON_ID"
-    private val layorId = "LAYOR_ID:"
+    private val layerId = "LAYER_ID:"
     private var listOfLayerId = mutableListOf<String>()
     private val propertyId = "PROPERTY_ID"
 
@@ -157,13 +157,13 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
     private fun showPlace(place: Place){
 
         when(place.isWarm()){
-            true -> tempWaterImage.setImageResource(R.drawable.water_red)
-            false -> tempWaterImage.setImageResource(R.drawable.water_blue)
+            true -> imageTempWater.setImageResource(R.drawable.water_red)
+            false -> imageTempWater.setImageResource(R.drawable.water_blue)
         }
 
-        name.text = place.name
-        tempAir.text = getString(R.string.notAvailable)
-        tempWater.text = getString(R.string.tempC, place.temp)
+        textName.text = place.name
+        textTempAir.text = getString(R.string.notAvailable)
+        textTempWater.text = getString(R.string.tempC, place.temp)
 
         //zoomer til stedet på kartet
         val position = CameraPosition.Builder()
@@ -212,7 +212,7 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
      * @param style: Stilen på kartet
      */
     private fun addMarker(place: Place, style: Style){
-        val id = layorId + place.id.toString()
+        val id = layerId + place.id.toString()
         val geoId = geojsonId + place.id.toString()
         val feature = mapFragmentViewModel.getFeature(place)
         feature.addNumberProperty(propertyId, place.id)

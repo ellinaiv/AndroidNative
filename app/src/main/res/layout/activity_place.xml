@@ -95,7 +95,7 @@
                 app:srcCompat="@drawable/water_blue" />
 
             <TextView
-                android:id="@+id/tempWater"
+                android:id="@+id/textTempWater"
                 android:layout_width="44dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="5dp"
@@ -103,7 +103,7 @@
                 android:gravity="center"
                 android:text="@string/tempC"
                 android:textColor="@color/mainTextColor"
-                app:layout_constraintBottom_toBottomOf="@+id/tempAir"
+                app:layout_constraintBottom_toBottomOf="@+id/textTempAir"
                 app:layout_constraintEnd_toEndOf="@+id/water"
                 app:layout_constraintStart_toStartOf="@+id/water"
                 app:layout_constraintTop_toBottomOf="@+id/water" />
@@ -122,7 +122,7 @@
                 android:contentDescription="@string/weatherIcon" />
 
             <TextView
-                android:id="@+id/tempAir"
+                android:id="@+id/textTempAir"
                 android:layout_width="44dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"

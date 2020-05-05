@@ -21,9 +21,9 @@
         android:paddingTop="20dp"
         android:paddingBottom="20dp"
 
-        android:textSize="32dp"
+        android:textSize="32sp"
         android:textColor="@color/mainTextColor"
-        android:text="Favoritter"
+        android:text="@string/favorite"
         />
 
     <ImageView

@@ -30,7 +30,7 @@ class ListAdapterTest(){
         resultData.putExtra("PLACES_LIST", places)
         val result = Instrumentation.ActivityResult(Activity.RESULT_OK, resultData)
         intending(toPackage("com.example.team11")).respondWith(result)
-        onView(withId(R.id.name)).check(matches(withText(places[0].name)))
+        onView(withId(R.id.textName)).check(matches(withText(places[0].name)))
 
     }
 

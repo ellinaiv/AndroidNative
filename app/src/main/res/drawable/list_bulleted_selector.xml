@@ -4,7 +4,7 @@
     <item android:drawable="@drawable/list_bulleted_white"
         android:state_checked="true" />
     <!-- When not selected-->
-    <item android:drawable="@drawable/list_bulleted_t"
+    <item android:drawable="@drawable/list_bulleted_turquoise"
         android:state_checked="false"/>
 
 </selector>

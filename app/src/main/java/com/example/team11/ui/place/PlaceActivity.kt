@@ -57,7 +57,7 @@ class PlaceActivity : AppCompatActivity() {
         val directionBikeButton = findViewById<ImageButton>(R.id.directionButtonBike)
         val directionCarButton = findViewById<ImageButton>(R.id.directionButtonCar)
         val directionWalkButton = findViewById<ImageButton>(R.id.directionButtonWalk)
-        val tempWater = findViewById<TextView>(R.id.tempWater)
+        val tempWater = findViewById<TextView>(R.id.textTempWater)
         val backButton = findViewById<ImageButton>(R.id.buttonBack)
         val toggelFavorite = findViewById<ToggleButton>(R.id.toggleFavourite)
 
