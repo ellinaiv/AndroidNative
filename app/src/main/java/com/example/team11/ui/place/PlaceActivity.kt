@@ -9,10 +9,8 @@ import android.util.Log
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.ImageButton
-import android.widget.TextView
 import android.widget.ToggleButton
 import androidx.activity.viewModels
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.Observer
 import com.example.team11.Place
 import com.example.team11.R
@@ -28,6 +26,7 @@ import com.mapbox.mapboxsdk.maps.Style
 import com.mapbox.mapboxsdk.style.layers.PropertyFactory
 import com.mapbox.mapboxsdk.style.layers.SymbolLayer
 import com.mapbox.mapboxsdk.style.sources.GeoJsonSource
+import kotlinx.android.synthetic.main.activity_place.*
 
 class PlaceActivity : AppCompatActivity() {
     private val viewModel: PlaceActivityViewModel by viewModels{ PlaceActivityViewModel.InstanceCreator() }
@@ -57,23 +56,6 @@ class PlaceActivity : AppCompatActivity() {
      * @param savedInstanceState: mapView trenger denne i makeMap
      */
     private fun makeAboutPage(place: Place, savedInstanceState: Bundle?) {
-        val buttonBack = findViewById<ImageButton>(R.id.buttonBack)
-        val toggleFavorite = findViewById<ToggleButton>(R.id.toggleFavourite)
-        val placeName = findViewById<TextView>(R.id.textPlaceName)
-        val tempWater = findViewById<TextView>(R.id.textTempWater)
-        val buttonCurrentsInfo = findViewById<ImageButton>(R.id.buttonCurrentsInfo)
-        val layoutCurrentsInfo = findViewById<ConstraintLayout>(R.id.layoutCurrentsInfo)
-        val currentsCloseInfo = findViewById<ImageButton>(R.id.buttonCurrentsCloseInfo)
-        val currentsInfoMore = findViewById<TextView>(R.id.linkCurrentsInfoMore)
-        val buttonUvInfo = findViewById<ImageButton>(R.id.buttonUVInfo)
-        val layoutUvInfo = findViewById<ConstraintLayout>(R.id.layoutUVInfo)
-        val uvCloseInfo = findViewById<ImageButton>(R.id.buttonUVCloseInfo)
-        val uvInfoMore = findViewById<TextView>(R.id.linkUVInfoMore)
-        val buttonBike = findViewById<ImageButton>(R.id.buttonBike)
-        val buttonCar = findViewById<ImageButton>(R.id.buttonCar)
-        val buttonWalk = findViewById<ImageButton>(R.id.buttonWalk)
-        val linkPublicTransport = findViewById<TextView>(R.id.linkPublicTransport)
-
         toggleFavorite.isChecked = place.favorite
 
         buttonBack.setOnClickListener {
@@ -88,35 +70,35 @@ class PlaceActivity : AppCompatActivity() {
 
 
         buttonCurrentsInfo.setOnClickListener {
-            if (layoutUvInfo.visibility == VISIBLE) {
-                layoutUvInfo.visibility = GONE
+            if (layoutUVInfo.visibility == VISIBLE) {
+                layoutUVInfo.visibility = GONE
             }
             layoutCurrentsInfo.visibility = VISIBLE
         }
 
-        currentsCloseInfo.setOnClickListener {
+        buttonCurrentsCloseInfo.setOnClickListener {
             layoutCurrentsInfo.visibility = GONE
         }
 
-        currentsInfoMore.setOnClickListener {
+        linkCurrentsInfoMore.setOnClickListener {
 //            TODO(sett inn uri)
 //            val link = Intent(Intent.ACTION_VIEW)
 //            link.data = Uri.parse("<uri>")
 //            startActivity(link)
         }
 
-        buttonUvInfo.setOnClickListener {
+        buttonUVInfo.setOnClickListener {
             if (layoutCurrentsInfo.visibility == VISIBLE) {
                 layoutCurrentsInfo.visibility = GONE
             }
-            layoutUvInfo.visibility = VISIBLE
+            layoutUVInfo.visibility = VISIBLE
         }
 
-        uvCloseInfo.setOnClickListener {
-            layoutUvInfo.visibility = GONE
+        buttonUVCloseInfo.setOnClickListener {
+            layoutUVInfo.visibility = GONE
         }
 
-        uvInfoMore.setOnClickListener {
+        linkUVInfoMore.setOnClickListener {
             val link = Intent(Intent.ACTION_VIEW)
             link.data = Uri.parse("https://www.yr.no/uv-varsel")
             startActivity(link)
@@ -142,8 +124,8 @@ class PlaceActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        placeName.text = place.name
-        tempWater.text = getString(R.string.tempC, place.temp)
+        textPlaceName.text = place.name
+        textTempWater.text = getString(R.string.tempC, place.temp)
 
         makeMap(place, savedInstanceState)
 
