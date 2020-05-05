@@ -1,0 +1,37 @@
+package com.example.team11.ui.bottomNavigation
+
+import android.os.Bundle
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
+import com.example.team11.R
+import com.mapbox.mapboxsdk.Mapbox
+
+class MainActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_bottom_navigation)
+
+        supportActionBar!!.hide()
+        val navView: BottomNavigationView = findViewById(R.id.nav_view)
+        val navController = findNavController(R.id.nav_host_fragment)
+        // Passing each menu ID as a set of Ids because each
+        // menu should be considered as top level destinations.
+        Mapbox.getInstance(this, getString(R.string.access_token))
+        val appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.navigation_map,
+                R.id.navigation_list,
+                R.id.navigation_favorites
+            )
+        )
+
+
+        setupActionBarWithNavController(navController, appBarConfiguration)
+        navView.setupWithNavController(navController)
+    }
+}
