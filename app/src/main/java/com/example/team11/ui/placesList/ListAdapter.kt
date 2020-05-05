@@ -30,7 +30,7 @@ class ListAdapter(private val myDataset: List<Place>, val context: Context,
         var itemTempWater: TextView
 
         init {
-            itemName = itemView.findViewById(R.id.name)
+            itemName = itemView.findViewById(R.id.textName)
             itemTempAir = itemView.findViewById(R.id.textTempAir)
             itemTempWater = itemView.findViewById(R.id.textTempWater)
         }

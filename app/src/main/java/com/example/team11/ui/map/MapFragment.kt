@@ -4,7 +4,6 @@ import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.PointF
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,14 +30,14 @@ import kotlinx.android.synthetic.main.fragment_map.*
 
 class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
 
-    private val ICON_ID_RED = "ICON_ID_RED"
-    private val ICON_ID_BLUE = "ICON_ID_BLUE "
-    private val GEOJSON_ID = "GEOJSON_ID"
-    private val LAYOR_ID = "LAYOR_ID:"
+    private val iconIdRed = "ICON_ID_RED"
+    private val iconIdBlue = "ICON_ID_BLUE "
+    private val geojsonId = "GEOJSON_ID"
+    private val layerId = "LAYER_ID:"
     private var listOfLayerId = mutableListOf<String>()
     private val propertyId = "PROPERTY_ID"
 
-    private var mapView: MapView? = null;
+    private var mapView: MapView? = null
     private lateinit var mapBoxMap: MapboxMap
 
     private lateinit var mapFragmentViewModel: MapFragmentViewModel
@@ -158,13 +157,13 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
     private fun showPlace(place: Place){
 
         when(place.isWarm()){
-            true -> tempWaterImage.setImageResource(R.drawable.water_red)
-            false -> tempWaterImage.setImageResource(R.drawable.water_blue)
+            true -> imageTempWater.setImageResource(R.drawable.water_red)
+            false -> imageTempWater.setImageResource(R.drawable.water_blue)
         }
 
-        textPlaceName.text = place.name
-        tempAirText.text = getString(R.string.notAvailable)
-        tempWaterText.text = getString(R.string.tempC, place.temp)
+        textName.text = place.name
+        textTempAir.text = getString(R.string.notAvailable)
+        textTempWater.text = getString(R.string.tempC, place.temp)
 
         //zoomer til stedet på kartet
         val position = CameraPosition.Builder()
@@ -190,21 +189,13 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
             this.resources,
             R.drawable.mapbox_marker_icon_default
         )
-
-        val tag = "Legg til icon"
-
-        if(icon == null) Log.d(tag, "RED")
-
-        style.addImage(ICON_ID_RED, icon)
-
+        style.addImage(iconIdRed, icon)
 
         icon = BitmapFactory.decodeResource(
             this.resources,
             R.drawable.blue_marker
         )
-
-        if(icon == null) Log.d(tag, "BLUE")
-        style.addImage(ICON_ID_BLUE, icon)
+        style.addImage(iconIdBlue, icon)
     }
     
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -221,8 +212,8 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
      * @param style: Stilen på kartet
      */
     private fun addMarker(place: Place, style: Style){
-        val id = LAYOR_ID + place.id.toString()
-        val geoId = GEOJSON_ID + place.id.toString()
+        val id = layerId + place.id.toString()
+        val geoId = geojsonId + place.id.toString()
         val feature = mapFragmentViewModel.getFeature(place)
         feature.addNumberProperty(propertyId, place.id)
         val geoJsonSource = GeoJsonSource(geoId, FeatureCollection.fromFeatures(
@@ -230,8 +221,8 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
         style.addSource(geoJsonSource)
 
         val iconId = when(place.isWarm()){
-            true -> ICON_ID_RED
-            false -> ICON_ID_BLUE
+            true -> iconIdRed
+            false -> iconIdBlue
         }
 
         val symbolLayer = SymbolLayer(id, geoId)
