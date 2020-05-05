@@ -9,13 +9,14 @@
 
     <com.mapbox.mapboxsdk.maps.MapView
         android:id="@+id/mapView"
+
         android:layout_width="match_parent"
         android:layout_height="match_parent"
 
-        mapbox:layout_constraintTop_toBottomOf="@+id/searchLayer"
         mapbox:layout_constraintBottom_toBottomOf="parent"
         mapbox:layout_constraintLeft_toLeftOf="parent"
         mapbox:layout_constraintRight_toRightOf="parent"
+        mapbox:layout_constraintTop_toBottomOf="@+id/searchLayer"
 
         mapbox:mapbox_cameraTargetLat = "59.9139"
         mapbox:mapbox_cameraTargetLng= "10.7522"
@@ -25,11 +26,13 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/searchLayer"
+
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        mapbox:layout_constraintTop_toTopOf="parent"
+
         mapbox:layout_constraintLeft_toLeftOf="parent"
         mapbox:layout_constraintRight_toRightOf="parent"
+        mapbox:layout_constraintTop_toTopOf="parent"
 
         android:background="@drawable/gradient_search"
         >
@@ -80,144 +83,132 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/placeViewHolder"
+    <androidx.cardview.widget.CardView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="12dp"
-        android:padding="16dp"
+        android:id="@+id/placeViewHolder"
 
         mapbox:layout_constraintBottom_toBottomOf="parent"
         mapbox:layout_constraintLeft_toLeftOf="parent"
         mapbox:layout_constraintRight_toRightOf="parent"
+        android:layout_margin="10dp"
 
         android:background="@color/backgroundCardsLight"
         android:visibility="gone"
 
+        app:cardCornerRadius="12dp"
+
         android:clickable="true"
         android:focusable="true">
 
-        <TextView
-            android:id="@+id/namePlace"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-
-            mapbox:layout_constraintBottom_toBottomOf="parent"
-            mapbox:layout_constraintLeft_toLeftOf="@id/placeViewHolder"
-            mapbox:layout_constraintTop_toTopOf="parent"
-            mapbox:layout_constraintRight_toLeftOf="@id/tempWater"
-
-            android:padding="4dp"
-            android:ellipsize="end"
-            android:maxLines="1"
-
-            android:text=""
-            android:textColor="@color/mainTextColor"
-            android:textSize="24sp"
-
-            />
-
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/tempAir"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            mapbox:layout_constraintRight_toRightOf="parent"
-            mapbox:layout_constraintTop_toTopOf="parent"
-            mapbox:layout_constraintBottom_toBottomOf="parent"
-            android:paddingEnd="8dp">
-
-            <ImageView
-                android:id="@+id/tempAirImage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:scaleType="fitXY"
-                android:maxWidth="44dp"
-                android:adjustViewBounds="true"
-
-                android:src="@drawable/sun"
-
-                mapbox:layout_constraintBottom_toTopOf="@id/tempAirText"
-                mapbox:layout_constraintLeft_toRightOf="parent"
-                mapbox:layout_constraintRight_toLeftOf="parent"
-                mapbox:layout_constraintTop_toTopOf="parent"
-
-                android:contentDescription="@string/weatherIcon" />
+            android:layout_width="match_parent"
+            android:layout_height="98dp"
+            android:orientation="vertical"
+            android:background="@drawable/card_rectangle">
 
             <TextView
+                android:id="@+id/textName"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
 
-                android:id="@+id/tempAirText"
-                android:paddingTop="6dp"
                 android:ellipsize="end"
+                android:fontFamily="@font/raleway_medium"
                 android:maxLines="1"
-                android:text="Ingen data"
 
+                android:padding="6dp"
                 android:textColor="@color/mainTextColor"
-                android:textSize="12sp"
 
-                mapbox:layout_constraintBottom_toBottomOf="parent"
-                mapbox:layout_constraintLeft_toRightOf="parent"
-                mapbox:layout_constraintRight_toLeftOf="parent"
-                mapbox:layout_constraintTop_toBottomOf="@id/tempAirImage"
-                />
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/gridLayout"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <GridLayout
+                android:id="@+id/gridLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:columnCount="2"
+                android:rowCount="2">
+
+                <ImageView
+                    android:id="@+id/imageTempWater"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_row="0"
+                    android:layout_column="0"
+
+                    android:scaleType="fitXY"
+                    android:maxHeight="42dp"
+                    android:adjustViewBounds="true"
+                    android:padding="4dp"
+                    android:layout_marginRight="12dp"
+                    android:layout_marginLeft="12dp"
+
+                    android:src="@drawable/water_blue" />
+
+                <TextView
+                    android:id="@+id/textTempWater"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/roboto_medium"
+                    android:layout_row="1"
+                    android:layout_column="0"
+
+                    android:layout_gravity="center"
+                    android:maxLines="1"
+                    android:textColor="@color/mainTextColor"
+
+                    android:paddingTop="6dp"
+                    android:textSize="12sp"/>
+
+                <ImageView
+                    android:id="@+id/imageTempAir"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_row="0"
+                    android:layout_column="1"
+                    android:layout_gravity="center"
+
+                    android:scaleType="fitXY"
+                    android:maxHeight="42dp"
+                    android:adjustViewBounds="true"
+                    android:padding="4dp"
+                    android:layout_marginRight="12dp"
+
+                    android:src="@drawable/sun"/>
+
+                <TextView
+                    android:id="@+id/textTempAir"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_row="1"
+                    android:layout_column="1"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="12dp"
+                    android:paddingTop="6dp"
+
+                    android:ellipsize="end"
+                    android:fontFamily="@font/roboto_medium"
+                    android:maxLines="1"
+                    android:textColor="@color/mainTextColor"
+                    android:textSize="12sp"/>
+
+
+            </GridLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/tempWater"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            mapbox:layout_constraintBottom_toBottomOf="parent"
-            mapbox:layout_constraintRight_toLeftOf="@id/tempAir"
-            mapbox:layout_constraintTop_toTopOf="parent"
-            android:paddingEnd="8dp"
-            android:paddingStart="8dp">
-
-            <ImageView
-                android:id="@+id/tempWaterImage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:scaleType="fitXY"
-                android:maxWidth="42dp"
-                android:adjustViewBounds="true"
-
-                android:src="@drawable/water_blue"
-                mapbox:layout_constraintBottom_toTopOf="@id/tempWaterText"
-                mapbox:layout_constraintLeft_toRightOf="parent"
-                mapbox:layout_constraintRight_toLeftOf="parent"
-                mapbox:layout_constraintTop_toTopOf="parent"
-
-                android:contentDescription="@string/waterTempIcon" />
-
-            <TextView
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-
-                android:id="@+id/tempWaterText"
-                android:paddingTop="6dp"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:text="@string/notAvailable"
-
-                android:textColor="@color/mainTextColor"
-                android:textSize="14sp"
-
-                mapbox:layout_constraintBottom_toBottomOf="parent"
-                mapbox:layout_constraintLeft_toRightOf="parent"
-                mapbox:layout_constraintRight_toLeftOf="parent"
-                mapbox:layout_constraintTop_toBottomOf="@id/tempWaterImage"
-                />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
+    </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

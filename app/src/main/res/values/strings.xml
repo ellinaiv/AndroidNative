@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Team11</string>
+    <string name="app_name">Splæsj</string>
 
     <!--    knapper for midlertidig navigering fra mainActivity (slettes sammen med koden)-->
     <string name="map">Kart</string>
@@ -47,6 +47,7 @@
     <string name="yourPosition">din posisjon</string>
     <string name="distance">Distanse:</string>
     <string name="time">Beregnet resietid:</string>
+    <string name="favorite">Favoritter</string>
 
     <!--    buttons-->
     <string name="back">Trykk her for å gå tilbake</string>

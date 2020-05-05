@@ -161,9 +161,9 @@ class MapActivity : AppCompatActivity(), MapboxMap.OnMapClickListener {
     private fun showPlace(place: Place){
         val nameTextView = findViewById<TextView>(R.id.namePlace)
         val placeViewHolder = findViewById<ConstraintLayout>(R.id.placeViewHolder)
-        val tempAirText = findViewById<TextView>(R.id.tempAirText)
-        val tempWaterText = findViewById<TextView>(R.id.tempWaterText)
-        val tempWaterImage = findViewById<ImageView>(R.id.tempWaterImage)
+        val tempAirText = findViewById<TextView>(R.id.textTempAir)
+        val tempWaterText = findViewById<TextView>(R.id.textTempWater)
+        val tempWaterImage = findViewById<ImageView>(R.id.imageTempWater)
 
 
         when(place.isWarm()){
