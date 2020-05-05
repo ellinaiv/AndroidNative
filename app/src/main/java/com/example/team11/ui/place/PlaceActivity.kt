@@ -114,7 +114,9 @@ class PlaceActivity : AppCompatActivity() {
         }
 
         uvInfoMore.setOnClickListener {
-            //TODO
+            val openURL = Intent(Intent.ACTION_VIEW)
+            openURL.data = Uri.parse("https://www.yr.no/uv-varsel")
+            startActivity(openURL)
         }
 
 
