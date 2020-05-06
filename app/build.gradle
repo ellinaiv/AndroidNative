@@ -91,8 +91,8 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-intents:3.2.0'
 
     //Retrofit og HTTP
-    implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofit2"
-    implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.okhttp3"
-    implementation "com.squareup.retrofit2:converter-moshi:$rootProject.moshi"
+    implementation "com.squareup.retrofit2:retrofit:2.6.2"
+    implementation "com.squareup.okhttp3:logging-interceptor:3.11.0"
+    implementation "com.squareup.retrofit2:converter-moshi:2.6.2"
 
 }

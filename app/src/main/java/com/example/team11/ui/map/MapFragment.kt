@@ -8,6 +8,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.ImageButton
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -15,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.team11.Place
 import com.example.team11.ui.place.PlaceActivity
 import com.example.team11.R
+import com.example.team11.ui.filter.FilterActivity
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.mapboxsdk.camera.CameraPosition
@@ -63,6 +66,12 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
                 search(text.toString(), places)
             }
         })
+
+        val filterButton = root.findViewById<ImageButton>(R.id.filterButton)
+        filterButton.setOnClickListener {
+            startActivity(Intent(this.context!!, FilterActivity::class.java))
+        }
+
         return root
     }
 
@@ -93,6 +102,7 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
             mapBoxMap.setStyle(Style.MAPBOX_STREETS)
 
             mapBoxMap.getStyle { style ->
+                removeLayers(style)
                 if(places.isNotEmpty()){
                     setUpMapImagePins(style)
                     for(place in places){
@@ -101,6 +111,16 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
                 }
                 mapBoxMap.addOnMapClickListener(this)
             }
+        }
+    }
+
+    /**
+     * Fjerner alle steden på kartet
+     * @param style: stilen til kartet
+     */
+    private fun removeLayers(style: Style){
+        listOfLayerId.forEach { layer ->
+            style.removeLayer(layer)
         }
     }
 
@@ -154,15 +174,13 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
      * @param place: Stedet som skal ha informasjonen sin på display
      */
     private fun showPlace(place: Place){
-
-        when(place.isWarm()){
+        when(mapFragmentViewModel.isPlaceWarm(place)){
             true -> tempWaterImage.setImageResource(R.drawable.water_red)
             false -> tempWaterImage.setImageResource(R.drawable.water_blue)
         }
-
         namePlace.text = place.name
         tempAirText.text = getString(R.string.notAvailable)
-        tempWaterText.text = getString(R.string.tempC, place.temp)
+        tempWaterText.text = getString(R.string.tempC, place.tempWater)
 
         //zoomer til stedet på kartet
         val position = CameraPosition.Builder()
@@ -227,7 +245,7 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
             arrayListOf(feature)))
         style.addSource(geoJsonSource)
 
-        val iconId = when(place.isWarm()){
+        val iconId = when(mapFragmentViewModel.isPlaceWarm(place)){
             true -> ICON_ID_RED
             false -> ICON_ID_BLUE
         }

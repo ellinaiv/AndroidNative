@@ -11,7 +11,6 @@ import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
 import com.example.team11.Place
 import com.example.team11.R
-import com.example.team11.Repository.PlaceRepository
 import com.example.team11.ui.place.PlaceActivity
 import com.example.team11.viewmodels.FavoritesFragmentViewModel
 
@@ -51,9 +50,8 @@ class ListAdapter(private val myDataset: List<Place>, val context: Context,
     // TODO("Celsius burde komme fra string resource ")
     override fun onBindViewHolder(holder: MyViewHolder, position: Int){
         holder.itemName.text = myDataset[position].name
-        holder.itemTempWater.text = myDataset[position].temp.toString() + "°C"
-        holder.itemTempAir.text = "no data"
-        holder.itemTempAir.text = PlaceRepository.getInstance().getWeather(myDataset[position])
+        holder.itemTempWater.text = myDataset[position].tempWater.toString() + "°C"
+        holder.itemTempAir.text = myDataset[position].tempAir.toString() + "°C"
 
 
        holder.itemView.setOnClickListener{

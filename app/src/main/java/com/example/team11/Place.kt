@@ -6,28 +6,8 @@ import kotlin.random.Random
 
 
 class Place(val id: Int, val name: String, val lat: Double, val lng: Double,
-            var favorite: Boolean = false, var temp: Int = Random.nextInt(0, 35)): Serializable {
-
-    //TODO("Slette det under")
-    /**
-     * tanken er at denne kan brukes i compareTo metoden
-     * kan også være et enum, se diskusjon i PersonligPreferanse klassen
-     */
-    private var tempraturInnafor = true
-
-
-    //TODO("Slette det under")
-    /**
-     * Endrer tempraturInnafor slik at den er true hvis den er innafor, og false ellers
-     *  @param nyPreferanse
-    */
-    fun oppdaterTempraturInnafor(nyPreferanse: Int): Boolean{
-        TODO("ikke implementert")
-    }
-
-    fun setWeatherForecast(weatherForecast: List<WeatherForecastTimeSlot>){
-
-    }
+            var favorite: Boolean = false, var tempWater: Int = Random.nextInt(0, 35),
+            var tempAir: Int = Random.nextInt(-30, 35) ): Serializable {
 
     /**
      * Returerer posisjon i et latlng objekt
@@ -35,15 +15,6 @@ class Place(val id: Int, val name: String, val lat: Double, val lng: Double,
      */
 
     fun getLatLng():LatLng = LatLng(lat, lng)
-
-    /**
-     * Sjekker om dette stedet er varmt
-     * @return boolean
-     */
-    fun isWarm(): Boolean{
-        return PersonalPreference.waterTempMid < temp
-    }
-
 
     /**
      * Sammenligner en strand med en annen
@@ -56,12 +27,7 @@ class Place(val id: Int, val name: String, val lat: Double, val lng: Double,
         TODO("ikke implemert")
     }*/
 
-
-
-
-
     override fun toString(): String {
         return "$id:$name[$lat,$lng]"
     }
-
 }
