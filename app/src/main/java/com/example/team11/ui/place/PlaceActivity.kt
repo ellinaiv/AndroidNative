@@ -56,13 +56,13 @@ class PlaceActivity : AppCompatActivity() {
      * @param savedInstanceState: mapView trenger denne i makeMap
      */
     private fun makeAboutPage(place: Place, savedInstanceState: Bundle?) {
-        toggleFavorite.isChecked = place.favorite
+        toggleFavourite.isChecked = place.favorite
 
         buttonBack.setOnClickListener {
             finish()
         }
 
-        toggleFavorite.setOnCheckedChangeListener { _, isChecked ->
+        toggleFavourite.setOnCheckedChangeListener { _, isChecked ->
             place.favorite = isChecked
             viewModel.updateFavoritePlaces()
         }
