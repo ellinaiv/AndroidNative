@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.team11.ui.placesList.ListAdapter
 import com.example.team11.R
+import com.example.team11.database.entity.Place
 import com.example.team11.viewmodels.FavoritesFragmentViewModel
 import kotlinx.android.synthetic.main.activity_places_list.*
 
@@ -28,7 +29,7 @@ class FavoritesFragment : Fragment() {
             ViewModelProvider(this, FavoritesFragmentViewModel.InstanceCreator(context!!)).get(FavoritesFragmentViewModel::class.java)
 
         val root = inflater.inflate(R.layout.fragment_favorites, container, false)
-        viewModel.favoritePlaces!!.observe(viewLifecycleOwner, Observer { favoritePlaces ->
+        viewModel.favoritePlaces!!.observe(viewLifecycleOwner, Observer { favoritePlaces: List<Place> ->
             recycler_view.layoutManager = layoutManager
             recycler_view.adapter = ListAdapter(
                 favoritePlaces,

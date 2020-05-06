@@ -26,6 +26,7 @@ class FavoritesFragmentViewModel(context: Context): ViewModel() {
         }
     }
 
+
     /**
      * Sender beskjed til repository om at stedet man vil lese mer om skal endre seg.
      * Denne må kalles når man før man går inn i PlaceActivity

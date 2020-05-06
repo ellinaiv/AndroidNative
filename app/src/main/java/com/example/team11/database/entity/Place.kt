@@ -14,8 +14,8 @@ class Place(
     val name: String,
     val lat: Double,
     val lng: Double,
-    var favorite: Boolean = false,
-    var temp: Int = Random.nextInt(0, 35)): Serializable {
+    var temp: Int = Random.nextInt(0, 35),
+    var favorite: Boolean): Serializable {
 
     /**
      * Returerer posisjon i et latlng objekt

@@ -58,12 +58,37 @@ class PlaceRepository private constructor(context: Context) {
      * Returnerer en liste med favoritt stedene til en bruker
      * @return LiveData<List<Place>> liste med brukerens favoritt steder
      */
-    fun getFavoritePlaces() = placeDao.getFavoritePlaceList()
+    fun getFavoritePlaces(): LiveData<List<Place>>{
+        val places =  placeDao.getFavoritePlaceList()
+        Log.d("tagFavoritePlace", "Favorittsteder: ${places.value}")
+        return places
+
+    }
 
     /**
-     * Oppdaterer favoritt stedene
+     * Legger til favoritt sted
      */
-    fun addFavoritePlace(place: Place) = placeDao.addFavorite(place.id)
+    fun addFavoritePlace(place: Place){
+        AsyncTask.execute { placeDao.addFavorite(place.id)}
+        Log.d("tagFavoritePlace", "Lagt til favorittsted i databasen")
+    }
+
+    /**
+     * Fjern favoritt sted
+     */
+    fun removeFavoritePlace(place: Place){
+        AsyncTask.execute { placeDao.removeFavorite(place.id)}
+        Log.d("tagFavoritePlace", "Fjernet favorittsted i databasen")
+    }
+
+    /**
+     * Sjekker om sted er favoritt
+     */
+    fun isPlaceFavorite(place: Place): LiveData<Boolean> {
+        val returnValue = placeDao.isPlaceFavorite(place.id)
+        Log.d("tagIsPlaceFavorite", "${returnValue.value}")
+        return returnValue
+    }
 
     /**
      * getPlaces funksjonen henter en liste til viewModel med badesteder
@@ -72,7 +97,8 @@ class PlaceRepository private constructor(context: Context) {
     fun getPlaces(): LiveData<List<Place>> {
         // TODO("Hvor ofte burde places fetches?")
         // TODO("Kan jeg gjøre non-assertive call her? Dersom favoritePlaces.value er null burde den stoppe å sjekke på første?"
-        if (favoritePlaces.value == null || favoritePlaces.value!!.isEmpty() || shouldFetch(
+        val places: LiveData<List<Place>> = placeDao.getPlaceList()
+        if (places.value == null || places.value!!.isEmpty() || shouldFetch(
                 DbConstants.PLACE_TABLE_NAME,
                 10,
                 TimeUnit.DAYS
@@ -80,10 +106,11 @@ class PlaceRepository private constructor(context: Context) {
         ) {
             cachePlacesDb(fetchPlaces(urlAPI))
         }
-        return placeDao.getPlaceList()
+        return places
     }
 
     fun cachePlacesDb(places: List<Place>){
+        Log.d("tagDatabase", "Lagrer nye steder")
         AsyncTask.execute { placeDao.insertPlaceList(places) }
     }
 

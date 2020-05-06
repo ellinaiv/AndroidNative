@@ -13,7 +13,8 @@ import com.mapbox.geojson.Point
 
 class PlaceActivityViewModel(context: Context): ViewModel() {
 
-    var place: LiveData<Place>? = null
+    var place: MutableLiveData<Place>? = null
+    lateinit var isFavorite: LiveData<Boolean>
     private var placeRepository: PlaceRepository? = null
 
     /**
@@ -23,9 +24,9 @@ class PlaceActivityViewModel(context: Context): ViewModel() {
         if(place == null){
             placeRepository = PlaceRepository.getInstance(context)
             place = placeRepository!!.getCurrentPlace()
+            isFavorite = placeRepository!!.isPlaceFavorite(place!!.value!!)
         }
     }
-
 
     class InstanceCreator(val context: Context) : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T  {
@@ -34,13 +35,14 @@ class PlaceActivityViewModel(context: Context): ViewModel() {
     }
 
     /**
-     * Funksjonen forteller videre til place repository at det har blitt gjort endringer på
-     * hvilke steder som er favoirutter og ber den om å oppdatere det. Dette må gjøres hver gang
-     * hjertetoggelknappen blir trykket på
+     * Oppdaterer databasen med favoritter.
      */
-    fun updateFavoritePlaces(){
-        //placeRepository!!.updateFavoritePlaces()
-    }
+    fun addFavoritePlace(place: Place) = placeRepository!!.addFavoritePlace(place)
+
+    /**
+     * Oppdaterer databasen med favoritter.
+     */
+    fun removeFavoritePlace(place: Place) = placeRepository!!.removeFavoritePlace(place)
 
     /**
      * Endrer måten brukeren ønsker å komme seg til en strand i repository

@@ -1,7 +1,6 @@
 package com.example.team11.database.dao
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.room.*
 import com.example.team11.database.entity.Place
 
@@ -11,8 +10,14 @@ interface PlaceDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertPlaceList(place: List<Place>)
 
-    @Query("UPDATE place SET favorite = 1 WHERE id = :placeId")
+    @Query("UPDATE place  SET favorite = 1, id = :placeId")
     fun addFavorite(placeId: Int)
+
+    @Query("UPDATE place SET favorite = 0 WHERE id = :placeId")
+    fun removeFavorite(placeId: Int)
+
+    @Query("SELECT favorite FROM place WHERE id  = :placeId")
+    fun isPlaceFavorite(placeId: Int): LiveData<Boolean>
 
     @Query("SELECT * FROM place WHERE id = :placeId")
     fun getPlace(placeId: Int): Place
@@ -20,6 +25,7 @@ interface PlaceDao {
     @Query("SELECT * FROM place")
     fun getPlaceList(): LiveData<List<Place>>
 
-    @Query("SELECT * FROM place WHERE favorite = 1")
+    @Query("SELECT * FROM place WHERE (SELECT id FROM place_favorite WHERE favorite = 1) = id")
     fun getFavoritePlaceList(): LiveData<List<Place>>
+
 }

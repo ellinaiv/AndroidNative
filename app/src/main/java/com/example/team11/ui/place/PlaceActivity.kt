@@ -61,11 +61,14 @@ class PlaceActivity : AppCompatActivity() {
         val backButton = findViewById<ImageButton>(R.id.backButton)
         val toggelFavorite = findViewById<ToggleButton>(R.id.toggleFavourite)
 
-        toggelFavorite.isChecked = place.favorite
+        // TODO("Denne burde obeserveres, men hvordan?")
+        viewModel.isFavorite.observe(this, Observer { isFavorite ->
+            toggelFavorite.isChecked = isFavorite
+        })
 
         toggelFavorite.setOnCheckedChangeListener { _, isChecked ->
-            place.favorite = isChecked
-            viewModel.updateFavoritePlaces()
+            if(isChecked) viewModel.addFavoritePlace(place)
+            else viewModel.removeFavoritePlace(place)
         }
 
         backButton.setOnClickListener {
