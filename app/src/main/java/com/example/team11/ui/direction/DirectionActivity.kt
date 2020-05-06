@@ -427,6 +427,11 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
         mapView?.onPause()
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        mapView?.onSaveInstanceState(outState)
+    }
+
     override fun onStop() {
         super.onStop()
         mapView?.onStop()
