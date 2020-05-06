@@ -2,8 +2,6 @@ package com.example.team11.valueObjects
 
 import com.google.gson.annotations.SerializedName
 
-// TODO("Burde disse ligge i SeaCurrent og vi kaller den APIModels? Eller burde vi har to ulike filer?")
-
 
 // For versjon 1.9 av apiet
 /*

@@ -266,7 +266,7 @@ class PlaceRepository private constructor() {
     /**
      * Henter forecast til et sted fra met sitt api.
      * @param place stranden man ønsker forecast for
-     * @return livedata
+     * @return Når returnerer den bare temperatur, må se ann hvordan det skal være når databasen er på plass
      *
      */
 
