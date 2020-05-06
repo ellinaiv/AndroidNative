@@ -67,6 +67,7 @@
 
             <TextView
                 android:id="@+id/textPlaceName"
+                android:fontFamily="@font/roboto_medium"
                 android:gravity="center_vertical"
                 android:text="@string/place_name"
                 android:textColor="@color/mainTextColor"
@@ -91,6 +92,7 @@
 
             <TextView
                 android:id="@+id/textTempWater"
+                android:fontFamily="@font/roboto_medium"
                 android:gravity="center"
                 android:text="18&#176;C"
                 android:textColor="@color/mainTextColor"
@@ -114,6 +116,7 @@
 
             <TextView
                 android:id="@+id/textTempAir"
+                android:fontFamily="@font/roboto_medium"
                 android:gravity="center"
                 android:text="20&#176;C"
                 android:textColor="@color/mainTextColor"
@@ -126,6 +129,7 @@
 
             <TextView
                 android:id="@+id/textCurrents"
+                android:fontFamily="@font/roboto_medium"
                 android:text="@string/place_currents"
                 android:textColor="@color/mainTextColor"
                 android:textSize="20sp"
@@ -137,6 +141,7 @@
 
             <TextView
                 android:id="@+id/textUV"
+                android:fontFamily="@font/roboto_medium"
                 android:text="@string/place_uv"
                 android:textColor="@color/mainTextColor"
                 android:textSize="20sp"
@@ -148,6 +153,7 @@
 
             <TextView
                 android:id="@+id/textCurrentsResult"
+                android:fontFamily="@font/roboto_medium"
                 android:text="Lite"
                 android:textColor="@color/place_info_low"
                 android:textSize="20sp"
@@ -160,6 +166,7 @@
 
             <TextView
                 android:id="@+id/textUVResult"
+                android:fontFamily="@font/roboto_medium"
                 android:text="Sterk"
                 android:textColor="@color/place_currents_info_strong"
                 android:textSize="20sp"
@@ -195,6 +202,7 @@
 
             <TextView
                 android:id="@+id/textForecast"
+                android:fontFamily="@font/roboto_medium"
                 android:text="@string/place_forecast"
                 android:textColor="@color/mainTextColor"
                 android:textSize="20sp"
@@ -206,6 +214,7 @@
 
             <TextView
                 android:id="@+id/textHourForecast"
+                android:fontFamily="@font/roboto_medium"
                 android:text="@string/place_hour_forecast"
                 android:textColor="@color/mainTextColor"
                 android:textSize="16sp"
@@ -217,6 +226,7 @@
 
             <TextView
                 android:id="@+id/text1Hour"
+                android:fontFamily="@font/roboto_medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
@@ -231,6 +241,7 @@
 
             <TextView
                 android:id="@+id/text2Hours"
+                android:fontFamily="@font/roboto_medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -243,6 +254,7 @@
 
             <TextView
                 android:id="@+id/text3Hours"
+                android:fontFamily="@font/roboto_medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -256,6 +268,7 @@
 
             <TextView
                 android:id="@+id/text4Hours"
+                android:fontFamily="@font/roboto_medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -269,6 +282,7 @@
 
             <TextView
                 android:id="@+id/text5Hours"
+                android:fontFamily="@font/roboto_medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -333,6 +347,7 @@
 
             <TextView
                 android:id="@+id/textTemp1Hour"
+                android:fontFamily="@font/roboto_medium"
                 android:gravity="center"
                 android:text="25&#176;C"
                 android:textColor="@color/mainTextColor"
@@ -346,6 +361,7 @@
 
             <TextView
                 android:id="@+id/textTemp2Hours"
+                android:fontFamily="@font/roboto_medium"
                 android:gravity="center"
                 android:text="23&#176;C"
                 android:textColor="@color/mainTextColor"
@@ -358,6 +374,7 @@
 
             <TextView
                 android:id="@+id/textTemp3Hours"
+                android:fontFamily="@font/roboto_medium"
                 android:gravity="center"
                 android:text="20&#176;C"
                 android:textColor="@color/mainTextColor"
@@ -370,6 +387,7 @@
 
             <TextView
                 android:id="@+id/textTemp4Hours"
+                android:fontFamily="@font/roboto_medium"
                 android:gravity="center"
                 android:text="21&#176;C"
                 android:textColor="@color/mainTextColor"
@@ -382,6 +400,7 @@
 
             <TextView
                 android:id="@+id/textTemp5Hours"
+                android:fontFamily="@font/roboto_medium"
                 android:gravity="center"
                 android:text="20&#176;C"
                 android:textColor="@color/mainTextColor"
@@ -394,6 +413,7 @@
 
             <TextView
                 android:id="@+id/textRain1Hour"
+                android:fontFamily="@font/roboto_medium"
                 android:text="0 mm"
                 android:textColor="@color/mainTextColor"
                 android:textSize="14sp"
@@ -405,6 +425,7 @@
 
             <TextView
                 android:id="@+id/textRain2Hours"
+                android:fontFamily="@font/roboto_medium"
                 android:text="0 mm"
                 android:textColor="@color/mainTextColor"
                 android:textSize="14sp"
@@ -416,6 +437,7 @@
 
             <TextView
                 android:id="@+id/textRain3Hours"
+                android:fontFamily="@font/roboto_medium"
                 android:text="0 mm"
                 android:textColor="@color/mainTextColor"
                 android:textSize="14sp"
@@ -427,6 +449,7 @@
 
             <TextView
                 android:id="@+id/textRain4Hours"
+                android:fontFamily="@font/roboto_medium"
                 android:text="0 mm"
                 android:textColor="@color/mainTextColor"
                 android:textSize="14sp"
@@ -438,6 +461,7 @@
 
             <TextView
                 android:id="@+id/textRain5Hours"
+                android:fontFamily="@font/roboto_medium"
                 android:text="0 mm"
                 android:textColor="@color/mainTextColor"
                 android:textSize="14sp"
@@ -449,6 +473,7 @@
 
             <TextView
                 android:id="@+id/textLongForecast"
+                android:fontFamily="@font/roboto_medium"
                 android:text="@string/place_long_forecast"
                 android:textColor="@color/mainTextColor"
                 android:textSize="16sp"
@@ -460,6 +485,7 @@
 
             <TextView
                 android:id="@+id/textDate1Day"
+                android:fontFamily="@font/roboto_medium"
                 android:gravity="center"
                 android:text="21/6"
                 android:textColor="@color/mainTextColor"
@@ -473,6 +499,7 @@
 
             <TextView
                 android:id="@+id/textDate2Days"
+                android:fontFamily="@font/roboto_medium"
                 android:gravity="center"
                 android:text="22/6"
                 android:textColor="@color/mainTextColor"
@@ -485,6 +512,7 @@
 
             <TextView
                 android:id="@+id/textDate3Days"
+                android:fontFamily="@font/roboto_medium"
                 android:gravity="center"
                 android:text="23/6"
                 android:textColor="@color/mainTextColor"
@@ -497,6 +525,7 @@
 
             <TextView
                 android:id="@+id/textDate4Days"
+                android:fontFamily="@font/roboto_medium"
                 android:gravity="center"
                 android:text="24/6"
                 android:textColor="@color/mainTextColor"
@@ -509,6 +538,7 @@
 
             <TextView
                 android:id="@+id/textDate5Days"
+                android:fontFamily="@font/roboto_medium"
                 android:gravity="center"
                 android:text="25/6"
                 android:textColor="@color/mainTextColor"
@@ -572,6 +602,7 @@
 
             <TextView
                 android:id="@+id/textTemp1Day"
+                android:fontFamily="@font/roboto_medium"
                 android:gravity="center"
                 android:text="25&#176;C"
                 android:textColor="@color/mainTextColor"
@@ -585,6 +616,7 @@
 
             <TextView
                 android:id="@+id/textTemp2Days"
+                android:fontFamily="@font/roboto_medium"
                 android:gravity="center"
                 android:text="23&#176;C"
                 android:textColor="@color/mainTextColor"
@@ -597,6 +629,7 @@
 
             <TextView
                 android:id="@+id/textTemp3Days"
+                android:fontFamily="@font/roboto_medium"
                 android:gravity="center"
                 android:text="20&#176;C"
                 android:textColor="@color/mainTextColor"
@@ -609,6 +642,7 @@
 
             <TextView
                 android:id="@+id/textTemp4Days"
+                android:fontFamily="@font/roboto_medium"
                 android:gravity="center"
                 android:text="21&#176;C"
                 android:textColor="@color/mainTextColor"
@@ -621,6 +655,7 @@
 
             <TextView
                 android:id="@+id/textTemp5Days"
+                android:fontFamily="@font/roboto_medium"
                 android:gravity="center"
                 android:text="20&#176;C"
                 android:textColor="@color/mainTextColor"
@@ -633,6 +668,7 @@
 
             <TextView
                 android:id="@+id/textRain1Day"
+                android:fontFamily="@font/roboto_medium"
                 android:text="0 mm"
                 android:textColor="@color/mainTextColor"
                 android:textSize="14sp"
@@ -644,6 +680,7 @@
 
             <TextView
                 android:id="@+id/textRain2Days"
+                android:fontFamily="@font/roboto_medium"
                 android:text="0 mm"
                 android:textColor="@color/mainTextColor"
                 android:textSize="14sp"
@@ -655,6 +692,7 @@
 
             <TextView
                 android:id="@+id/textRain3Days"
+                android:fontFamily="@font/roboto_medium"
                 android:text="0 mm"
                 android:textColor="@color/mainTextColor"
                 android:textSize="14sp"
@@ -666,6 +704,7 @@
 
             <TextView
                 android:id="@+id/textRain4Days"
+                android:fontFamily="@font/roboto_medium"
                 android:text="0 mm"
                 android:textColor="@color/mainTextColor"
                 android:textSize="14sp"
@@ -677,6 +716,7 @@
 
             <TextView
                 android:id="@+id/textRain5Days"
+                android:fontFamily="@font/roboto_medium"
                 android:text="0 mm"
                 android:textColor="@color/mainTextColor"
                 android:textSize="14sp"
@@ -698,6 +738,7 @@
 
                 <TextView
                     android:id="@+id/textDirections"
+                    android:fontFamily="@font/roboto_medium"
                     android:padding="6dp"
                     android:text="@string/place_select_route_type"
                     android:textColor="@color/mainTextColor"
@@ -784,6 +825,7 @@
 
             <TextView
                 android:id="@+id/linkPublicTransport"
+                android:fontFamily="@font/roboto_medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:clickable="true"
@@ -820,6 +862,7 @@
 
                 <TextView
                     android:id="@+id/textCurrentsInfoTitle"
+                    android:fontFamily="@font/roboto_medium"
                     android:text="@string/place_currents_info_title"
                     android:textColor="@color/mainTextColor"
                     android:textSize="20sp"
@@ -833,6 +876,7 @@
 
                 <TextView
                     android:id="@+id/textCurrentsInfoWeakTitle"
+                    android:fontFamily="@font/roboto_medium"
                     android:text="@string/place_info_weak_title"
                     android:textColor="@color/place_info_low"
                     android:textSize="18sp"
@@ -844,6 +888,7 @@
 
                 <TextView
                     android:id="@+id/textCurrentsInfoWeak"
+                    android:fontFamily="@font/roboto_medium"
                     android:text="@string/place_currents_info_weak"
                     android:textColor="@color/mainTextColor"
                     android:textSize="14sp"
@@ -855,6 +900,7 @@
 
                 <TextView
                     android:id="@+id/textCurrentsInfoModerateTitle"
+                    android:fontFamily="@font/roboto_medium"
                     android:text="@string/place_info_moderate_title"
                     android:textColor="@color/place_uv_info_moderate"
                     android:textSize="18sp"
@@ -866,6 +912,7 @@
 
                 <TextView
                     android:id="@+id/textCurrentsInfoModerate"
+                    android:fontFamily="@font/roboto_medium"
                     android:text="@string/place_currents_info_moderate"
                     android:textColor="@color/mainTextColor"
                     android:textSize="14sp"
@@ -877,6 +924,7 @@
 
                 <TextView
                     android:id="@+id/textCurrentsInfoStrongTitle"
+                    android:fontFamily="@font/roboto_medium"
                     android:text="@string/place_info_strong_title"
                     android:textColor="@color/place_currents_info_strong"
                     android:textSize="18sp"
@@ -888,6 +936,7 @@
 
                 <TextView
                     android:id="@+id/textCurrentsInfoStrong"
+                    android:fontFamily="@font/roboto_medium"
                     android:text="@string/place_currents_info_strong"
                     android:textColor="@color/mainTextColor"
                     android:textSize="14sp"
@@ -899,6 +948,7 @@
 
                 <TextView
                     android:id="@+id/linkCurrentsInfoMore"
+                    android:fontFamily="@font/roboto_medium"
                     android:text="@string/place_currents_info_more"
                     android:textColor="@color/colorPrimary"
                     android:textSize="15sp"
@@ -936,6 +986,7 @@
 
                 <TextView
                     android:id="@+id/textUVInfoTitle"
+                    android:fontFamily="@font/roboto_medium"
                     android:text="@string/place_uv_info_title"
                     android:textColor="@color/mainTextColor"
                     android:textSize="20sp"
@@ -947,6 +998,7 @@
 
                 <TextView
                     android:id="@+id/textUVInfoWeakTitle"
+                    android:fontFamily="@font/roboto_medium"
                     android:text="@string/place_info_weak_title"
                     android:textColor="@color/place_info_low"
                     android:textSize="18sp"
@@ -958,6 +1010,7 @@
 
                 <TextView
                     android:id="@+id/textUVInfoWeak"
+                    android:fontFamily="@font/roboto_medium"
                     android:text="@string/place_uv_info_weak"
                     android:textColor="@color/mainTextColor"
                     android:textSize="14sp"
@@ -969,6 +1022,7 @@
 
                 <TextView
                     android:id="@+id/textUVInfoModerateTitle"
+                    android:fontFamily="@font/roboto_medium"
                     android:text="@string/place_info_moderate_title"
                     android:textColor="@color/place_uv_info_moderate"
                     android:textSize="18sp"
@@ -980,6 +1034,7 @@
 
                 <TextView
                     android:id="@+id/textUVInfoModerate"
+                    android:fontFamily="@font/roboto_medium"
                     android:text="@string/place_uv_info_moderate"
                     android:textColor="@color/mainTextColor"
                     android:textSize="14sp"
@@ -991,6 +1046,7 @@
 
                 <TextView
                     android:id="@+id/textUVInfoStrongTitle"
+                    android:fontFamily="@font/roboto_medium"
                     android:text="@string/place_info_strong_title"
                     android:textColor="@color/place_uv_info_strong"
                     android:textSize="18sp"
@@ -1002,6 +1058,7 @@
 
                 <TextView
                     android:id="@+id/textUVInfoStrong"
+                    android:fontFamily="@font/roboto_medium"
                     android:text="@string/place_uv_info_strong"
                     android:textColor="@color/mainTextColor"
                     android:textSize="14sp"
@@ -1013,6 +1070,7 @@
 
                 <TextView
                     android:id="@+id/textUVInfoVeryStrongTitle"
+                    android:fontFamily="@font/roboto_medium"
                     android:text="@string/place_info_very_strong_title"
                     android:textColor="@color/place_uv_info_very_strong"
                     android:textSize="18sp"
@@ -1024,6 +1082,7 @@
 
                 <TextView
                     android:id="@+id/textUVInfoVeryStrong"
+                    android:fontFamily="@font/roboto_medium"
                     android:text="@string/place_uv_info_very_strong"
                     android:textColor="@color/mainTextColor"
                     android:textSize="14sp"
@@ -1046,6 +1105,7 @@
 
                 <TextView
                     android:id="@+id/textUVInfoExtreme"
+                    android:fontFamily="@font/roboto_medium"
                     android:text="@string/place_uv_info_extreme"
                     android:textColor="@color/mainTextColor"
                     android:textSize="14sp"
@@ -1057,6 +1117,7 @@
 
                 <TextView
                     android:id="@+id/linkUVInfoMore"
+                    android:fontFamily="@font/roboto_medium"
                     android:text="@string/place_uv_info_more"
                     android:textColor="@color/colorPrimary"
                     android:textSize="15sp"
