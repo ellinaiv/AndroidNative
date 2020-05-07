@@ -19,7 +19,7 @@ import org.junit.runner.RunWith
 
 
 @RunWith(AndroidJUnit4::class)
-class MapFragmentTest{
+class BottomNavigationTest{
 
     @get:Rule
     val activityTestRule = ActivityTestRule(MainActivity::class.java)
