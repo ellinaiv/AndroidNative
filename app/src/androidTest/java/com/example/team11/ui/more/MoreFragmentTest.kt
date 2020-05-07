@@ -11,6 +11,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.ActivityTestRule
 import com.example.team11.ui.bottomNavigation.MainActivity
+import com.example.team11.R
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -25,50 +26,50 @@ class MoreFragmentTest {
 
     @Before
     fun setup(){
-        launchFragmentInContainer<MoreFragment>(themeResId = com.example.team11.R.style.AppTheme)
+        launchFragmentInContainer<MoreFragment>(themeResId = R.style.AppTheme)
     }
 
     @Test
     fun testAppTitleClickOpen(){
-        onView(withId(com.example.team11.R.id.textAboutAppTitle))
+        onView(withId(R.id.textAboutAppTitle))
             .perform(scrollTo())
             .perform(click())
-        onView(withId(com.example.team11.R.id.textAboutApp)).check(matches(isDisplayed()))
-        onView(withId(com.example.team11.R.id.textAboutAPI)).check(matches(ViewMatchers
+        onView(withId(R.id.textAboutApp)).check(matches(isDisplayed()))
+        onView(withId(R.id.textAboutAPI)).check(matches(ViewMatchers
             .withEffectiveVisibility(ViewMatchers.Visibility.GONE)))
     }
 
     @Test
     fun testAppTitleClickClose(){
         testAppTitleClickOpen()
-        onView(withId(com.example.team11.R.id.textAboutAppTitle))
+        onView(withId(R.id.textAboutAppTitle))
             .perform(scrollTo())
             .perform(click())
-        onView(withId(com.example.team11.R.id.textAboutApp)).check(matches(ViewMatchers
+        onView(withId(R.id.textAboutApp)).check(matches(ViewMatchers
             .withEffectiveVisibility(ViewMatchers.Visibility.GONE)))
-        onView(withId(com.example.team11.R.id.textAboutAPI)).check(matches(ViewMatchers
+        onView(withId(R.id.textAboutAPI)).check(matches(ViewMatchers
             .withEffectiveVisibility(ViewMatchers.Visibility.GONE)))
     }
 
     @Test
     fun testAPITitleClickOpen(){
-        onView(withId(com.example.team11.R.id.textAboutAPITitle))
+        onView(withId(R.id.textAboutAPITitle))
             .perform(scrollTo())
             .perform(click())
-        onView(withId(com.example.team11.R.id.textAboutAPI)).check(matches(isDisplayed()))
-        onView(withId(com.example.team11.R.id.textAboutApp)).check(matches(ViewMatchers
+        onView(withId(R.id.textAboutAPI)).check(matches(isDisplayed()))
+        onView(withId(R.id.textAboutApp)).check(matches(ViewMatchers
             .withEffectiveVisibility(ViewMatchers.Visibility.GONE)))
     }
 
     @Test
     fun testAPITitleClickClose(){
         testAPITitleClickOpen()
-        onView(withId(com.example.team11.R.id.textAboutAPITitle))
+        onView(withId(R.id.textAboutAPITitle))
             .perform(scrollTo())
             .perform(click())
-        onView(withId(com.example.team11.R.id.textAboutApp)).check(matches(ViewMatchers
+        onView(withId(R.id.textAboutApp)).check(matches(ViewMatchers
             .withEffectiveVisibility(ViewMatchers.Visibility.GONE)))
-        onView(withId(com.example.team11.R.id.textAboutAPI)).check(matches(ViewMatchers
+        onView(withId(R.id.textAboutAPI)).check(matches(ViewMatchers
             .withEffectiveVisibility(ViewMatchers.Visibility.GONE)))
     }
 
