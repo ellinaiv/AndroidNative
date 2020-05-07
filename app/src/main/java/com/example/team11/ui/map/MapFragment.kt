@@ -208,7 +208,7 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
 
         icon = BitmapFactory.decodeResource(
             this.resources,
-            R.drawable.blue_marker
+            R.drawable.marker_blue
         )
         style.addImage(iconIdBlue, icon)
     }
