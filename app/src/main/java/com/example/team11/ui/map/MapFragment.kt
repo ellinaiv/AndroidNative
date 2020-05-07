@@ -202,7 +202,7 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
     private fun setUpMapImagePins(style: Style){
         var icon = BitmapFactory.decodeResource(
             this.resources,
-            R.drawable.mapbox_marker_icon_default
+            R.drawable.marker_red
         )
         style.addImage(iconIdRed, icon)
 
