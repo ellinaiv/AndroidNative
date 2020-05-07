@@ -13,6 +13,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
+import com.example.team11.PersonalPreference
 import com.example.team11.R
 import org.hamcrest.Matcher
 import org.junit.Assert.assertEquals
@@ -42,11 +43,21 @@ class FilterActivityTest{
     }
 
     @Test
-    fun testSeekBarWater1(){
+    fun testSeekBarWaterTextMid(){
         val temp = 22
         onView(withId(R.id.seekBarWater)).perform(setProgress(temp))
         onView(withId(R.id.textTempMidWater)).check(matches(withText(appContext.getString(R.string.tempC, temp))))
     }
+
+    @Test
+    fun testSeekBarAirTextMid(){
+        val temp = 12
+        val pp = PersonalPreference()
+        onView(withId(R.id.seekBarAir)).perform((setProgress(temp - pp.airTempLow)))
+        onView(withId(R.id.textTempMidAir)).check(matches(withText(appContext.getString(R.string.tempC, temp))))
+    }
+
+
 
 
     //insperasjon til kode hentet fra: https://stackoverflow.com/questions/23659367/espresso-set-seekbar
