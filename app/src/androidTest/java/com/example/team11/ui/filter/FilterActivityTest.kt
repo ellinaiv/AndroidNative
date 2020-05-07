@@ -6,10 +6,10 @@ import android.widget.SeekBar
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
+import androidx.test.espresso.action.ViewActions.scrollTo
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers
-import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.espresso.matcher.ViewMatchers.withText
+import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
@@ -21,6 +21,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import kotlin.math.abs
 
 
 @RunWith(AndroidJUnit4::class)
@@ -29,7 +30,8 @@ class FilterActivityTest{
 
     @get :Rule
     val activityTestRule = ActivityTestRule(FilterActivity::class.java)
-    lateinit var appContext: Context
+    private lateinit var appContext: Context
+    private val pp = PersonalPreference()
 
     @Before
     fun setup(){
@@ -45,20 +47,50 @@ class FilterActivityTest{
     @Test
     fun testSeekBarWaterTextMid(){
         val temp = 22
-        onView(withId(R.id.seekBarWater)).perform(setProgress(temp))
-        onView(withId(R.id.textTempMidWater)).check(matches(withText(appContext.getString(R.string.tempC, temp))))
+        onView(withId(R.id.seekBarWater))
+            .perform(scrollTo())
+            .perform(setProgress(temp))
+        onView(withId(R.id.textTempMidWater))
+            .check(matches(withText(appContext.getString(R.string.tempC, temp))))
     }
 
     @Test
     fun testSeekBarAirTextMid(){
         val temp = 12
-        val pp = PersonalPreference()
-        onView(withId(R.id.seekBarAir)).perform((setProgress(temp - pp.airTempLow)))
-        onView(withId(R.id.textTempMidAir)).check(matches(withText(appContext.getString(R.string.tempC, temp))))
+        onView(withId(R.id.seekBarAir))
+            .perform(scrollTo())
+            .perform((setProgress(temp + abs(pp.airTempLow))))
+        onView(withId(R.id.textTempMidAir))
+            .check(matches(withText(appContext.getString(R.string.tempC, temp))))
     }
 
+    @Test
+    fun testTextHighAirAndTextLowAir(){
+        onView(withId(R.id.textTempHighAir))
+            .check(matches(withText(appContext.getString(R.string.tempC, pp.airTempHigh))))
+        onView(withId(R.id.textTempLowAir))
+            .check(matches(withText(appContext.getString(R.string.tempC, pp.airTempLow))))
+    }
 
+    @Test
+    fun testTextHighWaterAndTextLowWater(){
+        onView(withId(R.id.textTempHighWater))
+            .check(matches(withText(appContext.getString(R.string.tempC, pp.waterTempHigh))))
+        onView(withId(R.id.textTempLowWater))
+            .check(matches(withText(appContext.getString(R.string.tempC, pp.waterTempLow))))
+    }
 
+    @Test
+    fun testCheckBoxInit(){
+        onView(withId(R.id.checkBoxColdAir))
+            .check(matches(isChecked()))
+        onView(withId(R.id.checkBoxWarmAir))
+            .check(matches(isChecked()))
+        onView(withId(R.id.checkBoxColdWater))
+            .check(matches(isChecked()))
+        onView(withId(R.id.checkBoxWarmWater))
+            .check(matches(isChecked()))
+    }
 
     //insperasjon til kode hentet fra: https://stackoverflow.com/questions/23659367/espresso-set-seekbar
     //skrevet om til kotlin
