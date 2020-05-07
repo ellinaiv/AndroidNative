@@ -1,4 +1,4 @@
-package com.example.team11.depricated
+package com.example.team11.deprecated
 
 import android.content.Intent
 import android.graphics.BitmapFactory
@@ -159,7 +159,7 @@ class MapActivity : AppCompatActivity(), MapboxMap.OnMapClickListener {
      * @param place: Stedet som skal ha informasjonen sin på display
      */
     private fun showPlace(place: Place){
-        val nameTextView = findViewById<TextView>(R.id.namePlace)
+        val nameTextView = findViewById<TextView>(R.id.textPlaceName)
         val placeViewHolder = findViewById<ConstraintLayout>(R.id.placeViewHolder)
         val tempAirText = findViewById<TextView>(R.id.textTempAir)
         val tempWaterText = findViewById<TextView>(R.id.textTempWater)

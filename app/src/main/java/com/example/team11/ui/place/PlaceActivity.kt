@@ -2,18 +2,20 @@ package com.example.team11.ui.place
 
 import android.content.Intent
 import android.graphics.BitmapFactory
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.ImageButton
-import android.widget.TextView
 import android.widget.ToggleButton
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.example.team11.Place
 import com.example.team11.R
 import com.example.team11.Transportation
-import com.example.team11.ui.direction.DirectionActivity
+import com.example.team11.ui.directions.DirectionsActivity
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.mapboxsdk.Mapbox
 import com.mapbox.mapboxsdk.camera.CameraPosition
@@ -24,6 +26,7 @@ import com.mapbox.mapboxsdk.maps.Style
 import com.mapbox.mapboxsdk.style.layers.PropertyFactory
 import com.mapbox.mapboxsdk.style.layers.SymbolLayer
 import com.mapbox.mapboxsdk.style.sources.GeoJsonSource
+import kotlinx.android.synthetic.main.activity_place.*
 
 class PlaceActivity : AppCompatActivity() {
     private val viewModel: PlaceActivityViewModel by viewModels{ PlaceActivityViewModel.InstanceCreator() }
@@ -53,47 +56,84 @@ class PlaceActivity : AppCompatActivity() {
      * @param savedInstanceState: mapView trenger denne i makeMap
      */
     private fun makeAboutPage(place: Place, savedInstanceState: Bundle?) {
-        val namePlace = findViewById<TextView>(R.id.namePlace)
-        val directionBikeButton = findViewById<ImageButton>(R.id.directionButtonBike)
-        val directionCarButton = findViewById<ImageButton>(R.id.directionButtonCar)
-        val directionWalkButton = findViewById<ImageButton>(R.id.directionButtonWalk)
-        val tempWater = findViewById<TextView>(R.id.textTempWater)
-        val backButton = findViewById<ImageButton>(R.id.buttonBack)
-        val toggelFavorite = findViewById<ToggleButton>(R.id.toggleFavourite)
+        toggleFavourite.isChecked = place.favorite
 
-        toggelFavorite.isChecked = place.favorite
+        buttonBack.setOnClickListener {
+            finish()
+        }
 
-        toggelFavorite.setOnCheckedChangeListener { _, isChecked ->
+        toggleFavourite.setOnCheckedChangeListener { _, isChecked ->
             place.favorite = isChecked
             viewModel.updateFavoritePlaces()
         }
 
-        backButton.setOnClickListener {
-            finish()
+
+
+        buttonCurrentsInfo.setOnClickListener {
+            if (layoutUVInfo.visibility == VISIBLE) {
+                layoutUVInfo.visibility = GONE
+            }
+            layoutCurrentsInfo.visibility = VISIBLE
         }
 
-        directionBikeButton.setOnClickListener {
-            val intent = Intent(this, DirectionActivity::class.java)
+        buttonCurrentsCloseInfo.setOnClickListener {
+            layoutCurrentsInfo.visibility = GONE
+        }
+
+        linkCurrentsInfoMore.setOnClickListener {
+//            TODO(sett inn uri)
+//            val link = Intent(Intent.ACTION_VIEW)
+//            link.data = Uri.parse("<uri>")
+//            startActivity(link)
+        }
+
+        buttonUVInfo.setOnClickListener {
+            if (layoutCurrentsInfo.visibility == VISIBLE) {
+                layoutCurrentsInfo.visibility = GONE
+            }
+            layoutUVInfo.visibility = VISIBLE
+        }
+
+        buttonUVCloseInfo.setOnClickListener {
+            layoutUVInfo.visibility = GONE
+        }
+
+        linkUVInfoMore.setOnClickListener {
+            val link = Intent(Intent.ACTION_VIEW)
+            link.data = Uri.parse("https://www.yr.no/uv-varsel")
+            startActivity(link)
+        }
+
+
+
+        buttonBike.setOnClickListener {
+            val intent = Intent(this, DirectionsActivity::class.java)
             viewModel.changeWayOfTransportation(Transportation.BIKE)
             startActivity(intent)
         }
 
-        directionCarButton.setOnClickListener {
-            val intent = Intent(this, DirectionActivity::class.java)
+        buttonCar.setOnClickListener {
+            val intent = Intent(this, DirectionsActivity::class.java)
             viewModel.changeWayOfTransportation(Transportation.CAR)
             startActivity(intent)
         }
 
-        directionWalkButton.setOnClickListener {
-            val intent = Intent(this, DirectionActivity::class.java)
+        buttonWalk.setOnClickListener {
+            val intent = Intent(this, DirectionsActivity::class.java)
             viewModel.changeWayOfTransportation(Transportation.WALK)
             startActivity(intent)
         }
 
-        namePlace.text = place.name
-        tempWater.text = getString(R.string.tempC, place.temp)
+        textPlaceName.text = place.name
+        textTempWater.text = getString(R.string.tempC, place.temp)
 
         makeMap(place, savedInstanceState)
+
+        linkPublicTransport.setOnClickListener {
+            val link = Intent(Intent.ACTION_VIEW)
+            link.data = Uri.parse("https://www.ruter.no/")
+            startActivity(link)
+        }
     }
 
     /**
