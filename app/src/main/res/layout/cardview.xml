@@ -55,12 +55,12 @@
                 android:maxWidth="42dp"
                 android:adjustViewBounds="true"
 
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/tempWater"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
 
-                android:src="@drawable/drop_blue" />
+                android:src="@drawable/water_blue" />
 
             <TextView
                 android:id="@+id/tempWater"
@@ -73,11 +73,12 @@
                 android:maxLines="1"
                 android:textColor="@color/mainTextColor"
 
+                android:paddingTop="6dp"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@id/tempWaterImage" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -98,15 +99,15 @@
                 android:layout_height="wrap_content"
 
                 android:scaleType="fitXY"
-                android:maxWidth="62dp"
+                android:maxWidth="43dp"
                 android:adjustViewBounds="true"
 
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/tempAir"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
 
-                android:src="@drawable/sun_vector"/>
+                android:src="@drawable/sun"/>
 
             <TextView
                 android:id="@+id/tempAir"
@@ -119,11 +120,12 @@
                 android:maxLines="1"
                 android:textColor="@color/mainTextColor"
 
+                android:paddingTop="6dp"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@id/tempAirImage" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

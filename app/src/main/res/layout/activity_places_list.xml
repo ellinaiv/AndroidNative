@@ -4,8 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PlacesListActivity"
+    tools:context=".depricated.PlacesListActivity"
     android:background="@color/backgroundCardsDark">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/searchLayer"
+        />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/searchLayer"
@@ -64,13 +72,5 @@
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scrollbars="vertical"
-        app:layout_constraintTop_toBottomOf="@+id/searchLayer"
-        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
