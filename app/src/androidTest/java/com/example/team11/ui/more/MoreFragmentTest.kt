@@ -3,6 +3,7 @@ package com.example.team11.ui.more
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.action.ViewActions.scrollTo
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
@@ -29,7 +30,9 @@ class MoreFragmentTest {
 
     @Test
     fun testAppTitleClickOpen(){
-        onView(withId(com.example.team11.R.id.textAboutAppTitle)).perform(click())
+        onView(withId(com.example.team11.R.id.textAboutAppTitle))
+            .perform(scrollTo())
+            .perform(click())
         onView(withId(com.example.team11.R.id.textAboutApp)).check(matches(isDisplayed()))
         onView(withId(com.example.team11.R.id.textAboutAPI)).check(matches(ViewMatchers
             .withEffectiveVisibility(ViewMatchers.Visibility.GONE)))
@@ -38,7 +41,9 @@ class MoreFragmentTest {
     @Test
     fun testAppTitleClickClose(){
         testAppTitleClickOpen()
-        onView(withId(com.example.team11.R.id.textAboutAppTitle)).perform(click())
+        onView(withId(com.example.team11.R.id.textAboutAppTitle))
+            .perform(scrollTo())
+            .perform(click())
         onView(withId(com.example.team11.R.id.textAboutApp)).check(matches(ViewMatchers
             .withEffectiveVisibility(ViewMatchers.Visibility.GONE)))
         onView(withId(com.example.team11.R.id.textAboutAPI)).check(matches(ViewMatchers
@@ -47,7 +52,9 @@ class MoreFragmentTest {
 
     @Test
     fun testAPITitleClickOpen(){
-        onView(withId(com.example.team11.R.id.textAboutAPITitle)).perform(click())
+        onView(withId(com.example.team11.R.id.textAboutAPITitle))
+            .perform(scrollTo())
+            .perform(click())
         onView(withId(com.example.team11.R.id.textAboutAPI)).check(matches(isDisplayed()))
         onView(withId(com.example.team11.R.id.textAboutApp)).check(matches(ViewMatchers
             .withEffectiveVisibility(ViewMatchers.Visibility.GONE)))
@@ -56,7 +63,9 @@ class MoreFragmentTest {
     @Test
     fun testAPITitleClickClose(){
         testAPITitleClickOpen()
-        onView(withId(com.example.team11.R.id.textAboutAPITitle)).perform(click())
+        onView(withId(com.example.team11.R.id.textAboutAPITitle))
+            .perform(scrollTo())
+            .perform(click())
         onView(withId(com.example.team11.R.id.textAboutApp)).check(matches(ViewMatchers
             .withEffectiveVisibility(ViewMatchers.Visibility.GONE)))
         onView(withId(com.example.team11.R.id.textAboutAPI)).check(matches(ViewMatchers
@@ -64,8 +73,14 @@ class MoreFragmentTest {
     }
 
     @Test
-    fun testAppAndAPI(){
+    fun testAppThenAPI(){
         testAppTitleClickOpen()
         testAPITitleClickOpen()
+    }
+
+    @Test
+    fun testAPIThenApp(){
+        testAPITitleClickOpen()
+        testAppTitleClickOpen()
     }
 }
