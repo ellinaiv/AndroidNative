@@ -9,11 +9,14 @@ import android.util.Log
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.ImageButton
+import android.widget.TextView
 import android.widget.ToggleButton
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
+import com.example.team11.PersonalPreference
 import com.example.team11.Place
 import com.example.team11.R
+import com.example.team11.Repository.PlaceRepository
 import com.example.team11.Transportation
 import com.example.team11.ui.directions.DirectionsActivity
 import com.mapbox.geojson.FeatureCollection

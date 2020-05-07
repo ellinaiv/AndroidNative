@@ -92,4 +92,9 @@ dependencies {
     androidTestImplementation 'androidx.test:rules:1.2.0'
     debugImplementation 'androidx.fragment:fragment-testing:1.2.4'
 
+    //Retrofit og HTTP
+    implementation "com.squareup.retrofit2:retrofit:2.6.2"
+    implementation "com.squareup.okhttp3:logging-interceptor:3.11.0"
+    implementation "com.squareup.retrofit2:converter-moshi:2.6.2"
+
 }

@@ -43,10 +43,11 @@ class ListAdapter(private val myDataset: List<Place>, val context: Context,
     }
 
 
+    // TODO("Celsius burde komme fra string resource ")
     override fun onBindViewHolder(holder: MyViewHolder, position: Int){
         holder.itemName.text = myDataset[position].name
-        holder.itemTempWater.text = myDataset[position].temp.toString() + "°C"
-        holder.itemTempAir.text = "no data"
+        holder.itemTempWater.text = myDataset[position].tempWater.toString() + "°C"
+        holder.itemTempAir.text = myDataset[position].tempAir.toString() + "°C"
 
 
        holder.itemView.setOnClickListener{

@@ -22,6 +22,7 @@
     <color name="coldBlue">#167EB9</color>
     <color name="warmRed">#FF4040</color>
     <color name="seekThumb">#6A6969</color>
+    <color name="transparent">#00FFFFFF</color>
     <color name="pinkIconColor">#F08C8E</color>
     <color name="searchIconsColor">#909090</color>
     <color name="place_info_low">#6CA754</color>
