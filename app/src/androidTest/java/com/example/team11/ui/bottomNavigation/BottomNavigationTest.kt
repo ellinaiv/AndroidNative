@@ -1,4 +1,4 @@
-package com.example.team11.ui.map
+package com.example.team11.ui.bottomNavigation
 
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
@@ -53,7 +53,7 @@ class MapFragmentTest{
     @Test
     fun testSearchView() {
         onView(withId(R.id.searchText))
-            .perform(typeText("Bekke"))
+            .perform(typeText("Bekkensten"))
             .check(matches(isDisplayed()))
     }
 }
