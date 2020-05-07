@@ -46,7 +46,7 @@
     <string name="settingsTitle">Innstillinger</string>
     <string name="waterPreference">Preferanser for vanntemperatur</string>
     <string name="noFavorites">Du har ikke lagt til noen favorittbadeplasser enda!</string>
-    <string name="aboutAppText"> !Insert app-navn! er appen for deg som er glad i å bade i Oslo! Her har
+    <string name="aboutAppText"> Splæsj er appen for deg som er glad i å bade i Oslo! Her har
         vi samlet relevant informasjon om værforhold, vanntemperatur og reisevei til forskjellige \
         badeplasser på ett sted, for at det skal være enklere å ta et informert valg om hvilken
         badeplass som passer best for deg.
@@ -57,7 +57,7 @@
         Universitetet i Oslo, våren 2020.</string>
     <string name="aboutAPIText">
         <b>MET</b>
-        \n!Insert app-navn! bruker værdata fra WeatherAPI-et til Meteorologisk institutt.
+        \nSplæsj bruker værdata fra WeatherAPI-et til Meteorologisk institutt.
         Dette gir appen informasjon om værforhold som lufttemperatur, UV-stråling,
         og havstrømninger ved ulike badeplasser.
         \n\n<b>Mapbox</b>
