@@ -10,7 +10,7 @@ interface PlaceDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertPlaceList(place: List<Place>)
 
-    @Query("UPDATE place  SET favorite = 1, id = :placeId")
+    @Query("UPDATE place  SET favorite = 1 WHERE id = :placeId")
     fun addFavorite(placeId: Int)
 
     @Query("UPDATE place SET favorite = 0 WHERE id = :placeId")
@@ -25,7 +25,7 @@ interface PlaceDao {
     @Query("SELECT * FROM place")
     fun getPlaceList(): LiveData<List<Place>>
 
-    @Query("SELECT * FROM place WHERE (SELECT id FROM place_favorite WHERE favorite = 1) = id")
+    @Query("SELECT * FROM place WHERE favorite = 1")
     fun getFavoritePlaceList(): LiveData<List<Place>>
 
 }

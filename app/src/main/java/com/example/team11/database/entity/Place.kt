@@ -10,12 +10,13 @@ import kotlin.random.Random
 
 @Entity(tableName = DbConstants.PLACE_TABLE_NAME)
 class Place(
-    @PrimaryKey @ColumnInfo(name = "id") val id: Int,
+    @PrimaryKey val id: Int,
     val name: String,
     val lat: Double,
     val lng: Double,
-    var temp: Int = Random.nextInt(0, 35),
-    var favorite: Boolean): Serializable {
+    var favorite: Boolean? = false,
+    var temp: Int = Random.nextInt(0, 35)
+): Serializable {
 
     /**
      * Returerer posisjon i et latlng objekt

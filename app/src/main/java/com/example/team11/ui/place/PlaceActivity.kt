@@ -34,12 +34,18 @@ class PlaceActivity : AppCompatActivity() {
         setContentView(R.layout.activity_place)
         Log.d("tagPlace", "kommet inn ")
         supportActionBar!!.hide()
+        val toggleFavorite = findViewById<ToggleButton>(R.id.toggleFavourite)
 
         //Observerer stedet som er valgt
         viewModel.place!!.observe(this, Observer { place ->
             //Skriver ut slik at vi kan se om vi har riktig badestrand
             Log.d("tagPlace", place.toString())
             makeAboutPage(place, savedInstanceState)
+
+            // TODO("Denne burde obeserveres, men hvordan?")
+            viewModel.isFavorite.observe(this, Observer { isFavorite ->
+                toggleFavorite.isChecked = isFavorite
+            })
         })
 
         Log.d("tagPlace", "ferdig")
@@ -59,14 +65,11 @@ class PlaceActivity : AppCompatActivity() {
         val directionWalkButton = findViewById<ImageButton>(R.id.directionButtonWalk)
         val tempWater = findViewById<TextView>(R.id.tempWater)
         val backButton = findViewById<ImageButton>(R.id.backButton)
-        val toggelFavorite = findViewById<ToggleButton>(R.id.toggleFavourite)
+        val toggleFavorite = findViewById<ToggleButton>(R.id.toggleFavourite)
 
-        // TODO("Denne burde obeserveres, men hvordan?")
-        viewModel.isFavorite.observe(this, Observer { isFavorite ->
-            toggelFavorite.isChecked = isFavorite
-        })
 
-        toggelFavorite.setOnCheckedChangeListener { _, isChecked ->
+
+        toggleFavorite.setOnCheckedChangeListener { _, isChecked ->
             if(isChecked) viewModel.addFavoritePlace(place)
             else viewModel.removeFavoritePlace(place)
         }

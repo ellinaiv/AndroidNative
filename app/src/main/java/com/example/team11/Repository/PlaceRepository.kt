@@ -12,6 +12,7 @@ import com.example.team11.valueObjects.OceanForecast
 import com.example.team11.Transportation
 import com.example.team11.api.ApiClient
 import com.example.team11.database.AppDatabase
+import com.example.team11.database.entity.MetadataTable
 import com.example.team11.util.Converters
 import com.example.team11.util.DbConstants
 import com.github.kittinunf.fuel.Fuel
@@ -25,6 +26,7 @@ import retrofit2.Response
 import java.io.StringReader
 import java.util.*
 import java.util.concurrent.TimeUnit
+import java.util.logging.Logger
 import kotlin.collections.ArrayList
 
 class PlaceRepository private constructor(context: Context) {
@@ -98,20 +100,35 @@ class PlaceRepository private constructor(context: Context) {
         // TODO("Hvor ofte burde places fetches?")
         // TODO("Kan jeg gjøre non-assertive call her? Dersom favoritePlaces.value er null burde den stoppe å sjekke på første?"
         val places: LiveData<List<Place>> = placeDao.getPlaceList()
-        if (places.value == null || places.value!!.isEmpty() || shouldFetch(
-                DbConstants.PLACE_TABLE_NAME,
-                10,
-                TimeUnit.DAYS
-            )
-        ) {
-            cachePlacesDb(fetchPlaces(urlAPI))
-        }
-        return places
+        places.observe(this, Observer{})
+        places.observe(this, Observer { places ->
+            if (places == null || places.isEmpty() || shouldFetch(
+                    DbConstants.PLACE_TABLE_NAME,
+                    10,
+                    TimeUnit.DAYS
+                )
+            ) {
+                Log.d(
+                    "tagDatabase",
+                    "places.value == null: ${places.value == null}, places.value.isEmpty(): ${places.value?.isEmpty()}, shouldFetch(): ${shouldFetch(
+                        DbConstants.PLACE_TABLE_NAME,
+                        10,
+                        TimeUnit.DAYS
+                    )} "
+                )
+                cachePlacesDb(fetchPlaces(urlAPI))
+            }
+        })
+            return places
     }
 
     fun cachePlacesDb(places: List<Place>){
         Log.d("tagDatabase", "Lagrer nye steder")
-        AsyncTask.execute { placeDao.insertPlaceList(places) }
+        AsyncTask.execute {
+            metadataDao.updateDateLastCached(MetadataTable(DbConstants.PLACE_TABLE_NAME, SystemClock.uptimeMillis()))
+        }
+        AsyncTask.execute {
+            placeDao.insertPlaceList(places) }
     }
 
     /**
@@ -169,6 +186,8 @@ class PlaceRepository private constructor(context: Context) {
                 lateinit var lat: String
                 lateinit var long: String
                 var id = 0
+                var favorite = false
+                placeDao.isPlaceFavorite(id)?.value?.let { favorite = it }
 
                 while (eventType != XmlPullParser.END_DOCUMENT) {
                     if (eventType == XmlPullParser.START_TAG && xpp.name == "name") {
@@ -189,7 +208,8 @@ class PlaceRepository private constructor(context: Context) {
                                 id++,
                                 name,
                                 lat.toDouble(),
-                                long.toDouble()
+                                long.toDouble(),
+                                favorite
                             )
                         )
                     }
@@ -259,14 +279,16 @@ class PlaceRepository private constructor(context: Context) {
     // Kode inspirert av:
 
     private fun shouldFetch(nameDatabase: String, timeout: Int, timeUnit: TimeUnit): Boolean{
-        val dateLastFetched = metadataDao.getDateLastCached(nameDatabase)
+        val dateLastFetched = metadataDao.getDateLastCached(nameDatabase).value
         val now = SystemClock.uptimeMillis()
         val timeoutMilli = timeUnit.toMillis(timeout.toLong())
+        Log.d("tagDatabase", "dateLastFetched: $dateLastFetched")
 
-        if(dateLastFetched== null){
+        if(dateLastFetched == null){
             return true
         }
         if (now - dateLastFetched > timeoutMilli) {
+            Log.d("tagDatabse", "Now: $now, dateLastFetcged: $dateLastFetched, timeoutMilli: $timeoutMilli")
             return true
         }
     return false
