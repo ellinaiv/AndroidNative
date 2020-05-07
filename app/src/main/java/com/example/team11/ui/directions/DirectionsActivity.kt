@@ -1,4 +1,4 @@
-package com.example.team11.ui.direction
+package com.example.team11.ui.directions
 
 import android.annotation.SuppressLint
 import android.graphics.BitmapFactory
@@ -10,6 +10,8 @@ import android.text.SpannableStringBuilder
 import android.text.style.StyleSpan
 import android.util.Log
 import android.view.View
+import android.widget.ImageButton
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
@@ -42,14 +44,14 @@ import com.mapbox.mapboxsdk.style.layers.Property
 import com.mapbox.mapboxsdk.style.layers.PropertyFactory
 import com.mapbox.mapboxsdk.style.layers.SymbolLayer
 import com.mapbox.mapboxsdk.style.sources.GeoJsonSource
-import kotlinx.android.synthetic.main.activity_direction.*
+import kotlinx.android.synthetic.main.activity_directions.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class DirectionActivity : AppCompatActivity() , PermissionsListener {
+class DirectionsActivity : AppCompatActivity() , PermissionsListener {
 
-    private val viewModel: DirectionActivityViewModel by viewModels{ DirectionActivityViewModel.InstanceCreator() }
+    private val viewModel: DirectionsActivityViewModel by viewModels{ DirectionsActivityViewModel.InstanceCreator() }
     private var permissionManager = PermissionsManager(this)
     private var mapboxMap: MapboxMap? = null
     private var mapView: MapView? = null
@@ -64,10 +66,10 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Mapbox.getInstance(this, getString(R.string.access_token))
-        setContentView(R.layout.activity_direction)
+        setContentView(R.layout.activity_directions)
         supportActionBar!!.hide()
-
-        buttonBack.setOnClickListener {
+        val backButton = findViewById<ImageButton>(R.id.buttonBack)
+        backButton.setOnClickListener {
             finish()
         }
 
@@ -253,7 +255,7 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
         val iconIdRed = "ICON_ID_RED"
         val geoId = "GEO_ID"
         val icon = BitmapFactory.decodeResource(
-            this@DirectionActivity.resources,
+            this@DirectionsActivity.resources,
             R.drawable.marker_place
         )
         style.addImage(iconIdRed, icon)
@@ -329,7 +331,7 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
         client.enqueueCall(object : Callback<DirectionsResponse> {
             override fun onResponse(call: Call<DirectionsResponse>, response: Response<DirectionsResponse>) {
                 if(response.body() == null || response.body()!!.routes().size < 1){
-                    Toast.makeText(this@DirectionActivity, "No routes found", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@DirectionsActivity, "No routes found", Toast.LENGTH_SHORT).show()
                     return
                 }
 
@@ -351,7 +353,7 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
             }
 
             override fun onFailure(call: Call<DirectionsResponse>, t: Throwable) {
-                Toast.makeText(this@DirectionActivity, "Error: " + t.message, Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@DirectionsActivity, "Error: " + t.message, Toast.LENGTH_SHORT).show()
             }
 
         })
@@ -371,7 +373,7 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
                 LocationComponentOptions.builder(this)
                     .trackingGesturesManagement(true)
                     .foregroundDrawable(R.drawable.start_position)
-                    .accuracyColor(ContextCompat.getColor(this@DirectionActivity,
+                    .accuracyColor(ContextCompat.getColor(this@DirectionsActivity,
                         R.color.colorPrimary
                     ))
                     .build()
@@ -425,6 +427,11 @@ class DirectionActivity : AppCompatActivity() , PermissionsListener {
     override fun onPause() {
         super.onPause()
         mapView?.onPause()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        mapView?.onSaveInstanceState(outState)
     }
 
     override fun onStop() {

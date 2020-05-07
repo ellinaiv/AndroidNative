@@ -1,4 +1,4 @@
-package com.example.team11.depricated
+package com.example.team11.deprecated
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity

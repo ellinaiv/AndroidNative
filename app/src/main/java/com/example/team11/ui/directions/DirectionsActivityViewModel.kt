@@ -1,4 +1,4 @@
-package com.example.team11.ui.direction
+package com.example.team11.ui.directions
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,7 +10,7 @@ import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Point
 import kotlin.math.roundToInt
 
-class DirectionActivityViewModel: ViewModel() {
+class DirectionsActivityViewModel: ViewModel() {
     var place: MutableLiveData<Place>? = null
     var wayOfTransportation: MutableLiveData<Transportation>? = null
     private var placeRepository: PlaceRepository? = null
