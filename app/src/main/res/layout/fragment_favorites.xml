@@ -39,7 +39,8 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
 
-        android:src="@drawable/empty_favorites_shark"/>
+        android:src="@drawable/empty_favorites_shark"
+        android:contentDescription="@string/empty_shark" />
 
     <TextView
         android:id="@+id/textNoFavorites"

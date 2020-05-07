@@ -46,7 +46,8 @@
             mapbox:layout_constraintBottom_toBottomOf="parent"
             mapbox:layout_constraintLeft_toLeftOf="parent"
 
-            android:src="@drawable/search"/>
+            android:src="@drawable/search"
+            android:contentDescription="@string/search_image" />
 
         <ImageButton
             android:layout_width="wrap_content"
@@ -60,7 +61,7 @@
 
             android:src="@drawable/filter_list"
             android:background="@color/backgroundDark"
-            />
+            android:contentDescription="@string/filter_button" />
 
         <EditText
             android:id="@+id/searchText"
@@ -78,7 +79,9 @@
             android:textColor="@color/mainTextColor"
             android:padding="4dp"
             android:background="@android:color/transparent"
-            />
+            android:importantForAutofill="no"
+            android:hint="@string/empty"
+            android:inputType="textFilter" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -151,7 +154,8 @@
                     android:layout_marginRight="12dp"
                     android:layout_marginLeft="12dp"
 
-                    android:src="@drawable/water_blue" />
+                    android:src="@drawable/water_blue"
+                    android:contentDescription="@string/water_temp_icon" />
 
                 <TextView
                     android:id="@+id/textTempWater"
@@ -185,7 +189,8 @@
                     android:padding="4dp"
                     android:layout_marginRight="12dp"
 
-                    android:src="@drawable/sun"/>
+                    android:src="@drawable/sun"
+                    android:contentDescription="@string/weather_icon" />
 
                 <TextView
                     android:id="@+id/textTempAir"

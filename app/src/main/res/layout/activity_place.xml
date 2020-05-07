@@ -67,15 +67,20 @@
 
             <TextView
                 android:id="@+id/textPlaceName"
-                android:fontFamily="@font/roboto_medium"
-                android:gravity="center_vertical"
-                android:text="@string/place_name"
-                android:textColor="@color/mainTextColor"
-                android:textSize="30sp"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="28dp"
                 android:layout_marginTop="32dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/roboto_medium"
+                android:gravity="center_vertical"
+                android:maxLines="2"
+                android:text="@string/place_name"
+
+                android:textColor="@color/mainTextColor"
+                android:textSize="30sp"
+
+                app:layout_constraintRight_toLeftOf="@id/imageWater"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
