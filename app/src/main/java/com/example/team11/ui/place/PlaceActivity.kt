@@ -150,13 +150,13 @@ class PlaceActivity : AppCompatActivity() {
         mapView.getMapAsync { mapboxMap ->
             mapboxMap.setStyle(Style.MAPBOX_STREETS)
             mapboxMap.getStyle { style ->
-                val ICON_ID_RED = "ICON_ID_RED"
+                val markerPlace = "ICON"
                 val geoId = "GEO_ID"
                 val icon = BitmapFactory.decodeResource(
                     this@PlaceActivity.resources,
-                    R.drawable.mapbox_marker_icon_default
+                    R.drawable.marker_place
                 )
-                style.addImage(ICON_ID_RED, icon)
+                style.addImage(markerPlace, icon)
 
                 val feature = viewModel.getFeature(place)
                 val geoJsonSource = GeoJsonSource(geoId, FeatureCollection.fromFeatures(
@@ -165,7 +165,7 @@ class PlaceActivity : AppCompatActivity() {
 
                 val symbolLayer = SymbolLayer("SYMBOL_LAYER_ID", geoId)
                 symbolLayer.withProperties(
-                    PropertyFactory.iconImage(ICON_ID_RED),
+                    PropertyFactory.iconImage(markerPlace),
                     PropertyFactory.iconAllowOverlap(true),
                     PropertyFactory.iconIgnorePlacement(true)
                 )
