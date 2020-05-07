@@ -1,4 +1,4 @@
-package com.example.team11.depricated
+package com.example.team11.deprecated
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData

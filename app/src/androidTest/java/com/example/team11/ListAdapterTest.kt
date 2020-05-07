@@ -10,7 +10,7 @@ import androidx.test.espresso.intent.matcher.IntentMatchers.toPackage
 import androidx.test.espresso.intent.rule.IntentsTestRule
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
-import com.example.team11.depricated.PlacesListActivity
+import com.example.team11.deprecated.PlacesListActivity
 import org.junit.Rule
 import org.junit.Test
 
