@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageButton
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
@@ -19,7 +18,6 @@ import com.example.team11.R
 import com.example.team11.ui.filter.FilterActivity
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
-import com.mapbox.mapboxsdk.Mapbox
 import com.mapbox.mapboxsdk.camera.CameraPosition
 import com.mapbox.mapboxsdk.camera.CameraUpdateFactory
 import com.mapbox.mapboxsdk.geometry.LatLng
@@ -69,7 +67,7 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
 
         val filterButton = root.findViewById<ImageButton>(R.id.filterButton)
         filterButton.setOnClickListener {
-            startActivity(Intent(this.context!!, FilterActivity::class.java))
+            startActivity(Intent(this.requireContext(), FilterActivity::class.java))
         }
 
         return root
@@ -175,12 +173,12 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
      */
     private fun showPlace(place: Place){
         when(mapFragmentViewModel.isPlaceWarm(place)){
-            true -> tempWaterImage.setImageResource(R.drawable.water_red)
-            false -> tempWaterImage.setImageResource(R.drawable.water_blue)
+            true -> imageTempWater.setImageResource(R.drawable.water_red)
+            false -> imageTempWater.setImageResource(R.drawable.water_blue)
         }
-        namePlace.text = place.name
-        tempAirText.text = getString(R.string.notAvailable)
-        tempWaterText.text = getString(R.string.tempC, place.tempWater)
+        textName.text = place.name
+        textTempAir.text = getString(R.string.notAvailable)
+        textTempWater.text = getString(R.string.tempC, place.tempWater)
 
         //zoomer til stedet på kartet
         val position = CameraPosition.Builder()
@@ -191,7 +189,7 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
 
         placeViewHolder.setOnClickListener{
             mapFragmentViewModel.changeCurrentPlace(place)
-            val intent = Intent(context!!, PlaceActivity::class.java)
+            val intent = Intent(requireContext(), PlaceActivity::class.java)
             startActivity(intent)
         }
         placeViewHolder.visibility = View.VISIBLE
@@ -238,8 +236,8 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
         style.addSource(geoJsonSource)
 
         val iconId = when(mapFragmentViewModel.isPlaceWarm(place)){
-            true -> ICON_ID_RED
-            false -> ICON_ID_BLUE
+            true -> iconIdRed
+            false -> iconIdBlue
         }
 
         val symbolLayer = SymbolLayer(id, geoId)

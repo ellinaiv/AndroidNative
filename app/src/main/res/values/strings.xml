@@ -72,13 +72,17 @@
     <string name="distance">Distanse:</string>
     <string name="time">Beregnet reisetid:</string>
     <string name="favorite">Favoritter</string>
-    <string name="button_back">Trykk her for å gå tilbake</string>
-    <string name="place_button_bike">Vis sykkelvei til badestedet</string>
-    <string name="place_button_car">Vis bilvei til badestedet</string>
-    <string name="place_button_walk">Vis gangvei til badestedet</string>
-    <string name="place_button_info_currents">Vis informasjon om måling av havstrømninger</string>
-    <string name="place_button_info_uv">Vis informasjon om måling av UV-stråling</string>
-    <string name="infoRefreshButton">Oppdater rute</string>
+    <string name="titleFilter">Filtrering</string>
+    <string name="showPlacesWater">Vis bare badeplasser med:</string>
+    <string name="coldWater">Kladt vann</string>
+    <string name="warmWater">Varmt vann</string>
+    <string name="preferenceAir">Preferanser for lufttempratur</string>
+    <string name="showPlacesAir">Vis bare badeplasser med:</string>
+    <string name="coldAir">Lav luftempratur</string>
+    <string name="hotAir">Høy luftempratur</string>
+    <string name="representationMap">Fargene på kartet representerer:</string>
+    <string name="airTemp">Lufttempratur</string>
+    <string name="waterTemp">Vanntempratur</string>
 
     <!--    buttons-->
     <string name="button_back">Trykk her for å gå tilbake</string>
@@ -89,6 +93,7 @@
     <string name="place_button_info_uv">Vis informasjon om måling av UV-stråling</string>
     <string name="infoRefreshButton">Oppdater rute</string>
     <string name="addFilter">Legg til filter</string>
+    <string name="reset">Nullstill</string>
 
     <!--    content description for images-->
     <string name="water_icon">Badevann ikon</string>
