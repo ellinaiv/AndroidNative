@@ -254,16 +254,6 @@ class PlaceRepository private constructor() {
     }
 
     /**
-     * En metode som lager url som skal, man skal hente json elemente på, når
-     * det kommer til havstrømninger.
-     * @param place: stedet som skal hente ut verdien.
-     * @return nettsiden man kan hente ut json elementene fra
-     */
-    private fun getSpeedUrl(place: Place): String{
-        return "http://in2000-apiproxy.ifi.uio.no/weatherapi/oceanforecast/0.9/.json?lat=${place.lat}&lon=${place.lng}"
-    }
-
-    /**
      * Henter forecast til et sted fra met sitt api.
      * @param place stranden man ønsker forecast for
      * @return Når returnerer den bare temperatur, må se ann hvordan det skal være når databasen er på plass

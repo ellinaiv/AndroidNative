@@ -3,52 +3,6 @@ package com.example.team11.valueObjects
 import com.google.gson.annotations.SerializedName
 
 
-// For versjon 1.9 av apiet
-/*
-data class WeatherForecast(
-    @SerializedName("product")
-    val weatherForecast: WeatherForecastLayer
-)
-
-data class WeatherForecastLayer(
-    @SerializedName("time")
-    val weatherForecastTimeSlot: List<WeatherForecastTimeSlot>
-)
-
-
-data class WeatherForecastTimeSlot(
-    @SerializedName("to")
-    val toTime: String,
-
-    @SerializedName("from")
-    val fromTime: String,
-
-    @SerializedName("location")
-    val forecastInfo: LocationForecast
-
-) : Comparable<WeatherForecastTimeSlot> {
-    override operator fun compareTo(other: WeatherForecastTimeSlot): Int {
-        if (this.toTime > other.toTime) return 1
-        if (this.toTime < other.toTime) return -1
-        return 0
-    }
-}
-
-data class LocationForecast(
-    @SerializedName("temperature")
-    val temp: WeatherTemp,
-
-    @SerializedName("symbol")
-    val symbol: WeatherSymbol,
-
-    @SerializedName("precipitation")
-    val rain: WeatherRain
-)
-
-data class WeatherTemp(val unit: String, val value: String, val id: String)
-data class WeatherSymbol(val number: String, val id: String)
-data class WeatherRain(val unit: String, val value: String, val minValue: String, val maxValue: String)*/
-
 // For versjon 2.0 av apiet
 
 data class WeatherForecast(
@@ -60,7 +14,6 @@ data class WeatherForecast(
 data class WeatherForecastTimeSlotList(
     @SerializedName("timeseries")
     val list: List<WeatherForecastTimeSlot>
-
 )
 
 data class WeatherForecastTimeSlot(
