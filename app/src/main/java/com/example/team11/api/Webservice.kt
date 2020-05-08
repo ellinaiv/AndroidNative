@@ -1,5 +1,6 @@
 package com.example.team11.api
 
+import com.example.team11.valueObjects.WeatherForecast
 import com.example.team11.valueObjects.OceanForecast
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -20,14 +21,14 @@ object ApiClient {
     private var servicesApiInterface: ServicesApiInterface?=null
 
     fun build(): ServicesApiInterface?{
-        var builder: Retrofit.Builder = Retrofit.Builder()
+        val builder: Retrofit.Builder = Retrofit.Builder()
             .baseUrl(API_BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
 
-        var httpClient: OkHttpClient.Builder = OkHttpClient.Builder()
+        val httpClient: OkHttpClient.Builder = OkHttpClient.Builder()
         httpClient.addInterceptor(interceptor())
 
-        var retrofit: Retrofit = builder.client(httpClient.build()).build()
+        val retrofit: Retrofit = builder.client(httpClient.build()).build()
         servicesApiInterface = retrofit.create(
             ServicesApiInterface::class.java)
 
@@ -50,7 +51,8 @@ object ApiClient {
 
         @GET("oceanforecast/0.9/.json?")
         fun getSeaSpeed(@Query("lat") lat: Double, @Query("lon") lon: Double): Call<OceanForecast>
+
+        @GET("locationforecast/2.0/.json?")
+        fun getWeather(@Query("lat") lat: Double, @Query("lon") lon: Double): Call<WeatherForecast>
     }
-
-
 }

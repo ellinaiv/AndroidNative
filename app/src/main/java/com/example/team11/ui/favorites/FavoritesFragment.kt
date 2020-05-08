@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.team11.ui.placesList.ListAdapter
 import com.example.team11.R
 import com.example.team11.viewmodels.FavoritesFragmentViewModel
-import kotlinx.android.synthetic.main.activity_places_list.*
+import kotlinx.android.synthetic.main.fragment_favorites.*
 
 class FavoritesFragment : Fragment() {
 
@@ -28,12 +28,14 @@ class FavoritesFragment : Fragment() {
         val root = inflater.inflate(R.layout.fragment_favorites, container, false)
         viewModel.favoritePlaces!!.observe(viewLifecycleOwner, Observer { favoritePlaces ->
             recycler_view.layoutManager = layoutManager
-            recycler_view.adapter = ListAdapter(
-                favoritePlaces,
-                context!!,
-                viewModel,
-                true
-            )
+            recycler_view.adapter = ListAdapter(favoritePlaces, context!!, viewModel, true)
+            if (recycler_view.adapter!!.itemCount == 0) {
+                imageEmptyListShark.visibility = View.VISIBLE
+                textNoFavorites.visibility = View.VISIBLE
+            } else {
+                imageEmptyListShark.visibility = View.GONE
+                textNoFavorites.visibility = View.GONE
+            }
         })
 
         return root
