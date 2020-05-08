@@ -1,0 +1,1152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.place.PlaceActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutTopBar"
+        android:background="@color/backgroundDark"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" >
+
+        <ImageButton
+            android:id="@+id/buttonBack"
+            android:background="@color/backgroundDark"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="6dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="@string/button_back"
+            android:src="@drawable/arrow_left"/>
+
+        <ToggleButton
+            android:id="@+id/toggleFavourite"
+            android:background="@drawable/favourite_toggle_image"
+            android:textOff=""
+            android:textOn=""
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_margin="6dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/horizontalDivider"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/topBarBorder"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layoutTopBar">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layoutInScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/backgroundLight">
+
+            <TextView
+                android:id="@+id/textPlaceName"
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_marginStart="28dp"
+                android:layout_marginTop="32dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/roboto_medium"
+                android:gravity="center_vertical"
+                android:maxLines="2"
+                android:text="@string/place_name"
+                tools:text="Badeplassen ved grorud"
+
+                android:textColor="@color/mainTextColor"
+                android:textSize="30sp"
+
+                app:layout_constraintEnd_toStartOf="@id/imageWater"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/imageWater"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:layout_marginEnd="14dp"
+                app:layout_constraintBottom_toBottomOf="@+id/textPlaceName"
+                app:layout_constraintEnd_toStartOf="@+id/imageWeather"
+                app:layout_constraintTop_toTopOf="@+id/textPlaceName"
+                android:contentDescription="@string/water_icon"
+                app:srcCompat="@drawable/water_blue" />
+
+            <TextView
+                android:id="@+id/textTempWater"
+                android:fontFamily="@font/roboto_medium"
+                android:gravity="center"
+                android:text="18&#176;C"
+                android:textColor="@color/mainTextColor"
+                android:layout_width="44dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="@+id/imageWater"
+                app:layout_constraintStart_toStartOf="@+id/imageWater"
+                app:layout_constraintTop_toBottomOf="@+id/imageWater" />
+
+            <ImageView
+                android:id="@+id/imageWeather"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:layout_marginEnd="14dp"
+                app:layout_constraintBottom_toBottomOf="@+id/imageWater"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/imageWater"
+                android:contentDescription="@string/weather_icon"
+                app:srcCompat="@drawable/sun" />
+
+            <TextView
+                android:id="@+id/textTempAir"
+                android:fontFamily="@font/roboto_medium"
+                android:gravity="center"
+                android:text="20&#176;C"
+                android:textColor="@color/mainTextColor"
+                android:layout_width="44dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@+id/textTempWater"
+                app:layout_constraintEnd_toEndOf="@+id/imageWeather"
+                app:layout_constraintStart_toStartOf="@+id/imageWeather"
+                app:layout_constraintTop_toTopOf="@+id/textTempWater" />
+
+            <TextView
+                android:id="@+id/textCurrents"
+                android:fontFamily="@font/roboto_medium"
+                android:text="@string/place_currents"
+                android:textColor="@color/mainTextColor"
+                android:textSize="20sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="56dp"
+                app:layout_constraintStart_toStartOf="@+id/textPlaceName"
+                app:layout_constraintTop_toBottomOf="@+id/textTempWater" />
+
+            <TextView
+                android:id="@+id/textUV"
+                android:fontFamily="@font/roboto_medium"
+                android:text="@string/place_uv"
+                android:textColor="@color/mainTextColor"
+                android:textSize="20sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="@+id/textCurrents"
+                app:layout_constraintTop_toBottomOf="@+id/textCurrents" />
+
+            <TextView
+                android:id="@+id/textCurrentsResult"
+                android:fontFamily="@font/roboto_medium"
+                android:text="Lite"
+                android:textColor="@color/place_info_low"
+                android:textSize="20sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="12dp"
+                app:layout_constraintBottom_toBottomOf="@+id/textCurrents"
+                app:layout_constraintEnd_toStartOf="@+id/buttonCurrentsInfo"
+                app:layout_constraintTop_toTopOf="@+id/textCurrents" />
+
+            <TextView
+                android:id="@+id/textUVResult"
+                android:fontFamily="@font/roboto_medium"
+                android:text="Sterk"
+                android:textColor="@color/place_currents_info_strong"
+                android:textSize="20sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@+id/textUV"
+                app:layout_constraintEnd_toEndOf="@+id/textCurrentsResult"
+                app:layout_constraintTop_toTopOf="@+id/textUV" />
+
+            <ImageButton
+                android:id="@+id/buttonCurrentsInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="14dp"
+                android:background="@color/backgroundLight"
+                android:contentDescription="@string/place_button_info_currents"
+                android:src="@drawable/info"
+                app:layout_constraintBottom_toBottomOf="@+id/textCurrentsResult"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textCurrentsResult" />
+
+            <ImageButton
+                android:id="@+id/buttonUVInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/backgroundLight"
+                android:contentDescription="@string/place_button_info_uv"
+                android:src="@drawable/info"
+                app:layout_constraintBottom_toBottomOf="@+id/textUVResult"
+                app:layout_constraintEnd_toEndOf="@+id/buttonCurrentsInfo"
+                app:layout_constraintStart_toStartOf="@+id/buttonCurrentsInfo"
+                app:layout_constraintTop_toTopOf="@+id/textUVResult" />
+
+            <TextView
+                android:id="@+id/textForecast"
+                android:fontFamily="@font/roboto_medium"
+                android:text="@string/place_forecast"
+                android:textColor="@color/mainTextColor"
+                android:textSize="20sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="56dp"
+                app:layout_constraintStart_toStartOf="@+id/textUV"
+                app:layout_constraintTop_toBottomOf="@+id/textUV" />
+
+            <TextView
+                android:id="@+id/textHourForecast"
+                android:fontFamily="@font/roboto_medium"
+                android:text="@string/place_hour_forecast"
+                android:textColor="@color/mainTextColor"
+                android:textSize="16sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                app:layout_constraintStart_toStartOf="@+id/textForecast"
+                app:layout_constraintTop_toBottomOf="@+id/textForecast" />
+
+            <TextView
+                android:id="@+id/text1Hour"
+                android:fontFamily="@font/roboto_medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:gravity="center"
+                android:text="kl. 14"
+                android:textColor="@color/mainTextColor"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.08"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textHourForecast" />
+
+            <TextView
+                android:id="@+id/text2Hours"
+                android:fontFamily="@font/roboto_medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="kl. 15"
+                android:textColor="@color/mainTextColor"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/text1Hour"
+                app:layout_constraintEnd_toStartOf="@+id/text3Hours"
+                app:layout_constraintStart_toEndOf="@+id/text1Hour" />
+
+            <TextView
+                android:id="@+id/text3Hours"
+                android:fontFamily="@font/roboto_medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="kl. 16"
+                android:textColor="@color/mainTextColor"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/text2Hours"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.501"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/text4Hours"
+                android:fontFamily="@font/roboto_medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="kl. 17"
+                android:textColor="@color/mainTextColor"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/text3Hours"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/text5Hours"
+                app:layout_constraintStart_toEndOf="@+id/text3Hours" />
+
+            <TextView
+                android:id="@+id/text5Hours"
+                android:fontFamily="@font/roboto_medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="kl. 18"
+                android:textColor="@color/mainTextColor"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/text4Hours"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.919"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <ImageView
+                android:id="@+id/forecast_1hour"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                app:layout_constraintEnd_toEndOf="@+id/text1Hour"
+                app:layout_constraintStart_toStartOf="@+id/text1Hour"
+                app:layout_constraintTop_toBottomOf="@+id/text1Hour"
+                android:layout_marginTop="8dp"
+                android:contentDescription="TODO"
+                app:srcCompat="@drawable/sun" />
+
+            <ImageView
+                android:id="@+id/imageForecast2Hours"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                app:layout_constraintBottom_toBottomOf="@+id/forecast_1hour"
+                app:layout_constraintEnd_toEndOf="@+id/text2Hours"
+                app:layout_constraintStart_toStartOf="@+id/text2Hours"
+                android:contentDescription="TODO"
+                app:srcCompat="@drawable/sun" />
+
+            <ImageView
+                android:id="@+id/imageForecast3Hours"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                app:layout_constraintBottom_toBottomOf="@+id/imageForecast2Hours"
+                app:layout_constraintEnd_toEndOf="@+id/text3Hours"
+                app:layout_constraintStart_toStartOf="@+id/text3Hours"
+                android:contentDescription="TODO"
+                app:srcCompat="@drawable/cloud" />
+
+            <ImageView
+                android:id="@+id/imageForecast4Hours"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                app:layout_constraintBottom_toBottomOf="@+id/imageForecast3Hours"
+                app:layout_constraintEnd_toEndOf="@+id/text4Hours"
+                app:layout_constraintStart_toStartOf="@+id/text4Hours"
+                android:contentDescription="TODO"
+                app:srcCompat="@drawable/sun" />
+
+            <ImageView
+                android:id="@+id/imageForecast5Hours"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                app:layout_constraintBottom_toBottomOf="@+id/imageForecast4Hours"
+                app:layout_constraintEnd_toEndOf="@+id/text5Hours"
+                app:layout_constraintStart_toStartOf="@+id/text5Hours"
+                android:contentDescription="TODO"
+                app:srcCompat="@drawable/cloud" />
+
+            <TextView
+                android:id="@+id/textTemp1Hour"
+                android:fontFamily="@font/roboto_medium"
+                android:gravity="center"
+                android:text="25&#176;C"
+                android:textColor="@color/mainTextColor"
+                android:textSize="16sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="@+id/forecast_1hour"
+                app:layout_constraintStart_toStartOf="@+id/forecast_1hour"
+                app:layout_constraintTop_toBottomOf="@+id/forecast_1hour" />
+
+            <TextView
+                android:id="@+id/textTemp2Hours"
+                android:fontFamily="@font/roboto_medium"
+                android:gravity="center"
+                android:text="23&#176;C"
+                android:textColor="@color/mainTextColor"
+                android:textSize="16sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@+id/textTemp1Hour"
+                app:layout_constraintEnd_toEndOf="@+id/imageForecast2Hours"
+                app:layout_constraintStart_toStartOf="@+id/imageForecast2Hours" />
+
+            <TextView
+                android:id="@+id/textTemp3Hours"
+                android:fontFamily="@font/roboto_medium"
+                android:gravity="center"
+                android:text="20&#176;C"
+                android:textColor="@color/mainTextColor"
+                android:textSize="16sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@+id/textTemp2Hours"
+                app:layout_constraintEnd_toEndOf="@+id/imageForecast3Hours"
+                app:layout_constraintStart_toStartOf="@+id/imageForecast3Hours" />
+
+            <TextView
+                android:id="@+id/textTemp4Hours"
+                android:fontFamily="@font/roboto_medium"
+                android:gravity="center"
+                android:text="21&#176;C"
+                android:textColor="@color/mainTextColor"
+                android:textSize="16sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@+id/textTemp3Hours"
+                app:layout_constraintEnd_toEndOf="@+id/imageForecast4Hours"
+                app:layout_constraintStart_toStartOf="@+id/imageForecast4Hours" />
+
+            <TextView
+                android:id="@+id/textTemp5Hours"
+                android:fontFamily="@font/roboto_medium"
+                android:gravity="center"
+                android:text="20&#176;C"
+                android:textColor="@color/mainTextColor"
+                android:textSize="16sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@+id/textTemp4Hours"
+                app:layout_constraintEnd_toEndOf="@+id/imageForecast5Hours"
+                app:layout_constraintStart_toStartOf="@+id/imageForecast5Hours" />
+
+            <TextView
+                android:id="@+id/textRain1Hour"
+                android:fontFamily="@font/roboto_medium"
+                android:text="0 mm"
+                android:textColor="@color/mainTextColor"
+                android:textSize="14sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="@+id/textTemp1Hour"
+                app:layout_constraintStart_toStartOf="@+id/textTemp1Hour"
+                app:layout_constraintTop_toBottomOf="@+id/textTemp1Hour" />
+
+            <TextView
+                android:id="@+id/textRain2Hours"
+                android:fontFamily="@font/roboto_medium"
+                android:text="0 mm"
+                android:textColor="@color/mainTextColor"
+                android:textSize="14sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@+id/textRain1Hour"
+                app:layout_constraintEnd_toEndOf="@+id/textTemp2Hours"
+                app:layout_constraintStart_toStartOf="@+id/textTemp2Hours"/>
+
+            <TextView
+                android:id="@+id/textRain3Hours"
+                android:fontFamily="@font/roboto_medium"
+                android:text="0 mm"
+                android:textColor="@color/mainTextColor"
+                android:textSize="14sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@+id/textRain2Hours"
+                app:layout_constraintEnd_toEndOf="@+id/textTemp3Hours"
+                app:layout_constraintStart_toStartOf="@+id/textTemp3Hours"/>
+
+            <TextView
+                android:id="@+id/textRain4Hours"
+                android:fontFamily="@font/roboto_medium"
+                android:text="0 mm"
+                android:textColor="@color/mainTextColor"
+                android:textSize="14sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@+id/textRain3Hours"
+                app:layout_constraintEnd_toEndOf="@+id/textTemp4Hours"
+                app:layout_constraintStart_toStartOf="@+id/textTemp4Hours"/>
+
+            <TextView
+                android:id="@+id/textRain5Hours"
+                android:fontFamily="@font/roboto_medium"
+                android:text="0 mm"
+                android:textColor="@color/mainTextColor"
+                android:textSize="14sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@+id/textRain4Hours"
+                app:layout_constraintEnd_toEndOf="@+id/textTemp5Hours"
+                app:layout_constraintStart_toStartOf="@+id/textTemp5Hours"/>
+
+            <TextView
+                android:id="@+id/textLongForecast"
+                android:fontFamily="@font/roboto_medium"
+                android:text="@string/place_long_forecast"
+                android:textColor="@color/mainTextColor"
+                android:textSize="16sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="26dp"
+                app:layout_constraintStart_toStartOf="@+id/textHourForecast"
+                app:layout_constraintTop_toBottomOf="@+id/textRain1Hour" />
+
+            <TextView
+                android:id="@+id/textDate1Day"
+                android:fontFamily="@font/roboto_medium"
+                android:gravity="center"
+                android:text="21/6"
+                android:textColor="@color/mainTextColor"
+                android:textSize="16sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                app:layout_constraintEnd_toEndOf="@+id/text1Hour"
+                app:layout_constraintStart_toStartOf="@+id/text1Hour"
+                app:layout_constraintTop_toBottomOf="@+id/textLongForecast" />
+
+            <TextView
+                android:id="@+id/textDate2Days"
+                android:fontFamily="@font/roboto_medium"
+                android:gravity="center"
+                android:text="22/6"
+                android:textColor="@color/mainTextColor"
+                android:textSize="16sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@+id/textDate1Day"
+                app:layout_constraintEnd_toEndOf="@+id/text2Hours"
+                app:layout_constraintStart_toStartOf="@+id/text2Hours" />
+
+            <TextView
+                android:id="@+id/textDate3Days"
+                android:fontFamily="@font/roboto_medium"
+                android:gravity="center"
+                android:text="23/6"
+                android:textColor="@color/mainTextColor"
+                android:textSize="16sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@+id/textDate2Days"
+                app:layout_constraintEnd_toEndOf="@+id/text3Hours"
+                app:layout_constraintStart_toStartOf="@+id/text3Hours" />
+
+            <TextView
+                android:id="@+id/textDate4Days"
+                android:fontFamily="@font/roboto_medium"
+                android:gravity="center"
+                android:text="24/6"
+                android:textColor="@color/mainTextColor"
+                android:textSize="16sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@+id/textDate3Days"
+                app:layout_constraintEnd_toEndOf="@+id/text4Hours"
+                app:layout_constraintStart_toStartOf="@+id/text4Hours" />
+
+            <TextView
+                android:id="@+id/textDate5Days"
+                android:fontFamily="@font/roboto_medium"
+                android:gravity="center"
+                android:text="25/6"
+                android:textColor="@color/mainTextColor"
+                android:textSize="16sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@+id/textDate4Days"
+                app:layout_constraintEnd_toEndOf="@+id/text5Hours"
+                app:layout_constraintStart_toStartOf="@+id/text5Hours" />
+
+            <ImageView
+                android:id="@+id/imageForecast1Day"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                app:layout_constraintEnd_toEndOf="@+id/textDate1Day"
+                app:layout_constraintStart_toStartOf="@+id/textDate1Day"
+                app:layout_constraintTop_toBottomOf="@+id/textDate1Day"
+                android:layout_marginTop="8dp"
+                android:contentDescription="TODO"
+                app:srcCompat="@drawable/sun" />
+
+            <ImageView
+                android:id="@+id/imageForecast2Days"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                app:layout_constraintBottom_toBottomOf="@+id/imageForecast1Day"
+                app:layout_constraintEnd_toEndOf="@+id/textDate2Days"
+                app:layout_constraintStart_toStartOf="@+id/textDate2Days"
+                android:contentDescription="TODO"
+                app:srcCompat="@drawable/sun" />
+
+            <ImageView
+                android:id="@+id/imageForecast3Days"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                app:layout_constraintBottom_toBottomOf="@+id/imageForecast2Days"
+                app:layout_constraintEnd_toEndOf="@+id/textDate3Days"
+                app:layout_constraintStart_toStartOf="@+id/textDate3Days"
+                android:contentDescription="TODO"
+                app:srcCompat="@drawable/cloud" />
+
+            <ImageView
+                android:id="@+id/imageForecast4Days"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                app:layout_constraintBottom_toBottomOf="@+id/imageForecast3Days"
+                app:layout_constraintEnd_toEndOf="@+id/textDate4Days"
+                app:layout_constraintStart_toStartOf="@+id/textDate4Days"
+                android:contentDescription="TODO"
+                app:srcCompat="@drawable/sun" />
+
+            <ImageView
+                android:id="@+id/imageForecast5Days"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                app:layout_constraintBottom_toBottomOf="@+id/imageForecast4Days"
+                app:layout_constraintEnd_toEndOf="@+id/textDate5Days"
+                app:layout_constraintStart_toStartOf="@+id/textDate5Days"
+                android:contentDescription="TODO"
+                app:srcCompat="@drawable/cloud" />
+
+            <TextView
+                android:id="@+id/textTemp1Day"
+                android:fontFamily="@font/roboto_medium"
+                android:gravity="center"
+                android:text="25&#176;C"
+                android:textColor="@color/mainTextColor"
+                android:textSize="16sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="@+id/imageForecast1Day"
+                app:layout_constraintStart_toStartOf="@+id/imageForecast1Day"
+                app:layout_constraintTop_toBottomOf="@+id/imageForecast1Day" />
+
+            <TextView
+                android:id="@+id/textTemp2Days"
+                android:fontFamily="@font/roboto_medium"
+                android:gravity="center"
+                android:text="23&#176;C"
+                android:textColor="@color/mainTextColor"
+                android:textSize="16sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@+id/textTemp1Day"
+                app:layout_constraintEnd_toEndOf="@+id/imageForecast2Days"
+                app:layout_constraintStart_toStartOf="@+id/imageForecast2Days" />
+
+            <TextView
+                android:id="@+id/textTemp3Days"
+                android:fontFamily="@font/roboto_medium"
+                android:gravity="center"
+                android:text="20&#176;C"
+                android:textColor="@color/mainTextColor"
+                android:textSize="16sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@+id/textTemp2Days"
+                app:layout_constraintEnd_toEndOf="@+id/imageForecast3Days"
+                app:layout_constraintStart_toStartOf="@+id/imageForecast3Days" />
+
+            <TextView
+                android:id="@+id/textTemp4Days"
+                android:fontFamily="@font/roboto_medium"
+                android:gravity="center"
+                android:text="21&#176;C"
+                android:textColor="@color/mainTextColor"
+                android:textSize="16sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@+id/textTemp3Days"
+                app:layout_constraintEnd_toEndOf="@+id/imageForecast4Days"
+                app:layout_constraintStart_toStartOf="@+id/imageForecast4Days" />
+
+            <TextView
+                android:id="@+id/textTemp5Days"
+                android:fontFamily="@font/roboto_medium"
+                android:gravity="center"
+                android:text="20&#176;C"
+                android:textColor="@color/mainTextColor"
+                android:textSize="16sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@+id/textTemp4Days"
+                app:layout_constraintEnd_toEndOf="@+id/imageForecast5Days"
+                app:layout_constraintStart_toStartOf="@+id/imageForecast5Days" />
+
+            <TextView
+                android:id="@+id/textRain1Day"
+                android:fontFamily="@font/roboto_medium"
+                android:text="0 mm"
+                android:textColor="@color/mainTextColor"
+                android:textSize="14sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="@+id/textTemp1Day"
+                app:layout_constraintStart_toStartOf="@+id/textTemp1Day"
+                app:layout_constraintTop_toBottomOf="@+id/textTemp1Day" />
+
+            <TextView
+                android:id="@+id/textRain2Days"
+                android:fontFamily="@font/roboto_medium"
+                android:text="0 mm"
+                android:textColor="@color/mainTextColor"
+                android:textSize="14sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@+id/textRain1Day"
+                app:layout_constraintEnd_toEndOf="@+id/textTemp2Days"
+                app:layout_constraintStart_toStartOf="@+id/textTemp2Days"/>
+
+            <TextView
+                android:id="@+id/textRain3Days"
+                android:fontFamily="@font/roboto_medium"
+                android:text="0 mm"
+                android:textColor="@color/mainTextColor"
+                android:textSize="14sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@+id/textRain2Days"
+                app:layout_constraintEnd_toEndOf="@+id/textTemp3Days"
+                app:layout_constraintStart_toStartOf="@+id/textTemp3Days"/>
+
+            <TextView
+                android:id="@+id/textRain4Days"
+                android:fontFamily="@font/roboto_medium"
+                android:text="0 mm"
+                android:textColor="@color/mainTextColor"
+                android:textSize="14sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@+id/textRain3Days"
+                app:layout_constraintEnd_toEndOf="@+id/textTemp4Days"
+                app:layout_constraintStart_toStartOf="@+id/textTemp4Days"/>
+
+            <TextView
+                android:id="@+id/textRain5Days"
+                android:fontFamily="@font/roboto_medium"
+                android:text="0 mm"
+                android:textColor="@color/mainTextColor"
+                android:textSize="14sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@+id/textRain4Days"
+                app:layout_constraintEnd_toEndOf="@+id/textTemp5Days"
+                app:layout_constraintStart_toStartOf="@+id/textTemp5Days"/>
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layoutDirections"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="56dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textTemp1Day">
+
+                <TextView
+                    android:id="@+id/textDirections"
+                    android:fontFamily="@font/roboto_medium"
+                    android:padding="6dp"
+                    android:text="@string/place_select_route_type"
+                    android:textColor="@color/mainTextColor"
+                    android:textSize="20sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageButton
+                    android:id="@+id/buttonWalk"
+                    android:background="@android:color/transparent"
+                    android:padding="6dp"
+                    android:layout_width="48dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/textDirections"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="@string/place_button_walk"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/directions_walk_pink"/>
+
+                <ImageButton
+                    android:id="@+id/buttonBike"
+                    android:background="@android:color/transparent"
+                    android:gravity="center"
+                    android:padding="6dp"
+                    android:layout_width="48dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/buttonWalk"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="@string/place_button_bike"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/directions_bike_pink"/>
+
+                <ImageButton
+                    android:id="@+id/buttonCar"
+                    android:background="@android:color/transparent"
+                    android:padding="6dp"
+                    android:layout_width="48dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/buttonBike"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="@string/place_button_car"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/directions_car_pink"
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <com.mapbox.mapboxsdk.maps.MapView
+                android:id="@+id/mapView"
+                android:layout_width="match_parent"
+                android:layout_height="140dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="@+id/layoutDirections"
+                app:layout_constraintStart_toStartOf="@+id/layoutDirections"
+                app:layout_constraintTop_toBottomOf="@+id/layoutDirections" />
+
+
+            <ImageView
+                android:id="@+id/imagePublicTransport"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="56dp"
+                android:src="@drawable/directions_public"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/linkPublicTransport"
+                app:layout_constraintHorizontal_bias="0.979"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/mapView"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <TextView
+                android:id="@+id/linkPublicTransport"
+                android:fontFamily="@font/roboto_medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:text="@string/place_public_transport_link"
+                android:textColor="@color/colorPrimary"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="@+id/imagePublicTransport"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/imagePublicTransport" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layoutCurrentsInfo"
+                android:background="@drawable/outline_rounded"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="26dp"
+                android:layout_marginHorizontal="38dp"
+                android:paddingHorizontal="26dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/buttonCurrentsInfo"
+                android:visibility="gone">
+
+                <ImageButton
+                    android:id="@+id/buttonCurrentsCloseInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="@color/backgroundDark"
+                    android:src="@drawable/xclose"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textCurrentsInfoTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="@string/place_currents_info_title"
+                    android:textColor="@color/mainTextColor"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textCurrentsInfoWeakTitle"
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="@string/place_info_weak_title"
+                    android:textColor="@color/place_info_low"
+                    android:textSize="18sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    app:layout_constraintStart_toStartOf="@+id/textCurrentsInfoTitle"
+                    app:layout_constraintTop_toBottomOf="@+id/textCurrentsInfoTitle"/>
+
+                <TextView
+                    android:id="@+id/textCurrentsInfoWeak"
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="@string/place_currents_info_weak"
+                    android:textColor="@color/mainTextColor"
+                    android:textSize="14sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    app:layout_constraintStart_toStartOf="@+id/textCurrentsInfoWeakTitle"
+                    app:layout_constraintTop_toBottomOf="@+id/textCurrentsInfoWeakTitle"/>
+
+                <TextView
+                    android:id="@+id/textCurrentsInfoModerateTitle"
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="@string/place_info_moderate_title"
+                    android:textColor="@color/place_uv_info_moderate"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    app:layout_constraintStart_toStartOf="@+id/textCurrentsInfoWeak"
+                    app:layout_constraintTop_toBottomOf="@+id/textCurrentsInfoWeak"/>
+
+                <TextView
+                    android:id="@+id/textCurrentsInfoModerate"
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="@string/place_currents_info_moderate"
+                    android:textColor="@color/mainTextColor"
+                    android:textSize="14sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    app:layout_constraintStart_toStartOf="@+id/textCurrentsInfoModerateTitle"
+                    app:layout_constraintTop_toBottomOf="@+id/textCurrentsInfoModerateTitle"/>
+
+                <TextView
+                    android:id="@+id/textCurrentsInfoStrongTitle"
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="@string/place_info_strong_title"
+                    android:textColor="@color/place_currents_info_strong"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    app:layout_constraintStart_toStartOf="@+id/textCurrentsInfoModerate"
+                    app:layout_constraintTop_toBottomOf="@+id/textCurrentsInfoModerate"/>
+
+                <TextView
+                    android:id="@+id/textCurrentsInfoStrong"
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="@string/place_currents_info_strong"
+                    android:textColor="@color/mainTextColor"
+                    android:textSize="14sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    app:layout_constraintStart_toStartOf="@+id/textCurrentsInfoStrongTitle"
+                    app:layout_constraintTop_toBottomOf="@+id/textCurrentsInfoStrongTitle" />
+
+                <TextView
+                    android:id="@+id/linkCurrentsInfoMore"
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="@string/place_currents_info_more"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="15sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="24dp"
+                    android:layout_marginTop="24dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textCurrentsInfoStrong"
+                    android:clickable="true"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layoutUVInfo"
+                android:background="@drawable/outline_rounded"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="26dp"
+                android:layout_marginHorizontal="38dp"
+                android:paddingHorizontal="26dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/buttonUVInfo"
+                android:visibility="gone">
+
+                <ImageButton
+                    android:id="@+id/buttonUVCloseInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/backgroundDark"
+                    android:layout_marginTop="16dp"
+                    android:src="@drawable/xclose"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textUVInfoTitle"
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="@string/place_uv_info_title"
+                    android:textColor="@color/mainTextColor"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <TextView
+                    android:id="@+id/textUVInfoWeakTitle"
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="@string/place_info_weak_title"
+                    android:textColor="@color/place_info_low"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    app:layout_constraintStart_toStartOf="@+id/textUVInfoTitle"
+                    app:layout_constraintTop_toBottomOf="@+id/textUVInfoTitle"/>
+
+                <TextView
+                    android:id="@+id/textUVInfoWeak"
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="@string/place_uv_info_weak"
+                    android:textColor="@color/mainTextColor"
+                    android:textSize="14sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    app:layout_constraintStart_toStartOf="@+id/textUVInfoWeakTitle"
+                    app:layout_constraintTop_toBottomOf="@+id/textUVInfoWeakTitle"/>
+
+                <TextView
+                    android:id="@+id/textUVInfoModerateTitle"
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="@string/place_info_moderate_title"
+                    android:textColor="@color/place_uv_info_moderate"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    app:layout_constraintStart_toStartOf="@+id/textUVInfoWeak"
+                    app:layout_constraintTop_toBottomOf="@+id/textUVInfoWeak"/>
+
+                <TextView
+                    android:id="@+id/textUVInfoModerate"
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="@string/place_uv_info_moderate"
+                    android:textColor="@color/mainTextColor"
+                    android:textSize="14sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    app:layout_constraintStart_toStartOf="@+id/textUVInfoModerateTitle"
+                    app:layout_constraintTop_toBottomOf="@+id/textUVInfoModerateTitle"/>
+
+                <TextView
+                    android:id="@+id/textUVInfoStrongTitle"
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="@string/place_info_strong_title"
+                    android:textColor="@color/place_uv_info_strong"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    app:layout_constraintStart_toStartOf="@+id/textUVInfoModerate"
+                    app:layout_constraintTop_toBottomOf="@+id/textUVInfoModerate"/>
+
+                <TextView
+                    android:id="@+id/textUVInfoStrong"
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="@string/place_uv_info_strong"
+                    android:textColor="@color/mainTextColor"
+                    android:textSize="14sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    app:layout_constraintStart_toStartOf="@+id/textUVInfoStrongTitle"
+                    app:layout_constraintTop_toBottomOf="@+id/textUVInfoStrongTitle" />
+
+                <TextView
+                    android:id="@+id/textUVInfoVeryStrongTitle"
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="@string/place_info_very_strong_title"
+                    android:textColor="@color/place_uv_info_very_strong"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    app:layout_constraintStart_toStartOf="@+id/textUVInfoStrong"
+                    app:layout_constraintTop_toBottomOf="@+id/textUVInfoStrong" />
+
+                <TextView
+                    android:id="@+id/textUVInfoVeryStrong"
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="@string/place_uv_info_very_strong"
+                    android:textColor="@color/mainTextColor"
+                    android:textSize="14sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    app:layout_constraintStart_toStartOf="@+id/textUVInfoVeryStrongTitle"
+                    app:layout_constraintTop_toBottomOf="@+id/textUVInfoVeryStrongTitle" />
+
+                <TextView
+                    android:id="@+id/textUVInfoExtremeTitle"
+                    android:text="@string/place_info_extreme_title"
+                    android:textColor="@color/place_uv_info_extreme"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    app:layout_constraintStart_toStartOf="@+id/textUVInfoVeryStrong"
+                    app:layout_constraintTop_toBottomOf="@+id/textUVInfoVeryStrong" />
+
+                <TextView
+                    android:id="@+id/textUVInfoExtreme"
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="@string/place_uv_info_extreme"
+                    android:textColor="@color/mainTextColor"
+                    android:textSize="14sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    app:layout_constraintStart_toStartOf="@+id/textUVInfoExtremeTitle"
+                    app:layout_constraintTop_toBottomOf="@+id/textUVInfoExtremeTitle" />
+
+                <TextView
+                    android:id="@+id/linkUVInfoMore"
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="@string/place_uv_info_more"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="15sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="24dp"
+                    android:layout_marginTop="24dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textUVInfoExtreme"
+                    android:clickable="true"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

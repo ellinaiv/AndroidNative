@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigationMap">
+
+    <fragment
+        android:id="@+id/navigationMap"
+        android:name="com.example.team11.ui.map.MapFragment"
+        android:label="@string/title_map"
+
+        tools:layout="@layout/fragment_map" />
+
+    <fragment
+        android:id="@+id/navigationList"
+        android:name="com.example.team11.ui.placesList.PlacesListFragment"
+        android:label="@string/title_list"
+
+        tools:layout="@layout/fragment_places_list" />
+
+    <fragment
+        android:id="@+id/navigationFavorites"
+        android:name="com.example.team11.ui.favorites.FavoritesFragment"
+        android:label="@string/title_favoritter"
+
+        tools:layout="@layout/fragment_favorites" />
+
+    <fragment
+        android:id="@+id/navigationMore"
+        android:name="com.example.team11.ui.more.MoreFragment"
+        android:label="@string/title_mer"
+
+        tools:layout="@layout/fragment_more" />
+
+
+</navigation>
