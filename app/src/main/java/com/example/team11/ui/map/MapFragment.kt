@@ -172,7 +172,7 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
      * @param place: Stedet som skal ha informasjonen sin på display
      */
     private fun showPlace(place: Place){
-        when(mapFragmentViewModel.isPlaceWarm(place)){
+        when(mapFragmentViewModel.warmWave(place)){
             true -> imageTempWater.setImageResource(R.drawable.water_red)
             false -> imageTempWater.setImageResource(R.drawable.water_blue)
         }

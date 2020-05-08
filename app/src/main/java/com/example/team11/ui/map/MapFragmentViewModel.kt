@@ -66,5 +66,10 @@ class MapFragmentViewModel: ViewModel() {
         return false
     }
 
+    fun warmWave(place: Place): Boolean{
+        if(personalPreference!!.value!!.waterTempMid <= place.tempWater) return true
+        return false
+    }
+
 
 }
