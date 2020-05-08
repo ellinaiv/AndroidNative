@@ -11,8 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.team11.ui.placesList.ListAdapter
 import com.example.team11.R
 import com.example.team11.viewmodels.FavoritesFragmentViewModel
-import kotlinx.android.synthetic.main.activity_places_list.*
-import kotlinx.android.synthetic.main.activity_places_list.recycler_view
 import kotlinx.android.synthetic.main.fragment_favorites.*
 
 class FavoritesFragment : Fragment() {
