@@ -4,10 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.SeekBar
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.example.team11.PersonalPreference
 import com.example.team11.R
 import kotlinx.android.synthetic.main.fragment_more.*
 
@@ -16,7 +15,6 @@ class MoreFragment : Fragment() {
 
     var aboutAppClicked = false
     var aboutAPIClicked = false
-    var settingClicked = false
 
 
     override fun onCreateView(
@@ -27,20 +25,20 @@ class MoreFragment : Fragment() {
 
         val root = inflater.inflate(R.layout.fragment_more, container, false)
 
-        val aboutAppTitle = root.findViewById<TextView>(R.id.aboutAppTitle)
-        val aboutAPITitle = root.findViewById<TextView>(R.id.aboutAPITitle)
-        val settingsText = root.findViewById<TextView>(R.id.settingsText)
+        val aboutAppTitle = root.findViewById<TextView>(R.id.textAboutAppTitle)
+        val aboutAPITitle = root.findViewById<TextView>(R.id.textAboutAPITitle)
 
         aboutAppTitle.setOnClickListener {
             makeViewsDisappear()
             if (aboutAppClicked) {
                 aboutAppClicked = false
             } else {
-                aboutAppText.visibility = View.VISIBLE
-                aboutAppView.visibility = View.VISIBLE
+                aboutAppTitle.setTextColor(ContextCompat.getColor(this.context!!, R.color.whiteTextColor))
+                textAboutApp.visibility = View.VISIBLE
                 aboutAppTitle.background =
                     resources.getDrawable(R.drawable.about_rectangle_clicked, null)
-                aboutAppClicked = true;
+                aboutAppClicked = true
+                aboutAPIClicked = false
             }
         }
 
@@ -49,27 +47,14 @@ class MoreFragment : Fragment() {
             if (aboutAPIClicked) {
                 aboutAPIClicked = false
             } else {
-                aboutAPIText.visibility = View.VISIBLE
-                aboutAPIView.visibility = View.VISIBLE
+                aboutAPITitle.setTextColor(ContextCompat.getColor(this.context!!, R.color.whiteTextColor))
+                textAboutAPI.visibility = View.VISIBLE
                 aboutAPITitle.background =
                     resources.getDrawable(R.drawable.about_rectangle_clicked, null)
                 aboutAPIClicked = true
+                aboutAppClicked = false
             }
         }
-
-        settingsText.setOnClickListener {
-            makeViewsDisappear()
-            if (settingClicked) {
-                settingClicked = false
-            } else {
-                seekBarLayout.visibility = View.VISIBLE
-                settingsView.visibility = View.VISIBLE
-                settingsText.background =
-                    resources.getDrawable(R.drawable.about_rectangle_clicked, null)
-                settingClicked = true
-            }
-        }
-
         return root
     }
 
@@ -77,18 +62,15 @@ class MoreFragment : Fragment() {
      * Nullstriller hele activiten (med tanke på viewene).
      */
     private fun makeViewsDisappear(){
+        textAboutApp.visibility = View.GONE
+        textAboutAPI.visibility = View.GONE
 
-        aboutAppText.visibility = View.GONE
-        aboutAPIText.visibility = View.GONE
-        seekBarLayout.visibility = View.GONE
+        textAboutAppTitle.background = resources.getDrawable(R.drawable.about_rectangle, null)
+        textAboutAPITitle.background = resources.getDrawable(R.drawable.about_rectangle, null)
 
-        aboutAppTitle.background = resources.getDrawable(R.drawable.about_rectangle, null)
-        aboutAPITitle.background = resources.getDrawable(R.drawable.about_rectangle, null)
-        settingsText.background = resources.getDrawable(R.drawable.about_rectangle, null)
-
-        aboutAppView.visibility = View.GONE
-        aboutAPIView.visibility = View.GONE
-        settingsView.visibility = View.GONE
+        textAboutAppTitle.setTextColor(ContextCompat.getColor(this.context!!, R.color.mainTextColor))
+        textAboutAPITitle.setTextColor(ContextCompat.getColor(this.context!!, R.color.mainTextColor))
     }
+
 }
 

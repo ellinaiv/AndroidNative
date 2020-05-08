@@ -30,9 +30,9 @@ class ListAdapter(private val myDataset: List<Place>, val context: Context,
         var itemTempWater: TextView
 
         init {
-            itemName = itemView.findViewById(R.id.name)
-            itemTempAir = itemView.findViewById(R.id.tempAir)
-            itemTempWater = itemView.findViewById(R.id.tempWater)
+            itemName = itemView.findViewById(R.id.textName)
+            itemTempAir = itemView.findViewById(R.id.textTempAir)
+            itemTempWater = itemView.findViewById(R.id.textTempWater)
         }
 
     }
@@ -43,6 +43,7 @@ class ListAdapter(private val myDataset: List<Place>, val context: Context,
     }
 
 
+    // TODO("Celsius burde komme fra string resource ")
     override fun onBindViewHolder(holder: MyViewHolder, position: Int){
         holder.itemName.text = myDataset[position].name
         holder.itemTempWater.text = myDataset[position].tempWater.toString() + "°C"
