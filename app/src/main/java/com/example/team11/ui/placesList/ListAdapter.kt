@@ -25,15 +25,9 @@ class ListAdapter(private val myDataset: List<Place>, val context: Context,
 
     class MyViewHolder(itemView: CardView) : RecyclerView.ViewHolder(itemView){
 
-        var itemName: TextView
-        var itemTempAir: TextView
-        var itemTempWater: TextView
-
-        init {
-            itemName = itemView.findViewById(R.id.textName)
-            itemTempAir = itemView.findViewById(R.id.textTempAir)
-            itemTempWater = itemView.findViewById(R.id.textTempWater)
-        }
+        var itemName: TextView = itemView.findViewById(R.id.textName)
+        var itemTempAir: TextView = itemView.findViewById(R.id.textTempAir)
+        var itemTempWater: TextView = itemView.findViewById(R.id.textTempWater)
 
     }
 
@@ -46,8 +40,8 @@ class ListAdapter(private val myDataset: List<Place>, val context: Context,
     // TODO("Celsius burde komme fra string resource ")
     override fun onBindViewHolder(holder: MyViewHolder, position: Int){
         holder.itemName.text = myDataset[position].name
-        holder.itemTempWater.text = myDataset[position].tempWater.toString() + "°C"
-        holder.itemTempAir.text = myDataset[position].tempAir.toString() + "°C"
+        holder.itemTempWater.text = context.getString(R.string.tempC, myDataset[position].tempWater)
+        holder.itemTempAir.text = context.getString(R.string.tempC, myDataset[position].tempAir)
 
 
        holder.itemView.setOnClickListener{
