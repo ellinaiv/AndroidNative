@@ -1,7 +1,7 @@
 package com.example.team11.ui.bottomNavigation
 
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ViewActions
+import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.typeText
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
@@ -9,7 +9,6 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.ActivityTestRule
 import com.example.team11.R
-import com.example.team11.ui.bottomNavigation.MainActivity
 import junit.framework.Assert.assertEquals
 import junit.framework.Assert.assertNotNull
 import kotlinx.android.synthetic.main.activity_bottom_navigation.*
@@ -35,19 +34,19 @@ class BottomNavigationTest{
     @Test
     fun testNavigationToList() {
         onView(withId(R.id.navigationList))
-            .perform(ViewActions.click())
+            .perform(click())
             .check(matches(isDisplayed()))
     }
     @Test
     fun testNavigationToFavourites() {
         onView(withId(R.id.navigationFavorites))
-            .perform(ViewActions.click())
+            .perform(click())
             .check(matches(isDisplayed()))
     }
     @Test
     fun testNavigationToMore() {
         onView(withId(R.id.navigationMore))
-            .perform(ViewActions.click())
+            .perform(click())
             .check(matches(isDisplayed()))
     }
     @Test
