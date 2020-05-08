@@ -8,10 +8,8 @@ import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.StyleSpan
-import android.util.Log
 import android.view.View
 import android.widget.ImageButton
-import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
@@ -57,7 +55,6 @@ class DirectionsActivity : AppCompatActivity() , PermissionsListener {
     private var mapView: MapView? = null
     private val routeSourceId = "ROUTE_SOURCE_ID"
     private var way: Transportation? = null
-    private var tag = "TAG"
     private var buttonWalkClicked = false
     private var buttonBikeClicked = false
     private var buttonCarClicked = false
@@ -194,7 +191,6 @@ class DirectionsActivity : AppCompatActivity() , PermissionsListener {
         mapView?.getMapAsync { mapboxMap ->
             disableButtons()
             this.mapboxMap = mapboxMap
-            Log.d(tag, mapboxMap.toString())
             mapboxMap.setStyle(Style.MAPBOX_STREETS)
             try {
                 mapboxMap.getStyle { style ->
@@ -306,7 +302,6 @@ class DirectionsActivity : AppCompatActivity() , PermissionsListener {
      */
     private fun getRoute(place: Place){
         //hentet stedet vi skal bruke
-        Log.d(tag, "getPlace")
         val originLocation = mapboxMap!!.locationComponent.lastKnownLocation ?: return
         val originPoint = Point.fromLngLat(originLocation.longitude, originLocation.latitude)
         val profile = when(way){
@@ -331,14 +326,14 @@ class DirectionsActivity : AppCompatActivity() , PermissionsListener {
         client.enqueueCall(object : Callback<DirectionsResponse> {
             override fun onResponse(call: Call<DirectionsResponse>, response: Response<DirectionsResponse>) {
                 if(response.body() == null || response.body()!!.routes().size < 1){
-                    Toast.makeText(this@DirectionsActivity, "No routes found", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@DirectionsActivity, getString(R.string.no_route_found), Toast.LENGTH_SHORT).show()
                     return
                 }
 
                 val currentRoute = response.body()!!.routes()[0]
 
-                textDistance.text = viewModel.convertToCorrectDistance(currentRoute.distance())
-                textTime.text = viewModel.convertTime(currentRoute.duration())
+                textDistance.text = viewModel.convertToCorrectDistance(currentRoute.distance(), this@DirectionsActivity)
+                textTime.text = viewModel.convertTime(currentRoute.duration(), this@DirectionsActivity)
                 layoutAboutRoute.visibility = View.VISIBLE
 
 
@@ -365,7 +360,6 @@ class DirectionsActivity : AppCompatActivity() , PermissionsListener {
      */
     @SuppressLint("MissingPermission")
     private fun enableLocationComponent(style: Style){
-        Log.d(tag, "enableLocationComponent")
         if(PermissionsManager.areLocationPermissionsGranted(this)){
             //grunnet et problem med emulatorer vil ikke foregroundDrawable bli svart på kartet,
             //skal fungere som normalt på et vanlig device
