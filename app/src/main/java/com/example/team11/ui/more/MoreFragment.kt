@@ -13,8 +13,10 @@ import kotlinx.android.synthetic.main.fragment_more.*
 class MoreFragment : Fragment() {
 
 
-    var aboutAppClicked = false
-    var aboutAPIClicked = false
+    private var aboutAppClicked = false
+    private var aboutAPIClicked = false
+    private var aboutSettingClicked = false
+
 
 
     override fun onCreateView(
@@ -27,6 +29,7 @@ class MoreFragment : Fragment() {
 
         val aboutAppTitle = root.findViewById<TextView>(R.id.textAboutAppTitle)
         val aboutAPITitle = root.findViewById<TextView>(R.id.textAboutAPITitle)
+        val textSettingTitle = root.findViewById<TextView>(R.id.textSettingTitle)
 
         aboutAppTitle.setOnClickListener {
             makeViewsDisappear()
@@ -39,6 +42,7 @@ class MoreFragment : Fragment() {
                     resources.getDrawable(R.drawable.about_rectangle_clicked, null)
                 aboutAppClicked = true
                 aboutAPIClicked = false
+                aboutSettingClicked = false
             }
         }
 
@@ -53,8 +57,26 @@ class MoreFragment : Fragment() {
                     resources.getDrawable(R.drawable.about_rectangle_clicked, null)
                 aboutAPIClicked = true
                 aboutAppClicked = false
+                aboutSettingClicked = false
             }
         }
+
+        textSettingTitle.setOnClickListener {
+            makeViewsDisappear()
+            if(aboutSettingClicked){
+                aboutSettingClicked = false
+            }else{
+                textSettingTitle.setTextColor(ContextCompat.getColor(this.context!!, R.color.whiteTextColor))
+                textAboutSettings.visibility = View.VISIBLE
+                switchSetting.visibility = View.VISIBLE
+                textSettingTitle.background =
+                    resources.getDrawable(R.drawable.about_rectangle_clicked, null)
+                aboutAPIClicked = false
+                aboutAppClicked = false
+                aboutSettingClicked = true
+            }
+        }
+
         return root
     }
 
@@ -64,12 +86,16 @@ class MoreFragment : Fragment() {
     private fun makeViewsDisappear(){
         textAboutApp.visibility = View.GONE
         textAboutAPI.visibility = View.GONE
+        textAboutSettings.visibility = View.GONE
+        switchSetting.visibility = View.GONE
 
         textAboutAppTitle.background = resources.getDrawable(R.drawable.about_rectangle, null)
         textAboutAPITitle.background = resources.getDrawable(R.drawable.about_rectangle, null)
+        textSettingTitle.background = resources.getDrawable(R.drawable.about_rectangle, null)
 
         textAboutAppTitle.setTextColor(ContextCompat.getColor(this.context!!, R.color.mainTextColor))
         textAboutAPITitle.setTextColor(ContextCompat.getColor(this.context!!, R.color.mainTextColor))
+        textSettingTitle.setTextColor(ContextCompat.getColor(this.context!!, R.color.mainTextColor))
     }
 
 }

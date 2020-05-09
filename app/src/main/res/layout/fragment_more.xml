@@ -36,6 +36,8 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
 
+                android:background="@drawable/about_rectangle"
+
                 android:clickable="true"
                 android:focusable="true"
                 android:fontFamily="@font/raleway_medium"
@@ -66,8 +68,51 @@
 
                 android:visibility="gone"/>
 
+            <TextView
+                android:id="@+id/textAboutAPITitle"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textAboutApp"
+
+                android:background="@drawable/about_rectangle"
+
+                android:clickable="true"
+                android:focusable="true"
+
+                android:fontFamily="@font/raleway_medium"
+
+                android:padding="22dp"
+
+                android:text="@string/aboutAPI"
+                android:textColor="@color/mainTextColor"
+                android:textSize="34sp"/>
+
+            <TextView
+                android:id="@+id/textAboutAPI"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textAboutAPITitle"
+
+                android:fontFamily="@font/roboto_medium"
+                android:lineSpacingExtra="12sp"
+                android:padding="12dp"
+
+                android:text="@string/aboutAPIText"
+                android:textColor="@color/mainTextColor"
+                android:textSize="16sp"
+
+                android:visibility="gone"/>
+
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/layoutAboutAPITitle"
+                android:id="@+id/layoutSetting"
 
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -75,10 +120,10 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textAboutApp">
+                app:layout_constraintTop_toBottomOf="@id/textAboutAPI">
 
                 <TextView
-                    android:id="@+id/textAboutAPITitle"
+                    android:id="@+id/textSettingTitle"
 
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -91,34 +136,53 @@
 
                     android:clickable="true"
                     android:focusable="true"
-
                     android:fontFamily="@font/raleway_medium"
 
                     android:padding="22dp"
 
-                    android:text="@string/aboutAPI"
+                    android:text="@string/settingsTitle"
                     android:textColor="@color/mainTextColor"
                     android:textSize="34sp"/>
 
                 <TextView
-                    android:id="@+id/textAboutAPI"
+                    android:id="@+id/textAboutSettings"
 
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
 
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/textAboutAPITitle"
+                    app:layout_constraintTop_toBottomOf="@id/textSettingTitle"
 
                     android:fontFamily="@font/roboto_medium"
                     android:lineSpacingExtra="12sp"
                     android:padding="12dp"
 
-                    android:text="@string/aboutAPIText"
+                    android:text="@string/aboutSettings"
                     android:textColor="@color/mainTextColor"
                     android:textSize="16sp"
 
                     android:visibility="gone"/>
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/switchSetting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textAboutSettings"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="4dp"
+
+                    android:theme="@style/switchStyleSettings"
+                    android:textOff="av"
+                    android:textOn="På"
+
+                    android:visibility="gone"
+                    />
+
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
