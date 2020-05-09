@@ -14,6 +14,8 @@ class PersonalPreferenceTest{
         tempAir = pp.airTempMid- 1, tempWater = pp.waterTempMid - 1)
     private val placeNotOK = Place(-4, "TestNotOk", 0.1, 0.2,
         tempAir = pp.airTempMid- 5, tempWater = pp.waterTempMid -5)
+    private val placeNoData= Place(-5, "TestNoData", 0.1, 0.2,
+        tempAir = Int.MAX_VALUE, tempWater = Int.MAX_VALUE)
 
     @Test
     fun testTempWaterShowColdAndWarm(){
@@ -21,6 +23,7 @@ class PersonalPreferenceTest{
         assertTrue(pp.isTempWaterOk(placeJustOk))
         assertTrue(pp.isTempWaterOk(placeJustNotOK))
         assertTrue(pp.isTempWaterOk(placeNotOK))
+        assertTrue(pp.isTempWaterOk(placeNoData))
     }
 
     @Test
@@ -30,6 +33,7 @@ class PersonalPreferenceTest{
         assertFalse(pp.isTempWaterOk(placeJustOk))
         assertTrue(pp.isTempWaterOk(placeJustNotOK))
         assertTrue(pp.isTempWaterOk(placeNotOK))
+        assertTrue(pp.isTempWaterOk(placeNoData))
     }
 
     @Test
@@ -39,6 +43,18 @@ class PersonalPreferenceTest{
         assertTrue(pp.isTempWaterOk(placeJustOk))
         assertFalse(pp.isTempWaterOk(placeJustNotOK))
         assertFalse(pp.isTempWaterOk(placeNotOK))
+        assertTrue(pp.isTempWaterOk(placeNoData))
+    }
+
+    @Test
+    fun testTempWaterNotShowAnyThing(){
+        pp.showWaterCold = false
+        pp.showWaterWarm = false
+        assertFalse(pp.isTempWaterOk(placeOk))
+        assertFalse(pp.isTempWaterOk(placeJustOk))
+        assertFalse(pp.isTempWaterOk(placeJustNotOK))
+        assertFalse(pp.isTempWaterOk(placeNotOK))
+        assertTrue(pp.isTempWaterOk(placeNoData))
     }
 
     @Test
@@ -47,6 +63,7 @@ class PersonalPreferenceTest{
         assertTrue(pp.isTempAirOk(placeJustOk))
         assertTrue(pp.isTempAirOk(placeJustNotOK))
         assertTrue(pp.isTempAirOk(placeNotOK))
+        assertTrue(pp.isTempWaterOk(placeNoData))
     }
 
     @Test
@@ -56,6 +73,7 @@ class PersonalPreferenceTest{
         assertFalse(pp.isTempAirOk(placeJustOk))
         assertTrue(pp.isTempAirOk(placeJustNotOK))
         assertTrue(pp.isTempAirOk(placeNotOK))
+        assertTrue(pp.isTempWaterOk(placeNoData))
     }
 
     @Test
@@ -65,5 +83,17 @@ class PersonalPreferenceTest{
         assertTrue(pp.isTempAirOk(placeJustOk))
         assertFalse(pp.isTempAirOk(placeJustNotOK))
         assertFalse(pp.isTempAirOk(placeNotOK))
+        assertTrue(pp.isTempWaterOk(placeNoData))
+    }
+
+    @Test
+    fun testTempAirNotShowAnyThing(){
+        pp.showAirCold = false
+        pp.showAirWarm = false
+        assertFalse(pp.isTempAirOk(placeOk))
+        assertFalse(pp.isTempAirOk(placeJustOk))
+        assertFalse(pp.isTempAirOk(placeJustNotOK))
+        assertFalse(pp.isTempAirOk(placeNotOK))
+        assertTrue(pp.isTempWaterOk(placeNoData))
     }
 }
