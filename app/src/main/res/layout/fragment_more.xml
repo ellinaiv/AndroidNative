@@ -176,9 +176,6 @@
                     android:layout_marginEnd="4dp"
 
                     android:theme="@style/switchStyleSettings"
-                    android:textOff="av"
-                    android:textOn="På"
-
                     android:visibility="gone"
                     />
 

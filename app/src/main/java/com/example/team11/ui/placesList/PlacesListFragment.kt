@@ -38,7 +38,7 @@ class PlacesListFragment : Fragment() {
             recycler_viewPlaces.adapter =
                 ListAdapter(
                     places,
-                    context!!,
+                    requireContext(),
                     placesListViewModel,
                     false
                 )
@@ -49,7 +49,7 @@ class PlacesListFragment : Fragment() {
 
         val filterButton = root.findViewById<ImageButton>(R.id.filterButton)
         filterButton.setOnClickListener {
-            startActivity(Intent(this.context!!, FilterActivity::class.java))
+            startActivity(Intent(this.requireContext(), FilterActivity::class.java))
         }
         return root
     }
@@ -63,7 +63,7 @@ class PlacesListFragment : Fragment() {
         recycler_viewPlaces.adapter =
             ListAdapter(
                 filterPlaces,
-                context!!,
+                requireContext(),
                 placesListViewModel,
                 false
             )

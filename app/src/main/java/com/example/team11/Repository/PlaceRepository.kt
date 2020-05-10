@@ -27,6 +27,7 @@ class PlaceRepository private constructor() {
     private var wayOfTransportation = MutableLiveData<Transportation>()
     private var favoritePlaces = MutableLiveData<List<Place>>()
     private var personalPreferences = MutableLiveData<PersonalPreference>()
+    private var falseData = MutableLiveData<Boolean>()
 
     //Kotlin sin static
     companion object {
@@ -43,8 +44,17 @@ class PlaceRepository private constructor() {
                     instance = it
                     it.personalPreferences.value = PersonalPreference()
                     it.wayOfTransportation.value = Transportation.BIKE
+                    it.falseData.value = false
                 }
             }
+    }
+
+    fun getFalseData() = falseData
+
+    fun changeFalseData(newFalseData: Boolean){
+        if(falseData.value != newFalseData){
+            falseData.value = newFalseData
+        }
     }
 
     /**
@@ -280,7 +290,6 @@ class PlaceRepository private constructor() {
         })
         return temp
     }
-
 
 }
 
