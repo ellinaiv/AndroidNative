@@ -84,6 +84,14 @@
     <string name="airTemp">Lufttempratur</string>
     <string name="waterTemp">Vanntempratur</string>
     <string name="empty"> </string>
+    <string name="no_distance">"Kunne ikke finne reiselengde"</string>
+    <string name="distance_m">%1$d m</string>
+    <string name="distance_km">%1$.1f km</string>
+    <string name="no_travel_time">Kunne ikke finne reisetid</string>
+    <string name="travel_time_minutes">%1$d minutter</string>
+    <string name="travel_time_hours">%1$d timer</string>
+    <string name="travel_time_hours_minutes">%1$d timer og %2$d</string>
+    <string name="no_route_found">Fant ingen rute</string>
 
     <!--    buttons-->
     <string name="button_back">Trykk her for å gå tilbake</string>

@@ -129,6 +129,10 @@ class PlaceActivity : AppCompatActivity() {
 
         textPlaceName.text = place.name
         textTempWater.text = getString(R.string.tempC, place.tempWater)
+        when(viewModel.redWave(place)){
+            true -> imageWater.setImageDrawable(getDrawable(R.drawable.water_red))
+            false -> imageWater.setImageDrawable(getDrawable(R.drawable.water_blue))
+        }
 
         makeMap(place, savedInstanceState)
 
