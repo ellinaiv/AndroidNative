@@ -3,6 +3,7 @@ package com.example.team11.ui.place
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.team11.PersonalPreference
 import com.example.team11.Place
 import com.example.team11.Repository.PlaceRepository
 import com.example.team11.Transportation
@@ -13,6 +14,7 @@ class PlaceActivityViewModel: ViewModel() {
 
     var place: MutableLiveData<Place>? = null
     private var placeRepository: PlaceRepository? = null
+    private var personalPreference: MutableLiveData<PersonalPreference>? = null
 
     /**
      * Setter verdier
@@ -21,6 +23,7 @@ class PlaceActivityViewModel: ViewModel() {
         if(place == null){
             placeRepository = PlaceRepository.getInstance()
             place = placeRepository!!.getCurrentPlace()
+            personalPreference = placeRepository!!.getPersonalPreferences()
         }
     }
 
@@ -55,4 +58,13 @@ class PlaceActivityViewModel: ViewModel() {
      * @return en Feature verdi basert på lokasjonen til place
      */
     fun getFeature(place: Place) = Feature.fromGeometry(Point.fromLngLat(place.lng, place.lat))!!
+
+    /**
+     * Sjekker om et sted skal ha rød eller blaa boolge
+     * @param place: Stedet man vil sjekke
+     */
+    fun redWave(place: Place): Boolean{
+        if(personalPreference!!.value!!.waterTempMid <= place.tempWater) return true
+        return false
+    }
 }
