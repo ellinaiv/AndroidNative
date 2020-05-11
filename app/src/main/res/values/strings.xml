@@ -69,6 +69,8 @@
     <string name="aboutSettings">
         BLABLABLALALALALALALAALALALLAALLALALAALLALALALALALAALLAALALALLALALLALAALALALALAALALALALALALALALALLAALALALALALAALLA
     </string>
+    <string name="off">Av</string>
+    <string name="on">På</string>
     <string name="from">Fra</string>
     <string name="to"> til</string>
     <string name="yourPosition">din posisjon</string>

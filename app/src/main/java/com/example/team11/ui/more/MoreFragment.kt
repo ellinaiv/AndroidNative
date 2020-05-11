@@ -77,7 +77,7 @@ class MoreFragment : Fragment() {
             }else{
                 textSettingTitle.setTextColor(ContextCompat.getColor(this.requireContext(), R.color.whiteTextColor))
                 textAboutSettings.visibility = View.VISIBLE
-                switchSetting.visibility = View.VISIBLE
+                layoutSwitch.visibility = View.VISIBLE
                 textSettingTitle.background =
                     resources.getDrawable(R.drawable.about_rectangle_clicked, null)
                 aboutAPIClicked = false
@@ -96,7 +96,7 @@ class MoreFragment : Fragment() {
         textAboutApp.visibility = View.GONE
         textAboutAPI.visibility = View.GONE
         textAboutSettings.visibility = View.GONE
-        switchSetting.visibility = View.GONE
+        layoutSwitch.visibility = View.GONE
 
         textAboutAppTitle.background = resources.getDrawable(R.drawable.about_rectangle, null)
         textAboutAPITitle.background = resources.getDrawable(R.drawable.about_rectangle, null)
