@@ -1,6 +1,6 @@
 package com.example.team11
 
-import android.app.Activity
+/*import android.app.Activity
 import android.app.Instrumentation
 import android.content.Intent
 import androidx.test.espresso.Espresso.onView
@@ -35,4 +35,4 @@ class ListAdapterTest(){
     }
 
 
-}
+}*/
