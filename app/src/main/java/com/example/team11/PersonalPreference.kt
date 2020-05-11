@@ -12,5 +12,6 @@ data class PersonalPreference(
     var showWaterWarm: Boolean = true,
     var showAirCold: Boolean = true,
     var showAirWarm: Boolean = true,
-    var showBasedOnWater: Boolean = true
+    var showBasedOnWater: Boolean = true,
+    var falseData: Boolean = false
 )

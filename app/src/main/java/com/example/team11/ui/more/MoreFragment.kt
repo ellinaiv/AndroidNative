@@ -32,8 +32,8 @@ class MoreFragment : Fragment() {
 
         val root = inflater.inflate(R.layout.fragment_more, container, false)
 
-        viewModel.falseData!!.observe(viewLifecycleOwner, Observer {falseData ->
-            switchSetting.isChecked = falseData
+        viewModel.personalPreference!!.observe(viewLifecycleOwner, Observer {personalPreference ->
+            switchSetting.isChecked = personalPreference.falseData
         })
 
         val aboutAppTitle = root.findViewById<TextView>(R.id.textAboutAppTitle)
