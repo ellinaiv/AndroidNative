@@ -12,6 +12,7 @@ import kotlinx.android.synthetic.main.activity_filter.textTempMidWater
 
 class FilterActivity : AppCompatActivity() {
     private val viewModel: FilterActivityViewModel by viewModels{ FilterActivityViewModel.InstanceCreator() }
+    private var waterRepresentation = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,6 +20,7 @@ class FilterActivity : AppCompatActivity() {
 
         supportActionBar!!.hide()
         buttonBack.setOnClickListener {
+            setFilter()
             finish()
         }
 
@@ -31,9 +33,32 @@ class FilterActivity : AppCompatActivity() {
             finish()
         }
 
+        buttonAirTemp.setOnClickListener {
+            if(waterRepresentation){
+                waterRepresentation = false
+                buttonAirTemp.setImageResource(R.drawable.rep_true)
+                buttonWaterTemp.setImageResource(R.drawable.rep_false)
+            }
+        }
+
+        buttonWaterTemp.setOnClickListener {
+            if(! waterRepresentation){
+                waterRepresentation = true
+                buttonWaterTemp.setImageResource(R.drawable.rep_true)
+                buttonAirTemp.setImageResource(R.drawable.rep_false)
+            }
+        }
+
         viewModel.personalPreferences!!.observe(this, Observer {personalPreferences ->
             makeSeekBar(personalPreferences)
-            switchRepresentation.isChecked = personalPreferences.showBasedOnWater
+            waterRepresentation = personalPreferences.showBasedOnWater
+            if(waterRepresentation){
+                buttonWaterTemp.setImageResource(R.drawable.rep_true)
+                buttonAirTemp.setImageResource(R.drawable.rep_false)
+            }else{
+                buttonAirTemp.setImageResource(R.drawable.rep_true)
+                buttonWaterTemp.setImageResource(R.drawable.rep_false)
+            }
             makeCheckBoxes(personalPreferences)
 
         })
@@ -52,7 +77,7 @@ class FilterActivity : AppCompatActivity() {
                 showAirWarm = checkBoxWarmAir.isChecked,
                 showWaterCold = checkBoxColdWater.isChecked,
                 showWaterWarm = checkBoxWarmWater.isChecked,
-                showBasedOnWater = switchRepresentation.isChecked
+                showBasedOnWater = waterRepresentation
         ))
     }
 
