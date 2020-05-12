@@ -5,15 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.team11.ui.placesList.ListAdapter
 import com.example.team11.R
+import kotlinx.android.synthetic.main.fragment_favorites.*
 import com.example.team11.database.entity.Place
-import com.example.team11.viewmodels.FavoritesFragmentViewModel
-import kotlinx.android.synthetic.main.activity_places_list.*
+
 
 class FavoritesFragment : Fragment() {
 
@@ -27,16 +26,17 @@ class FavoritesFragment : Fragment() {
         val layoutManager = LinearLayoutManager(context)
         viewModel =
             ViewModelProvider(this, FavoritesFragmentViewModel.InstanceCreator(context!!)).get(FavoritesFragmentViewModel::class.java)
-
         val root = inflater.inflate(R.layout.fragment_favorites, container, false)
         viewModel.favoritePlaces!!.observe(viewLifecycleOwner, Observer { favoritePlaces: List<Place> ->
             recycler_view.layoutManager = layoutManager
-            recycler_view.adapter = ListAdapter(
-                favoritePlaces,
-                context!!,
-                viewModel,
-                true
-            )
+            recycler_view.adapter = ListAdapter(favoritePlaces, requireContext(), viewModel, true)
+            if (recycler_view.adapter!!.itemCount == 0) {
+                imageEmptyListShark.visibility = View.VISIBLE
+                textNoFavorites.visibility = View.VISIBLE
+            } else {
+                imageEmptyListShark.visibility = View.GONE
+                textNoFavorites.visibility = View.GONE
+            }
         })
 
         return root

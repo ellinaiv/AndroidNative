@@ -4,10 +4,10 @@ import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.PointF
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.team11.database.entity.Place
 import com.example.team11.ui.place.PlaceActivity
 import com.example.team11.R
+import com.example.team11.ui.filter.FilterActivity
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.mapboxsdk.camera.CameraPosition
@@ -31,14 +32,14 @@ import kotlinx.android.synthetic.main.fragment_map.*
 
 class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
 
-    private val ICON_ID_RED = "ICON_ID_RED"
-    private val ICON_ID_BLUE = "ICON_ID_BLUE "
-    private val GEOJSON_ID = "GEOJSON_ID"
-    private val LAYOR_ID = "LAYOR_ID:"
+    private val iconIdRed = "ICON_ID_RED"
+    private val iconIdBlue = "ICON_ID_BLUE "
+    private val geojsonId = "GEOJSON_ID"
+    private val layerId = "LAYER_ID:"
     private var listOfLayerId = mutableListOf<String>()
     private val propertyId = "PROPERTY_ID"
 
-    private var mapView: MapView? = null;
+    private var mapView: MapView? = null
     private lateinit var mapBoxMap: MapboxMap
 
     private lateinit var mapFragmentViewModel: MapFragmentViewModel
@@ -64,6 +65,12 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
                 search(text.toString(), places)
             }
         })
+
+        val filterButton = root.findViewById<ImageButton>(R.id.filterButton)
+        filterButton.setOnClickListener {
+            startActivity(Intent(this.requireContext(), FilterActivity::class.java))
+        }
+
         return root
     }
 
@@ -94,6 +101,7 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
             mapBoxMap.setStyle(Style.MAPBOX_STREETS)
 
             mapBoxMap.getStyle { style ->
+                removeLayers(style)
                 if(places.isNotEmpty()){
                     setUpMapImagePins(style)
                     for(place in places){
@@ -102,6 +110,16 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
                 }
                 mapBoxMap.addOnMapClickListener(this)
             }
+        }
+    }
+
+    /**
+     * Fjerner alle steden på kartet
+     * @param style: stilen til kartet
+     */
+    private fun removeLayers(style: Style){
+        listOfLayerId.forEach { layer ->
+            style.removeLayer(layer)
         }
     }
 
@@ -155,15 +173,13 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
      * @param place: Stedet som skal ha informasjonen sin på display
      */
     private fun showPlace(place: Place){
-
-        when(place.isWarm()){
-            true -> tempWaterImage.setImageResource(R.drawable.water_red)
-            false -> tempWaterImage.setImageResource(R.drawable.water_blue)
+        when(mapFragmentViewModel.redWave(place)){
+            true -> imageTempWater.setImageResource(R.drawable.water_red)
+            false -> imageTempWater.setImageResource(R.drawable.water_blue)
         }
-
-        namePlace.text = place.name
-        tempAirText.text = getString(R.string.notAvailable)
-        tempWaterText.text = getString(R.string.tempC, place.temp)
+        textName.text = place.name
+        textTempAir.text = getString(R.string.notAvailable)
+        textTempWater.text = getString(R.string.tempC, place.tempWater)
 
         //zoomer til stedet på kartet
         val position = CameraPosition.Builder()
@@ -174,7 +190,7 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
 
         placeViewHolder.setOnClickListener{
             mapFragmentViewModel.changeCurrentPlace(place)
-            val intent = Intent(context!!, PlaceActivity::class.java)
+            val intent = Intent(requireContext(), PlaceActivity::class.java)
             startActivity(intent)
         }
         placeViewHolder.visibility = View.VISIBLE
@@ -187,23 +203,15 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
     private fun setUpMapImagePins(style: Style){
         var icon = BitmapFactory.decodeResource(
             this.resources,
-            R.drawable.mapbox_marker_icon_default
+            R.drawable.marker_red
         )
-
-        val tag = "Legg til icon"
-
-        if(icon == null) Log.d(tag, "RED")
-
-        style.addImage(ICON_ID_RED, icon)
-
+        style.addImage(iconIdRed, icon)
 
         icon = BitmapFactory.decodeResource(
             this.resources,
-            R.drawable.blue_marker
+            R.drawable.marker_blue
         )
-
-        if(icon == null) Log.d(tag, "BLUE")
-        style.addImage(ICON_ID_BLUE, icon)
+        style.addImage(iconIdBlue, icon)
     }
     
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -220,17 +228,17 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
      * @param style: Stilen på kartet
      */
     private fun addMarker(place: Place, style: Style){
-        val id = LAYOR_ID + place.id.toString()
-        val geoId = GEOJSON_ID + place.id.toString()
+        val id = layerId + place.id.toString()
+        val geoId = geojsonId + place.id.toString()
         val feature = mapFragmentViewModel.getFeature(place)
         feature.addNumberProperty(propertyId, place.id)
         val geoJsonSource = GeoJsonSource(geoId, FeatureCollection.fromFeatures(
             arrayListOf(feature)))
         style.addSource(geoJsonSource)
 
-        val iconId = when(place.isWarm()){
-            true -> ICON_ID_RED
-            false -> ICON_ID_BLUE
+        val iconId = when(mapFragmentViewModel.isPlaceWarm(place)){
+            true -> iconIdRed
+            false -> iconIdBlue
         }
 
         val symbolLayer = SymbolLayer(id, geoId)
@@ -256,6 +264,11 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
     override fun onPause() {
         super.onPause()
         mapView?.onPause()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        mapView?.onSaveInstanceState(outState)
     }
 
     override fun onStop() {

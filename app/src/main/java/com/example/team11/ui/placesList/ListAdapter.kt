@@ -2,7 +2,7 @@ package com.example.team11.ui.placesList
 
 import android.content.Context
 import android.content.Intent
-import android.util.Log
+import android.media.Image
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.*
@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.team11.database.entity.Place
 import com.example.team11.R
 import com.example.team11.ui.place.PlaceActivity
-import com.example.team11.viewmodels.FavoritesFragmentViewModel
+import com.example.team11.ui.favorites.FavoritesFragmentViewModel
 
 /*
  * List adapter viser informasjon på de forskjellige cardsViews.
@@ -20,20 +20,15 @@ import com.example.team11.viewmodels.FavoritesFragmentViewModel
  * @param context er kotexten til activity der cardViews skal visses
  */
 
-class ListAdapter(private val myDataset: List<Place>, val context: Context,
-                  val viewModel: ViewModel, val favorite: Boolean) : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
+class ListAdapter(private val myDataSet: List<Place>, val context: Context,
+                  private val viewModel: ViewModel, private val favorite: Boolean) : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
 
     class MyViewHolder(itemView: CardView) : RecyclerView.ViewHolder(itemView){
 
-        var itemName: TextView
-        var itemTempAir: TextView
-        var itemTempWater: TextView
-
-        init {
-            itemName = itemView.findViewById(R.id.name)
-            itemTempAir = itemView.findViewById(R.id.tempAir)
-            itemTempWater = itemView.findViewById(R.id.tempWater)
-        }
+        val itemName: TextView = itemView.findViewById(R.id.textName)
+        val itemTempAir: TextView = itemView.findViewById(R.id.textTempAir)
+        val itemTempWater: TextView = itemView.findViewById(R.id.textTempWater)
+        val imageWater: ImageView = itemView.findViewById(R.id.imageWater)
 
     }
 
@@ -43,26 +38,40 @@ class ListAdapter(private val myDataset: List<Place>, val context: Context,
     }
 
 
+    // TODO("Celsius burde komme fra string resource ")
     override fun onBindViewHolder(holder: MyViewHolder, position: Int){
-        holder.itemName.text = myDataset[position].name
-        holder.itemTempWater.text = myDataset[position].temp.toString() + "°C"
-        holder.itemTempAir.text = "no data"
+        holder.itemName.text = myDataSet[position].name
+        holder.itemTempWater.text = context.getString(R.string.tempC, myDataSet[position].tempWater)
+        holder.itemTempAir.text = context.getString(R.string.tempC, myDataSet[position].tempAir)
+
+        if(favorite){
+            val favoritePlacesViewModel = viewModel as FavoritesFragmentViewModel
+            when(favoritePlacesViewModel.redWave(myDataSet[position])){
+                true -> holder.imageWater.setImageDrawable(context.getDrawable(R.drawable.water_red))
+                false ->holder.imageWater.setImageDrawable(context.getDrawable(R.drawable.water_blue))
+            }
+
+        }else{
+            val placesListActivityViewModel = viewModel as PlacesListFragmentViewModel
+            when(placesListActivityViewModel.redWave(myDataSet[position])){
+                true -> holder.imageWater.setImageDrawable(context.getDrawable(R.drawable.water_red))
+                false ->holder.imageWater.setImageDrawable(context.getDrawable(R.drawable.water_blue))
+            }
+        }
 
 
        holder.itemView.setOnClickListener{
            if(favorite){
                val favoritePlacesViewModel = viewModel as FavoritesFragmentViewModel
-               favoritePlacesViewModel.changeCurrentPlace(myDataset[position])
+               favoritePlacesViewModel.changeCurrentPlace(myDataSet[position])
            }else{
                val placesListActivityViewModel = viewModel as PlacesListFragmentViewModel
-               placesListActivityViewModel.changeCurrentPlace(myDataset[position])
+               placesListActivityViewModel.changeCurrentPlace(myDataSet[position])
            }
-
-           Log.d("in holder", "come here when your click on cards")
            val intent = Intent(context, PlaceActivity::class.java)
            context.startActivity(intent)
         }
 
     }
-    override fun getItemCount() = myDataset.size
+    override fun getItemCount() = myDataSet.size
 }

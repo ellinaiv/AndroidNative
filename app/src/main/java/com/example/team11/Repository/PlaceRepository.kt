@@ -2,19 +2,18 @@ package com.example.team11.Repository
 
 import android.content.Context
 import android.os.AsyncTask
-import android.os.SystemClock
 import android.util.Log
-import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.team11.PersonalPreference
 import com.example.team11.database.entity.Place
-import com.example.team11.valueObjects.OceanForecast
 import com.example.team11.Transportation
 import com.example.team11.api.ApiClient
 import com.example.team11.database.AppDatabase
 import com.example.team11.database.entity.MetadataTable
-import com.example.team11.util.Converters
 import com.example.team11.util.DbConstants
+import com.example.team11.valueObjects.OceanForecast
+import com.example.team11.valueObjects.WeatherForecast
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.coroutines.awaitString
 import kotlinx.coroutines.runBlocking
@@ -25,18 +24,16 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.io.StringReader
 import java.lang.System.currentTimeMillis
-import java.util.*
 import java.util.concurrent.TimeUnit
-import java.util.logging.Logger
 import kotlin.collections.ArrayList
 
 class PlaceRepository private constructor(context: Context) {
-
-
+    private var allPlaces = mutableListOf<Place>()
     private val urlAPI = "http://oslokommune.msolution.no/friluft/badetemperaturer.jsp"
     private var currentPlace = MutableLiveData<Place>()
     private var wayOfTransportation = MutableLiveData<Transportation>()
     private var favoritePlaces = MutableLiveData<List<Place>>()
+    private var personalPreferences = MutableLiveData<PersonalPreference>()
     private val database: AppDatabase = AppDatabase.getInstance(context)
     private val placeDao = database.placeDao()
     private val metadataDao = database.metadataDao()
@@ -52,8 +49,37 @@ class PlaceRepository private constructor(context: Context) {
          */
         fun getInstance(context: Context) =
             instance ?: synchronized(this){
-                instance?: PlaceRepository(context).also { instance = it}
+                instance?: PlaceRepository(context).also {
+                    instance = it
+                    it.personalPreferences.value = PersonalPreference()
+                    it.wayOfTransportation.value = Transportation.BIKE
+                }
             }
+    }
+
+    /**
+     * Returnerer en peker til preferansene til brukeren
+     * @return brukerens preferance
+     */
+    fun getPersonalPreferences() = personalPreferences
+
+    /**
+     * Oppdaterer preferansene til brukeren
+     * @param newPersonalPreference den nye preferansen
+     */
+    fun updatePersonalPreference(newPersonalPreference: PersonalPreference){
+        personalPreferences.value =  newPersonalPreference
+        updatePlaces()
+    }
+
+    /**
+     * Oppdatere listen med steder som liste og kart bruker basert på preferanser
+     */
+    private fun updatePlaces(){
+        val pp = personalPreferences.value!!
+        //places.value = allPlaces.filter { place ->
+        //    pp.isTempWaterOk(place) and pp.isTempAirOk(place)
+        //}
     }
 
 
@@ -165,7 +191,6 @@ class PlaceRepository private constructor(context: Context) {
         val places = ArrayList<Place>()
         val tag = "getData() ---->"
         runBlocking{
-
             try {
 
                 val response = Fuel.get(url).awaitString()
@@ -179,8 +204,6 @@ class PlaceRepository private constructor(context: Context) {
                 lateinit var lat: String
                 lateinit var long: String
                 var id = 0
-                var favorite = false
-                placeDao.isPlaceFavorite(id)?.value?.let { favorite = it }
 
                 while (eventType != XmlPullParser.END_DOCUMENT) {
                     if (eventType == XmlPullParser.START_TAG && xpp.name == "name") {
@@ -257,15 +280,32 @@ class PlaceRepository private constructor(context: Context) {
         return speed
     }
 
-
     /**
-     * En metode som lager url som skal, man skal hente json elemente på, når
-     * det kommer til havstrømninger.
-     * @param place: stedet som skal hente ut verdien.
-     * @return nettsiden man kan hente ut json elementene fra
+     * Henter forecast til et sted fra met sitt api.
+     * @param place stranden man ønsker forecast for
+     * @return Når returnerer den bare temperatur, må se ann hvordan det skal være når databasen er på plass
+     *
      */
-    private fun getSpeedUrl(place: Place): String{
-        return "http://in2000-apiproxy.ifi.uio.no/weatherapi/oceanforecast/0.9/.json?lat=${place.lat}&lon=${place.lng}"
+
+    fun fetchWeather(place: Place): String? {
+        val tag = "tagWeather"
+        val temp = null;
+
+        val call= ApiClient.build()?.getWeather(place.lat, place.lng)
+
+        call?.enqueue(object : Callback<WeatherForecast> {
+            override fun onResponse(call: Call<WeatherForecast>, response: Response<WeatherForecast>) {
+                if (response.isSuccessful){
+                    Log.d(tag, response.body().toString())
+                    val temp = response.body()?.weatherForecastTimeSlotList?.list?.get(0)?.types?.instantWeatherForecast?.details?.temp
+                    Log.d(tag, temp.toString())
+                }
+            }
+            override fun onFailure(call: Call<WeatherForecast>, t: Throwable) {
+                Log.d(tag, "error")
+            }
+        })
+        return temp
     }
 
     // Kode inspirert av:

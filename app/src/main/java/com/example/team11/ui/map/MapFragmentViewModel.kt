@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
+import com.example.team11.PersonalPreference
 import com.example.team11.database.entity.Place
 import com.example.team11.Repository.PlaceRepository
 import com.mapbox.geojson.Feature
@@ -13,6 +14,7 @@ import com.mapbox.geojson.Point
 
 class MapFragmentViewModel(context: Context): ViewModel() {
     var places: LiveData<List<Place>>? = null
+    var personalPreference: MutableLiveData<PersonalPreference>? = null
     private var placeRepository: PlaceRepository? = null
 
     /**
@@ -22,6 +24,7 @@ class MapFragmentViewModel(context: Context): ViewModel() {
         if(places == null){
             placeRepository = PlaceRepository.getInstance(context)
             places = placeRepository!!.getPlaces()
+            personalPreference = placeRepository!!.getPersonalPreferences()
         }
     }
 
@@ -39,12 +42,35 @@ class MapFragmentViewModel(context: Context): ViewModel() {
      */
     fun getFeature(place: Place) = Feature.fromGeometry(Point.fromLngLat(place.lng, place.lat))!!
 
+    /**
+     * Endrer hvilken strand man vil undersøke nøyere
+     */
     fun changeCurrentPlace(place: Place){
-        if(placeRepository != null){
-            placeRepository!!.changeCurrentPlace(place)
-        }else{
-            Log.d("ViewModelTag", "finner ikke Placerepository ")
+        placeRepository?.changeCurrentPlace(place)
+    }
+
+    /**
+     * Sjekker om stedet er varmt, basert på brukeren sin preferance
+     * @param place: stedet som man vil finne ut om er varmt
+     * @return true hvis stedet er varmt, false hvis kaldt
+     */
+    fun isPlaceWarm(place: Place): Boolean{
+        val personalPreferenceValue = personalPreference!!.value!!
+        if(personalPreferenceValue.showBasedOnWater){
+            if(personalPreferenceValue.waterTempMid <= place.tempWater) return true
+            return false
         }
+        if(personalPreferenceValue.airTempMid <= place.tempAir) return true
+        return false
+    }
+
+    /**
+     * Sjekker om et sted skal ha rød eller blaa boolge
+     * @param place: Stedet man vil sjekke
+     */
+    fun redWave(place: Place): Boolean{
+        if(personalPreference!!.value!!.waterTempMid <= place.tempWater) return true
+        return false
     }
 
 

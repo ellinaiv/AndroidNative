@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.team11.database.entity.Place
+import com.example.team11.PersonalPreference
 import com.example.team11.Repository.PlaceRepository
 import com.example.team11.Transportation
 import com.mapbox.geojson.Feature
@@ -16,6 +17,7 @@ class PlaceActivityViewModel(context: Context): ViewModel() {
     var place: MutableLiveData<Place>? = null
     lateinit var isFavorite: LiveData<Boolean>
     private var placeRepository: PlaceRepository? = null
+    private var personalPreference: MutableLiveData<PersonalPreference>? = null
 
     /**
      * Setter verdier
@@ -25,6 +27,7 @@ class PlaceActivityViewModel(context: Context): ViewModel() {
             placeRepository = PlaceRepository.getInstance(context)
             place = placeRepository!!.getCurrentPlace()
             isFavorite = placeRepository!!.isPlaceFavorite(place!!.value!!)
+            personalPreference = placeRepository!!.getPersonalPreferences()
         }
     }
 
@@ -59,4 +62,13 @@ class PlaceActivityViewModel(context: Context): ViewModel() {
      * @return en Feature verdi basert på lokasjonen til place
      */
     fun getFeature(place: Place) = Feature.fromGeometry(Point.fromLngLat(place.lng, place.lat))!!
+
+    /**
+     * Sjekker om et sted skal ha rød eller blaa boolge
+     * @param place: Stedet man vil sjekke
+     */
+    fun redWave(place: Place): Boolean{
+        if(personalPreference!!.value!!.waterTempMid <= place.tempWater) return true
+        return false
+    }
 }

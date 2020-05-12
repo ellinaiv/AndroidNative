@@ -1,8 +1,6 @@
 package com.example.team11.database.entity
-import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.team11.PersonalPreference
 import com.example.team11.util.DbConstants
 import com.google.android.gms.maps.model.LatLng
 import java.io.Serializable
@@ -15,7 +13,8 @@ class Place(
     val lat: Double,
     val lng: Double,
     var favorite: Boolean? = false,
-    var temp: Int = Random.nextInt(0, 35)
+    var tempWater: Int = Random.nextInt(0, 35),
+    var tempAir: Int = Random.nextInt(-30, 35)
 ): Serializable {
 
     /**
@@ -24,15 +23,6 @@ class Place(
      */
 
     fun getLatLng():LatLng = LatLng(lat, lng)
-
-    /**
-     * Sjekker om dette stedet er varmt
-     * @return boolean
-     */
-    fun isWarm(): Boolean{
-        return PersonalPreference.waterTempMid < temp
-    }
-
 
     /**
      * Sammenligner en strand med en annen
@@ -45,11 +35,7 @@ class Place(
         TODO("Slette denne metoden? ")
     }*/
 
-
-
-
     override fun toString(): String {
         return "$id:$name[$lat,$lng]"
     }
-
 }

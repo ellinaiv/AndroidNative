@@ -12,7 +12,7 @@ import com.example.team11.database.entity.MetadataTable
 import com.example.team11.database.entity.Place
 
 /**
- * The Room database for this app
+ * The Room database for this app, denne klassen oppretter databasen
  */
 @Database(entities = [Place::class, MetadataTable::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
