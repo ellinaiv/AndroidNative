@@ -1,5 +1,4 @@
 package com.example.team11
-import com.example.team11.valueObjects.WeatherForecastTimeSlot
 import com.google.android.gms.maps.model.LatLng
 import java.io.Serializable
 import kotlin.random.Random

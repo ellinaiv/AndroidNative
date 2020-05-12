@@ -7,7 +7,7 @@ import com.example.team11.Place
 import com.example.team11.Transportation
 import com.example.team11.api.ApiClient
 import com.example.team11.valueObjects.OceanForecast
-import com.example.team11.valueObjects.WeatherForecast
+import com.example.team11.database.entity.WeatherForecast
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.coroutines.awaitString
 import kotlinx.coroutines.runBlocking

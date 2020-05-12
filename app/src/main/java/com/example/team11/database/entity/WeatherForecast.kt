@@ -1,10 +1,11 @@
-package com.example.team11.valueObjects
+package com.example.team11.database.entity
 
+import androidx.room.Entity
 import com.google.gson.annotations.SerializedName
 
 
 // For versjon 2.0 av apiet
-
+@Entity(tableName = )
 data class WeatherForecast(
     @SerializedName("properties")
     val weatherForecastTimeSlotList: WeatherForecastTimeSlotList
