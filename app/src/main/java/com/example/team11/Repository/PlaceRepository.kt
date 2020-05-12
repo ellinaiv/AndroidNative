@@ -102,7 +102,7 @@ class PlaceRepository private constructor(context: Context) {
         // TODO("Hvor ofte burde places fetches?")
         // TODO("Kan jeg gjøre non-assertive call her? Dersom favoritePlaces.value er null burde den stoppe å sjekke på første?"
         val places: LiveData<List<Place>> = placeDao.getPlaceList()
-        Log.d(tag, "tagGetPlaces")
+        Log.d(tag, "getPlaces")
 
         AsyncTask.execute {
             if (shouldFetch(
