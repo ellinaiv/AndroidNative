@@ -16,7 +16,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
 
-        android:background="@color/backgroundCardsLight"
+        android:background="@color/backgroundLight"
         android:padding="6dp"
         >
 
@@ -30,8 +30,8 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
 
-            android:background="@color/backgroundCardsLight"
-            android:contentDescription="@string/back"
+            android:background="@color/backgroundLight"
+            android:contentDescription="@string/button_back"
             android:src="@drawable/arrow_left"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

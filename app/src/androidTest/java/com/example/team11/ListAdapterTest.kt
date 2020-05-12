@@ -1,4 +1,4 @@
-package com.example.team11
+/*package com.example.team11
 
 import android.app.Activity
 import android.app.Instrumentation
@@ -10,7 +10,7 @@ import androidx.test.espresso.intent.matcher.IntentMatchers.toPackage
 import androidx.test.espresso.intent.rule.IntentsTestRule
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
-import com.example.team11.depricated.PlacesListActivity
+import com.example.team11.deprecated.PlacesListActivity
 import org.junit.Rule
 import org.junit.Test
 
@@ -30,9 +30,9 @@ class ListAdapterTest(){
         resultData.putExtra("PLACES_LIST", places)
         val result = Instrumentation.ActivityResult(Activity.RESULT_OK, resultData)
         intending(toPackage("com.example.team11")).respondWith(result)
-        onView(withId(R.id.name)).check(matches(withText(places[0].name)))
+        onView(withId(R.id.textName)).check(matches(withText(places[0].name)))
 
     }
 
 
-}
+}*/

@@ -1,9 +1,10 @@
-package com.example.team11.viewmodels
+package com.example.team11.ui.favorites
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.team11.PersonalPreference
 import com.example.team11.Place
 import com.example.team11.Repository.PlaceRepository
 
@@ -11,16 +12,14 @@ class FavoritesFragmentViewModel: ViewModel() {
 
     var favoritePlaces: MutableLiveData<List<Place>>? = null
     private var placeRepository: PlaceRepository? = null
+    private var personalPreference: MutableLiveData<PersonalPreference>? = null
 
     init {
         if(favoritePlaces == null){
+
             placeRepository = PlaceRepository.getInstance()
             favoritePlaces = placeRepository!!.getFavoritePlaces()
-        }
-    }
-    class InstanceCreator : ViewModelProvider.Factory {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return modelClass.getConstructor().newInstance()
+            personalPreference = placeRepository!!.getPersonalPreferences()
         }
     }
 
@@ -30,10 +29,15 @@ class FavoritesFragmentViewModel: ViewModel() {
      * @param place: stedet man ønsker å dra til
      */
     fun changeCurrentPlace(place: Place){
-        if(placeRepository != null){
-            placeRepository!!.changeCurrentPlace(place)
-        }else{
-            Log.d("ViewModelTag", "finner ikke Placerepository ")
-        }
+        placeRepository?.changeCurrentPlace(place)
+    }
+
+    /**
+     * Sjekker om et sted skal ha rød eller blaa boolge
+     * @param place: Stedet man vil sjekke
+     */
+    fun redWave(place: Place): Boolean{
+        if(personalPreference!!.value!!.waterTempMid <= place.tempWater) return true
+        return false
     }
 }

@@ -3,10 +3,11 @@ package com.example.team11.Repository
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.team11.PersonalPreference
-import com.example.team11.valueObjects.OceanForecast
 import com.example.team11.Place
 import com.example.team11.Transportation
 import com.example.team11.api.ApiClient
+import com.example.team11.valueObjects.OceanForecast
+import com.example.team11.valueObjects.WeatherForecast
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.coroutines.awaitString
 import kotlinx.coroutines.runBlocking
@@ -67,30 +68,8 @@ class PlaceRepository private constructor() {
     private fun updatePlaces(){
         val pp = personalPreferences.value!!
         places.value = allPlaces.filter { place ->
-            isTempAirOk(pp, place) and isTempWaterOk(pp, place)
+            pp.isTempWaterOk(place) and pp.isTempAirOk(place)
         }
-    }
-
-    /**
-     * Sjekker om et gitt sted har riktig kriterier mtp vanntempratur for å vises
-     * @param pp: brukeren sine preferanser
-     * @param place stedet som skal sjekkes
-     * @return true hvis den oppfyller kriteriene false ellers
-     */
-    private fun isTempWaterOk(pp: PersonalPreference, place: Place): Boolean{
-        return ((pp.showWaterWarm and (place.tempWater >= pp.waterTempMid))
-                or (pp.showWaterCold and (place.tempWater < pp.waterTempMid)))
-    }
-
-    /**
-     * Sjekker om et gitt sted har riktig kriterier mtp luftempratur for å vises
-     * @param pp: brukeren sine preferanser
-     * @param place stedet som skal sjekkes
-     * @return true hvis den oppfyller kriteriene false ellers
-     */
-    private fun isTempAirOk(pp: PersonalPreference, place: Place): Boolean{
-        return ((pp.showAirWarm and (place.tempAir >= pp.airTempMid))
-                or (pp.showAirCold and (place.tempAir < pp.airTempMid)))
     }
 
     /**
@@ -204,10 +183,9 @@ class PlaceRepository private constructor() {
                 Log.e(tag, e.message.toString())
             }
         }
-
-        // TODO("Fjerne dette og legge in dette når man trykker på et place")
-        for (i in places){
-            getSeaCurrentSpeed(i)
+        //Bare for at det skal logges, så man kan se at det funker
+        for(i in places){
+            fetchWeather(i)
         }
         return places
     }
@@ -254,14 +232,34 @@ class PlaceRepository private constructor() {
     }
 
     /**
-     * En metode som lager url som skal, man skal hente json elemente på, når
-     * det kommer til havstrømninger.
-     * @param place: stedet som skal hente ut verdien.
-     * @return nettsiden man kan hente ut json elementene fra
+     * Henter forecast til et sted fra met sitt api.
+     * @param place stranden man ønsker forecast for
+     * @return Når returnerer den bare temperatur, må se ann hvordan det skal være når databasen er på plass
+     *
      */
-    private fun getSpeedUrl(place: Place): String{
-        return "http://in2000-apiproxy.ifi.uio.no/weatherapi/oceanforecast/0.9/.json?lat=${place.lat}&lon=${place.lng}"
+
+    fun fetchWeather(place: Place): String? {
+        val tag = "tagWeather"
+        val temp = null;
+
+        val call= ApiClient.build()?.getWeather(place.lat, place.lng)
+
+        call?.enqueue(object : Callback<WeatherForecast> {
+            override fun onResponse(call: Call<WeatherForecast>, response: Response<WeatherForecast>) {
+                if (response.isSuccessful){
+                    Log.d(tag, response.body().toString())
+                    val temp = response.body()?.weatherForecastTimeSlotList?.list?.get(0)?.types?.instantWeatherForecast?.details?.temp
+                    Log.d(tag, temp.toString())
+                }
+            }
+            override fun onFailure(call: Call<WeatherForecast>, t: Throwable) {
+                Log.d(tag, "error")
+            }
+        })
+        return temp
     }
+
+
 }
 
 
