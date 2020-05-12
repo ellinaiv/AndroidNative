@@ -254,6 +254,7 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
         listOfLayerId.add(id)
     }
 
+
     fun Fragment.hideKeyboard() {
         view?.let { activity?.hideKeyboard(it) }
     }
