@@ -23,7 +23,6 @@ class PlacesListFragmentTes{
         data.add(place)
         val scenario = launchFragmentInContainer<PlacesListFragment>(themeResId = R.style.AppTheme)
 
-
     }
 
 }
