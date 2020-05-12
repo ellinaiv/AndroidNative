@@ -80,7 +80,36 @@
             android:inputType="textFilter"
             android:hint="@string/empty"/>
 
-
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/imageEmptyListShark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:adjustViewBounds="true"
+        android:gravity="center"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/searchLayer"
+
+        android:src="@drawable/empty_favorites_shark"
+        android:contentDescription="@string/empty_shark" />
+
+    <TextView
+        android:id="@+id/textNoFavorites"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="20dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imageEmptyListShark"
+
+        android:text="@string/empty_list"
+        android:textAlignment="center"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

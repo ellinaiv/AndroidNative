@@ -15,7 +15,6 @@ import com.example.team11.Place
 import com.example.team11.R
 import com.example.team11.ui.filter.FilterActivity
 import kotlinx.android.synthetic.main.fragment_places_list.*
-import kotlinx.android.synthetic.main.fragment_places_list.filterButton
 import kotlinx.android.synthetic.main.fragment_places_list.searchText
 
 class PlacesListFragment : Fragment() {
@@ -38,10 +37,17 @@ class PlacesListFragment : Fragment() {
             recycler_viewPlaces.adapter =
                 ListAdapter(
                     places,
-                    context!!,
+                    requireContext(),
                     placesListViewModel,
                     false
                 )
+            if (recycler_viewPlaces.adapter!!.itemCount == 0) {
+                imageEmptyListShark.visibility = View.VISIBLE
+                textNoFavorites.visibility = View.VISIBLE
+            } else {
+                imageEmptyListShark.visibility = View.GONE
+                textNoFavorites.visibility = View.GONE
+            }
             searchText.doOnTextChanged { text, _, _, _ ->
                 search(text.toString(), places)
             }
@@ -49,7 +55,7 @@ class PlacesListFragment : Fragment() {
 
         val filterButton = root.findViewById<ImageButton>(R.id.filterButton)
         filterButton.setOnClickListener {
-            startActivity(Intent(this.context!!, FilterActivity::class.java))
+            startActivity(Intent(this.requireContext(), FilterActivity::class.java))
         }
         return root
     }
@@ -63,10 +69,17 @@ class PlacesListFragment : Fragment() {
         recycler_viewPlaces.adapter =
             ListAdapter(
                 filterPlaces,
-                context!!,
+                requireContext(),
                 placesListViewModel,
                 false
             )
+        if (recycler_viewPlaces.adapter!!.itemCount == 0) {
+            imageEmptyListShark.visibility = View.VISIBLE
+            textNoFavorites.visibility = View.VISIBLE
+        } else {
+            imageEmptyListShark.visibility = View.GONE
+            textNoFavorites.visibility = View.GONE
+        }
     }
 
 }
