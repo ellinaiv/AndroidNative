@@ -14,7 +14,6 @@ package com.example.team11
     var showAirWarm: Boolean = true,
     var showBasedOnWater: Boolean = true,
     var falseData: Boolean = false
-    var showBasedOnWater: Boolean = true
 ){
      /**
       * Sjekker om et gitt sted har riktig kriterier mtp vanntempratur for å vises.
