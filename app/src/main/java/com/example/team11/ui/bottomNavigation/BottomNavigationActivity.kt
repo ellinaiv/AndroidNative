@@ -17,19 +17,20 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_bottom_navigation)
 
         supportActionBar!!.hide()
-        val navView: BottomNavigationView = findViewById(R.id.nav_view)
-        val navController = findNavController(R.id.nav_host_fragment)
+        val navView: BottomNavigationView = findViewById(R.id.bottomNavigationView)
+        val navController = findNavController(R.id.fragmentNavHost)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         Mapbox.getInstance(this, getString(R.string.access_token))
+        navView.itemIconTintList = null
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_map,
-                R.id.navigation_list,
-                R.id.navigation_favorites
+                R.id.navigationMap,
+                R.id.navigationList,
+                R.id.navigationFavorites,
+                R.id.navigationMore
             )
         )
-
 
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)

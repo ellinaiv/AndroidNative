@@ -14,6 +14,7 @@ class FavoritesFragmentViewModel: ViewModel() {
 
     init {
         if(favoritePlaces == null){
+
             placeRepository = PlaceRepository.getInstance()
             favoritePlaces = placeRepository!!.getFavoritePlaces()
         }
