@@ -42,6 +42,12 @@ class PlacesListFragmentTes{
         scenario.recreate()
     }
 
+    @Test
+    fun testScrolling(){
+        onView(withId(R.id.recycler_viewPlaces)).perform(ViewActions.swipeUp())
+        onView(withId(R.id.recycler_viewPlaces)).perform(ViewActions.swipeDown())
+    }
+
 
 
 }
