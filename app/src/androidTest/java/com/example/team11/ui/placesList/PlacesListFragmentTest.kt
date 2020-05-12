@@ -48,6 +48,11 @@ class PlacesListFragmentTes{
         onView(withId(R.id.recycler_viewPlaces)).perform(ViewActions.swipeDown())
     }
 
+    @Test
+    fun testClickable(){
+        onView(allOf(withId(R.id.recycler_viewPlaces), isDisplayed()))
+            .perform(click())
 
+    }
 
 }
