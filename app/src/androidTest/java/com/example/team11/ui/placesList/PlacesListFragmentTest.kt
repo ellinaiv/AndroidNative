@@ -36,5 +36,12 @@ class PlacesListFragmentTes{
             .perform(typeText("Bekkensten"))
         onView(withId(R.id.textName)).check(matches(withText("Bekkensten")))
     }
+    @Test
+    fun testFragmentRecreation() {
+        val scenario = launchFragmentInContainer<PlacesListFragment>(themeResId = R.style.AppTheme)
+        scenario.recreate()
+    }
+
+
 
 }
