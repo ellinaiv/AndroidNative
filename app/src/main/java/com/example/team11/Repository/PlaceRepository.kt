@@ -68,30 +68,8 @@ class PlaceRepository private constructor() {
     private fun updatePlaces(){
         val pp = personalPreferences.value!!
         places.value = allPlaces.filter { place ->
-            isTempAirOk(pp, place) and isTempWaterOk(pp, place)
+            pp.isTempWaterOk(place) and pp.isTempAirOk(place)
         }
-    }
-
-    /**
-     * Sjekker om et gitt sted har riktig kriterier mtp vanntempratur for å vises
-     * @param pp: brukeren sine preferanser
-     * @param place stedet som skal sjekkes
-     * @return true hvis den oppfyller kriteriene false ellers
-     */
-    private fun isTempWaterOk(pp: PersonalPreference, place: Place): Boolean{
-        return ((pp.showWaterWarm and (place.tempWater >= pp.waterTempMid))
-                or (pp.showWaterCold and (place.tempWater < pp.waterTempMid)))
-    }
-
-    /**
-     * Sjekker om et gitt sted har riktig kriterier mtp luftempratur for å vises
-     * @param pp: brukeren sine preferanser
-     * @param place stedet som skal sjekkes
-     * @return true hvis den oppfyller kriteriene false ellers
-     */
-    private fun isTempAirOk(pp: PersonalPreference, place: Place): Boolean{
-        return ((pp.showAirWarm and (place.tempAir >= pp.airTempMid))
-                or (pp.showAirCold and (place.tempAir < pp.airTempMid)))
     }
 
     /**
