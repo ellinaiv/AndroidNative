@@ -1,5 +1,6 @@
 package com.example.team11.ui.directions
 
+import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -9,6 +10,7 @@ import com.example.team11.Transportation
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Point
 import kotlin.math.roundToInt
+import com.example.team11.R
 
 class DirectionsActivityViewModel: ViewModel() {
     var place: MutableLiveData<Place>? = null
@@ -57,9 +59,9 @@ class DirectionsActivityViewModel: ViewModel() {
      * @param sec: tid oppgitt i sekunder
      * @return String representasjon av timer og minutter
      */
-    fun convertTime(sec: Double?): String{
+    fun convertTime(sec: Double?, context: Context): String{
         if(sec == null){
-            return "Kunne ikke finne reisetid"
+            return context.getString(R.string.no_travel_time)
         }
         val hoursAndMinutes = (sec/3600)
         var hours = hoursAndMinutes.roundToInt()
@@ -68,14 +70,14 @@ class DirectionsActivityViewModel: ViewModel() {
         }
         val minutes = ((hoursAndMinutes - hours)*60).roundToInt()
         if(hours == 0){
-            return "$minutes minutter"
+            return context.getString(R.string.travel_time_minutes, minutes)
         }
 
         if(minutes == 0){
-            return "$hours timer"
+            return context.getString(R.string.travel_time_hours, hours)
         }
 
-        return "$hours timer og $minutes minutter"
+        return context.getString(R.string.travel_time_hours_minutes, hours, minutes)
 
     }
 
@@ -85,18 +87,18 @@ class DirectionsActivityViewModel: ViewModel() {
      * @param meters: lengden på distansen
      * @return String representasjon av distansen
      */
-    fun convertToCorrectDistance(meters: Double?): String{
+    fun convertToCorrectDistance(meters: Double?, context: Context): String{
         if(meters == null){
-            return "Kunne ikke finne reiselengde"
+            return context.getString(R.string.no_distance)
         }
         val metersInt = meters.roundToInt()
         val cntDigits = digitsInInt(metersInt)
         if(cntDigits < 4){
-            return "$metersInt m"
+            return context.getString(R.string.distance_m, metersInt)
         }
 
         val km = metersInt.toDouble()/1000
-        return "%.1f km".format(km)
+        return context.getString(R.string.distance_km, km)
     }
 
     /**

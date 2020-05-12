@@ -44,11 +44,7 @@ class MapFragmentViewModel: ViewModel() {
      * Endrer hvilken strand man vil undersøke nøyere
      */
     fun changeCurrentPlace(place: Place){
-        if(placeRepository != null){
-            placeRepository!!.changeCurrentPlace(place)
-        }else{
-            Log.d("ViewModelTag", "finner ikke Placerepository ")
-        }
+        placeRepository?.changeCurrentPlace(place)
     }
 
     /**
@@ -63,6 +59,15 @@ class MapFragmentViewModel: ViewModel() {
             return false
         }
         if(personalPreferenceValue.airTempMid <= place.tempAir) return true
+        return false
+    }
+
+    /**
+     * Sjekker om et sted skal ha rød eller blaa boolge
+     * @param place: Stedet man vil sjekke
+     */
+    fun redWave(place: Place): Boolean{
+        if(personalPreference!!.value!!.waterTempMid <= place.tempWater) return true
         return false
     }
 
