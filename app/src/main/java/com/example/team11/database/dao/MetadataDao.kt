@@ -14,5 +14,5 @@ interface MetadataDao {
 
     //TODO("Tror det er helt unødvendig at denne er livedata, men det var lettere å lage enn tråd")
     @Query("SELECT date_last_cached FROM metadata WHERE table_name = :tableName_")
-    fun getDateLastCached(tableName_: String): LiveData<Long>
+    fun getDateLastCached(tableName_: String): Long
 }

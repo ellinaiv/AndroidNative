@@ -7,7 +7,7 @@ import com.example.team11.database.entity.Place
 @Dao
 interface PlaceDao {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertPlaceList(place: List<Place>)
 
     @Query("UPDATE place  SET favorite = 1 WHERE id = :placeId")

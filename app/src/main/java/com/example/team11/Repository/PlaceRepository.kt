@@ -24,6 +24,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.StringReader
+import java.lang.System.currentTimeMillis
 import java.util.*
 import java.util.concurrent.TimeUnit
 import java.util.logging.Logger
@@ -97,38 +98,30 @@ class PlaceRepository private constructor(context: Context) {
      * @return: MutableLiveData<List<Place>>, liste med badesteder
      */
     fun getPlaces(): LiveData<List<Place>> {
+        val tag = "tagGetPlaces"
         // TODO("Hvor ofte burde places fetches?")
         // TODO("Kan jeg gjøre non-assertive call her? Dersom favoritePlaces.value er null burde den stoppe å sjekke på første?"
         val places: LiveData<List<Place>> = placeDao.getPlaceList()
-        places.observe(this, Observer{})
-        places.observe(this, Observer { places ->
-            if (places == null || places.isEmpty() || shouldFetch(
+        Log.d(tag, "tagGetPlaces")
+
+        AsyncTask.execute {
+            if (shouldFetch(
                     DbConstants.PLACE_TABLE_NAME,
                     10,
                     TimeUnit.DAYS
                 )
             ) {
-                Log.d(
-                    "tagDatabase",
-                    "places.value == null: ${places.value == null}, places.value.isEmpty(): ${places.value?.isEmpty()}, shouldFetch(): ${shouldFetch(
-                        DbConstants.PLACE_TABLE_NAME,
-                        10,
-                        TimeUnit.DAYS
-                    )} "
-                )
+                Log.d(tag, "fetcherPlaces")
                 cachePlacesDb(fetchPlaces(urlAPI))
             }
-        })
-            return places
+        }
+        return places
     }
 
     fun cachePlacesDb(places: List<Place>){
         Log.d("tagDatabase", "Lagrer nye steder")
-        AsyncTask.execute {
-            metadataDao.updateDateLastCached(MetadataTable(DbConstants.PLACE_TABLE_NAME, SystemClock.uptimeMillis()))
-        }
-        AsyncTask.execute {
-            placeDao.insertPlaceList(places) }
+        metadataDao.updateDateLastCached(MetadataTable(DbConstants.PLACE_TABLE_NAME, currentTimeMillis()))
+        placeDao.insertPlaceList(places)
     }
 
     /**
@@ -208,8 +201,7 @@ class PlaceRepository private constructor(context: Context) {
                                 id++,
                                 name,
                                 lat.toDouble(),
-                                long.toDouble(),
-                                favorite
+                                long.toDouble()
                             )
                         )
                     }
@@ -279,8 +271,8 @@ class PlaceRepository private constructor(context: Context) {
     // Kode inspirert av:
 
     private fun shouldFetch(nameDatabase: String, timeout: Int, timeUnit: TimeUnit): Boolean{
-        val dateLastFetched = metadataDao.getDateLastCached(nameDatabase).value
-        val now = SystemClock.uptimeMillis()
+        val dateLastFetched = metadataDao.getDateLastCached(nameDatabase)
+        val now = currentTimeMillis()
         val timeoutMilli = timeUnit.toMillis(timeout.toLong())
         Log.d("tagDatabase", "dateLastFetched: $dateLastFetched")
 
