@@ -177,7 +177,7 @@
                 android:id="@+id/textCurrentsResult"
                 android:fontFamily="@font/roboto_medium"
                 android:text="Lite"
-                android:textColor="@color/place_info_low"
+                tools:textColor="@color/place_info_low"
                 android:textSize="20sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -190,7 +190,7 @@
                 android:id="@+id/textUVResult"
                 android:fontFamily="@font/roboto_medium"
                 android:text="Sterk"
-                android:textColor="@color/place_currents_info_strong"
+                tools:textColor="@color/place_currents_info_strong"
                 android:textSize="20sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -996,7 +996,7 @@
                 android:paddingHorizontal="26dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/buttonUVInfo"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <ImageButton
                     android:id="@+id/buttonUVCloseInfo"
