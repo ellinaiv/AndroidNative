@@ -67,9 +67,9 @@
         \nAppen benytter API-er fra Oslo Kommune for data om ulike badeplasser og badetemperatur.
     </string>
     <string name="aboutSettings">
-        Det er ikke alltid at oslo kommune tar målinger av vanntempraturer, som.feks. på vinteren.
-        Har du fortsatt lyst til å teste de ulike funksjonalitetene til appen, som f.eks. filtreringen
-        kan du slå på falsk data, da vil det bli lagt til tilfeldig verdier for vanntempraturen.
+        Målingene av badetemperaturene fra Oslo kommune er tilgjengelige mellom juni og august.
+        Dersom du ønsker å teste de ulike funksjonalitetene i appen utenom denne perioden kan du
+        slå på falske data. Det vil da bli lagt til tilfeldige verdier for vanntemperatur.
     </string>
     <string name="off">Av</string>
     <string name="on">På</string>
