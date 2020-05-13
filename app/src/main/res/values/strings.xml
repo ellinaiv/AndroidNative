@@ -44,7 +44,7 @@
     <string name="aboutApp">Om appen</string>
     <string name="aboutAPI">Om API</string>
     <string name="settingsTitle">Innstillinger</string>
-    <string name="waterPreference">Preferanser for vanntemperatur</string>
+    <string name="waterPreference">Preferanse for vanntemperatur</string>
     <string name="noFavorites">Du har ikke lagt til noen favorittbadeplasser enda!</string>
     <string name="aboutAppText"> Splæsj er appen for deg som er glad i å bade i Oslo! Her har
         vi samlet relevant informasjon om værforhold, vanntemperatur og reisevei til forskjellige \
@@ -81,15 +81,15 @@
     <string name="favorite">Favoritter</string>
     <string name="titleFilter">Filtrering</string>
     <string name="showPlacesWater">Vis bare badeplasser med:</string>
-    <string name="coldWater">Kladt vann</string>
-    <string name="warmWater">Varmt vann</string>
-    <string name="preferenceAir">Preferanser for lufttempratur</string>
+    <string name="coldWater"><b>Kaldt vann</b></string>
+    <string name="warmWater"><b>Varmt vann</b></string>
+    <string name="preferenceAir">Preferanse for lufttemperatur</string>
     <string name="showPlacesAir">Vis bare badeplasser med:</string>
-    <string name="coldAir">Lav luftempratur</string>
-    <string name="hotAir">Høy luftempratur</string>
+    <string name="coldAir"><b>Lav lufttemperatur</b></string>
+    <string name="hotAir"><b>Høy lufttemperatur</b></string>
     <string name="representationMap">Fargene på kartet representerer:</string>
-    <string name="airTemp">Lufttempratur</string>
-    <string name="waterTemp">Vanntempratur</string>
+    <string name="airTemp">Lufttemperatur</string>
+    <string name="waterTemp">Vanntemperatur</string>
     <string name="empty"> </string>
     <string name="no_distance">"Kunne ikke finne reiselengde"</string>
     <string name="distance_m">%1$d m</string>
@@ -112,6 +112,8 @@
     <string name="addFilter">Legg til filter</string>
     <string name="reset">Nullstill</string>
     <string name="filter_button">Trykk her for å filtrer badeplassene</string>
+    <string name="rep_button_water">Hvis markert, vises markørene i kartet vanntempratur </string>
+    <string name="rep_button_air">Hvis markert, vises markørene i kartet lufttempratur </string>
 
     <!--    content description for images-->
     <string name="water_icon">Badevann ikon</string>
