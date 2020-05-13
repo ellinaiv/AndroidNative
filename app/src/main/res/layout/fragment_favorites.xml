@@ -43,7 +43,7 @@
         android:contentDescription="@string/empty_shark" />
 
     <TextView
-        android:id="@+id/textNoFavorites"
+        android:id="@+id/textNoElementInList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 

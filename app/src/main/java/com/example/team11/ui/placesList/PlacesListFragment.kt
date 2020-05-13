@@ -43,10 +43,10 @@ class PlacesListFragment : Fragment() {
                 )
             if (recycler_viewPlaces.adapter!!.itemCount == 0) {
                 imageEmptyListShark.visibility = View.VISIBLE
-                textNoFavorites.visibility = View.VISIBLE
+                textNoElementInList.visibility = View.VISIBLE
             } else {
                 imageEmptyListShark.visibility = View.GONE
-                textNoFavorites.visibility = View.GONE
+                textNoElementInList.visibility = View.GONE
             }
             searchText.doOnTextChanged { text, _, _, _ ->
                 search(text.toString(), places)
@@ -75,10 +75,10 @@ class PlacesListFragment : Fragment() {
             )
         if (recycler_viewPlaces.adapter!!.itemCount == 0) {
             imageEmptyListShark.visibility = View.VISIBLE
-            textNoFavorites.visibility = View.VISIBLE
+            textNoElementInList.visibility = View.VISIBLE
         } else {
             imageEmptyListShark.visibility = View.GONE
-            textNoFavorites.visibility = View.GONE
+            textNoElementInList.visibility = View.GONE
         }
     }
 
