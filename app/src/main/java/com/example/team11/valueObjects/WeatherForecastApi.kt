@@ -1,4 +1,4 @@
-package com.example.team11.database.entity
+package com.example.team11.valueObjects
 
 import com.google.gson.annotations.SerializedName
 

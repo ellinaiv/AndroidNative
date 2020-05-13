@@ -6,12 +6,12 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.team11.database.entity.WeatherForecast
+import com.example.team11.database.entity.WeatherForecastDb
 
 /**
  * The Room database for this app, denne klassen oppretter databasen
  */
-@Database(entities = [WeatherForecast::class], version = 1, exportSchema = false)
+@Database(entities = [WeatherForecastDb::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
     companion object {
