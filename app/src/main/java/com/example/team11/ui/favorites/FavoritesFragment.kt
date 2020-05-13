@@ -32,10 +32,10 @@ class FavoritesFragment : Fragment() {
             recycler_view.adapter = ListAdapter(favoritePlaces, requireContext(), viewModel, true)
             if (recycler_view.adapter!!.itemCount == 0) {
                 imageEmptyListShark.visibility = View.VISIBLE
-                textNoFavorites.visibility = View.VISIBLE
+                textNoElementInList.visibility = View.VISIBLE
             } else {
                 imageEmptyListShark.visibility = View.GONE
-                textNoFavorites.visibility = View.GONE
+                textNoElementInList.visibility = View.GONE
             }
         })
 

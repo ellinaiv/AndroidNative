@@ -14,7 +14,8 @@ class PersonalPreference(
     var showWaterWarm: Boolean = true,
     var showAirCold: Boolean = true,
     var showAirWarm: Boolean = true,
-    var showBasedOnWater: Boolean = true
+    var showBasedOnWater: Boolean = true,
+    var falseData: Boolean = false
 ){
      /**
       * Sjekker om et gitt sted har riktig kriterier mtp vanntempratur for å vises.

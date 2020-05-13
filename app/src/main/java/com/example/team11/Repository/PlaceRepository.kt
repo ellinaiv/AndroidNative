@@ -57,6 +57,12 @@ class PlaceRepository private constructor(context: Context) {
             }
     }
 
+    fun changeFalseData(newFalseData: Boolean){
+        if(personalPreferences.value!!.falseData != newFalseData){
+            personalPreferences.value!!.falseData  = newFalseData
+        }
+    }
+
     /**
      * Returnerer en peker til preferansene til brukeren
      * @return brukerens preferance
@@ -81,7 +87,6 @@ class PlaceRepository private constructor(context: Context) {
         //    pp.isTempWaterOk(place) and pp.isTempAirOk(place)
         //}
     }
-
 
     /**
      * Returnerer en liste med favoritt stedene til en bruker

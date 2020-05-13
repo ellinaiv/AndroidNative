@@ -34,7 +34,9 @@ class FilterActivityViewModel(context: Context): ViewModel(){
      * Reseter personlige preferanser til det vi har valgt som standar
      */
     fun resetPersonalPreference(){
-        placeRepository!!.updatePersonalPreference(PersonalPreference())
+        placeRepository!!.updatePersonalPreference(PersonalPreference(
+            falseData = personalPreferences!!.value!!.falseData)
+        )
     }
 
     /**
