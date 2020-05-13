@@ -24,15 +24,6 @@ class FilterActivity : AppCompatActivity() {
             finish()
         }
 
-        buttonReset.setOnClickListener {
-            viewModel.resetPersonalPreference()
-        }
-
-        buttonFilter.setOnClickListener {
-            setFilter()
-            finish()
-        }
-
         buttonAirTemp.setOnClickListener {
             if(waterRepresentation){
                 waterRepresentation = false
@@ -145,5 +136,10 @@ class FilterActivity : AppCompatActivity() {
             }
 
         })
+    }
+
+    override fun onPause() {
+        super.onPause()
+        setFilter()
     }
 }
