@@ -99,6 +99,7 @@
     <string name="travel_time_hours">%1$d timer</string>
     <string name="travel_time_hours_minutes">%1$d timer og %2$d</string>
     <string name="no_route_found">Fant ingen rute</string>
+    <string name="empty_list">Kunne ikke finne noen badeplasser</string>
 
     <!--    buttons-->
     <string name="button_back">Trykk her for å gå tilbake</string>
