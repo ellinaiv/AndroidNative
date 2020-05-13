@@ -1,10 +1,5 @@
 package com.example.team11.database.entity
 
-import androidx.room.Entity
-import androidx.room.ForeignKey
-import androidx.room.PrimaryKey
-import com.example.team11.Place
-import com.example.team11.util.DbConstants
 import com.google.gson.annotations.SerializedName
 
 
@@ -13,10 +8,8 @@ import com.google.gson.annotations.SerializedName
 /**
  * Deklarerer at primary key er en foreign key fra place databasen
  */
-@Entity(tableName = DbConstants.FORECAST_TABLE_NAME,
-    foreignKeys = [ForeignKey(entity = Place::class, parentColumns = arrayOf("id"), childColumns = arrayOf("placeId"), onDelete = ForeignKey.CASCADE)])
-data class WeatherForecast(
-    @PrimaryKey val placeId: Int,
+
+data class WeatherForecastApi(
     @SerializedName("properties")
     val weatherForecastTimeSlotList: WeatherForecastTimeSlotList
 

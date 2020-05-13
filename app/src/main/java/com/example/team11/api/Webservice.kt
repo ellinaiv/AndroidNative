@@ -1,6 +1,6 @@
 package com.example.team11.api
 
-import com.example.team11.database.entity.WeatherForecast
+import com.example.team11.database.entity.WeatherForecastApi
 import com.example.team11.valueObjects.OceanForecast
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -53,6 +53,6 @@ object ApiClient {
         fun getSeaSpeed(@Query("lat") lat: Double, @Query("lon") lon: Double): Call<OceanForecast>
 
         @GET("locationforecast/2.0/.json?")
-        fun getWeather(@Query("lat") lat: Double, @Query("lon") lon: Double): Call<WeatherForecast>
+        fun getWeather(@Query("lat") lat: Double, @Query("lon") lon: Double): Call<WeatherForecastApi>
     }
 }
