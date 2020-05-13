@@ -47,6 +47,12 @@ class PlaceRepository private constructor() {
             }
     }
 
+    fun changeFalseData(newFalseData: Boolean){
+        if(personalPreferences.value!!.falseData != newFalseData){
+            personalPreferences.value!!.falseData  = newFalseData
+        }
+    }
+
     /**
      * Returnerer en peker til preferansene til brukeren
      * @return brukerens preferance
@@ -258,7 +264,6 @@ class PlaceRepository private constructor() {
         })
         return temp
     }
-
 
 }
 
