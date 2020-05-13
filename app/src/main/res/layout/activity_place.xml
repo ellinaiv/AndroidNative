@@ -317,7 +317,7 @@
                 app:layout_constraintStart_toStartOf="parent" />
 
             <ImageView
-                android:id="@+id/forecast_1hour"
+                android:id="@+id/imageForecast1Hour"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 app:layout_constraintEnd_toEndOf="@+id/text1Hour"
@@ -331,7 +331,7 @@
                 android:id="@+id/imageForecast2Hours"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                app:layout_constraintBottom_toBottomOf="@+id/forecast_1hour"
+                app:layout_constraintBottom_toBottomOf="@+id/imageForecast1Hour"
                 app:layout_constraintEnd_toEndOf="@+id/text2Hours"
                 app:layout_constraintStart_toStartOf="@+id/text2Hours"
                 android:contentDescription="TODO"
@@ -377,9 +377,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                app:layout_constraintEnd_toEndOf="@+id/forecast_1hour"
-                app:layout_constraintStart_toStartOf="@+id/forecast_1hour"
-                app:layout_constraintTop_toBottomOf="@+id/forecast_1hour" />
+                app:layout_constraintEnd_toEndOf="@+id/imageForecast1Hour"
+                app:layout_constraintStart_toStartOf="@+id/imageForecast1Hour"
+                app:layout_constraintTop_toBottomOf="@+id/imageForecast1Hour" />
 
             <TextView
                 android:id="@+id/textTemp2Hours"

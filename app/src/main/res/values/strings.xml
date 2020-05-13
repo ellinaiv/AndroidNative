@@ -7,6 +7,7 @@
 
     <!--    textViews-->
     <string name="tempC">%1$d °C</string>
+    <string name="place_rain">%1$d mm</string>
     <string name="notAvailable">Ikke tilgjengelig</string>
     <string name="place_name">Badeplass</string>
     <string name="place_currents">Havstrømninger</string>

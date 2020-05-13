@@ -8,15 +8,12 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
-import android.widget.ToggleButton
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
-import com.example.team11.PersonalPreference
 import com.example.team11.Place
 import com.example.team11.R
-import com.example.team11.Repository.PlaceRepository
 import com.example.team11.Transportation
 import com.example.team11.ui.directions.DirectionsActivity
 import com.mapbox.geojson.FeatureCollection
@@ -45,6 +42,17 @@ class PlaceActivity : AppCompatActivity() {
         viewModel.place!!.observe(this, Observer { place ->
             //Skriver ut slik at vi kan se om vi har riktig badestrand
             Log.d("tagPlace", place.toString())
+
+            // henter timesvarsel vær
+            viewModel.hourForecast!!.observe(this, Observer { hourForecast ->
+
+            })
+
+            // henter langtidsvarsel vær
+            viewModel.dayForecast!!.observe(this, Observer { longForecast ->
+
+            })
+
             makeAboutPage(place, savedInstanceState)
         })
 
@@ -54,13 +62,15 @@ class PlaceActivity : AppCompatActivity() {
     }
 
     /**
-     * Lager om siden
-     * @param place: Stedet som man skal ha informasjon om
+     * Lager infosiden om badeplassen
+     * @param place: badeplassen
      * @param savedInstanceState: mapView trenger denne i makeMap
      */
     private fun makeAboutPage(place: Place, savedInstanceState: Bundle?) {
         toggleFavourite.isChecked = place.favorite
 
+
+        // topBar
         buttonBack.setOnClickListener {
             finish()
         }
@@ -71,7 +81,17 @@ class PlaceActivity : AppCompatActivity() {
         }
 
 
+        textPlaceName.text = place.name
 
+        // vann, vær, uv sanntid
+        textTempWater.text = getString(R.string.tempC, place.tempWater)
+        textTempAir.text = getString(R.string.tempC, place.hourforecast.instant.tempAir)
+        textRain.text = getString(R.string.place_rain, place.hourforecast.instant.precipitation)
+//        textCurrentsResult.text =         //TODO
+//        textUVResult =        //TODO
+
+
+        // infovinduer om havstrømninger og uv
         buttonCurrentsInfo.setOnClickListener {
             if (layoutUVInfo.visibility == VISIBLE) {
                 layoutUVInfo.visibility = GONE
@@ -108,7 +128,22 @@ class PlaceActivity : AppCompatActivity() {
         }
 
 
+        // timesvarsel vær
+        setForecast(hourForecast.hour1, text1Hour, imageForecast1Hour, textTemp1Hour, textRain1Hour)
+        setForecast(hourForecast.hour2, text2Hours, imageForecast2Hours, textTemp2Hours, textRain2Hours)
+        setForecast(hourForecast.hour3, text3Hours, imageForecast3Hours, textTemp3Hours, textRain3Hours)
+        setForecast(hourForecast.hour4, text4Hours, imageForecast4Hours, textTemp4Hours, textRain4Hours)
+        setForecast(hourForecast.hour5, text5Hours, imageForecast5Hours, textTemp5Hours, textRain5Hours)
 
+        // langtidsvarsel vær
+        setForecast(dayForecast.day1, textDate1Day, imageForecast1Day, textTemp1Day, textRain1Day)
+        setForecast(dayForecast.day2, textDate2Days, imageForecast2Days, textTemp2Days, textRain2Days)
+        setForecast(dayForecast.day3, textDate3Days, imageForecast3Days, textTemp3Days, textRain3Days)
+        setForecast(dayForecast.day4, textDate4Days, imageForecast4Days, textTemp4Days, textRain4Days)
+        setForecast(dayForecast.day5, textDate5Days, imageForecast5Days, textTemp5Days, textRain5Days)
+
+
+        // reisevei og kart
         buttonBike.setOnClickListener {
             val intent = Intent(this, DirectionsActivity::class.java)
             viewModel.changeWayOfTransportation(Transportation.BIKE)
@@ -125,13 +160,6 @@ class PlaceActivity : AppCompatActivity() {
             val intent = Intent(this, DirectionsActivity::class.java)
             viewModel.changeWayOfTransportation(Transportation.WALK)
             startActivity(intent)
-        }
-
-        textPlaceName.text = place.name
-        textTempWater.text = getString(R.string.tempC, place.tempWater)
-        when(viewModel.redWave(place)){
-            true -> imageWater.setImageDrawable(getDrawable(R.drawable.water_red))
-            false -> imageWater.setImageDrawable(getDrawable(R.drawable.water_blue))
         }
 
         makeMap(place, savedInstanceState)
@@ -181,6 +209,15 @@ class PlaceActivity : AppCompatActivity() {
                 .build()
             mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(position), 2)
         }
+    }
+
+    private fun setForecast(forecast: kotlin.Any, time: TextView, symbol: ImageView,
+                            temp: TextView, rain: TextView) {
+        //TODO(må testes når data er på plass)
+        time.text = forecast.time    //TODO(formatere string)
+        symbol.setImageDrawable(getDrawable(getResources().getIdentifier(forecast.symbol)))
+        temp.text = forecast.tempAir
+        rain.text = forecast.precipitation
     }
 
     override fun onStart() {
