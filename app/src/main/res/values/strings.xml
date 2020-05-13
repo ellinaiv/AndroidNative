@@ -85,8 +85,8 @@
     <string name="warmWater"><b>Varmt vann</b></string>
     <string name="preferenceAir">Preferanse for lufttemperatur</string>
     <string name="showPlacesAir">Vis bare badeplasser med:</string>
-    <string name="coldAir"><b>Lav luftemperatur</b></string>
-    <string name="hotAir"><b>Høy luftemperatur</b></string>
+    <string name="coldAir"><b>Lav lufttemperatur</b></string>
+    <string name="hotAir"><b>Høy lufttemperatur</b></string>
     <string name="representationMap">Fargene på kartet representerer:</string>
     <string name="airTemp">Lufttemperatur</string>
     <string name="waterTemp">Vanntemperatur</string>
