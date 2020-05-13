@@ -38,7 +38,6 @@ class PlaceActivity : AppCompatActivity() {
         setContentView(R.layout.activity_place)
         Log.d("tagPlace", "kommet inn ")
         supportActionBar!!.hide()
-        val toggleFavorite = findViewById<ToggleButton>(R.id.toggleFavorite)
 
         //Observerer stedet som er valgt
         viewModel.place!!.observe(this, Observer { place ->
@@ -188,10 +187,8 @@ class PlaceActivity : AppCompatActivity() {
     }
 
     override fun onPause() {
-        toggleFavorite.setOnCheckedChangeListener { _, isChecked ->
-            if(isChecked) viewModel.addFavoritePlace()
-            else viewModel.removeFavoritePlace()
-        }
+        if (toggleFavorite.isChecked) viewModel.addFavoritePlace()
+        else viewModel.removeFavoritePlace()
         super.onPause()
         mapView?.onPause()
     }

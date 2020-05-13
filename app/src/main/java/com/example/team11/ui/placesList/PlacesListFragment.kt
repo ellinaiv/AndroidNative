@@ -65,7 +65,6 @@ class PlacesListFragment : Fragment() {
      * @param name: en input-streng som skal brukes for å filtrere places
      * @param places: en liste med badesteder som skal filtreres
      */
-
     private fun search(name: String, places: List<Place>){
         filterPlaces = places.filter{ it.name.contains(name, ignoreCase = true)}
         recycler_viewPlaces.adapter =

@@ -8,7 +8,9 @@ import com.example.team11.database.entity.Place
 interface PlaceDao {
 
     /**
-     * Setter inn nye steder, men setter kun inn de stedene som ikke ligger der fra før, regner med at steder ikke endrer posisjon, og det er for at favorite-informasjonen skal bevares
+     * Setter inn nye steder, men setter kun inn de stedene som ikke ligger der fra før,
+     * regner med at steder ikke endrer posisjon, og det er for at favorite-informasjonen
+     * skal bevares
      * @param place en liste med alle stedene
      */
     @Insert(onConflict = OnConflictStrategy.IGNORE)
