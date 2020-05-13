@@ -76,7 +76,6 @@
                 android:gravity="center_vertical"
                 android:maxLines="2"
                 android:text="@string/place_name"
-                tools:text="Badeplassen ved grorud"
 
                 android:textColor="@color/mainTextColor"
                 android:textSize="30sp"
@@ -100,14 +99,15 @@
                 android:id="@+id/textTempWater"
                 android:fontFamily="@font/roboto_medium"
                 android:gravity="center"
-                android:text="18&#176;C"
                 android:textColor="@color/mainTextColor"
+                android:textSize="16sp"
                 android:layout_width="44dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 app:layout_constraintEnd_toEndOf="@+id/imageWater"
                 app:layout_constraintStart_toStartOf="@+id/imageWater"
-                app:layout_constraintTop_toBottomOf="@+id/imageWater" />
+                app:layout_constraintTop_toBottomOf="@+id/imageWater"
+                tools:text="18&#176;C" />
 
             <ImageView
                 android:id="@+id/imageWeather"
@@ -124,14 +124,30 @@
                 android:id="@+id/textTempAir"
                 android:fontFamily="@font/roboto_medium"
                 android:gravity="center"
-                android:text="20&#176;C"
                 android:textColor="@color/mainTextColor"
+                android:textSize="16sp"
                 android:layout_width="44dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="@+id/textTempWater"
                 app:layout_constraintEnd_toEndOf="@+id/imageWeather"
                 app:layout_constraintStart_toStartOf="@+id/imageWeather"
-                app:layout_constraintTop_toTopOf="@+id/textTempWater" />
+                app:layout_constraintTop_toTopOf="@+id/textTempWater"
+                tools:text="20&#176;C"
+                />
+
+            <TextView
+                android:id="@+id/textRain"
+                android:fontFamily="@font/roboto_medium"
+                android:gravity="center"
+                android:textColor="@color/mainTextColor"
+                android:textSize="14sp"
+                android:layout_width="44dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="@+id/imageWeather"
+                app:layout_constraintStart_toStartOf="@+id/imageWeather"
+                app:layout_constraintTop_toBottomOf="@+id/textTempAir"
+                tools:text="0 mm"
+                />
 
             <TextView
                 android:id="@+id/textCurrents"
@@ -420,62 +436,62 @@
             <TextView
                 android:id="@+id/textRain1Hour"
                 android:fontFamily="@font/roboto_medium"
-                android:text="0 mm"
                 android:textColor="@color/mainTextColor"
                 android:textSize="14sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="@+id/textTemp1Hour"
                 app:layout_constraintStart_toStartOf="@+id/textTemp1Hour"
-                app:layout_constraintTop_toBottomOf="@+id/textTemp1Hour" />
+                app:layout_constraintTop_toBottomOf="@+id/textTemp1Hour"
+                tools:text="0 mm"/>
 
             <TextView
                 android:id="@+id/textRain2Hours"
                 android:fontFamily="@font/roboto_medium"
-                android:text="0 mm"
                 android:textColor="@color/mainTextColor"
                 android:textSize="14sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="@+id/textRain1Hour"
                 app:layout_constraintEnd_toEndOf="@+id/textTemp2Hours"
-                app:layout_constraintStart_toStartOf="@+id/textTemp2Hours"/>
+                app:layout_constraintStart_toStartOf="@+id/textTemp2Hours"
+                tools:text="0 mm"/>
 
             <TextView
                 android:id="@+id/textRain3Hours"
                 android:fontFamily="@font/roboto_medium"
-                android:text="0 mm"
                 android:textColor="@color/mainTextColor"
                 android:textSize="14sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="@+id/textRain2Hours"
                 app:layout_constraintEnd_toEndOf="@+id/textTemp3Hours"
-                app:layout_constraintStart_toStartOf="@+id/textTemp3Hours"/>
+                app:layout_constraintStart_toStartOf="@+id/textTemp3Hours"
+                tools:text="0 mm"/>
 
             <TextView
                 android:id="@+id/textRain4Hours"
                 android:fontFamily="@font/roboto_medium"
-                android:text="0 mm"
                 android:textColor="@color/mainTextColor"
                 android:textSize="14sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="@+id/textRain3Hours"
                 app:layout_constraintEnd_toEndOf="@+id/textTemp4Hours"
-                app:layout_constraintStart_toStartOf="@+id/textTemp4Hours"/>
+                app:layout_constraintStart_toStartOf="@+id/textTemp4Hours"
+                tools:text="0 mm"/>
 
             <TextView
                 android:id="@+id/textRain5Hours"
                 android:fontFamily="@font/roboto_medium"
-                android:text="0 mm"
                 android:textColor="@color/mainTextColor"
                 android:textSize="14sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="@+id/textRain4Hours"
                 app:layout_constraintEnd_toEndOf="@+id/textTemp5Hours"
-                app:layout_constraintStart_toStartOf="@+id/textTemp5Hours"/>
+                app:layout_constraintStart_toStartOf="@+id/textTemp5Hours"
+                tools:text="0 mm"/>
 
             <TextView
                 android:id="@+id/textLongForecast"
@@ -687,26 +703,26 @@
             <TextView
                 android:id="@+id/textRain2Days"
                 android:fontFamily="@font/roboto_medium"
-                android:text="0 mm"
                 android:textColor="@color/mainTextColor"
                 android:textSize="14sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="@+id/textRain1Day"
                 app:layout_constraintEnd_toEndOf="@+id/textTemp2Days"
-                app:layout_constraintStart_toStartOf="@+id/textTemp2Days"/>
+                app:layout_constraintStart_toStartOf="@+id/textTemp2Days"
+                tools:text="0 mm"/>
 
             <TextView
                 android:id="@+id/textRain3Days"
                 android:fontFamily="@font/roboto_medium"
-                android:text="0 mm"
                 android:textColor="@color/mainTextColor"
                 android:textSize="14sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="@+id/textRain2Days"
                 app:layout_constraintEnd_toEndOf="@+id/textTemp3Days"
-                app:layout_constraintStart_toStartOf="@+id/textTemp3Days"/>
+                app:layout_constraintStart_toStartOf="@+id/textTemp3Days"
+                tools:text="0 mm"/>
 
             <TextView
                 android:id="@+id/textRain4Days"
@@ -723,14 +739,14 @@
             <TextView
                 android:id="@+id/textRain5Days"
                 android:fontFamily="@font/roboto_medium"
-                android:text="0 mm"
                 android:textColor="@color/mainTextColor"
                 android:textSize="14sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="@+id/textRain4Days"
                 app:layout_constraintEnd_toEndOf="@+id/textTemp5Days"
-                app:layout_constraintStart_toStartOf="@+id/textTemp5Days"/>
+                app:layout_constraintStart_toStartOf="@+id/textTemp5Days"
+                tools:text="0 mm"/>
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
