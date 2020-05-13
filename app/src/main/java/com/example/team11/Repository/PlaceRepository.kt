@@ -313,8 +313,6 @@ class PlaceRepository private constructor(context: Context) {
         return temp
     }
 
-    // Kode inspirert av:
-
     private fun shouldFetch(nameDatabase: String, timeout: Int, timeUnit: TimeUnit): Boolean{
         val dateLastFetched = metadataDao.getDateLastCached(nameDatabase)
         val now = currentTimeMillis()
