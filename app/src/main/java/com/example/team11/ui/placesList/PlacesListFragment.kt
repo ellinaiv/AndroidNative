@@ -15,7 +15,6 @@ import com.example.team11.Place
 import com.example.team11.R
 import com.example.team11.ui.filter.FilterActivity
 import kotlinx.android.synthetic.main.fragment_places_list.*
-import kotlinx.android.synthetic.main.fragment_places_list.filterButton
 import kotlinx.android.synthetic.main.fragment_places_list.searchText
 
 class PlacesListFragment : Fragment() {
@@ -38,10 +37,17 @@ class PlacesListFragment : Fragment() {
             recycler_viewPlaces.adapter =
                 ListAdapter(
                     places,
-                    context!!,
+                    requireContext(),
                     placesListViewModel,
                     false
                 )
+            if (recycler_viewPlaces.adapter!!.itemCount == 0) {
+                imageEmptyListShark.visibility = View.VISIBLE
+                textNoElementInList.visibility = View.VISIBLE
+            } else {
+                imageEmptyListShark.visibility = View.GONE
+                textNoElementInList.visibility = View.GONE
+            }
             searchText.doOnTextChanged { text, _, _, _ ->
                 search(text.toString(), places)
             }
@@ -49,7 +55,7 @@ class PlacesListFragment : Fragment() {
 
         val filterButton = root.findViewById<ImageButton>(R.id.filterButton)
         filterButton.setOnClickListener {
-            startActivity(Intent(this.context!!, FilterActivity::class.java))
+            startActivity(Intent(this.requireContext(), FilterActivity::class.java))
         }
         return root
     }
@@ -59,14 +65,21 @@ class PlacesListFragment : Fragment() {
      * @param places: en liste med badesteder som skal filtreres
      */
     private fun search(name: String, places: List<Place>){
-        filterPlaces = places.filter{ it.name.contains(name.toString(), ignoreCase = true)}
+        filterPlaces = places.filter{ it.name.contains(name, ignoreCase = true)}
         recycler_viewPlaces.adapter =
             ListAdapter(
                 filterPlaces,
-                context!!,
+                requireContext(),
                 placesListViewModel,
                 false
             )
+        if (recycler_viewPlaces.adapter!!.itemCount == 0) {
+            imageEmptyListShark.visibility = View.VISIBLE
+            textNoElementInList.visibility = View.VISIBLE
+        } else {
+            imageEmptyListShark.visibility = View.GONE
+            textNoElementInList.visibility = View.GONE
+        }
     }
 
 }

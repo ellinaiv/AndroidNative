@@ -26,15 +26,16 @@ class FilterActivity : AppCompatActivity() {
             viewModel.resetPersonalPreference()
         }
 
-        buttonFilter.setOnClickListener {
-            setFilter()
-            finish()
-        }
 
         viewModel.personalPreferences!!.observe(this, Observer {personalPreferences ->
             makeSeekBar(personalPreferences)
             switchRepresentation.isChecked = personalPreferences.showBasedOnWater
             makeCheckBoxes(personalPreferences)
+
+            buttonFilter.setOnClickListener {
+                setFilter(personalPreferences)
+                finish()
+            }
 
         })
 
@@ -43,7 +44,7 @@ class FilterActivity : AppCompatActivity() {
     /**
      * Lager et nytt objekt som er den nye preferansen til brukeren
      */
-    private fun setFilter(){
+    private fun setFilter(personalPreferences: PersonalPreference){
         viewModel.updatePersonalPreference(
             PersonalPreference(
                 waterTempMid = seekBarWater.progress,
@@ -52,7 +53,8 @@ class FilterActivity : AppCompatActivity() {
                 showAirWarm = checkBoxWarmAir.isChecked,
                 showWaterCold = checkBoxColdWater.isChecked,
                 showWaterWarm = checkBoxWarmWater.isChecked,
-                showBasedOnWater = switchRepresentation.isChecked
+                showBasedOnWater = switchRepresentation.isChecked,
+                falseData = personalPreferences.falseData
         ))
     }
 
