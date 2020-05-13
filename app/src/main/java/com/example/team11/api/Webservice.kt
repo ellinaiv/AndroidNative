@@ -1,6 +1,6 @@
 package com.example.team11.api
 
-import com.example.team11.database.entity.WeatherForecastApi
+import com.example.team11.valueObjects.WeatherForecastApi
 import com.example.team11.valueObjects.OceanForecast
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
