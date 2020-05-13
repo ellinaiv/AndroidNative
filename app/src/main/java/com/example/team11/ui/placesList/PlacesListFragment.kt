@@ -29,7 +29,7 @@ class PlacesListFragment : Fragment() {
     ): View? {
         //TODO("Context i fragment kan være null før onAttach() og etter onDetach(), men burde være ganske safe i oncreat, litt usikker på om jeg burde bruke !! her.")
         placesListViewModel =
-            ViewModelProvider(this, PlacesListFragmentViewModel.InstanceCreator(context!!)).get(PlacesListFragmentViewModel::class.java)
+            ViewModelProvider(this, PlacesListFragmentViewModel.InstanceCreator(requireContext())).get(PlacesListFragmentViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_places_list, container, false)
         val layoutManager = LinearLayoutManager(context)
 
@@ -66,7 +66,6 @@ class PlacesListFragment : Fragment() {
      * @param places: en liste med badesteder som skal filtreres
      */
 
-    //TODO("Denne burde vel ikke ligge her, men i viewmodel?")
     private fun search(name: String, places: List<Place>){
         filterPlaces = places.filter{ it.name.contains(name, ignoreCase = true)}
         recycler_viewPlaces.adapter =

@@ -40,12 +40,12 @@ class PlaceActivityViewModel(context: Context): ViewModel() {
     /**
      * Oppdaterer databasen med favoritter.
      */
-    fun addFavoritePlace(place: Place) = placeRepository!!.addFavoritePlace(place)
+    fun addFavoritePlace() = placeRepository!!.addFavoritePlace(place!!.value!!)
 
     /**
      * Oppdaterer databasen med favoritter.
      */
-    fun removeFavoritePlace(place: Place) = placeRepository!!.removeFavoritePlace(place)
+    fun removeFavoritePlace() = placeRepository!!.removeFavoritePlace(place!!.value!!)
 
     /**
      * Endrer måten brukeren ønsker å komme seg til en strand i repository

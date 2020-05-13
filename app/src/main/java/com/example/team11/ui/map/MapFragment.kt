@@ -53,7 +53,7 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
     ): View? {
         //TODO("Context i fragment kan være null før onAttach() og etter onDetach(), men burde være ganske safe i oncreat, litt usikker på om jeg burde bruke !! her.")
         mapFragmentViewModel =
-            ViewModelProvider(this, MapFragmentViewModel.InstanceCreator(context!!)).get(MapFragmentViewModel::class.java)
+            ViewModelProvider(this, MapFragmentViewModel.InstanceCreator(requireContext())).get(MapFragmentViewModel::class.java)
 
         val root = inflater.inflate(R.layout.fragment_map, container, false)
         mapFragmentViewModel.places!!.observe(viewLifecycleOwner, Observer {places->

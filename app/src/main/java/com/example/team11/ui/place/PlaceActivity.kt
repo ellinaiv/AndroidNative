@@ -46,7 +46,6 @@ class PlaceActivity : AppCompatActivity() {
             Log.d("tagPlace", place.toString())
             makeAboutPage(place, savedInstanceState)
 
-            // TODO("Denne burde obeserveres, men hvordan?")
             viewModel.isFavorite.observe(this, Observer { isFavorite ->
                 toggleFavorite.isChecked = isFavorite
             })
@@ -66,13 +65,6 @@ class PlaceActivity : AppCompatActivity() {
         buttonBack.setOnClickListener {
             finish()
         }
-
-        toggleFavorite.setOnCheckedChangeListener { _, isChecked ->
-            if(isChecked) viewModel.addFavoritePlace(place)
-            else viewModel.removeFavoritePlace(place)
-        }
-
-
 
         buttonCurrentsInfo.setOnClickListener {
             if (layoutUVInfo.visibility == VISIBLE) {
@@ -196,6 +188,10 @@ class PlaceActivity : AppCompatActivity() {
     }
 
     override fun onPause() {
+        toggleFavorite.setOnCheckedChangeListener { _, isChecked ->
+            if(isChecked) viewModel.addFavoritePlace()
+            else viewModel.removeFavoritePlace()
+        }
         super.onPause()
         mapView?.onPause()
     }
