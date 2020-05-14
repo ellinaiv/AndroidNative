@@ -49,7 +49,7 @@ class PlaceActivity : AppCompatActivity() {
             })
 
             // henter langtidsvarsel vær
-            viewModel.getDayForecast().observe(this, Observer { longForecast ->
+            viewModel.getDayForecast().observe(this, Observer { dayForecast ->
                 //TODO
             })
 
@@ -81,7 +81,7 @@ class PlaceActivity : AppCompatActivity() {
         }
 
 
-        // nåværende badeplass, vær, vanntemperatur, havstrømninger, uv
+        // navn badeplass, vær nå, vanntemperatur, havstrømninger, uv
         textPlaceName.text = place.name
 
         textTempWater.text = getString(R.string.tempC, place.tempWater)
@@ -245,7 +245,7 @@ class PlaceActivity : AppCompatActivity() {
      */
     private fun convertCurrents(value: Int): String {
         ///TODO
-        return ""
+        return "Ikke tilgjengelig"
     }
 
 
