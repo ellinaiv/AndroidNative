@@ -9,7 +9,6 @@ import com.example.team11.Place
 import com.example.team11.Transportation
 import com.example.team11.api.ApiClient
 import com.example.team11.database.AppDatabase
-import com.example.team11.database.dao.WeatherForecastDao
 import com.example.team11.database.entity.WeatherForecastDb
 import com.example.team11.util.DbConstants
 import com.example.team11.valueObjects.OceanForecast
@@ -130,7 +129,7 @@ class PlaceRepository private constructor() {
         val tag = "tagGetPlaces"
         // TODO("Hvor ofte burde places fetches?")
         // TODO("Kan jeg gjøre non-assertive call her? Dersom favoritePlaces.value er null burde den stoppe å sjekke på første?"
-        val hourForecast: LiveData<List<WeatherForecastDb.HourForecast>> = weatherForecastDao.gethourForecast(place.id)
+        val hourForecast = weatherForecastDao.gethourForecast(place.id)
         Log.d(tag, "getHourForecast")
 
         AsyncTask.execute {
@@ -144,7 +143,7 @@ class PlaceRepository private constructor() {
                 cachePlacesDb(fetchPlaces(urlAPI))
             }
         }
-        return places
+        return hourForecast
     }
 
     /**
