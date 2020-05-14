@@ -195,7 +195,6 @@ class PlaceRepository private constructor(context: Context) {
     private fun fetchPlaces(url : String) : List<Place>{
         val places = ArrayList<Place>()
         val tag = "getData() ---->"
-        Log.d("Tag1", "HEI")
         runBlocking{
             try {
 
