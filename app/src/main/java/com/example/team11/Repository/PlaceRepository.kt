@@ -209,14 +209,14 @@ class PlaceRepository private constructor(context: Context) {
                 lateinit var name: String
                 lateinit var lat: String
                 lateinit var long: String
-                var id = 0
+                var id = -1
 
                 while (eventType != XmlPullParser.END_DOCUMENT) {
                     if (eventType == XmlPullParser.START_TAG && xpp.name == "place") {
                         for (i in 0 until xpp.attributeCount){
                             val attrName = xpp.getAttributeName(i)
                             if(attrName != null && attrName == "id"){
-                                Log.d("TAG1", xpp.getAttributeValue(i))
+                                id =  xpp.getAttributeValue(i).toInt()
                             }
                         }
                     }else if (eventType == XmlPullParser.START_TAG && xpp.name == "name") {
@@ -234,7 +234,7 @@ class PlaceRepository private constructor(context: Context) {
                         xpp.next()
                         places.add(
                             Place(
-                                id++,
+                                id,
                                 name,
                                 lat.toDouble(),
                                 long.toDouble()
