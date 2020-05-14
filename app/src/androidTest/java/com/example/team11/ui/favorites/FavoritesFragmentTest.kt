@@ -18,7 +18,6 @@ import org.hamcrest.Matchers.allOf
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import java.lang.Thread.sleep
 
 
 class FavoritesFragmentTest{
@@ -38,7 +37,6 @@ class FavoritesFragmentTest{
 
     @Test
     fun testFavouriteMarked(){
-        val activityTestRule = ActivityTestRule(MainActivity::class.java)
 
         launchFragmentInContainer<PlacesListFragment>(themeResId = R.style.AppTheme)
         onView(withId(R.id.recycler_viewPlaces))
@@ -49,11 +47,21 @@ class FavoritesFragmentTest{
             .perform(click())
 
         launchFragmentInContainer<FavoritesFragment>(themeResId = R.style.AppTheme)
-        onView(withId(R.id.recycler_view)).check( RecyclerViewItemCountAssertion(2))
-        //onView(withId(R.id.textName)).check(matches(withText("Bekkensten")))
+        onView(withId(R.id.recycler_view))
+            .check( RecyclerViewItemCountAssertion(2))
     }
 
-
+    @Test
+    fun testFavouriteUnmarked(){
+        launchFragmentInContainer<FavoritesFragment>(themeResId = R.style.AppTheme)
+        onView(withId(R.id.recycler_view))
+            .perform(click())
+        onView(withId(R.id.toggleFavourite))
+            .perform(click())
+        launchFragmentInContainer<FavoritesFragment>(themeResId = R.style.AppTheme)
+        onView(withId(R.id.recycler_view))
+            .check( RecyclerViewItemCountAssertion(1))
+    }
 }
 
 class RecyclerViewItemCountAssertion(private val expectedCount: Int) : ViewAssertion {
