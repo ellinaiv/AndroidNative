@@ -30,7 +30,7 @@ import com.mapbox.mapboxsdk.style.sources.GeoJsonSource
 import kotlinx.android.synthetic.main.activity_place.*
 
 class PlaceActivity : AppCompatActivity() {
-    private val viewModel: PlaceActivityViewModel by viewModels{ PlaceActivityViewModel.InstanceCreator() }
+    private val viewModel: PlaceActivityViewModel by viewModels{ PlaceActivityViewModel.InstanceCreator(applicationContext) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,8 +64,8 @@ class PlaceActivity : AppCompatActivity() {
      * @param place: badeplassen
      * @param savedInstanceState: mapView trenger denne i makeMap
      */
-    private fun makeAboutPage(place: Place, savedInstanceState: Bundle?, dayForecast: List<WeatherForecastDb.DayForecast>,
-                              hourForecast: List<WeatherForecastDb.HourForecast>) {
+    private fun makeAboutPage(place: Place, savedInstanceState: Bundle?, dayForecast: List<WeatherForecastDb.WeatherForecast>,
+                              hourForecast: List<WeatherForecastDb.WeatherForecast>) {
         // topBar
         buttonBack.setOnClickListener {
             finish()
