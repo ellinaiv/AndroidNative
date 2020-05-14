@@ -19,7 +19,7 @@ data class WeatherForecastDb(
     val dayForecast: DayForecast
 ) {
 
-    open class WeatherForecast(
+    abstract class WeatherForecast(
         var time: String,
         var symbol: String,
         @ColumnInfo(name = "temp_air")
