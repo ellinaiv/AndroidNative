@@ -138,7 +138,7 @@ class PlaceRepository private constructor(context: Context) {
         AsyncTask.execute {
             if (shouldFetch(
                     DbConstants.PLACE_TABLE_NAME,
-                    10,
+                    0,
                     TimeUnit.DAYS
                 )
             ) {
@@ -208,10 +208,17 @@ class PlaceRepository private constructor(context: Context) {
                 lateinit var name: String
                 lateinit var lat: String
                 lateinit var long: String
-                var id = 0
+                var id = -1
 
                 while (eventType != XmlPullParser.END_DOCUMENT) {
-                    if (eventType == XmlPullParser.START_TAG && xpp.name == "name") {
+                    if (eventType == XmlPullParser.START_TAG && xpp.name == "place") {
+                        for (i in 0 until xpp.attributeCount){
+                            val attrName = xpp.getAttributeName(i)
+                            if(attrName != null && attrName == "id"){
+                                id =  xpp.getAttributeValue(i).toInt()
+                            }
+                        }
+                    }else if (eventType == XmlPullParser.START_TAG && xpp.name == "name") {
                         xpp.next()
                         name = xpp.text
                         xpp.next()
@@ -226,7 +233,7 @@ class PlaceRepository private constructor(context: Context) {
                         xpp.next()
                         places.add(
                             Place(
-                                id++,
+                                id,
                                 name,
                                 lat.toDouble(),
                                 long.toDouble()
