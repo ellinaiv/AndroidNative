@@ -44,6 +44,20 @@ class PlaceActivityViewModel: ViewModel() {
     }
 
     /**
+     * Henter forecast for de neste timene fra database
+     * @param place
+     * @return Livedata<List<HourForecast>>
+     */
+    fun getHourForecast() = placeRepository!!.getHourForecast(place!!.value!!)
+    /**
+     * Henter forecast for de neste dagene fra database
+     * @param place
+     * @return Livedata<List<HourForecast>>
+     */
+    fun getDayForecast() = placeRepository!!.getDayForecast(place!!.value!!)
+
+
+    /**
      * Endrer måten brukeren ønsker å komme seg til en strand i repository
      * @param way: måten brukeren ønsker å komme seg til stranden
      */

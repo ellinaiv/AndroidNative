@@ -1,13 +1,16 @@
 package com.example.team11.Repository
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.team11.PersonalPreference
 import com.example.team11.Place
 import com.example.team11.Transportation
 import com.example.team11.api.ApiClient
+import com.example.team11.database.dao.WeatherForecastDao
+import com.example.team11.database.entity.WeatherForecastDb
 import com.example.team11.valueObjects.OceanForecast
-import com.example.team11.database.entity.WeatherForecast
+import com.example.team11.valueObjects.WeatherForecastApi
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.coroutines.awaitString
 import kotlinx.coroutines.runBlocking
@@ -108,6 +111,19 @@ class PlaceRepository private constructor() {
         }
         return places
     }
+
+    /**
+     * getPlaces funksjonen henter en liste til viewModel med vær for de netse timene
+     * @return: LiveData<List<HourForecast>>, liste med badesteder
+     */
+    fun getHourForecast(place: Place): LiveData<List<WeatherForecastDb.HourForecast>> = WeatherForecastDao.getHourForecast(place.id)
+
+    /**
+     * getPlaces funksjonen henter en liste til viewModel med vær for de netse timene
+     * @return: LiveData<List<DayForecast>>, liste med badesteder
+     */
+    fun getDayForecast(place: Place): LiveData<List<WeatherForecastDb.DayForecast>> = WeatherForecastDao.getDayForecast(place.id)
+
 
     /**
      * endrer currentplace
@@ -250,15 +266,15 @@ class PlaceRepository private constructor() {
 
         val call= ApiClient.build()?.getWeather(place.lat, place.lng)
 
-        call?.enqueue(object : Callback<WeatherForecast> {
-            override fun onResponse(call: Call<WeatherForecast>, response: Response<WeatherForecast>) {
+        call?.enqueue(object : Callback<WeatherForecastApi> {
+            override fun onResponse(call: Call<WeatherForecastApi>, response: Response<WeatherForecastApi>) {
                 if (response.isSuccessful){
                     Log.d(tag, response.body().toString())
                     val temp = response.body()?.weatherForecastTimeSlotList?.list?.get(0)?.types?.instantWeatherForecast?.details?.temp
                     Log.d(tag, temp.toString())
                 }
             }
-            override fun onFailure(call: Call<WeatherForecast>, t: Throwable) {
+            override fun onFailure(call: Call<WeatherForecastApi>, t: Throwable) {
                 Log.d(tag, "error")
             }
         })

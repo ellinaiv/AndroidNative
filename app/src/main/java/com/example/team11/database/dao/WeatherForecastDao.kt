@@ -9,7 +9,7 @@ import androidx.room.*
 import com.example.team11.database.entity.Place
 
 @Dao
-interface PlaceDao {
+interface WeatherForecastDao {
 
     /**
      * Setter inn nye steder, men setter kun inn de stedene som ikke ligger der fra før, regner med at steder ikke endrer posisjon, og det er for at favorite-informasjonen skal bevares
