@@ -93,12 +93,14 @@
                 app:layout_constraintEnd_toStartOf="@+id/imageWeather"
                 app:layout_constraintTop_toTopOf="@+id/textPlaceName"
                 android:contentDescription="@string/water_icon"
-                app:srcCompat="@drawable/water_blue" />
+                app:srcCompat="@drawable/ic_nodatawave"
+                tools:srcCompat="@drawable/water_blue" />
 
             <TextView
                 android:id="@+id/textTempWater"
                 android:fontFamily="@font/roboto_medium"
                 android:gravity="center"
+                android:text="@string/no_data"
                 android:textColor="@color/mainTextColor"
                 android:textSize="16sp"
                 android:layout_width="44dp"
@@ -118,12 +120,14 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/imageWater"
                 android:contentDescription="@string/weather_icon"
-                app:srcCompat="@drawable/sun" />
+                app:srcCompat="@drawable/ic_noweatherdata"
+                tools:srcCompat="@drawable/sun" />
 
             <TextView
                 android:id="@+id/textTempAir"
                 android:fontFamily="@font/roboto_medium"
                 android:gravity="center"
+                android:text="@string/no_weather_data"
                 android:textColor="@color/mainTextColor"
                 android:textSize="16sp"
                 android:layout_width="44dp"
@@ -139,6 +143,7 @@
                 android:id="@+id/textRain"
                 android:fontFamily="@font/roboto_medium"
                 android:gravity="center"
+                android:text="@string/empty"
                 android:textColor="@color/mainTextColor"
                 android:textSize="14sp"
                 android:layout_width="44dp"
@@ -176,7 +181,7 @@
             <TextView
                 android:id="@+id/textCurrentsResult"
                 android:fontFamily="@font/roboto_medium"
-                android:text="Lite"
+                tools:text="Lite"
                 tools:textColor="@color/place_info_low"
                 android:textSize="20sp"
                 android:layout_width="wrap_content"
@@ -189,7 +194,7 @@
             <TextView
                 android:id="@+id/textUVResult"
                 android:fontFamily="@font/roboto_medium"
-                android:text="Sterk"
+                tools:text="Sterk"
                 tools:textColor="@color/place_currents_info_strong"
                 android:textSize="20sp"
                 android:layout_width="wrap_content"
@@ -253,7 +258,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:gravity="center"
-                android:text="kl. 14"
+                android:text="@string/empty"
+                tools:text="kl. 14"
                 android:textColor="@color/mainTextColor"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -267,7 +273,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="kl. 15"
+                android:text="@string/empty"
+                tools:text="kl. 15"
                 android:textColor="@color/mainTextColor"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@+id/text1Hour"
@@ -280,7 +287,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="kl. 16"
+                android:text="@string/empty"
+                tools:text="kl. 16"
                 android:textColor="@color/mainTextColor"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@+id/text2Hours"
@@ -294,7 +302,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="kl. 17"
+                android:text="@string/empty"
+                tools:text="kl. 17"
                 android:textColor="@color/mainTextColor"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@+id/text3Hours"
@@ -308,7 +317,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="kl. 18"
+                android:text="@string/empty"
+                tools:text="kl. 18"
                 android:textColor="@color/mainTextColor"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@+id/text4Hours"
@@ -325,7 +335,8 @@
                 app:layout_constraintTop_toBottomOf="@+id/text1Hour"
                 android:layout_marginTop="8dp"
                 android:contentDescription="TODO"
-                app:srcCompat="@drawable/sun" />
+                app:srcCompat="@drawable/ic_noweatherdata"
+                tools:srcCompat="@drawable/sun" />
 
             <ImageView
                 android:id="@+id/imageForecast2Hours"
@@ -335,7 +346,8 @@
                 app:layout_constraintEnd_toEndOf="@+id/text2Hours"
                 app:layout_constraintStart_toStartOf="@+id/text2Hours"
                 android:contentDescription="TODO"
-                app:srcCompat="@drawable/sun" />
+                app:srcCompat="@drawable/ic_noweatherdata"
+                tools:srcCompat="@drawable/sun" />
 
             <ImageView
                 android:id="@+id/imageForecast3Hours"
@@ -345,7 +357,8 @@
                 app:layout_constraintEnd_toEndOf="@+id/text3Hours"
                 app:layout_constraintStart_toStartOf="@+id/text3Hours"
                 android:contentDescription="TODO"
-                app:srcCompat="@drawable/cloud" />
+                app:srcCompat="@drawable/ic_noweatherdata"
+                tools:srcCompat="@drawable/cloud" />
 
             <ImageView
                 android:id="@+id/imageForecast4Hours"
@@ -355,7 +368,8 @@
                 app:layout_constraintEnd_toEndOf="@+id/text4Hours"
                 app:layout_constraintStart_toStartOf="@+id/text4Hours"
                 android:contentDescription="TODO"
-                app:srcCompat="@drawable/sun" />
+                app:srcCompat="@drawable/ic_noweatherdata"
+                tools:srcCompat="@drawable/sun" />
 
             <ImageView
                 android:id="@+id/imageForecast5Hours"
@@ -365,13 +379,15 @@
                 app:layout_constraintEnd_toEndOf="@+id/text5Hours"
                 app:layout_constraintStart_toStartOf="@+id/text5Hours"
                 android:contentDescription="TODO"
-                app:srcCompat="@drawable/cloud" />
+                app:srcCompat="@drawable/ic_noweatherdata"
+                tools:srcCompat="@drawable/cloud" />
 
             <TextView
                 android:id="@+id/textTemp1Hour"
                 android:fontFamily="@font/roboto_medium"
                 android:gravity="center"
-                android:text="25&#176;C"
+                tools:text="25&#176;C"
+                android:text="@string/no_weather_data"
                 android:textColor="@color/mainTextColor"
                 android:textSize="16sp"
                 android:layout_width="wrap_content"
@@ -385,7 +401,8 @@
                 android:id="@+id/textTemp2Hours"
                 android:fontFamily="@font/roboto_medium"
                 android:gravity="center"
-                android:text="23&#176;C"
+                android:text="@string/no_weather_data"
+                tools:text="23&#176;C"
                 android:textColor="@color/mainTextColor"
                 android:textSize="16sp"
                 android:layout_width="wrap_content"
@@ -398,7 +415,8 @@
                 android:id="@+id/textTemp3Hours"
                 android:fontFamily="@font/roboto_medium"
                 android:gravity="center"
-                android:text="20&#176;C"
+                android:text="@string/no_weather_data"
+                tools:text="20&#176;C"
                 android:textColor="@color/mainTextColor"
                 android:textSize="16sp"
                 android:layout_width="wrap_content"
@@ -411,7 +429,8 @@
                 android:id="@+id/textTemp4Hours"
                 android:fontFamily="@font/roboto_medium"
                 android:gravity="center"
-                android:text="21&#176;C"
+                android:text="@string/no_weather_data"
+                tools:text="21&#176;C"
                 android:textColor="@color/mainTextColor"
                 android:textSize="16sp"
                 android:layout_width="wrap_content"
@@ -424,7 +443,8 @@
                 android:id="@+id/textTemp5Hours"
                 android:fontFamily="@font/roboto_medium"
                 android:gravity="center"
-                android:text="20&#176;C"
+                android:text="@string/no_weather_data"
+                tools:text="20&#176;C"
                 android:textColor="@color/mainTextColor"
                 android:textSize="16sp"
                 android:layout_width="wrap_content"
@@ -436,6 +456,7 @@
             <TextView
                 android:id="@+id/textRain1Hour"
                 android:fontFamily="@font/roboto_medium"
+                android:text="@string/empty"
                 android:textColor="@color/mainTextColor"
                 android:textSize="14sp"
                 android:layout_width="wrap_content"
@@ -448,6 +469,7 @@
             <TextView
                 android:id="@+id/textRain2Hours"
                 android:fontFamily="@font/roboto_medium"
+                android:text="@string/empty"
                 android:textColor="@color/mainTextColor"
                 android:textSize="14sp"
                 android:layout_width="wrap_content"
@@ -460,6 +482,7 @@
             <TextView
                 android:id="@+id/textRain3Hours"
                 android:fontFamily="@font/roboto_medium"
+                android:text="@string/empty"
                 android:textColor="@color/mainTextColor"
                 android:textSize="14sp"
                 android:layout_width="wrap_content"
@@ -472,6 +495,7 @@
             <TextView
                 android:id="@+id/textRain4Hours"
                 android:fontFamily="@font/roboto_medium"
+                android:text="@string/empty"
                 android:textColor="@color/mainTextColor"
                 android:textSize="14sp"
                 android:layout_width="wrap_content"
@@ -484,6 +508,7 @@
             <TextView
                 android:id="@+id/textRain5Hours"
                 android:fontFamily="@font/roboto_medium"
+                android:text="@string/empty"
                 android:textColor="@color/mainTextColor"
                 android:textSize="14sp"
                 android:layout_width="wrap_content"
@@ -509,7 +534,8 @@
                 android:id="@+id/textDate1Day"
                 android:fontFamily="@font/roboto_medium"
                 android:gravity="center"
-                android:text="21/6"
+                android:text="@string/empty"
+                tools:text="21/6"
                 android:textColor="@color/mainTextColor"
                 android:textSize="16sp"
                 android:layout_width="wrap_content"
@@ -523,7 +549,8 @@
                 android:id="@+id/textDate2Days"
                 android:fontFamily="@font/roboto_medium"
                 android:gravity="center"
-                android:text="22/6"
+                android:text="@string/empty"
+                tools:text="22/6"
                 android:textColor="@color/mainTextColor"
                 android:textSize="16sp"
                 android:layout_width="wrap_content"
@@ -536,7 +563,8 @@
                 android:id="@+id/textDate3Days"
                 android:fontFamily="@font/roboto_medium"
                 android:gravity="center"
-                android:text="23/6"
+                android:text="@string/empty"
+                tools:text="23/6"
                 android:textColor="@color/mainTextColor"
                 android:textSize="16sp"
                 android:layout_width="wrap_content"
@@ -549,7 +577,8 @@
                 android:id="@+id/textDate4Days"
                 android:fontFamily="@font/roboto_medium"
                 android:gravity="center"
-                android:text="24/6"
+                android:text="@string/empty"
+                tools:text="24/6"
                 android:textColor="@color/mainTextColor"
                 android:textSize="16sp"
                 android:layout_width="wrap_content"
@@ -562,7 +591,8 @@
                 android:id="@+id/textDate5Days"
                 android:fontFamily="@font/roboto_medium"
                 android:gravity="center"
-                android:text="25/6"
+                android:text="@string/empty"
+                tools:text="25/6"
                 android:textColor="@color/mainTextColor"
                 android:textSize="16sp"
                 android:layout_width="wrap_content"
@@ -590,7 +620,8 @@
                 app:layout_constraintEnd_toEndOf="@+id/textDate2Days"
                 app:layout_constraintStart_toStartOf="@+id/textDate2Days"
                 android:contentDescription="TODO"
-                app:srcCompat="@drawable/sun" />
+                app:srcCompat="@drawable/ic_noweatherdata"
+                tools:srcCompat="@drawable/sun" />
 
             <ImageView
                 android:id="@+id/imageForecast3Days"
@@ -600,7 +631,8 @@
                 app:layout_constraintEnd_toEndOf="@+id/textDate3Days"
                 app:layout_constraintStart_toStartOf="@+id/textDate3Days"
                 android:contentDescription="TODO"
-                app:srcCompat="@drawable/cloud" />
+                app:srcCompat="@drawable/ic_noweatherdata"
+                tools:srcCompat="@drawable/cloud" />
 
             <ImageView
                 android:id="@+id/imageForecast4Days"
@@ -610,7 +642,8 @@
                 app:layout_constraintEnd_toEndOf="@+id/textDate4Days"
                 app:layout_constraintStart_toStartOf="@+id/textDate4Days"
                 android:contentDescription="TODO"
-                app:srcCompat="@drawable/sun" />
+                app:srcCompat="@drawable/ic_noweatherdata"
+                tools:srcCompat="@drawable/sun" />
 
             <ImageView
                 android:id="@+id/imageForecast5Days"
@@ -620,13 +653,15 @@
                 app:layout_constraintEnd_toEndOf="@+id/textDate5Days"
                 app:layout_constraintStart_toStartOf="@+id/textDate5Days"
                 android:contentDescription="TODO"
-                app:srcCompat="@drawable/cloud" />
+                app:srcCompat="@drawable/ic_noweatherdata"
+                tools:srcCompat="@drawable/cloud" />
 
             <TextView
                 android:id="@+id/textTemp1Day"
                 android:fontFamily="@font/roboto_medium"
                 android:gravity="center"
-                android:text="25&#176;C"
+                android:text="@string/no_weather_data"
+                tools:text="25&#176;C"
                 android:textColor="@color/mainTextColor"
                 android:textSize="16sp"
                 android:layout_width="wrap_content"
@@ -640,7 +675,8 @@
                 android:id="@+id/textTemp2Days"
                 android:fontFamily="@font/roboto_medium"
                 android:gravity="center"
-                android:text="23&#176;C"
+                android:text="@string/no_weather_data"
+                tools:text="23&#176;C"
                 android:textColor="@color/mainTextColor"
                 android:textSize="16sp"
                 android:layout_width="wrap_content"
@@ -653,7 +689,8 @@
                 android:id="@+id/textTemp3Days"
                 android:fontFamily="@font/roboto_medium"
                 android:gravity="center"
-                android:text="20&#176;C"
+                android:text="@string/no_weather_data"
+                tools:text="20&#176;C"
                 android:textColor="@color/mainTextColor"
                 android:textSize="16sp"
                 android:layout_width="wrap_content"
@@ -666,7 +703,8 @@
                 android:id="@+id/textTemp4Days"
                 android:fontFamily="@font/roboto_medium"
                 android:gravity="center"
-                android:text="21&#176;C"
+                android:text="@string/no_weather_data"
+                tools:text="21&#176;C"
                 android:textColor="@color/mainTextColor"
                 android:textSize="16sp"
                 android:layout_width="wrap_content"
@@ -679,7 +717,8 @@
                 android:id="@+id/textTemp5Days"
                 android:fontFamily="@font/roboto_medium"
                 android:gravity="center"
-                android:text="20&#176;C"
+                android:text="@string/no_weather_data"
+                tools:text="20&#176;C"
                 android:textColor="@color/mainTextColor"
                 android:textSize="16sp"
                 android:layout_width="wrap_content"
@@ -691,7 +730,8 @@
             <TextView
                 android:id="@+id/textRain1Day"
                 android:fontFamily="@font/roboto_medium"
-                android:text="0 mm"
+                android:text="@string/empty"
+                tools:text="0 mm"
                 android:textColor="@color/mainTextColor"
                 android:textSize="14sp"
                 android:layout_width="wrap_content"
@@ -703,6 +743,7 @@
             <TextView
                 android:id="@+id/textRain2Days"
                 android:fontFamily="@font/roboto_medium"
+                android:text="@string/empty"
                 android:textColor="@color/mainTextColor"
                 android:textSize="14sp"
                 android:layout_width="wrap_content"
@@ -715,6 +756,7 @@
             <TextView
                 android:id="@+id/textRain3Days"
                 android:fontFamily="@font/roboto_medium"
+                android:text="@string/empty"
                 android:textColor="@color/mainTextColor"
                 android:textSize="14sp"
                 android:layout_width="wrap_content"
@@ -727,7 +769,8 @@
             <TextView
                 android:id="@+id/textRain4Days"
                 android:fontFamily="@font/roboto_medium"
-                android:text="0 mm"
+                android:text="@string/empty"
+                tools:text="0 mm"
                 android:textColor="@color/mainTextColor"
                 android:textSize="14sp"
                 android:layout_width="wrap_content"
@@ -739,6 +782,7 @@
             <TextView
                 android:id="@+id/textRain5Days"
                 android:fontFamily="@font/roboto_medium"
+                android:text="@string/empty"
                 android:textColor="@color/mainTextColor"
                 android:textSize="14sp"
                 android:layout_width="wrap_content"
@@ -996,7 +1040,7 @@
                 android:paddingHorizontal="26dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/buttonUVInfo"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <ImageButton
                     android:id="@+id/buttonUVCloseInfo"

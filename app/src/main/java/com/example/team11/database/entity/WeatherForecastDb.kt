@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
-import com.example.team11.Place
+//import com.example.team11.Place       overflødig? får også feil når den er med
 import com.example.team11.util.DbConstants
 
 
