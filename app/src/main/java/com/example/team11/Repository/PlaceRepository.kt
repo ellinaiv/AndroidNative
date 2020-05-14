@@ -138,7 +138,7 @@ class PlaceRepository private constructor(context: Context) {
         AsyncTask.execute {
             if (shouldFetch(
                     DbConstants.PLACE_TABLE_NAME,
-                    10,
+                    0,
                     TimeUnit.DAYS
                 )
             ) {
@@ -195,6 +195,7 @@ class PlaceRepository private constructor(context: Context) {
     private fun fetchPlaces(url : String) : List<Place>{
         val places = ArrayList<Place>()
         val tag = "getData() ---->"
+        Log.d("Tag1", "HEI")
         runBlocking{
             try {
 
@@ -211,7 +212,14 @@ class PlaceRepository private constructor(context: Context) {
                 var id = 0
 
                 while (eventType != XmlPullParser.END_DOCUMENT) {
-                    if (eventType == XmlPullParser.START_TAG && xpp.name == "name") {
+                    if (eventType == XmlPullParser.START_TAG && xpp.name == "place") {
+                        for (i in 0 until xpp.attributeCount){
+                            val attrName = xpp.getAttributeName(i)
+                            if(attrName != null && attrName == "id"){
+                                Log.d("TAG1", xpp.getAttributeValue(i))
+                            }
+                        }
+                    }else if (eventType == XmlPullParser.START_TAG && xpp.name == "name") {
                         xpp.next()
                         name = xpp.text
                         xpp.next()
