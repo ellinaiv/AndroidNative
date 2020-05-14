@@ -1,18 +1,21 @@
 package com.example.team11.ui.place
 
+import android.content.Context
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.team11.database.entity.Place
 import com.example.team11.PersonalPreference
-import com.example.team11.Place
 import com.example.team11.Repository.PlaceRepository
 import com.example.team11.Transportation
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Point
 
-class PlaceActivityViewModel: ViewModel() {
+class PlaceActivityViewModel(context: Context): ViewModel() {
 
     var place: MutableLiveData<Place>? = null
+    lateinit var isFavorite: LiveData<Boolean>
     private var placeRepository: PlaceRepository? = null
     private var personalPreference: MutableLiveData<PersonalPreference>? = null
 
@@ -21,27 +24,28 @@ class PlaceActivityViewModel: ViewModel() {
      */
     init {
         if(place == null){
-            placeRepository = PlaceRepository.getInstance()
+            placeRepository = PlaceRepository.getInstance(context)
             place = placeRepository!!.getCurrentPlace()
+            isFavorite = placeRepository!!.isPlaceFavorite(place!!.value!!)
             personalPreference = placeRepository!!.getPersonalPreferences()
         }
     }
 
-
-    class InstanceCreator : ViewModelProvider.Factory {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return modelClass.getConstructor().newInstance()
+    class InstanceCreator(val context: Context) : ViewModelProvider.Factory {
+        override fun <T : ViewModel?> create(modelClass: Class<T>): T  {
+            return modelClass.getConstructor(Context::class.java).newInstance(context)
         }
     }
 
     /**
-     * Funksjonen forteller videre til place repository at det har blitt gjort endringer på
-     * hvilke steder som er favoirutter og ber den om å oppdatere det. Dette må gjøres hver gang
-     * hjertetoggelknappen blir trykket på
+     * Markerer stedet som favoritt i databasen
      */
-    fun updateFavoritePlaces(){
-        placeRepository!!.updateFavoritePlaces()
-    }
+    fun addFavoritePlace() = placeRepository!!.addFavoritePlace(place!!.value!!)
+
+    /**
+     * Markerer stedet som ikke-favoritt i databasen
+     */
+    fun removeFavoritePlace() = placeRepository!!.removeFavoritePlace(place!!.value!!)
 
     /**
      * Henter forecast for de neste timene fra database

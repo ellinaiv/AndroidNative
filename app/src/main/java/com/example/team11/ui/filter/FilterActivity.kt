@@ -11,7 +11,8 @@ import kotlinx.android.synthetic.main.activity_filter.*
 import kotlinx.android.synthetic.main.activity_filter.textTempMidWater
 
 class FilterActivity : AppCompatActivity() {
-    private val viewModel: FilterActivityViewModel by viewModels{ FilterActivityViewModel.InstanceCreator() }
+    private val viewModel: FilterActivityViewModel by viewModels{ FilterActivityViewModel.InstanceCreator(applicationContext) }
+    private var waterRepresentation = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,23 +20,37 @@ class FilterActivity : AppCompatActivity() {
 
         supportActionBar!!.hide()
         buttonBack.setOnClickListener {
+            setFilter()
             finish()
         }
 
-        buttonReset.setOnClickListener {
-            viewModel.resetPersonalPreference()
+        buttonAirTemp.setOnClickListener {
+            if(waterRepresentation){
+                waterRepresentation = false
+                buttonAirTemp.setImageResource(R.drawable.rep_true)
+                buttonWaterTemp.setImageResource(R.drawable.rep_false)
+            }
         }
 
+        buttonWaterTemp.setOnClickListener {
+            if(! waterRepresentation){
+                waterRepresentation = true
+                buttonWaterTemp.setImageResource(R.drawable.rep_true)
+                buttonAirTemp.setImageResource(R.drawable.rep_false)
+            }
+        }
 
         viewModel.personalPreferences!!.observe(this, Observer {personalPreferences ->
             makeSeekBar(personalPreferences)
-            switchRepresentation.isChecked = personalPreferences.showBasedOnWater
-            makeCheckBoxes(personalPreferences)
-
-            buttonFilter.setOnClickListener {
-                setFilter(personalPreferences)
-                finish()
+            waterRepresentation = personalPreferences.showBasedOnWater
+            if(waterRepresentation){
+                buttonWaterTemp.setImageResource(R.drawable.rep_true)
+                buttonAirTemp.setImageResource(R.drawable.rep_false)
+            }else{
+                buttonAirTemp.setImageResource(R.drawable.rep_true)
+                buttonWaterTemp.setImageResource(R.drawable.rep_false)
             }
+            makeCheckBoxes(personalPreferences)
 
         })
 
@@ -44,7 +59,7 @@ class FilterActivity : AppCompatActivity() {
     /**
      * Lager et nytt objekt som er den nye preferansen til brukeren
      */
-    private fun setFilter(personalPreferences: PersonalPreference){
+    private fun setFilter(){
         viewModel.updatePersonalPreference(
             PersonalPreference(
                 waterTempMid = seekBarWater.progress,
@@ -53,8 +68,8 @@ class FilterActivity : AppCompatActivity() {
                 showAirWarm = checkBoxWarmAir.isChecked,
                 showWaterCold = checkBoxColdWater.isChecked,
                 showWaterWarm = checkBoxWarmWater.isChecked,
-                showBasedOnWater = switchRepresentation.isChecked,
-                falseData = personalPreferences.falseData
+                showBasedOnWater = waterRepresentation,
+                falseData = viewModel.personalPreferences!!.value!!.falseData
         ))
     }
 
@@ -121,5 +136,10 @@ class FilterActivity : AppCompatActivity() {
             }
 
         })
+    }
+
+    override fun onPause() {
+        super.onPause()
+        setFilter()
     }
 }

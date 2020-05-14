@@ -1,10 +1,8 @@
 package com.example.team11.ui.directions
 
 import android.content.Context
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import com.example.team11.Place
+import androidx.lifecycle.*
+import com.example.team11.database.entity.Place
 import com.example.team11.Repository.PlaceRepository
 import com.example.team11.Transportation
 import com.mapbox.geojson.Feature
@@ -12,8 +10,8 @@ import com.mapbox.geojson.Point
 import kotlin.math.roundToInt
 import com.example.team11.R
 
-class DirectionsActivityViewModel: ViewModel() {
-    var place: MutableLiveData<Place>? = null
+class DirectionsActivityViewModel(context: Context): ViewModel() {
+    var place: LiveData<Place>? = null
     var wayOfTransportation: MutableLiveData<Transportation>? = null
     private var placeRepository: PlaceRepository? = null
 
@@ -23,16 +21,16 @@ class DirectionsActivityViewModel: ViewModel() {
      */
     init {
         if(place == null){
-            placeRepository = PlaceRepository.getInstance()
+            placeRepository = PlaceRepository.getInstance(context)
             place = placeRepository!!.getCurrentPlace()
             wayOfTransportation = placeRepository!!.getWayOfTransportation()
         }
     }
 
 
-    class InstanceCreator : ViewModelProvider.Factory {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return modelClass.getConstructor().newInstance()
+    class InstanceCreator(val context: Context) : ViewModelProvider.Factory {
+        override fun <T : ViewModel?> create(modelClass: Class<T>): T  {
+            return modelClass.getConstructor(Context::class.java).newInstance(context)
         }
     }
 

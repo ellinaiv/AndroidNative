@@ -12,7 +12,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
-import com.example.team11.Place
+import com.example.team11.database.entity.Place
 import com.example.team11.R
 import com.example.team11.Transportation
 import com.example.team11.database.entity.WeatherForecastDb
@@ -43,13 +43,17 @@ class PlaceActivity : AppCompatActivity() {
         viewModel.place!!.observe(this, Observer { place ->
             //Skriver ut slik at vi kan se om vi har riktig badestrand
             Log.d("tagPlace", place.toString())
-
+            makeAboutPage(place, savedInstanceState)
             // henter langtidsvarsel vær
             viewModel.getDayForecast().observe(this, Observer { dayForecast ->
                 // henter timesvarsel vær
                 viewModel.getHourForecast().observe(this, Observer { hourForecast ->
                     makeAboutPage(place, savedInstanceState, dayForecast, hourForecast)
                 })
+            })
+
+            viewModel.isFavorite.observe(this, Observer { isFavorite ->
+                toggleFavorite.isChecked = isFavorite
             })
         })
         Log.d("tagPlace", "ferdig")
@@ -60,17 +64,11 @@ class PlaceActivity : AppCompatActivity() {
      * @param place: badeplassen
      * @param savedInstanceState: mapView trenger denne i makeMap
      */
-    private fun makeAboutPage(place: Place, savedInstanceState: Bundle?, dayForecast: List<WeatherForecastDb.DayForecast>, hourForecast: List<WeatherForecastDb.HourForecast>) {
-        toggleFavourite.isChecked = place.favorite
-
+    private fun makeAboutPage(place: Place, savedInstanceState: Bundle?, dayForecast: List<WeatherForecastDb.DayForecast>,
+                              hourForecast: List<WeatherForecastDb.HourForecast>) {
         // topBar
         buttonBack.setOnClickListener {
             finish()
-        }
-
-        toggleFavourite.setOnCheckedChangeListener { _, isChecked ->
-            place.favorite = isChecked
-            viewModel.updateFavoritePlaces()
         }
 
         // nåværende badeplass, vær, vanntemperatur, havstrømninger, uv
@@ -169,9 +167,6 @@ class PlaceActivity : AppCompatActivity() {
             startActivity(link)
         }
     }
-
-
-
 
     /**
      * Tegner kartet til stedet man er på nå, og zommer inn på det.
@@ -307,6 +302,8 @@ class PlaceActivity : AppCompatActivity() {
     }
 
     override fun onPause() {
+        if (toggleFavorite.isChecked) viewModel.addFavoritePlace()
+        else viewModel.removeFavoritePlace()
         super.onPause()
         mapView?.onPause()
     }

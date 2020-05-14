@@ -28,8 +28,8 @@
             android:src="@drawable/arrow_left"/>
 
         <ToggleButton
-            android:id="@+id/toggleFavourite"
-            android:background="@drawable/favourite_toggle_image"
+            android:id="@+id/toggleFavorite"
+            android:background="@drawable/favorite_toggle_image"
             android:textOff=""
             android:textOn=""
             android:layout_width="35dp"

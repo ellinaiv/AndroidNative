@@ -1,16 +1,18 @@
 package com.example.team11.Repository
 
+import android.content.Context
 import android.os.AsyncTask
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.team11.PersonalPreference
-import com.example.team11.Place
+import com.example.team11.database.entity.Place
 import com.example.team11.Transportation
 import com.example.team11.api.ApiClient
 import com.example.team11.database.AppDatabase
 import com.example.team11.database.entity.WeatherForecastDb
 import com.example.team11.util.DbConstants
+import com.example.team11.database.entity.MetadataTable
 import com.example.team11.valueObjects.OceanForecast
 import com.example.team11.valueObjects.WeatherForecastApi
 import com.github.kittinunf.fuel.Fuel
@@ -24,19 +26,18 @@ import retrofit2.Response
 import java.io.StringReader
 import java.lang.System.currentTimeMillis
 import java.util.concurrent.TimeUnit
+import kotlin.collections.ArrayList
 
-class PlaceRepository private constructor() {
-
+class PlaceRepository private constructor(context: Context) {
     private var allPlaces = mutableListOf<Place>()
-    private var places = MutableLiveData<List<Place>>()
     private val urlAPI = "http://oslokommune.msolution.no/friluft/badetemperaturer.jsp"
     private var currentPlace = MutableLiveData<Place>()
     private var wayOfTransportation = MutableLiveData<Transportation>()
     private var favoritePlaces = MutableLiveData<List<Place>>()
     private var personalPreferences = MutableLiveData<PersonalPreference>()
-    private val database: AppDatabase = AppDatabase.getInstance()
-    private val weatherForecastDao = database.weatherForecastDao()
-
+    private val database: AppDatabase = AppDatabase.getInstance(context)
+    private val placeDao = database.placeDao()
+    private val metadataDao = database.metadataDao()
 
     //Kotlin sin static
     companion object {
@@ -47,9 +48,9 @@ class PlaceRepository private constructor() {
          * eller returneres det et.
          * @return PlaceRepository
          */
-        fun getInstance() =
+        fun getInstance(context: Context) =
             instance ?: synchronized(this){
-                instance?: PlaceRepository().also {
+                instance?: PlaceRepository(context).also {
                     instance = it
                     it.personalPreferences.value = PersonalPreference()
                     it.wayOfTransportation.value = Transportation.BIKE
@@ -83,38 +84,68 @@ class PlaceRepository private constructor() {
      */
     private fun updatePlaces(){
         val pp = personalPreferences.value!!
-        places.value = allPlaces.filter { place ->
-            pp.isTempWaterOk(place) and pp.isTempAirOk(place)
-        }
+        //places.value = allPlaces.filter { place ->
+        //    pp.isTempWaterOk(place) and pp.isTempAirOk(place)
+        //}
     }
 
     /**
      * Returnerer en liste med favoritt stedene til en bruker
-     * @return MutableLiveData<List<Place>> liste med brukerens favoritt steder
+     * @return LiveData<List<Place>> liste med brukerens favoritt steder
      */
-    fun getFavoritePlaces(): MutableLiveData<List<Place>>{
-        if(favoritePlaces.value == null){
-            favoritePlaces.value = emptyList()
-        }
-        return favoritePlaces
+    fun getFavoritePlaces(): LiveData<List<Place>>{
+        val places =  placeDao.getFavoritePlaceList()
+        Log.d("tagFavoritePlace", "Favorittsteder: ${places.value}")
+        return places
+
     }
 
     /**
-     * Oppdaterer favoritt stedene
+     * Legger til favoritt sted
      */
-    fun updateFavoritePlaces(){
-        favoritePlaces.value = allPlaces.filter { place ->  place.favorite}
+    fun addFavoritePlace(place: Place){
+        AsyncTask.execute { placeDao.addFavorite(place.id)}
+        Log.d("tagFavoritePlace", "Lagt til favorittsted i databasen")
+    }
+
+    /**
+     * Fjern favoritt sted
+     */
+    fun removeFavoritePlace(place: Place){
+        AsyncTask.execute { placeDao.removeFavorite(place.id)}
+        Log.d("tagFavoritePlace", "Fjernet favorittsted i databasen")
+    }
+
+    /**
+     * Sjekker om sted er favoritt
+     */
+    fun isPlaceFavorite(place: Place): LiveData<Boolean> {
+        val returnValue = placeDao.isPlaceFavorite(place.id)
+        Log.d("tagIsPlaceFavorite", "${returnValue.value}")
+        return returnValue
     }
 
     /**
      * getPlaces funksjonen henter en liste til viewModel med badesteder
      * @return: MutableLiveData<List<Place>>, liste med badesteder
      */
-    fun getPlaces(): MutableLiveData<List<Place>>{
-        if (places.value == null){
-            allPlaces = fetchPlaces(urlAPI)
-            places.value = allPlaces
-            updatePlaces()
+    fun getPlaces(): LiveData<List<Place>> {
+        val tag = "tagGetPlaces"
+        // TODO("Hvor ofte burde places fetches?")
+        // TODO("Kan jeg gjøre non-assertive call her? Dersom favoritePlaces.value er null burde den stoppe å sjekke på første?"
+        val places: LiveData<List<Place>> = placeDao.getPlaceList()
+        Log.d(tag, "getPlaces")
+
+        AsyncTask.execute {
+            if (shouldFetch(
+                    DbConstants.PLACE_TABLE_NAME,
+                    10,
+                    TimeUnit.DAYS
+                )
+            ) {
+                Log.d(tag, "fetcherPlaces")
+                cachePlacesDb(fetchPlaces(urlAPI))
+            }
         }
         return places
     }
@@ -151,6 +182,12 @@ class PlaceRepository private constructor() {
      * @return: LiveData<List<DayForecast>>, liste med badesteder
      */
     fun getDayForecast(place: Place): LiveData<List<WeatherForecastDb.DayForecast>> = weatherForecastDao.getDayForecast(place.id)
+
+    fun cachePlacesDb(places: List<Place>){
+        Log.d("tagDatabase", "Lagrer nye steder")
+        metadataDao.updateDateLastCached(MetadataTable(DbConstants.PLACE_TABLE_NAME, currentTimeMillis()))
+        placeDao.insertPlaceList(places)
+    }
 
     /**
      * endrer currentplace
@@ -189,11 +226,10 @@ class PlaceRepository private constructor() {
      * @return: ArrayList<Place>, liste med badesteder
      */
 
-    private fun fetchPlaces(url : String) : ArrayList<Place>{
-        val places = arrayListOf<Place>()
+    private fun fetchPlaces(url : String) : List<Place>{
+        val places = ArrayList<Place>()
         val tag = "getData() ---->"
         runBlocking{
-
             try {
 
                 val response = Fuel.get(url).awaitString()
@@ -222,7 +258,14 @@ class PlaceRepository private constructor() {
                         xpp.next()
                         long = xpp.text
                         xpp.next()
-                        places.add(Place(id++, name, lat.toDouble(), long.toDouble()))
+                        places.add(
+                            Place(
+                                id++,
+                                name,
+                                lat.toDouble(),
+                                long.toDouble()
+                            )
+                        )
                     }
 
                     eventType = xpp.next()
@@ -231,10 +274,6 @@ class PlaceRepository private constructor() {
             } catch (e: Exception) {
                 Log.e(tag, e.message.toString())
             }
-        }
-        //Bare for at det skal logges, så man kan se at det funker
-        for(i in places){
-            fetchWeather(i)
         }
         return places
     }

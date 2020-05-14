@@ -1,12 +1,14 @@
 package com.example.team11.ui.filter
 
+import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.team11.PersonalPreference
 import com.example.team11.Repository.PlaceRepository
+import kotlin.coroutines.coroutineContext
 
-class FilterActivityViewModel: ViewModel(){
+class FilterActivityViewModel(context: Context): ViewModel(){
 
     var personalPreferences: MutableLiveData<PersonalPreference>? = null
 
@@ -16,15 +18,15 @@ class FilterActivityViewModel: ViewModel(){
      */
     init {
         if(personalPreferences == null){
-            placeRepository = PlaceRepository.getInstance()
+            placeRepository = PlaceRepository.getInstance(context)
             personalPreferences = placeRepository!!.getPersonalPreferences()
         }
     }
 
 
-    class InstanceCreator : ViewModelProvider.Factory {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return modelClass.getConstructor().newInstance()
+    class InstanceCreator(val context: Context) : ViewModelProvider.Factory {
+        override fun <T : ViewModel?> create(modelClass: Class<T>): T  {
+            return modelClass.getConstructor(Context::class.java).newInstance(context)
         }
     }
 

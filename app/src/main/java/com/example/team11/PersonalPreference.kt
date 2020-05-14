@@ -1,7 +1,9 @@
 package com.example.team11
 
+import com.example.team11.database.entity.Place
 
- class PersonalPreference(
+
+class PersonalPreference(
     val waterTempLow: Int = 0,
     var waterTempMid : Int = 15,
     val waterTempHigh: Int = 30,
