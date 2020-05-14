@@ -8,7 +8,7 @@ import com.example.team11.Place
 import com.example.team11.util.DbConstants
 
 
-@Entity(tableName = DbConstants.FORECAST_TABLE_NAME,
+@Entity(tableName = DbConstants.WEATHER_FORECAST_TABLE_NAME,
     foreignKeys = [ForeignKey(entity = Place::class, parentColumns = arrayOf("id"), childColumns = arrayOf("placeId"), onDelete = ForeignKey.CASCADE)])
 data class WeatherForecastDb(
     @ColumnInfo(name = "place_id")
@@ -19,6 +19,8 @@ data class WeatherForecastDb(
     val dayForecast: DayForecast
 ) {
 
+    abstract class WeatherForecast()
+
     data class HourForecast(
         val time: String,
         val symbol: String,
@@ -26,7 +28,7 @@ data class WeatherForecastDb(
         val tempAir: Float,
         val precipitation: Float,
         val uv: Float
-    )
+    ) : WeatherForecast()
 
     data class DayForecast(
         val time: String,
@@ -35,5 +37,5 @@ data class WeatherForecastDb(
         val tempAir: Float,
         val precipitation: Float,
         val uv: Float
-    )
+    ) : WeatherForecast()
 }

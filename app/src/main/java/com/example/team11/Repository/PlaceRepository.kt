@@ -1,5 +1,6 @@
 package com.example.team11.Repository
 
+import android.os.AsyncTask
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -7,8 +8,10 @@ import com.example.team11.PersonalPreference
 import com.example.team11.Place
 import com.example.team11.Transportation
 import com.example.team11.api.ApiClient
+import com.example.team11.database.AppDatabase
 import com.example.team11.database.dao.WeatherForecastDao
 import com.example.team11.database.entity.WeatherForecastDb
+import com.example.team11.util.DbConstants
 import com.example.team11.valueObjects.OceanForecast
 import com.example.team11.valueObjects.WeatherForecastApi
 import com.github.kittinunf.fuel.Fuel
@@ -20,6 +23,8 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.StringReader
+import java.lang.System.currentTimeMillis
+import java.util.concurrent.TimeUnit
 
 class PlaceRepository private constructor() {
 
@@ -30,6 +35,9 @@ class PlaceRepository private constructor() {
     private var wayOfTransportation = MutableLiveData<Transportation>()
     private var favoritePlaces = MutableLiveData<List<Place>>()
     private var personalPreferences = MutableLiveData<PersonalPreference>()
+    private val database: AppDatabase = AppDatabase.getInstance()
+    private val weatherForecastDao = database.weatherForecastDao()
+
 
     //Kotlin sin static
     companion object {
@@ -112,18 +120,38 @@ class PlaceRepository private constructor() {
         return places
     }
 
+
+
     /**
      * getPlaces funksjonen henter en liste til viewModel med vær for de netse timene
      * @return: LiveData<List<HourForecast>>, liste med badesteder
      */
-    fun getHourForecast(place: Place): LiveData<List<WeatherForecastDb.HourForecast>> = WeatherForecastDao. (place.id)
+    fun getHourForecast(place: Place): LiveData<List<WeatherForecastDb.HourForecast>>{
+        val tag = "tagGetPlaces"
+        // TODO("Hvor ofte burde places fetches?")
+        // TODO("Kan jeg gjøre non-assertive call her? Dersom favoritePlaces.value er null burde den stoppe å sjekke på første?"
+        val hourForecast: LiveData<List<WeatherForecastDb.HourForecast>> = weatherForecastDao.gethourForecast(place.id)
+        Log.d(tag, "getHourForecast")
+
+        AsyncTask.execute {
+            if (shouldFetch(
+                    DbConstants.WEATHER_FORECAST_TABLE_NAME,
+                    1,
+                    TimeUnit.HOURS
+                )
+            ) {
+                Log.d(tag, "fetcherPlaces")
+                cachePlacesDb(fetchPlaces(urlAPI))
+            }
+        }
+        return places
+    }
 
     /**
      * getPlaces funksjonen henter en liste til viewModel med vær for de netse timene
      * @return: LiveData<List<DayForecast>>, liste med badesteder
      */
-    fun getDayForecast(place: Place): LiveData<List<WeatherForecastDb.DayForecast>> = WeatherForecastDao.getDayForecast(place.id)
-
+    fun getDayForecast(place: Place): LiveData<List<WeatherForecastDb.DayForecast>> = weatherForecastDao.getDayForecast(place.id)
 
     /**
      * endrer currentplace
@@ -280,6 +308,24 @@ class PlaceRepository private constructor() {
         })
         return temp
     }
+
+    private fun shouldFetch(nameDatabase: String, timeout: Int, timeUnit: TimeUnit): Boolean{
+        val dateLastFetched = metadataDao.getDateLastCached(nameDatabase)
+        val now = currentTimeMillis()
+        val timeoutMilli = timeUnit.toMillis(timeout.toLong())
+        Log.d("tagDatabase", "dateLastFetched: $dateLastFetched")
+
+        if(dateLastFetched == null){
+            return true
+        }
+        if (now - dateLastFetched > timeoutMilli) {
+            Log.d("tagDatabse", "Now: $now, dateLastFetcged: $dateLastFetched, timeoutMilli: $timeoutMilli")
+            return true
+        }
+        return false
+
+    }
+}
 
 }
 
