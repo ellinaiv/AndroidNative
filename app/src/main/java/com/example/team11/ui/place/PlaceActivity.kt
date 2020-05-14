@@ -248,14 +248,13 @@ class PlaceActivity : AppCompatActivity() {
      * @param type "uv" eller "currents"
      * @return ID for fargekoden i colors.xml
      */
-    private fun getTextColor(text: String, type: String): String = when(type) {
-        //TODO(get string res?)
+    private fun getTextColor(text: String, type: String): String {
         if (text.equals("Svak"))  {
             return "place_info_low"
         }
 
-        if (type.equals()) {
-            when(text) {
+        if (type.equals("uv")) {
+            return when(text) {
                 "Moderat" ->  "place_uv_info_moderate"
                 "Sterk" -> "place_uv_info_strong"
                 "Svært sterk" -> "place_uv_info_very_strong"
@@ -263,7 +262,7 @@ class PlaceActivity : AppCompatActivity() {
                 else -> "mainTextColor"
             }
         } else {
-            when(text) {
+            return when(text) {
                 "Moderat" -> "place_currents_info_moderate"
                 "Sterk" -> "place_currents_info_strong"
                 else -> "mainTextColor"
@@ -283,7 +282,6 @@ class PlaceActivity : AppCompatActivity() {
      */
     private fun setForecastViews(forecast: WeatherForecastDb.WeatherForecast, time: TextView, symbol: ImageView,
                                  temp: TextView, rain: TextView) {
-        //TODO(angi type for forecast)
         //TODO(må testes når data er på plass)
         time.text = forecast.time    //TODO(formatere string)
         symbol.setImageDrawable(getDrawable(getResources().getIdentifier(forecast.symbol,
