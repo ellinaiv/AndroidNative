@@ -80,11 +80,11 @@
     <string name="time">Beregnet reisetid:</string>
     <string name="favorite">Favoritter</string>
     <string name="titleFilter">Filtrering</string>
-    <string name="showPlacesWater">Vis bare badeplasser med:</string>
+    <string name="showPlacesWater">Vis badeplasser med:</string>
     <string name="coldWater"><b>Kaldt vann</b></string>
     <string name="warmWater"><b>Varmt vann</b></string>
     <string name="preferenceAir">Preferanse for lufttemperatur</string>
-    <string name="showPlacesAir">Vis bare badeplasser med:</string>
+    <string name="showPlacesAir">Vis badeplasser med:</string>
     <string name="coldAir"><b>Lav lufttemperatur</b></string>
     <string name="hotAir"><b>Høy lufttemperatur</b></string>
     <string name="representationMap">Fargene på kartet representerer:</string>
