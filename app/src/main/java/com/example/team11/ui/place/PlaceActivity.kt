@@ -86,8 +86,9 @@ class PlaceActivity : AppCompatActivity() {
 
         var uvText = convertUV(hourForecast[0].uv.toInt())
         textUVResult.text = uvText
-        textUVResult.setTextColor(getColor(getResources().getIdentifier(getTextColor(uvText,
-            "uv"),"color", this.getPackageName())))
+        textUVResult.setTextColor(getColor(
+            resources.getIdentifier(getTextColor(uvText,"uv"),
+                "color", this.packageName)))
 
         // infovinduer om havstrømninger og uv
         buttonCurrentsInfo.setOnClickListener {
@@ -250,8 +251,8 @@ class PlaceActivity : AppCompatActivity() {
             return "place_info_low"
         }
 
-        if (type.equals("uv")) {
-            return when(text) {
+        return if (type.equals("uv")) {
+            when(text) {
                 "Moderat" ->  "place_uv_info_moderate"
                 "Sterk" -> "place_uv_info_strong"
                 "Svært sterk" -> "place_uv_info_very_strong"
@@ -259,7 +260,7 @@ class PlaceActivity : AppCompatActivity() {
                 else -> "mainTextColor"
             }
         } else {
-            return when(text) {
+            when(text) {
                 "Moderat" -> "place_currents_info_moderate"
                 "Sterk" -> "place_currents_info_strong"
                 else -> "mainTextColor"
@@ -280,11 +281,14 @@ class PlaceActivity : AppCompatActivity() {
     private fun setForecastViews(forecast: WeatherForecastDb.WeatherForecast, time: TextView, symbol: ImageView,
                                  temp: TextView, rain: TextView) {
         //TODO(må testes når data er på plass)
+        if (forecast.tempAir.toInt() == Int.MAX_VALUE) {
+
+        }
         time.text = forecast.time    //TODO(formatere string)
-        symbol.setImageDrawable(getDrawable(getResources().getIdentifier(forecast.symbol,
-            "drawable", this.getPackageName())))
         temp.text = forecast.tempAir.toInt().toString()
         rain.text = forecast.precipitation.toString()
+        symbol.setImageDrawable(getDrawable(resources.getIdentifier(forecast.symbol,
+            "drawable", this.packageName)))
     }
 
 
