@@ -126,7 +126,7 @@ class PlaceRepository private constructor() {
      * getPlaces funksjonen henter en liste til viewModel med vær for de netse timene
      * @return: LiveData<List<HourForecast>>, liste med badesteder
      */
-    fun getHourForecast(place: Place): LiveData<List<WeatherForecastDb.HourForecast>>{
+    fun getHourForecast(place: Place): LiveData<List<WeatherForecastDb.WeatherForecast>>{
         val tag = "tagGetPlaces"
         // TODO("Hvor ofte burde places fetches?")
         // TODO("Kan jeg gjøre non-assertive call her? Dersom favoritePlaces.value er null burde den stoppe å sjekke på første?"
