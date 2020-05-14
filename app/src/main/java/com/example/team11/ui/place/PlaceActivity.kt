@@ -237,12 +237,18 @@ class PlaceActivity : AppCompatActivity() {
      * @return en stringrepresentasjon av den tilsvarende kategorien
      */
     private fun convertUV(value: Int): String = when {
-        value in 1..2 -> "Svak"
-        value in 3..5 -> "Moderat"
-        value in 6..7 -> "Sterk"
-        value in 8..10 -> "Svært sterk"
-        value > 10 -> "Ekstrem"
-        else -> "Ingen data"
+        value in 1..2 -> getString(resources.getIdentifier("place_info_weak",
+            "string", this.packageName))
+        value in 3..5 -> getString(resources.getIdentifier("place_info_moderate",
+            "string", this.packageName))
+        value in 6..7 -> getString(resources.getIdentifier("place_info_strong",
+            "string", this.packageName))
+        value in 8..10 -> getString(resources.getIdentifier("place_info_very_strong",
+            "string", this.packageName))
+        value > 10 -> getString(resources.getIdentifier("place_info_extreme",
+            "string", this.packageName))
+        else -> getString(resources.getIdentifier("no_data",
+            "string", this.packageName))
     }
 
 
@@ -253,7 +259,8 @@ class PlaceActivity : AppCompatActivity() {
      */
     private fun convertCurrents(value: Int): String {
         ///TODO
-        return "Ingen data"
+        return getString(resources.getIdentifier("no_data",
+            "string", this.packageName))
     }
 
 

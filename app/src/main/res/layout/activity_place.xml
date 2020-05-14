@@ -932,7 +932,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:fontFamily="@font/roboto_medium"
-                    android:text="@string/place_currents_info_title"
+                    android:text="@string/place_currents_info"
                     android:textColor="@color/mainTextColor"
                     android:textSize="20sp"
                     android:textStyle="bold"
@@ -942,7 +942,7 @@
                 <TextView
                     android:id="@+id/textCurrentsInfoWeakTitle"
                     android:fontFamily="@font/roboto_medium"
-                    android:text="@string/place_info_weak_title"
+                    android:text="@string/place_info_weak"
                     android:textColor="@color/place_info_low"
                     android:textSize="18sp"
                     android:layout_width="wrap_content"
@@ -966,7 +966,7 @@
                 <TextView
                     android:id="@+id/textCurrentsInfoModerateTitle"
                     android:fontFamily="@font/roboto_medium"
-                    android:text="@string/place_info_moderate_title"
+                    android:text="@string/place_info_moderate"
                     android:textColor="@color/place_uv_info_moderate"
                     android:textSize="18sp"
                     android:textStyle="bold"
@@ -991,7 +991,7 @@
                 <TextView
                     android:id="@+id/textCurrentsInfoStrongTitle"
                     android:fontFamily="@font/roboto_medium"
-                    android:text="@string/place_info_strong_title"
+                    android:text="@string/place_info_strong"
                     android:textColor="@color/place_currents_info_strong"
                     android:textSize="18sp"
                     android:textStyle="bold"
@@ -1068,7 +1068,7 @@
                 <TextView
                     android:id="@+id/textUVInfoWeakTitle"
                     android:fontFamily="@font/roboto_medium"
-                    android:text="@string/place_info_weak_title"
+                    android:text="@string/place_info_weak"
                     android:textColor="@color/place_info_low"
                     android:textSize="18sp"
                     android:textStyle="bold"
@@ -1093,7 +1093,7 @@
                 <TextView
                     android:id="@+id/textUVInfoModerateTitle"
                     android:fontFamily="@font/roboto_medium"
-                    android:text="@string/place_info_moderate_title"
+                    android:text="@string/place_info_moderate"
                     android:textColor="@color/place_uv_info_moderate"
                     android:textSize="18sp"
                     android:textStyle="bold"
@@ -1118,7 +1118,7 @@
                 <TextView
                     android:id="@+id/textUVInfoStrongTitle"
                     android:fontFamily="@font/roboto_medium"
-                    android:text="@string/place_info_strong_title"
+                    android:text="@string/place_info_strong"
                     android:textColor="@color/place_uv_info_strong"
                     android:textSize="18sp"
                     android:textStyle="bold"
@@ -1143,7 +1143,7 @@
                 <TextView
                     android:id="@+id/textUVInfoVeryStrongTitle"
                     android:fontFamily="@font/roboto_medium"
-                    android:text="@string/place_info_very_strong_title"
+                    android:text="@string/place_info_very_strong"
                     android:textColor="@color/place_uv_info_very_strong"
                     android:textSize="18sp"
                     android:textStyle="bold"
@@ -1167,7 +1167,7 @@
 
                 <TextView
                     android:id="@+id/textUVInfoExtremeTitle"
-                    android:text="@string/place_info_extreme_title"
+                    android:text="@string/place_info_extreme"
                     android:textColor="@color/place_uv_info_extreme"
                     android:textSize="18sp"
                     android:textStyle="bold"
