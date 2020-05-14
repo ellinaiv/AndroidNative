@@ -23,7 +23,7 @@ data class WeatherForecastDb(
         val time: String,
         val symbol: String,
         @ColumnInfo(name = "temp_air")
-        val tempAir: Int,
+        val tempAir: Float,
         val precipitation: Float,
         val uv: Float
     )
@@ -32,7 +32,7 @@ data class WeatherForecastDb(
         val time: String,
         val symbol: String,
         @ColumnInfo(name = "temp_air")
-        val tempAir: Int,
+        val tempAir: Float,
         val precipitation: Float,
         val uv: Float
     )
