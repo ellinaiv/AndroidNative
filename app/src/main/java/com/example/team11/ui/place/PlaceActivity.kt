@@ -44,12 +44,12 @@ class PlaceActivity : AppCompatActivity() {
             Log.d("tagPlace", place.toString())
 
             // henter timesvarsel vær
-            viewModel.hourForecast!!.observe(this, Observer { hourForecast ->
+            viewModel.getHourForecast().observe(this, Observer { hourForecast ->
                 //TODO
             })
 
             // henter langtidsvarsel vær
-            viewModel.dayForecast!!.observe(this, Observer { longForecast ->
+            viewModel.getDayForecast().observe(this, Observer { longForecast ->
                 //TODO
             })
 
