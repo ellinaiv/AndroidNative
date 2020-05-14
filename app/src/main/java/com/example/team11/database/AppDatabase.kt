@@ -13,6 +13,7 @@ import com.example.team11.database.entity.WeatherForecastDb
  */
 @Database(entities = [WeatherForecastDb::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
+    abstract fun weatherForecastDao(): WeatherForecastDao
 
     companion object {
 

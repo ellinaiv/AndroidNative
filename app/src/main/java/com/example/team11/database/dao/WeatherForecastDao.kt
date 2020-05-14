@@ -25,7 +25,7 @@ interface WeatherForecastDao {
      * Henter ut liste med alle steder som er favoritter
      * @return liste med steder som er favoritter
      */
-    @Query("SELECT * FROM place WHERE favorite = 1")
-    fun getDayForecast(): LiveData<List<WeatherForecastDb.DayForecast>>
+    @Query("SELECT * FROM weather_forecast WHERE place_id = :placeId")
+    fun getDayForecast(placeId: Int): LiveData<List<WeatherForecastDb.DayForecast>>
 
 }
