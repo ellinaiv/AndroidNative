@@ -19,23 +19,27 @@ data class WeatherForecastDb(
     val dayForecast: DayForecast
 ) {
 
-    interface WeatherForecast
-
-    data class HourForecast(
-        val time: String,
-        val symbol: String,
+    abstract class WeatherForecast(
+        var time: String,
+        var symbol: String,
         @ColumnInfo(name = "temp_air")
-        val tempAir: Float,
-        val precipitation: Float,
-        val uv: Float
-    ) : WeatherForecast
+        var tempAir: Float,
+        var precipitation: Float,
+        var uv: Float)
 
-    data class DayForecast(
-        val time: String,
-        val symbol: String,
-        @ColumnInfo(name = "temp_air")
-        val tempAir: Float,
-        val precipitation: Float,
-        val uv: Float
-    ) : WeatherForecast
+    class HourForecast(
+        time: String,
+        symbol: String,
+        tempAir: Float,
+        precipitation: Float,
+        uv: Float
+    ) : WeatherForecast( time, symbol, tempAir, precipitation, uv)
+
+    class DayForecast(
+        time: String,
+        symbol: String,
+        tempAir: Float,
+        precipitation: Float,
+        uv: Float
+    ) : WeatherForecast( time, symbol, tempAir, precipitation, uv)
 }
