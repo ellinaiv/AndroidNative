@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.activity_filter.*
 import kotlinx.android.synthetic.main.activity_filter.textTempMidWater
 
 class FilterActivity : AppCompatActivity() {
-    private val viewModel: FilterActivityViewModel by viewModels{ FilterActivityViewModel.InstanceCreator() }
+    private val viewModel: FilterActivityViewModel by viewModels{ FilterActivityViewModel.InstanceCreator(applicationContext) }
     private var waterRepresentation = false
 
     override fun onCreate(savedInstanceState: Bundle?) {

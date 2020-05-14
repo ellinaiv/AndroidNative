@@ -1,25 +1,32 @@
 package com.example.team11.ui.favorites
 
+import android.content.Context
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.team11.database.entity.Place
 import com.example.team11.PersonalPreference
-import com.example.team11.Place
 import com.example.team11.Repository.PlaceRepository
 
-class FavoritesFragmentViewModel: ViewModel() {
+class FavoritesFragmentViewModel(context: Context): ViewModel() {
 
-    var favoritePlaces: MutableLiveData<List<Place>>? = null
+    var favoritePlaces: LiveData<List<Place>>? = null
     private var placeRepository: PlaceRepository? = null
     private var personalPreference: MutableLiveData<PersonalPreference>? = null
 
     init {
         if(favoritePlaces == null){
-
-            placeRepository = PlaceRepository.getInstance()
+            placeRepository = PlaceRepository.getInstance(context)
             favoritePlaces = placeRepository!!.getFavoritePlaces()
             personalPreference = placeRepository!!.getPersonalPreferences()
+
+        }
+    }
+    class InstanceCreator(val context: Context) : ViewModelProvider.Factory {
+        override fun <T : ViewModel?> create(modelClass: Class<T>): T  {
+            return modelClass.getConstructor(Context::class.java).newInstance(context)
         }
     }
 

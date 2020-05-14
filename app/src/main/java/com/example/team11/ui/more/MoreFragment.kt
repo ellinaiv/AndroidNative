@@ -27,7 +27,7 @@ class MoreFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewModel = ViewModelProvider(this).get(MoreFragmentViewModel::class.java)
+        viewModel = ViewModelProvider(this, MoreFragmentViewModel.InstanceCreator(requireContext())).get(MoreFragmentViewModel::class.java)
 
         val root = inflater.inflate(R.layout.fragment_more, container, false)
 
