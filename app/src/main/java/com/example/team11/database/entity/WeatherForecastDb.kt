@@ -19,6 +19,8 @@ data class WeatherForecastDb(
     val dayForecast: DayForecast
 ) {
 
+    abstract class WeatherForecast()
+
     data class HourForecast(
         val time: String,
         val symbol: String,
@@ -26,7 +28,7 @@ data class WeatherForecastDb(
         val tempAir: Int,
         val precipitation: Float,
         val uv: Float
-    )
+    ) : WeatherForecast()
 
     data class DayForecast(
         val time: String,
@@ -35,5 +37,5 @@ data class WeatherForecastDb(
         val tempAir: Int,
         val precipitation: Float,
         val uv: Float
-    )
+    ) : WeatherForecast()
 }
