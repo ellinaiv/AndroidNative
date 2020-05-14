@@ -116,7 +116,7 @@ class PlaceRepository private constructor() {
      * getPlaces funksjonen henter en liste til viewModel med vær for de netse timene
      * @return: LiveData<List<HourForecast>>, liste med badesteder
      */
-    fun getHourForecast(place: Place): LiveData<List<WeatherForecastDb.HourForecast>> = WeatherForecastDao.get (place.id)
+    fun getHourForecast(place: Place): LiveData<List<WeatherForecastDb.HourForecast>> = WeatherForecastDao. (place.id)
 
     /**
      * getPlaces funksjonen henter en liste til viewModel med vær for de netse timene

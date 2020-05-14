@@ -15,6 +15,7 @@ import androidx.lifecycle.Observer
 import com.example.team11.Place
 import com.example.team11.R
 import com.example.team11.Transportation
+import com.example.team11.database.entity.WeatherForecastDb
 import com.example.team11.ui.directions.DirectionsActivity
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.mapboxsdk.Mapbox
@@ -43,22 +44,15 @@ class PlaceActivity : AppCompatActivity() {
             //Skriver ut slik at vi kan se om vi har riktig badestrand
             Log.d("tagPlace", place.toString())
 
-            // henter timesvarsel vær
-            viewModel.getHourForecast().observe(this, Observer { hourForecast ->
-                //TODO
-            })
-
             // henter langtidsvarsel vær
             viewModel.getDayForecast().observe(this, Observer { dayForecast ->
-                //TODO
+                // henter timesvarsel vær
+                viewModel.getHourForecast().observe(this, Observer { hourForecast ->
+                    makeAboutPage(place, savedInstanceState, dayForecast, hourForecast)
+                })
             })
-
-            makeAboutPage(place, savedInstanceState)
         })
-
         Log.d("tagPlace", "ferdig")
-
-
     }
 
     /**
@@ -66,9 +60,8 @@ class PlaceActivity : AppCompatActivity() {
      * @param place: badeplassen
      * @param savedInstanceState: mapView trenger denne i makeMap
      */
-    private fun makeAboutPage(place: Place, savedInstanceState: Bundle?) {
+    private fun makeAboutPage(place: Place, savedInstanceState: Bundle?, dayForecast: List<WeatherForecastDb.DayForecast>, hourForecast: List<WeatherForecastDb.HourForecast>) {
         toggleFavourite.isChecked = place.favorite
-
 
         // topBar
         buttonBack.setOnClickListener {
@@ -97,7 +90,6 @@ class PlaceActivity : AppCompatActivity() {
         textUVResult.text = uvText
         textUVResult.setTextColor(getColor(getResources().getIdentifier(getTextColor(uvText,
             "uv"),"color", this.getPackageName())))
-
 
         // infovinduer om havstrømninger og uv
         buttonCurrentsInfo.setOnClickListener {
