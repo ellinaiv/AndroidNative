@@ -23,14 +23,14 @@ data class WeatherForecastDb(
         var time: String,
         var symbol: String,
         @ColumnInfo(name = "temp_air")
-        var tempAir: Int,
+        var tempAir: Float,
         var precipitation: Float,
         var uv: Float)
 
     class HourForecast(
         time: String,
         symbol: String,
-        tempAir: Int,
+        tempAir: Float,
         precipitation: Float,
         uv: Float
     ) : WeatherForecast( time, symbol, tempAir, precipitation, uv)
@@ -38,7 +38,7 @@ data class WeatherForecastDb(
     class DayForecast(
         time: String,
         symbol: String,
-        tempAir: Int,
+        tempAir: Float,
         precipitation: Float,
         uv: Float
     ) : WeatherForecast( time, symbol, tempAir, precipitation, uv)

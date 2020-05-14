@@ -43,7 +43,7 @@ class PlaceActivity : AppCompatActivity() {
         viewModel.place!!.observe(this, Observer { place ->
             //Skriver ut slik at vi kan se om vi har riktig badestrand
             Log.d("tagPlace", place.toString())
-            makeAboutPage(place, savedInstanceState)
+
             // henter langtidsvarsel vær
             viewModel.getDayForecast().observe(this, Observer { dayForecast ->
                 // henter timesvarsel vær
@@ -75,15 +75,16 @@ class PlaceActivity : AppCompatActivity() {
         textPlaceName.text = place.name
 
         textTempWater.text = getString(R.string.tempC, place.tempWater)
-        textTempAir.text = getString(R.string.tempC, hourForecast.instant.tempAir)
-        textRain.text = getString(R.string.place_rain, hourForecast.instant.precipitation)
+        textTempAir.text = getString(R.string.tempC, hourForecast[0].tempAir)
+        textRain.text = getString(R.string.place_rain, hourForecast[0].precipitation)
 
-        var currentsText = convertCurrents(hourForecast.instant.currents)
-        textCurrentsResult.text = currentsText
-        textUVResult.setTextColor(getColor(getResources().getIdentifier(getTextColor(currentsText,
-            "currents"), "color", this.getPackageName())))
+        //TODO
+//        var currentsText = convertCurrents(hourForecast[0].currents)
+//        textCurrentsResult.text = currentsText
+//        textUVResult.setTextColor(getColor(getResources().getIdentifier(getTextColor(currentsText,
+//            "currents"), "color", this.getPackageName())))
 
-        var uvText = convertUV(hourForecast.instant.uv)
+        var uvText = convertUV(hourForecast[0].uv.toInt())
         textUVResult.text = uvText
         textUVResult.setTextColor(getColor(getResources().getIdentifier(getTextColor(uvText,
             "uv"),"color", this.getPackageName())))
@@ -126,18 +127,18 @@ class PlaceActivity : AppCompatActivity() {
 
 
         // timesvarsel vær
-        setForecastViews(hourForecast.hour1, text1Hour, imageForecast1Hour, textTemp1Hour, textRain1Hour)
-        setForecastViews(hourForecast.hour2, text2Hours, imageForecast2Hours, textTemp2Hours, textRain2Hours)
-        setForecastViews(hourForecast.hour3, text3Hours, imageForecast3Hours, textTemp3Hours, textRain3Hours)
-        setForecastViews(hourForecast.hour4, text4Hours, imageForecast4Hours, textTemp4Hours, textRain4Hours)
-        setForecastViews(hourForecast.hour5, text5Hours, imageForecast5Hours, textTemp5Hours, textRain5Hours)
+        setForecastViews(hourForecast[1], text1Hour, imageForecast1Hour, textTemp1Hour, textRain1Hour)
+        setForecastViews(hourForecast[2], text2Hours, imageForecast2Hours, textTemp2Hours, textRain2Hours)
+        setForecastViews(hourForecast[3], text3Hours, imageForecast3Hours, textTemp3Hours, textRain3Hours)
+        setForecastViews(hourForecast[4], text4Hours, imageForecast4Hours, textTemp4Hours, textRain4Hours)
+        setForecastViews(hourForecast[5], text5Hours, imageForecast5Hours, textTemp5Hours, textRain5Hours)
 
         // langtidsvarsel vær
-        setForecastViews(dayForecast.day1, textDate1Day, imageForecast1Day, textTemp1Day, textRain1Day)
-        setForecastViews(dayForecast.day2, textDate2Days, imageForecast2Days, textTemp2Days, textRain2Days)
-        setForecastViews(dayForecast.day3, textDate3Days, imageForecast3Days, textTemp3Days, textRain3Days)
-        setForecastViews(dayForecast.day4, textDate4Days, imageForecast4Days, textTemp4Days, textRain4Days)
-        setForecastViews(dayForecast.day5, textDate5Days, imageForecast5Days, textTemp5Days, textRain5Days)
+        setForecastViews(dayForecast[0], textDate1Day, imageForecast1Day, textTemp1Day, textRain1Day)
+        setForecastViews(dayForecast[1], textDate2Days, imageForecast2Days, textTemp2Days, textRain2Days)
+        setForecastViews(dayForecast[2], textDate3Days, imageForecast3Days, textTemp3Days, textRain3Days)
+        setForecastViews(dayForecast[3], textDate4Days, imageForecast4Days, textTemp4Days, textRain4Days)
+        setForecastViews(dayForecast[4], textDate5Days, imageForecast5Days, textTemp5Days, textRain5Days)
 
 
         // reisevei og kart
@@ -167,6 +168,9 @@ class PlaceActivity : AppCompatActivity() {
             startActivity(link)
         }
     }
+
+
+
 
     /**
      * Tegner kartet til stedet man er på nå, og zommer inn på det.
@@ -231,7 +235,7 @@ class PlaceActivity : AppCompatActivity() {
      */
     private fun convertCurrents(value: Int): String {
         ///TODO
-        return ""
+        return "Ikke tilgjengelig"
     }
 
 
@@ -241,30 +245,24 @@ class PlaceActivity : AppCompatActivity() {
      * @param type "uv" eller "currents"
      * @return ID for fargekoden i colors.xml
      */
-    private fun getTextColor(text: String, type: String):  {
+    private fun getTextColor(text: String, type: String): String {
         if (text.equals("Svak"))  {
             return "place_info_low"
         }
 
         if (type.equals("uv")) {
-            if (text.equals("Moderat")) {
-                return "place_uv_info_moderate"
-            } else if (text.equals("Sterk")) {
-                return "place_uv_info_strong"
-            } else if (text.equals("Svært sterk")) {
-                return "place_uv_info_very_strong"
-            } else if (text.equals("Ekstrem")) {
-                return "place_uv_info_extreme"
-            } else {
-                return "mainTextColor"
+            return when(text) {
+                "Moderat" ->  "place_uv_info_moderate"
+                "Sterk" -> "place_uv_info_strong"
+                "Svært sterk" -> "place_uv_info_very_strong"
+                "Ekstrem" -> "place_uv_info_extreme"
+                else -> "mainTextColor"
             }
         } else {
-            if (text.equals("Moderat")) {
-                return "place_currents_info_moderate"
-            } else if (text.equals("Sterk")) {
-                return "place_currents_info_strong"
-            } else {
-                return "mainTextColor"
+            return when(text) {
+                "Moderat" -> "place_currents_info_moderate"
+                "Sterk" -> "place_currents_info_strong"
+                else -> "mainTextColor"
             }
         }
     }
@@ -279,15 +277,14 @@ class PlaceActivity : AppCompatActivity() {
      * @param temp textView som viser lufttemperatur for gjeldende tid
      * @param rain textView som viser nedbørsmengde for gjeldende tid
      */
-    private fun setForecastViews(forecast: Any, time: TextView, symbol: ImageView,
+    private fun setForecastViews(forecast: WeatherForecastDb.WeatherForecast, time: TextView, symbol: ImageView,
                                  temp: TextView, rain: TextView) {
-        //TODO(angi type for forecast)
         //TODO(må testes når data er på plass)
         time.text = forecast.time    //TODO(formatere string)
         symbol.setImageDrawable(getDrawable(getResources().getIdentifier(forecast.symbol,
             "drawable", this.getPackageName())))
-        temp.text = forecast.tempAir
-        rain.text = forecast.precipitation
+        temp.text = forecast.tempAir.toInt().toString()
+        rain.text = forecast.precipitation.toString()
     }
 
 
