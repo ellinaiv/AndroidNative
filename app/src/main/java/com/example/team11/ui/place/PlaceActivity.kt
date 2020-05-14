@@ -248,13 +248,13 @@ class PlaceActivity : AppCompatActivity() {
      * @param type "uv" eller "currents"
      * @return ID for fargekoden i colors.xml
      */
-    private fun getTextColor(text: String, type: String): String {
-        //TODO(get string res)
+    private fun getTextColor(text: String, type: String): String = when(type) {
+        //TODO(get string res?)
         if (text.equals("Svak"))  {
             return "place_info_low"
         }
 
-        if (type.equals("uv")) {
+        if (type.equals()) {
             when(text) {
                 "Moderat" ->  "place_uv_info_moderate"
                 "Sterk" -> "place_uv_info_strong"
@@ -263,12 +263,10 @@ class PlaceActivity : AppCompatActivity() {
                 else -> "mainTextColor"
             }
         } else {
-            if (text.equals("Moderat")) {
-                return "place_currents_info_moderate"
-            } else if (text.equals("Sterk")) {
-                return "place_currents_info_strong"
-            } else {
-                return "mainTextColor"
+            when(text) {
+                "Moderat" -> "place_currents_info_moderate"
+                "Sterk" -> "place_currents_info_strong"
+                else -> "mainTextColor"
             }
         }
     }
@@ -283,7 +281,7 @@ class PlaceActivity : AppCompatActivity() {
      * @param temp textView som viser lufttemperatur for gjeldende tid
      * @param rain textView som viser nedbørsmengde for gjeldende tid
      */
-    private fun setForecastViews(forecast: WeatherForecast, time: TextView, symbol: ImageView,
+    private fun setForecastViews(forecast: WeatherForecastDb.WeatherForecast, time: TextView, symbol: ImageView,
                                  temp: TextView, rain: TextView) {
         //TODO(angi type for forecast)
         //TODO(må testes når data er på plass)
