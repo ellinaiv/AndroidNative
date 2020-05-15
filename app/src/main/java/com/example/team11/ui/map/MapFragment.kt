@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.PointF
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,6 +36,7 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
     private val iconIdRed = "ICON_ID_RED"
     private val iconIdBlue = "ICON_ID_BLUE "
     private val geojsonId = "GEOJSON_ID"
+    private val listOfgeojsonId = mutableListOf<String>()
     private val layerId = "LAYER_ID:"
     private var listOfLayerId = mutableListOf<String>()
     private val propertyId = "PROPERTY_ID"
@@ -120,6 +122,9 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
     private fun removeLayers(style: Style){
         listOfLayerId.forEach { layer ->
             style.removeLayer(layer)
+        }
+        listOfgeojsonId.forEach { id ->
+            style.removeSource(id)
         }
     }
 
@@ -230,6 +235,12 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
     private fun addMarker(place: Place, style: Style){
         val id = layerId + place.id.toString()
         val geoId = geojsonId + place.id.toString()
+
+        if(listOfgeojsonId.contains(geoId) or listOfLayerId.contains(id)){
+            Log.d("TagMapFragment", "En id finnes fra før av")
+            return
+        }
+
         val feature = mapFragmentViewModel.getFeature(place)
         feature.addNumberProperty(propertyId, place.id)
         val geoJsonSource = GeoJsonSource(geoId, FeatureCollection.fromFeatures(
