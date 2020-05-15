@@ -34,10 +34,10 @@ data class WeatherForecastTypes(
     val instantWeatherForecast: InstantWeatherForecast,
 
     @SerializedName("next_1_hours")
-    val nextOneHourForecast: NextHoursForecast,
+    val nextOneHourForecast: NextHoursForecast?,
 
     @SerializedName("next_6_hours")
-val nextSixHourForecast: NextHoursForecast
+    val nextSixHourForecast: NextHoursForecast?
 )
 
 data class InstantWeatherForecast(
