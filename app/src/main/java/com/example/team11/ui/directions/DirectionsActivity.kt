@@ -252,7 +252,7 @@ class DirectionsActivity : AppCompatActivity() , PermissionsListener {
         val geoId = "GEO_ID"
         val icon = BitmapFactory.decodeResource(
             this@DirectionsActivity.resources,
-            R.drawable.marker_place
+            R.drawable.marker_blue
         )
         style.addImage(iconIdRed, icon)
 

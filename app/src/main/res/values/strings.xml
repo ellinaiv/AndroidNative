@@ -12,7 +12,7 @@
     <string name="place_currents">Havstrømninger</string>
     <string name="place_info_weak_title">Svak</string>
     <string name="place_info_moderate_title">Moderat</string>
-    <string name="place_info_strong_title">Sterk</string>
+    <string name="place_info_strong_title"><b><i>Sterk</i></b></string>
     <string name="place_info_very_strong_title">Svært sterk</string>
     <string name="place_info_extreme_title">Ekstrem</string>
     <string name="place_currents_info_title">Informasjon om havstrømninger</string>
@@ -118,7 +118,7 @@
     <!--    content description for images-->
     <string name="water_icon">Badevann ikon</string>
     <string name="weather_icon">Ikon som viser været</string>
-    <string name="water_temp_icon">ikon som viser om vanntemperaturen er varm eller kald i forhold til gjeldende preferanser</string>
+    <string name="water_temp_icon">ikon som viser om vanntemperaturen er varm eller kald i forhold til gjeldende preferansƒer</string>
     <string name="empty_shark">En hai som symboliserer at du ikke har noen favoritter</string>
     <string name="search_image">Bilde av et forstørrelsesglass</string>
 
