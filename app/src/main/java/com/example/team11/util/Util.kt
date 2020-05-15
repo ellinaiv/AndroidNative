@@ -7,9 +7,10 @@ import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 
+//TODO("Hadde vært smooth om vi kunne refaktorert noe av dette, her er det mye kode som går igjen mange steder")
 object Util {
     fun getWantedHoursForecastApi(): List<String>{
-        var listTider = arrayListOf<String>()
+        var listTimes = arrayListOf<String>()
         val c: Calendar = GregorianCalendar()
         c.time = Date(System.currentTimeMillis())
         c.set(Calendar.MINUTE, 0)
@@ -17,14 +18,14 @@ object Util {
         val stringFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
         for (hour in 1..DbConstants.NUMB_HOURS_FORECAST){
             c.add(Calendar.HOUR, 1)
-            listTider.add(stringFormat.format(c.time))
+            listTimes.add(stringFormat.format(c.time))
             Log.d("Gattering times", stringFormat.format(c.time))
         }
-        return listTider
+        return listTimes
     }
 
     fun getWantedDaysForecastApi(): List<String>{
-        var listTider = arrayListOf<String>()
+        var listTimes = arrayListOf<String>()
         val c: Calendar = GregorianCalendar()
         c.time = Date(System.currentTimeMillis())
         c.set(Calendar.HOUR, 12)
@@ -33,20 +34,24 @@ object Util {
         val stringFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
         for (hour in 1..DbConstants.NUMB_HOURS_FORECAST){
             c.add(Calendar.DATE, 1)
-            listTider.add(stringFormat.format(c.time))
+            listTimes.add(stringFormat.format(c.time))
             Log.d("Gattering times", stringFormat.format(c.time))
         }
-        return listTider
+        return listTimes
     }
 
     fun formatToHoursTime(time: String): String{
+        val parser =  SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
+        val dateTime = parser.parse(time)
         val formatter = SimpleDateFormat("HH")
-        return formatter.format(time)
+        return formatter.format(dateTime)
     }
 
     fun formatToDaysTime(time: String): String{
+        val parser =  SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
+        val dateTime = parser.parse(time)
         val formatter = SimpleDateFormat("dd/MM")
-        return formatter.format(time)
+        return formatter.format(dateTime)
     }
 
     fun getWantedHoursForecastDb(): List<String>{
