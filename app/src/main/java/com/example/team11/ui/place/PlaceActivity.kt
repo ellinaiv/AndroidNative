@@ -45,7 +45,6 @@ class PlaceActivity : AppCompatActivity() {
 
         //Observerer stedet som er valgt
         viewModel.place!!.observe(this, Observer { place ->
-            //Skriver ut slik at vi kan se om vi har riktig badestrand
             Log.d("tagPlace", place.toString())
 
             makeAboutPage(place, savedInstanceState)
@@ -85,6 +84,10 @@ class PlaceActivity : AppCompatActivity() {
         //TODO(hente fra database og ikke place)
         if (place.tempWater != Int.MAX_VALUE) {
             textTempWater.text = getString(R.string.tempC, place.tempWater)
+            when(viewModel.redWave(place)){
+                true -> imageWater.setImageDrawable(getDrawable(R.drawable.water_red))
+                false -> imageWater.setImageDrawable(getDrawable(R.drawable.water_blue))
+            }
         }
 
 
@@ -160,16 +163,22 @@ class PlaceActivity : AppCompatActivity() {
      * @param forecast liste med objekter som inneholder værdata
      */
     private fun makeDayForecast(forecast: List<WeatherForecastDb>) {
-        setForecastViews(forecast[0], textDate1Day, imageForecast1Day,
-            textTemp1Day, textRain1Day, false)
-        setForecastViews(forecast[1], textDate2Days, imageForecast2Days,
-            textTemp2Days, textRain2Days, false)
-        setForecastViews(forecast[2], textDate3Days, imageForecast3Days,
-            textTemp3Days, textRain3Days, false)
-        setForecastViews(forecast[3], textDate4Days, imageForecast4Days,
-            textTemp4Days, textRain4Days, false)
-        setForecastViews(forecast[4], textDate5Days, imageForecast5Days,
-            textTemp5Days, textRain5Days, false)
+        Log.d("tagPlace", "kommet inn i makeDayForecast")
+        if (forecast.isEmpty()) {
+            return
+        } else {
+            setForecastViews(forecast[0], textDate1Day, imageForecast1Day,
+                textTemp1Day, textRain1Day, false)
+            setForecastViews(forecast[1], textDate2Days, imageForecast2Days,
+                textTemp2Days, textRain2Days, false)
+            setForecastViews(forecast[2], textDate3Days, imageForecast3Days,
+                textTemp3Days, textRain3Days, false)
+            setForecastViews(forecast[3], textDate4Days, imageForecast4Days,
+                textTemp4Days, textRain4Days, false)
+            setForecastViews(forecast[4], textDate5Days, imageForecast5Days,
+                textTemp5Days, textRain5Days, false)
+        }
+        Log.d("tagPlace", "makeDayForecast ferdig")
     }
 
 
@@ -181,39 +190,46 @@ class PlaceActivity : AppCompatActivity() {
      * @param forecast liste med objekter som inneholder værdata
      */
     private fun makeHourForecast(forecast: List<WeatherForecastDb>) {
-        // vær nå
-        if (forecast[0].tempAir.toInt() != Int.MAX_VALUE){
-            textTempAir.text = getString(R.string.tempC, forecast[0].tempAir.toInt())
-            imageWeather.setImageDrawable(getDrawable(resources.getIdentifier(forecast[0].symbol,
-                "drawable", this.packageName)))
-            textRain.text = getString(R.string.place_rain, forecast[0].precipitation)
-        }
+        Log.d("tagPlace", "kommet inn i makeHourForecast")
+        if (forecast.isEmpty()) {
+            return
+        } else {
+            // vær nå
+            if (forecast[0].tempAir.toInt() != Int.MAX_VALUE){
+                textTempAir.text = getString(R.string.tempC, forecast[0].tempAir.toInt())
+                imageWeather.setImageDrawable(getDrawable(resources.getIdentifier(forecast[0].symbol,
+                    "drawable", this.packageName)))
+                textRain.text = getString(R.string.place_rain, forecast[0].precipitation)
+                Log.d("tagPlace", "makeHourForecast ferdig")
+            }
 
-        // havstrømninger
-        //TODO
+            // havstrømninger
+            //TODO
 //        var currentsText = convertCurrents(hourForecast[0].currents)
 //        textCurrentsResult.text = currentsText
 //        textUVResult.setTextColor(getColor(
 //            resources.getIdentifier(getTextColor(currentsText, "currents"),
 //                "color", this.packageName)))
 
-        // uv
-        val uvText = convertUV(forecast[0].uv.toInt())
-        textUVResult.text = uvText
-        textUVResult.setTextColor(getColor(
-            resources.getIdentifier(getTextColor(uvText, "uv"),
-                "color", this.packageName)))
+            // uv
+            val uvText = convertUV(forecast[0].uv.toInt())
+            textUVResult.text = uvText
+            textUVResult.setTextColor(getColor(
+                resources.getIdentifier(getTextColor(uvText, "uv"),
+                    "color", this.packageName)))
 
-        setForecastViews(forecast[1], text1Hour, imageForecast1Hour,
-            textTemp1Hour, textRain1Hour, true)
-        setForecastViews(forecast[2], text2Hours, imageForecast2Hours,
-            textTemp2Hours, textRain2Hours, true)
-        setForecastViews(forecast[3], text3Hours, imageForecast3Hours,
-            textTemp3Hours, textRain3Hours, true)
-        setForecastViews(forecast[4], text4Hours, imageForecast4Hours,
-            textTemp4Hours, textRain4Hours, true)
-        setForecastViews(forecast[5], text5Hours, imageForecast5Hours,
-            textTemp5Hours, textRain5Hours, true)
+            setForecastViews(forecast[1], text1Hour, imageForecast1Hour,
+                textTemp1Hour, textRain1Hour, true)
+            setForecastViews(forecast[2], text2Hours, imageForecast2Hours,
+                textTemp2Hours, textRain2Hours, true)
+            setForecastViews(forecast[3], text3Hours, imageForecast3Hours,
+                textTemp3Hours, textRain3Hours, true)
+            setForecastViews(forecast[4], text4Hours, imageForecast4Hours,
+                textTemp4Hours, textRain4Hours, true)
+            setForecastViews(forecast[5], text5Hours, imageForecast5Hours,
+                textTemp5Hours, textRain5Hours, true)
+        }
+        Log.d("tagPlace", "makeHourForecast ferdig")
     }
 
 
@@ -250,48 +266,6 @@ class PlaceActivity : AppCompatActivity() {
             rain.text = forecast.precipitation.toString()
             symbol.setImageDrawable(getDrawable(resources.getIdentifier(forecast.symbol,
                 "drawable", this.packageName)))
-        }
-    }
-
-
-    /**
-     * Tegner kartet til stedet man er på nå, og zoomer inn på det.
-     *
-     * @param place: Stedet som skal vises på kartet
-     * @param savedInstanceState: mapView trenger denne til onCreate metoden sin
-     */
-    private fun makeMap(place: Place, savedInstanceState: Bundle?) {
-        val mapView = findViewById<MapView>(R.id.mapView)
-        mapView.onCreate(savedInstanceState)
-        mapView.getMapAsync { mapboxMap ->
-            mapboxMap.setStyle(Style.MAPBOX_STREETS)
-            mapboxMap.getStyle { style ->
-                val markerPlace = "ICON"
-                val geoId = "GEO_ID"
-                val icon = BitmapFactory.decodeResource(
-                    this@PlaceActivity.resources,
-                    R.drawable.marker_place
-                )
-                style.addImage(markerPlace, icon)
-
-                val feature = viewModel.getFeature(place)
-                val geoJsonSource = GeoJsonSource(geoId, FeatureCollection.fromFeatures(
-                    arrayListOf(feature)))
-                style.addSource(geoJsonSource)
-
-                val symbolLayer = SymbolLayer("SYMBOL_LAYER_ID", geoId)
-                symbolLayer.withProperties(
-                    PropertyFactory.iconImage(markerPlace),
-                    PropertyFactory.iconAllowOverlap(true),
-                    PropertyFactory.iconIgnorePlacement(true)
-                )
-                style.addLayer(symbolLayer)
-            }
-            val position = CameraPosition.Builder()
-                .target(LatLng(place.lat, place.lng))
-                .zoom(15.0)
-                .build()
-            mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(position), 2)
         }
     }
 
@@ -357,6 +331,48 @@ class PlaceActivity : AppCompatActivity() {
                 "Sterk" -> "place_currents_info_strong"
                 else -> "mainTextColor"
             }
+        }
+    }
+
+
+    /**
+     * Tegner kartet til stedet man er på nå, og zoomer inn på det.
+     *
+     * @param place: Stedet som skal vises på kartet
+     * @param savedInstanceState: mapView trenger denne til onCreate metoden sin
+     */
+    private fun makeMap(place: Place, savedInstanceState: Bundle?) {
+        val mapView = findViewById<MapView>(R.id.mapView)
+        mapView.onCreate(savedInstanceState)
+        mapView.getMapAsync { mapboxMap ->
+            mapboxMap.setStyle(Style.MAPBOX_STREETS)
+            mapboxMap.getStyle { style ->
+                val markerPlace = "ICON"
+                val geoId = "GEO_ID"
+                val icon = BitmapFactory.decodeResource(
+                    this@PlaceActivity.resources,
+                    R.drawable.marker_place
+                )
+                style.addImage(markerPlace, icon)
+
+                val feature = viewModel.getFeature(place)
+                val geoJsonSource = GeoJsonSource(geoId, FeatureCollection.fromFeatures(
+                    arrayListOf(feature)))
+                style.addSource(geoJsonSource)
+
+                val symbolLayer = SymbolLayer("SYMBOL_LAYER_ID", geoId)
+                symbolLayer.withProperties(
+                    PropertyFactory.iconImage(markerPlace),
+                    PropertyFactory.iconAllowOverlap(true),
+                    PropertyFactory.iconIgnorePlacement(true)
+                )
+                style.addLayer(symbolLayer)
+            }
+            val position = CameraPosition.Builder()
+                .target(LatLng(place.lat, place.lng))
+                .zoom(15.0)
+                .build()
+            mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(position), 2)
         }
     }
 

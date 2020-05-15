@@ -127,7 +127,7 @@
                 android:id="@+id/textTempAir"
                 android:fontFamily="@font/roboto_medium"
                 android:gravity="center"
-                android:text="@string/no_weather_data"
+                android:text="@string/no_data"
                 android:textColor="@color/mainTextColor"
                 android:textSize="16sp"
                 android:layout_width="44dp"
@@ -181,6 +181,8 @@
             <TextView
                 android:id="@+id/textCurrentsResult"
                 android:fontFamily="@font/roboto_medium"
+                android:text="@string/no_data"
+                android:textColor="@color/mainTextColor"
                 tools:text="Lite"
                 tools:textColor="@color/place_info_low"
                 android:textSize="20sp"
@@ -194,6 +196,8 @@
             <TextView
                 android:id="@+id/textUVResult"
                 android:fontFamily="@font/roboto_medium"
+                android:text="@string/no_data"
+                android:textColor="@color/mainTextColor"
                 tools:text="Sterk"
                 tools:textColor="@color/place_currents_info_strong"
                 android:textSize="20sp"
@@ -335,7 +339,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/text1Hour"
                 android:layout_marginTop="8dp"
                 android:contentDescription="TODO"
-                app:srcCompat="@drawable/ic_noweatherdata"
                 tools:srcCompat="@drawable/sun" />
 
             <ImageView
@@ -346,7 +349,6 @@
                 app:layout_constraintEnd_toEndOf="@+id/text2Hours"
                 app:layout_constraintStart_toStartOf="@+id/text2Hours"
                 android:contentDescription="TODO"
-                app:srcCompat="@drawable/ic_noweatherdata"
                 tools:srcCompat="@drawable/sun" />
 
             <ImageView
@@ -368,7 +370,6 @@
                 app:layout_constraintEnd_toEndOf="@+id/text4Hours"
                 app:layout_constraintStart_toStartOf="@+id/text4Hours"
                 android:contentDescription="TODO"
-                app:srcCompat="@drawable/ic_noweatherdata"
                 tools:srcCompat="@drawable/sun" />
 
             <ImageView
@@ -379,7 +380,6 @@
                 app:layout_constraintEnd_toEndOf="@+id/text5Hours"
                 app:layout_constraintStart_toStartOf="@+id/text5Hours"
                 android:contentDescription="TODO"
-                app:srcCompat="@drawable/ic_noweatherdata"
                 tools:srcCompat="@drawable/cloud" />
 
             <TextView
@@ -387,7 +387,7 @@
                 android:fontFamily="@font/roboto_medium"
                 android:gravity="center"
                 tools:text="25&#176;C"
-                android:text="@string/no_weather_data"
+                android:text="@string/empty"
                 android:textColor="@color/mainTextColor"
                 android:textSize="16sp"
                 android:layout_width="wrap_content"
@@ -401,7 +401,7 @@
                 android:id="@+id/textTemp2Hours"
                 android:fontFamily="@font/roboto_medium"
                 android:gravity="center"
-                android:text="@string/no_weather_data"
+                android:text="@string/empty"
                 tools:text="23&#176;C"
                 android:textColor="@color/mainTextColor"
                 android:textSize="16sp"
@@ -429,7 +429,7 @@
                 android:id="@+id/textTemp4Hours"
                 android:fontFamily="@font/roboto_medium"
                 android:gravity="center"
-                android:text="@string/no_weather_data"
+                android:text="@string/empty"
                 tools:text="21&#176;C"
                 android:textColor="@color/mainTextColor"
                 android:textSize="16sp"
@@ -443,7 +443,7 @@
                 android:id="@+id/textTemp5Hours"
                 android:fontFamily="@font/roboto_medium"
                 android:gravity="center"
-                android:text="@string/no_weather_data"
+                android:text="@string/empty"
                 tools:text="20&#176;C"
                 android:textColor="@color/mainTextColor"
                 android:textSize="16sp"
@@ -610,7 +610,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textDate1Day"
                 android:layout_marginTop="8dp"
                 android:contentDescription="TODO"
-                app:srcCompat="@drawable/sun" />
+                tools:srcCompat="@drawable/sun" />
 
             <ImageView
                 android:id="@+id/imageForecast2Days"
@@ -620,7 +620,6 @@
                 app:layout_constraintEnd_toEndOf="@+id/textDate2Days"
                 app:layout_constraintStart_toStartOf="@+id/textDate2Days"
                 android:contentDescription="TODO"
-                app:srcCompat="@drawable/ic_noweatherdata"
                 tools:srcCompat="@drawable/sun" />
 
             <ImageView
@@ -642,7 +641,6 @@
                 app:layout_constraintEnd_toEndOf="@+id/textDate4Days"
                 app:layout_constraintStart_toStartOf="@+id/textDate4Days"
                 android:contentDescription="TODO"
-                app:srcCompat="@drawable/ic_noweatherdata"
                 tools:srcCompat="@drawable/sun" />
 
             <ImageView
@@ -653,14 +651,13 @@
                 app:layout_constraintEnd_toEndOf="@+id/textDate5Days"
                 app:layout_constraintStart_toStartOf="@+id/textDate5Days"
                 android:contentDescription="TODO"
-                app:srcCompat="@drawable/ic_noweatherdata"
                 tools:srcCompat="@drawable/cloud" />
 
             <TextView
                 android:id="@+id/textTemp1Day"
                 android:fontFamily="@font/roboto_medium"
                 android:gravity="center"
-                android:text="@string/no_weather_data"
+                android:text="@string/empty"
                 tools:text="25&#176;C"
                 android:textColor="@color/mainTextColor"
                 android:textSize="16sp"
@@ -675,7 +672,7 @@
                 android:id="@+id/textTemp2Days"
                 android:fontFamily="@font/roboto_medium"
                 android:gravity="center"
-                android:text="@string/no_weather_data"
+                android:text="@string/empty"
                 tools:text="23&#176;C"
                 android:textColor="@color/mainTextColor"
                 android:textSize="16sp"
@@ -703,7 +700,7 @@
                 android:id="@+id/textTemp4Days"
                 android:fontFamily="@font/roboto_medium"
                 android:gravity="center"
-                android:text="@string/no_weather_data"
+                android:text="@string/empty"
                 tools:text="21&#176;C"
                 android:textColor="@color/mainTextColor"
                 android:textSize="16sp"
@@ -717,7 +714,7 @@
                 android:id="@+id/textTemp5Days"
                 android:fontFamily="@font/roboto_medium"
                 android:gravity="center"
-                android:text="@string/no_weather_data"
+                android:text="@string/empty"
                 tools:text="20&#176;C"
                 android:textColor="@color/mainTextColor"
                 android:textSize="16sp"
