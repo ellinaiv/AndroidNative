@@ -13,10 +13,8 @@ import android.widget.TextView
 import android.widget.ToggleButton
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
-import com.example.team11.PersonalPreference
-import com.example.team11.Place
+import com.example.team11.database.entity.Place
 import com.example.team11.R
-import com.example.team11.Repository.PlaceRepository
 import com.example.team11.Transportation
 import com.example.team11.ui.directions.DirectionsActivity
 import com.mapbox.geojson.FeatureCollection
@@ -32,7 +30,7 @@ import com.mapbox.mapboxsdk.style.sources.GeoJsonSource
 import kotlinx.android.synthetic.main.activity_place.*
 
 class PlaceActivity : AppCompatActivity() {
-    private val viewModel: PlaceActivityViewModel by viewModels{ PlaceActivityViewModel.InstanceCreator() }
+    private val viewModel: PlaceActivityViewModel by viewModels{ PlaceActivityViewModel.InstanceCreator(applicationContext) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +44,10 @@ class PlaceActivity : AppCompatActivity() {
             //Skriver ut slik at vi kan se om vi har riktig badestrand
             Log.d("tagPlace", place.toString())
             makeAboutPage(place, savedInstanceState)
+
+            viewModel.isFavorite.observe(this, Observer { isFavorite ->
+                toggleFavorite.isChecked = isFavorite
+            })
         })
 
         Log.d("tagPlace", "ferdig")
@@ -59,18 +61,9 @@ class PlaceActivity : AppCompatActivity() {
      * @param savedInstanceState: mapView trenger denne i makeMap
      */
     private fun makeAboutPage(place: Place, savedInstanceState: Bundle?) {
-        toggleFavourite.isChecked = place.favorite
-
         buttonBack.setOnClickListener {
             finish()
         }
-
-        toggleFavourite.setOnCheckedChangeListener { _, isChecked ->
-            place.favorite = isChecked
-            viewModel.updateFavoritePlaces()
-        }
-
-
 
         buttonCurrentsInfo.setOnClickListener {
             if (layoutUVInfo.visibility == VISIBLE) {
@@ -195,6 +188,8 @@ class PlaceActivity : AppCompatActivity() {
     }
 
     override fun onPause() {
+        if (toggleFavorite.isChecked) viewModel.addFavoritePlace()
+        else viewModel.removeFavoritePlace()
         super.onPause()
         mapView?.onPause()
     }

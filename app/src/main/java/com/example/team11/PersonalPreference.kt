@@ -1,7 +1,9 @@
 package com.example.team11
 
+import com.example.team11.database.entity.Place
 
- class PersonalPreference(
+
+class PersonalPreference(
     val waterTempLow: Int = 0,
     var waterTempMid : Int = 15,
     val waterTempHigh: Int = 30,
@@ -12,7 +14,8 @@ package com.example.team11
     var showWaterWarm: Boolean = true,
     var showAirCold: Boolean = true,
     var showAirWarm: Boolean = true,
-    var showBasedOnWater: Boolean = true
+    var showBasedOnWater: Boolean = true,
+    var falseData: Boolean = false
 ){
      /**
       * Sjekker om et gitt sted har riktig kriterier mtp vanntempratur for å vises.

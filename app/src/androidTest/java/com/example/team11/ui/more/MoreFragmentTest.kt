@@ -37,6 +37,10 @@ class MoreFragmentTest {
         onView(withId(R.id.textAboutApp)).check(matches(isDisplayed()))
         onView(withId(R.id.textAboutAPI)).check(matches(ViewMatchers
             .withEffectiveVisibility(ViewMatchers.Visibility.GONE)))
+        onView(withId(R.id.textAboutSettings)).check(matches(ViewMatchers
+            .withEffectiveVisibility(ViewMatchers.Visibility.GONE)))
+        onView(withId(R.id.layoutSwitch)).check(matches(ViewMatchers
+            .withEffectiveVisibility(ViewMatchers.Visibility.GONE)))
     }
 
     @Test
@@ -59,6 +63,11 @@ class MoreFragmentTest {
         onView(withId(R.id.textAboutAPI)).check(matches(isDisplayed()))
         onView(withId(R.id.textAboutApp)).check(matches(ViewMatchers
             .withEffectiveVisibility(ViewMatchers.Visibility.GONE)))
+        onView(withId(R.id.textAboutSettings)).check(matches(ViewMatchers
+            .withEffectiveVisibility(ViewMatchers.Visibility.GONE)))
+        onView(withId(R.id.layoutSwitch)).check(matches(ViewMatchers
+            .withEffectiveVisibility(ViewMatchers.Visibility.GONE)))
+
     }
 
     @Test
@@ -72,6 +81,33 @@ class MoreFragmentTest {
         onView(withId(R.id.textAboutAPI)).check(matches(ViewMatchers
             .withEffectiveVisibility(ViewMatchers.Visibility.GONE)))
     }
+
+    @Test
+    fun testSettingTitleClicked(){
+        testAPITitleClickOpen()
+        onView(withId(R.id.textSettingTitle))
+            .perform(scrollTo())
+            .perform(click())
+        onView(withId(R.id.textAboutSettings)).check(matches(isDisplayed()))
+        onView(withId(R.id.layoutSwitch)).check(matches(isDisplayed()))
+        onView(withId(R.id.textAboutApp)).check(matches(ViewMatchers
+            .withEffectiveVisibility(ViewMatchers.Visibility.GONE)))
+        onView(withId(R.id.textAboutAPI)).check(matches(ViewMatchers
+            .withEffectiveVisibility(ViewMatchers.Visibility.GONE)))
+    }
+
+    @Test
+    fun testSettingsTitleClickClose(){
+        testSettingTitleClicked()
+        onView(withId(R.id.textSettingTitle))
+            .perform(scrollTo())
+            .perform(click())
+        onView(withId(R.id.textAboutSettings)).check(matches(ViewMatchers
+            .withEffectiveVisibility(ViewMatchers.Visibility.GONE)))
+        onView(withId(R.id.layoutSwitch)).check(matches(ViewMatchers
+            .withEffectiveVisibility(ViewMatchers.Visibility.GONE)))
+    }
+
 
     @Test
     fun testAppThenAPI(){
