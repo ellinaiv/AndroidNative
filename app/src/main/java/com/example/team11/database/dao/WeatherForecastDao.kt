@@ -18,14 +18,14 @@ interface WeatherForecastDao {
      * Henter ut alle forecast for de neste timene
      * @return liste med HourForecast
      */
-    @Query("SELECT * FROM weather_forecast WHERE place_id = :placeId")
-    fun getHourForecast(placeId: Int): LiveData<List<WeatherForecastDb.HourForecast>>
+    @Query("SELECT * FROM weather_forecast WHERE place_id = :placeId AND time IN (:wantedTimes)")
+    fun getHourForecast(placeId: Int, wantedTimes: List<String>): LiveData<List<WeatherForecastDb>>
 
     /**
      * Henter ut liste med alle steder som er favoritter
      * @return liste med steder som er favoritter
      */
-    @Query("SELECT * FROM weather_forecast WHERE place_id = :placeId")
-    fun getDayForecast(placeId: Int): LiveData<List<WeatherForecastDb.DayForecast>>
+    @Query("SELECT * FROM weather_forecast WHERE place_id = :placeId AND time IN (:wantedTimes)")
+    fun getDayForecast(placeId: Int, wantedTimes: List<String>): LiveData<List<WeatherForecastDb>>
 
 }

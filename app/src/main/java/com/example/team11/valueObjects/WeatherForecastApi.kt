@@ -26,21 +26,18 @@ data class WeatherForecastTimeSlot(
 
     @SerializedName("data")
     val types: WeatherForecastTypes
+)
 
-) : Comparable<WeatherForecastTimeSlot> {
-    override operator fun compareTo(other: WeatherForecastTimeSlot): Int {
-        if (this.time > other.time) return 1
-        if (this.time < other.time) return -1
-        return 0
-    }
-}
 
 data class WeatherForecastTypes(
     @SerializedName("instant")
     val instantWeatherForecast: InstantWeatherForecast,
 
-    @SerializedName("next_1_hour")
-    val nextOneHourForecast: NextOneHourForecast
+    @SerializedName("next_1_hours")
+    val nextOneHourForecast: NextHoursForecast,
+
+    @SerializedName("next_6_hours")
+val nextSixHourForecast: NextHoursForecast
 )
 
 data class InstantWeatherForecast(
@@ -61,7 +58,7 @@ data class WeatherForecastDetails(
     val thunderProbability: Float
 )
 
-data class NextOneHourForecast(
+data class NextHoursForecast(
     @SerializedName("summary")
     val summary: WeatherForecastSymbol,
 
@@ -69,5 +66,7 @@ data class NextOneHourForecast(
     val details: WeatherForecastDetails
 )
 
-data class WeatherForecastSymbol(val symbol: String)
+data class WeatherForecastSymbol(
+    @SerializedName("symbol_code")
+    val symbol: String)
 
