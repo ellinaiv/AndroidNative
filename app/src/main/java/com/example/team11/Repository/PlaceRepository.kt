@@ -181,7 +181,7 @@ class PlaceRepository private constructor(context: Context) {
                 )
             ) {
                 Log.d(tag, "fetcherForecast")
-                cacheWeatherForecastDb(fetchWeatherForecast(place))
+                fetchWeatherForecast(place)
             }
         }
         return hourForecast
@@ -207,7 +207,7 @@ class PlaceRepository private constructor(context: Context) {
                 )
             ) {
                 Log.d(tag, "fetcherForecast")
-                cacheWeatherForecastDb(fetchWeatherForecast(place))
+                fetchWeatherForecast(place)
             }
         }
         return dayForecast
@@ -219,6 +219,8 @@ class PlaceRepository private constructor(context: Context) {
     }
 
     fun cacheWeatherForecastDb(weatherForecast: List<WeatherForecastDb>){
+        Log.d("tagDatabase", weatherForecast.toString())
+        metadataDao.updateDateLastCached(MetadataTable(DbConstants.WEATHER_FORECAST_TABLE_NAME, currentTimeMillis()))
         weatherForecastDao.insertWeatherForecast(weatherForecast)
     }
 
@@ -358,7 +360,7 @@ class PlaceRepository private constructor(context: Context) {
      * @return Når returnerer den bare temperatur, må se ann hvordan det skal være når databasen er på plass
      *
      */
-    fun fetchWeatherForecast(place: Place): List<WeatherForecastDb> {
+    fun fetchWeatherForecast(place: Place){
         val tag = "tagWeather"
         val wantedForecastDb = ArrayList<WeatherForecastDb>()
         val call= ApiClient.build()?.getWeather(place.lat, place.lng)
@@ -387,16 +389,14 @@ class PlaceRepository private constructor(context: Context) {
                             nextHours.details.rainAmount,
                             forecast.types.instantWeatherForecast.details.uv)
                         )};
-                    Log.d(tag, wantedForecastApi.toString())
-                    Log.d(tag, wantedForecastDb.toString())
+                    AsyncTask.execute{cacheWeatherForecastDb(wantedForecastDb)}
+
                 }
             }
             override fun onFailure(call: Call<WeatherForecastApi>, t: Throwable) {
                 Log.d(tag, "error")
             }
         })
-        Log.d("tagWeather1", wantedForecastDb.toString())
-        return wantedForecastDb
     }
 
 
