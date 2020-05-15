@@ -13,6 +13,9 @@ import com.example.team11.database.AppDatabase
 import com.example.team11.database.entity.WeatherForecastDb
 import com.example.team11.util.DbConstants
 import com.example.team11.database.entity.MetadataTable
+import com.example.team11.util.Util.getForecastTimesDays
+import com.example.team11.util.Util.getForecastTimesHours
+import com.example.team11.util.Util.shouldFetch
 import com.example.team11.valueObjects.OceanForecast
 import com.example.team11.valueObjects.WeatherForecastApi
 import com.github.kittinunf.fuel.Fuel
@@ -38,6 +41,7 @@ class PlaceRepository private constructor(context: Context) {
     private val database: AppDatabase = AppDatabase.getInstance(context)
     private val placeDao = database.placeDao()
     private val metadataDao = database.metadataDao()
+    private val weatherForecastDao = database.weatherForecastDao()
 
     //Kotlin sin static
     companion object {
@@ -138,6 +142,7 @@ class PlaceRepository private constructor(context: Context) {
 
         AsyncTask.execute {
             if (shouldFetch(
+                    metadataDao,
                     DbConstants.PLACE_TABLE_NAME,
                     10,
                     TimeUnit.DAYS
@@ -156,22 +161,23 @@ class PlaceRepository private constructor(context: Context) {
      * getPlaces funksjonen henter en liste til viewModel med vær for de netse timene
      * @return: LiveData<List<HourForecast>>, liste med badesteder
      */
-    fun getHourForecast(place: Place): LiveData<List<WeatherForecastDb.WeatherForecast>>{
-        val tag = "tagGetPlaces"
+    fun getHourForecast(place: Place): LiveData<List<WeatherForecastDb>>{
+        val tag = "tagGetForecast"
         // TODO("Hvor ofte burde places fetches?")
         // TODO("Kan jeg gjøre non-assertive call her? Dersom favoritePlaces.value er null burde den stoppe å sjekke på første?"
-        val hourForecast = weatherForecastDao.gethourForecast(place.id)
+        val hourForecast: LiveData<List<WeatherForecastDb>> = weatherForecastDao.getHourForecast(place.id, getForecastTimesHours())
         Log.d(tag, "getHourForecast")
 
         AsyncTask.execute {
             if (shouldFetch(
+                    metadataDao,
                     DbConstants.WEATHER_FORECAST_TABLE_NAME,
-                    1,
+                    0,
                     TimeUnit.HOURS
                 )
             ) {
-                Log.d(tag, "fetcherPlaces")
-                cachePlacesDb(fetchPlaces(urlAPI))
+                Log.d(tag, "fetcherForecast")
+                cacheWeatherForecastDb(fetchWeatherForecast(place))
             }
         }
         return hourForecast
@@ -181,12 +187,35 @@ class PlaceRepository private constructor(context: Context) {
      * getPlaces funksjonen henter en liste til viewModel med vær for de netse timene
      * @return: LiveData<List<DayForecast>>, liste med badesteder
      */
-    fun getDayForecast(place: Place): LiveData<List<WeatherForecastDb.DayForecast>> = weatherForecastDao.getDayForecast(place.id)
+    fun getDayForecast(place: Place): LiveData<List<WeatherForecastDb>>{
+        val tag = "tagGetForecast"
+        // TODO("Hvor ofte burde places fetches?")
+        // TODO("Kan jeg gjøre non-assertive call her? Dersom favoritePlaces.value er null burde den stoppe å sjekke på første?"
+        val dayForecast: LiveData<List<WeatherForecastDb>> = weatherForecastDao.getDayForecast(place.id, getForecastTimesDays())
+        Log.d(tag, "getHourForecast")
 
+        AsyncTask.execute {
+            if (shouldFetch(
+                    metadataDao,
+                    DbConstants.WEATHER_FORECAST_TABLE_NAME,
+                    0,
+                    TimeUnit.HOURS
+                )
+            ) {
+                Log.d(tag, "fetcherForecast")
+                cacheWeatherForecastDb(fetchWeatherForecast(place))
+            }
+        }
+        return dayForecast
+    }
     fun cachePlacesDb(places: List<Place>){
         Log.d("tagDatabase", "Lagrer nye steder")
         metadataDao.updateDateLastCached(MetadataTable(DbConstants.PLACE_TABLE_NAME, currentTimeMillis()))
         placeDao.insertPlaceList(places)
+    }
+
+    fun cacheWeatherForecastDb(weatherForecast: List<WeatherForecastDb>){
+        weatherForecastDao.insertWeatherForecast(weatherForecast)
     }
 
     /**
@@ -325,45 +354,64 @@ class PlaceRepository private constructor(context: Context) {
      * @return Når returnerer den bare temperatur, må se ann hvordan det skal være når databasen er på plass
      *
      */
-
-    fun fetchWeather(place: Place): String? {
+    fun fetchWeatherForecast(place: Place): List<WeatherForecastDb> {
         val tag = "tagWeather"
-        val temp = null;
-
+        var wantedForecastDbHours: List<WeatherForecastDb> = ArrayList<WeatherForecastDb>()
+        var wantedForecastDbDays: List<WeatherForecastDb> = ArrayList<WeatherForecastDb>()
+        val wantedForecastDbAll = ArrayList<WeatherForecastDb>()
         val call= ApiClient.build()?.getWeather(place.lat, place.lng)
 
         call?.enqueue(object : Callback<WeatherForecastApi> {
             override fun onResponse(call: Call<WeatherForecastApi>, response: Response<WeatherForecastApi>) {
                 if (response.isSuccessful){
-                    Log.d(tag, response.body().toString())
-                    val temp = response.body()?.weatherForecastTimeSlotList?.list?.get(0)?.types?.instantWeatherForecast?.details?.temp
-                    Log.d(tag, temp.toString())
+                    val forecastTimesHours = getForecastTimesHours()
+                    val forecastTimesDays = getForecastTimesDays()
+                    val wantedForecastApiHours =
+                        response.body()?.weatherForecastTimeSlotList?.list?.filter { timeSlot ->
+                        timeSlot.time in forecastTimesHours
+                    }
+                    val wantedForecastApiDays =
+                        response.body()?.weatherForecastTimeSlotList?.list?.filter { timeSlot ->
+                            timeSlot.time in forecastTimesDays
+                        }
+
+                    Log.d(tag, wantedForecastApiDays.toString())
+                    Log.d(tag, wantedForecastApiHours.toString())
+
+                    wantedForecastDbHours = wantedForecastApiHours!!.map {
+                        WeatherForecastDb(place.id,
+                            it.time,
+                            it.types.nextOneHourForecast.summary.symbol,
+                            it.types.instantWeatherForecast.details.temp,
+                            it.types.nextOneHourForecast.details.rainAmount,
+                            it.types.instantWeatherForecast.details.uv) };
+
+
+                    //TODO("Er det greit å bruke !! Her? med ? får jeg feil i databasen)
+                    wantedForecastDbDays = wantedForecastApiDays!!.map {
+                        WeatherForecastDb(place.id,
+                            it.time,
+                            it.types.nextSixHourForecast.summary.symbol,
+                            it.types.instantWeatherForecast.details.temp,
+                            it.types.nextSixHourForecast.details.rainAmount,
+                            it.types.instantWeatherForecast.details.uv) };
+
+                    Log.d(wantedForecastApiHours)
+                    Log.d(wantedForecastApiDays)
+                    wantedForecastDbAll.addAll(wantedForecastDbHours)
+                    wantedForecastDbAll.addAll(wantedForecastDbDays)
                 }
             }
             override fun onFailure(call: Call<WeatherForecastApi>, t: Throwable) {
                 Log.d(tag, "error")
             }
         })
-        return temp
+        Log.d("tagWeather1", wantedForecastDbAll.toString())
+        Log.d("tagWeather1", wantedForecastDbDays.toString())
+        Log.d("tagWeather1", wantedForecastDbHours.toString())
+        return wantedForecastDbAll
     }
 
-    private fun shouldFetch(nameDatabase: String, timeout: Int, timeUnit: TimeUnit): Boolean{
-        val dateLastFetched = metadataDao.getDateLastCached(nameDatabase)
-        val now = currentTimeMillis()
-        val timeoutMilli = timeUnit.toMillis(timeout.toLong())
-        Log.d("tagDatabase", "dateLastFetched: $dateLastFetched")
-
-        if(dateLastFetched == null){
-            return true
-        }
-        if (now - dateLastFetched > timeoutMilli) {
-            Log.d("tagDatabse", "Now: $now, dateLastFetcged: $dateLastFetched, timeoutMilli: $timeoutMilli")
-            return true
-        }
-        return false
-
-    }
-}
 
 }
 
