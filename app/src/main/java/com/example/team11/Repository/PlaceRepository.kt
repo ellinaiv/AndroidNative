@@ -13,6 +13,8 @@ import com.example.team11.database.AppDatabase
 import com.example.team11.database.entity.WeatherForecastDb
 import com.example.team11.util.DbConstants
 import com.example.team11.database.entity.MetadataTable
+import com.example.team11.util.Util.formatToDaysTime
+import com.example.team11.util.Util.formatToHoursTime
 import com.example.team11.util.Util.getForecastTimesDays
 import com.example.team11.util.Util.getForecastTimesHours
 import com.example.team11.util.Util.shouldFetch
@@ -356,50 +358,33 @@ class PlaceRepository private constructor(context: Context) {
      */
     fun fetchWeatherForecast(place: Place): List<WeatherForecastDb> {
         val tag = "tagWeather"
-        var wantedForecastDbHours: List<WeatherForecastDb> = ArrayList<WeatherForecastDb>()
-        var wantedForecastDbDays: List<WeatherForecastDb> = ArrayList<WeatherForecastDb>()
-        val wantedForecastDbAll = ArrayList<WeatherForecastDb>()
+        val wantedForecastDb = ArrayList<WeatherForecastDb>()
         val call= ApiClient.build()?.getWeather(place.lat, place.lng)
 
         call?.enqueue(object : Callback<WeatherForecastApi> {
             override fun onResponse(call: Call<WeatherForecastApi>, response: Response<WeatherForecastApi>) {
                 if (response.isSuccessful){
-                    val forecastTimesHours = getForecastTimesHours()
-                    val forecastTimesDays = getForecastTimesDays()
-                    val wantedForecastApiHours =
+                    val wantedTimesHours = getForecastTimesHours()
+                    val wantedTimesDays = getForecastTimesDays()
+                    val wantedForecastApi =
                         response.body()?.weatherForecastTimeSlotList?.list?.filter { timeSlot ->
-                        timeSlot.time in forecastTimesHours
-                    }
-                    val wantedForecastApiDays =
-                        response.body()?.weatherForecastTimeSlotList?.list?.filter { timeSlot ->
-                            timeSlot.time in forecastTimesDays
+                        timeSlot.time in wantedTimesHours || timeSlot.time in wantedTimesDays
                         }
+                    wantedForecastApi!!.forEach { forecast ->
+                        var nextHours = forecast.types.nextOneHourForecast
+                        nextHours?.let { nextHours = forecast.types.nextSixHourForecast }
+                        wantedForecastDb.add(WeatherForecastDb(place.id,
+                            forecast.time,
+                            nextHours.summary.symbol,
+                            forecast.types.instantWeatherForecast.details.temp,
+                            nextHours.details.rainAmount,
+                            forecast.types.instantWeatherForecast.details.uv)
+                        )};
 
-                    Log.d(tag, wantedForecastApiDays.toString())
                     Log.d(tag, wantedForecastApiHours.toString())
-
-                    wantedForecastDbHours = wantedForecastApiHours!!.map {
-                        WeatherForecastDb(place.id,
-                            it.time,
-                            it.types.nextOneHourForecast.summary.symbol,
-                            it.types.instantWeatherForecast.details.temp,
-                            it.types.nextOneHourForecast.details.rainAmount,
-                            it.types.instantWeatherForecast.details.uv) };
-
-
-                    //TODO("Er det greit å bruke !! Her? med ? får jeg feil i databasen)
-                    wantedForecastDbDays = wantedForecastApiDays!!.map {
-                        WeatherForecastDb(place.id,
-                            it.time,
-                            it.types.nextSixHourForecast.summary.symbol,
-                            it.types.instantWeatherForecast.details.temp,
-                            it.types.nextSixHourForecast.details.rainAmount,
-                            it.types.instantWeatherForecast.details.uv) };
-
-                    Log.d(wantedForecastApiHours)
-                    Log.d(wantedForecastApiDays)
-                    wantedForecastDbAll.addAll(wantedForecastDbHours)
-                    wantedForecastDbAll.addAll(wantedForecastDbDays)
+                    Log.d(tag, wantedForecastApiDays.toString())
+                    wantedForecastDbAll.addAll(formatToHoursTime(wantedForecastDbHours))
+                    wantedForecastDbAll.addAll(formatToDaysTime(wantedForecastDbDays))
                 }
             }
             override fun onFailure(call: Call<WeatherForecastApi>, t: Throwable) {

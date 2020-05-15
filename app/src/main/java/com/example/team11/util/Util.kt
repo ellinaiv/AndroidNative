@@ -2,6 +2,7 @@ package com.example.team11.util
 
 import android.util.Log
 import com.example.team11.database.dao.MetadataDao
+import com.example.team11.database.entity.WeatherForecastDb
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -36,6 +37,21 @@ object Util {
             Log.d("Gattering times", stringFormat.format(c.time))
         }
         return listTimer
+    }
+
+    fun formatToHoursTime(forecasts: List<WeatherForecastDb>): List<WeatherForecastDb>{
+        forecasts.forEach{
+            val formatter = SimpleDateFormat("HH")
+            it.time = formatter.format(it.time)
+        }
+        return forecasts
+    }
+    fun formatToDaysTime(forecasts: List<WeatherForecastDb>): List<WeatherForecastDb>{
+        forecasts.forEach{
+            val formatter = SimpleDateFormat("dd/MM")
+            it.time = formatter.format(it.time)
+        }
+        return forecasts
     }
 
     fun shouldFetch(metadataDao: MetadataDao, nameDatabase: String, timeout: Int, timeUnit: TimeUnit): Boolean{

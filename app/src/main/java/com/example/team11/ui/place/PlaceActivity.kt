@@ -70,7 +70,7 @@ class PlaceActivity : AppCompatActivity() {
      * @param hourForecast liste med værdata for timesvarsel
      */
     private fun makeAboutPage(place: Place, savedInstanceState: Bundle?, dayForecast: List<WeatherForecastDb>,
-                              hourForecast: List<WeatherForecastDb.WeatherForecast>) {
+                              hourForecast: List<WeatherForecastDb>) {
         buttonBack.setOnClickListener {
             finish()
         }
@@ -302,7 +302,7 @@ class PlaceActivity : AppCompatActivity() {
      * @param temp textView som viser lufttemperatur for gjeldende tid
      * @param rain textView som viser nedbørsmengde for gjeldende tid
      */
-    private fun setForecastViews(forecast: WeatherForecastDb.WeatherForecast, time: TextView, symbol: ImageView,
+    private fun setForecastViews(forecast: WeatherForecastDb, time: TextView, symbol: ImageView,
                                  temp: TextView, rain: TextView) {
         if (forecast.tempAir.toInt() == Int.MAX_VALUE) {
             // ingen værdata
@@ -312,7 +312,7 @@ class PlaceActivity : AppCompatActivity() {
             val parser =  SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
             val dateTime = parser.parse(forecast.time)
 
-            if (forecast is WeatherForecastDb.HourForecast) {
+            if (forecast is WeatherForecastDb) {
                 val formatter = SimpleDateFormat("HH")
                 time.text = "kl. " + formatter.format(dateTime)
             } else {
