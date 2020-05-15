@@ -260,6 +260,7 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
         )
         style.addLayer(symbolLayer)
         listOfLayerId.add(id)
+        listOfgeojsonId.add(geoId)
     }
 
     override fun onStart() {
