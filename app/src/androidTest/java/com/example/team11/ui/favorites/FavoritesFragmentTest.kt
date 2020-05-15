@@ -28,9 +28,8 @@ class FavoritesFragmentTest{
     @Before
     fun setUp(){
         launchFragmentInContainer<PlacesListFragment>(themeResId = R.style.AppTheme)
-        val a =  onView((withId(R.id.recycler_viewPlaces)))
-        a.perform(click())
-       // onView(withId(R.id.toggleFavourite))
+
+        onView(withId(R.id.toggleFavourite))
          //   .perform(click())
     }
 
