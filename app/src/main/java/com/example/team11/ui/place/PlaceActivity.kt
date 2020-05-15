@@ -163,7 +163,6 @@ class PlaceActivity : AppCompatActivity() {
      * @param forecast liste med objekter som inneholder værdata
      */
     private fun makeDayForecast(forecast: List<WeatherForecastDb>) {
-        Log.d("tagPlace", "kommet inn i makeDayForecast")
         if (forecast.isEmpty()) {
             return
         } else {
@@ -178,7 +177,6 @@ class PlaceActivity : AppCompatActivity() {
             setForecastViews(forecast[4], textDate5Days, imageForecast5Days,
                 textTemp5Days, textRain5Days)
         }
-        Log.d("tagPlace", "makeDayForecast ferdig")
     }
 
 
@@ -190,7 +188,6 @@ class PlaceActivity : AppCompatActivity() {
      * @param forecast liste med objekter som inneholder værdata
      */
     private fun makeHourForecast(forecast: List<WeatherForecastDb>) {
-        Log.d("tagPlace", "kommet inn i makeHourForecast")
         if (forecast.isEmpty()) {
             return
         } else {
@@ -200,7 +197,6 @@ class PlaceActivity : AppCompatActivity() {
                 imageWeather.setImageDrawable(getDrawable(resources.getIdentifier(forecast[0].symbol,
                     "drawable", this.packageName)))
                 textRain.text = getString(R.string.place_rain, forecast[0].precipitation)
-                Log.d("tagPlace", "makeHourForecast ferdig")
             }
 
             // havstrømninger
