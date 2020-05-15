@@ -43,18 +43,35 @@ class PlaceActivity : AppCompatActivity() {
         viewModel.place!!.observe(this, Observer { place ->
             //Skriver ut slik at vi kan se om vi har riktig badestrand
             Log.d("tagPlace", place.toString())
-
-            // henter langtidsvarsel vær
-            viewModel.getDayForecast().observe(this, Observer { dayForecast ->
-                // henter timesvarsel vær
-                viewModel.getHourForecast().observe(this, Observer { hourForecast ->
-                    makeAboutPage(place, savedInstanceState, dayForecast, hourForecast)
-                })
             })
 
-            viewModel.isFavorite.observe(this, Observer { isFavorite ->
-                toggleFavorite.isChecked = isFavorite
-            })
+        viewModel.isFavorite.observe(this, Observer { isFavorite ->
+            toggleFavorite.isChecked = isFavorite
+        })
+
+        viewModel.getHourForecast().observe(this, Observer { hourForecastList ->
+
+            setHourForecast(hourForecastList)
+
+            // nåværende badeplass, vær, vanntemperatur, havstrømninger, uv
+
+
+            textTempWater.text = getString(R.string.tempC, place.tempWater)
+            textTempAir.text = getString(R.string.tempC, hour[0].tempAir)
+            textRain.text = getString(R.string.place_rain, hour[0].precipitation)
+
+            var uvText = convertUV(hour[0].uv.toInt())
+            textUVResult.text = uvText
+            textUVResult.setTextColor(getColor(getResources().getIdentifier(getTextColor(uvText,
+                "uv"),"color", this.getPackageName())))
+
+            // timesvarsel vær
+            setForecastViews(hour[1], text1Hour, imageForecast1Hour, textTemp1Hour, textRain1Hour)
+            setForecastViews(hour[2], text2Hours, imageForecast2Hours, textTemp2Hours, textRain2Hours)
+            setForecastViews(hour[3], text3Hours, imageForecast3Hours, textTemp3Hours, textRain3Hours)
+            setForecastViews(hour[4], text4Hours, imageForecast4Hours, textTemp4Hours, textRain4Hours)
+            setForecastViews(hour[5], text5Hours, imageForecast5Hours, textTemp5Hours, textRain5Hours)
+
         })
         Log.d("tagPlace", "ferdig")
     }
@@ -64,19 +81,14 @@ class PlaceActivity : AppCompatActivity() {
      * @param place: badeplassen
      * @param savedInstanceState: mapView trenger denne i makeMap
      */
-    private fun makeAboutPage(place: Place, savedInstanceState: Bundle?, dayForecast: List<WeatherForecastDb.WeatherForecast>,
-                              hourForecast: List<WeatherForecastDb.WeatherForecast>) {
+    private fun makeAboutPage(place: Place, savedInstanceState: Bundle?) {
         // topBar
         buttonBack.setOnClickListener {
             finish()
         }
 
-        // nåværende badeplass, vær, vanntemperatur, havstrømninger, uv
         textPlaceName.text = place.name
 
-        textTempWater.text = getString(R.string.tempC, place.tempWater)
-        textTempAir.text = getString(R.string.tempC, hourForecast[0].tempAir)
-        textRain.text = getString(R.string.place_rain, hourForecast[0].precipitation)
 
         //TODO
 //        var currentsText = convertCurrents(hourForecast[0].currents)
@@ -84,10 +96,7 @@ class PlaceActivity : AppCompatActivity() {
 //        textUVResult.setTextColor(getColor(getResources().getIdentifier(getTextColor(currentsText,
 //            "currents"), "color", this.getPackageName())))
 
-        var uvText = convertUV(hourForecast[0].uv.toInt())
-        textUVResult.text = uvText
-        textUVResult.setTextColor(getColor(getResources().getIdentifier(getTextColor(uvText,
-            "uv"),"color", this.getPackageName())))
+
 
         // infovinduer om havstrømninger og uv
         buttonCurrentsInfo.setOnClickListener {
@@ -126,20 +135,15 @@ class PlaceActivity : AppCompatActivity() {
         }
 
 
-        // timesvarsel vær
-        setForecastViews(hourForecast[1], text1Hour, imageForecast1Hour, textTemp1Hour, textRain1Hour)
-        setForecastViews(hourForecast[2], text2Hours, imageForecast2Hours, textTemp2Hours, textRain2Hours)
-        setForecastViews(hourForecast[3], text3Hours, imageForecast3Hours, textTemp3Hours, textRain3Hours)
-        setForecastViews(hourForecast[4], text4Hours, imageForecast4Hours, textTemp4Hours, textRain4Hours)
-        setForecastViews(hourForecast[5], text5Hours, imageForecast5Hours, textTemp5Hours, textRain5Hours)
 
-        // langtidsvarsel vær
-        setForecastViews(dayForecast[0], textDate1Day, imageForecast1Day, textTemp1Day, textRain1Day)
-        setForecastViews(dayForecast[1], textDate2Days, imageForecast2Days, textTemp2Days, textRain2Days)
-        setForecastViews(dayForecast[2], textDate3Days, imageForecast3Days, textTemp3Days, textRain3Days)
-        setForecastViews(dayForecast[3], textDate4Days, imageForecast4Days, textTemp4Days, textRain4Days)
-        setForecastViews(dayForecast[4], textDate5Days, imageForecast5Days, textTemp5Days, textRain5Days)
-
+        viewModel.getDayForecast().observe(this, Observer { day ->
+            // langtidsvarsel vær
+            setForecastViews(day[0], textDate1Day, imageForecast1Day, textTemp1Day, textRain1Day)
+            setForecastViews(day[1], textDate2Days, imageForecast2Days, textTemp2Days, textRain2Days)
+            setForecastViews(day[2], textDate3Days, imageForecast3Days, textTemp3Days, textRain3Days)
+            setForecastViews(day[3], textDate4Days, imageForecast4Days, textTemp4Days, textRain4Days)
+            setForecastViews(day[4], textDate5Days, imageForecast5Days, textTemp5Days, textRain5Days)
+        })
 
         // reisevei og kart
         buttonBike.setOnClickListener {
@@ -277,7 +281,7 @@ class PlaceActivity : AppCompatActivity() {
      * @param temp textView som viser lufttemperatur for gjeldende tid
      * @param rain textView som viser nedbørsmengde for gjeldende tid
      */
-    private fun setForecastViews(forecast: WeatherForecastDb.WeatherForecast, time: TextView, symbol: ImageView,
+    private fun setForecastViews(forecast: WeatherForecastDb, time: TextView, symbol: ImageView,
                                  temp: TextView, rain: TextView) {
         //TODO(må testes når data er på plass)
         time.text = forecast.time    //TODO(formatere string)
