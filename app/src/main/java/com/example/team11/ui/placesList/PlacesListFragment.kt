@@ -51,6 +51,9 @@ class PlacesListFragment : Fragment() {
             parent_layout.setOnClickListener {
                 hideKeyboard()
             }
+            recycler_viewPlaces.setOnClickListener{
+                hideKeyboard()
+            }
         })
 
         val filterButton = root.findViewById<ImageButton>(R.id.filterButton)
@@ -74,6 +77,7 @@ class PlacesListFragment : Fragment() {
                 false
             )
     }
+
     fun Fragment.hideKeyboard() {
         view?.let { activity?.hideKeyboard(it) }
     }
