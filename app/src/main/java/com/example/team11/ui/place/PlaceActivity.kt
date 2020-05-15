@@ -28,6 +28,9 @@ import com.mapbox.mapboxsdk.style.layers.PropertyFactory
 import com.mapbox.mapboxsdk.style.layers.SymbolLayer
 import com.mapbox.mapboxsdk.style.sources.GeoJsonSource
 import kotlinx.android.synthetic.main.activity_place.*
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.util.*
 
 class PlaceActivity : AppCompatActivity() {
     private val viewModel: PlaceActivityViewModel by viewModels{ PlaceActivityViewModel.InstanceCreator(applicationContext) }
@@ -43,46 +46,31 @@ class PlaceActivity : AppCompatActivity() {
         viewModel.place!!.observe(this, Observer { place ->
             //Skriver ut slik at vi kan se om vi har riktig badestrand
             Log.d("tagPlace", place.toString())
+
+            // henter langtidsvarsel vær
+            viewModel.getDayForecast().observe(this, Observer { dayForecast ->
+                // henter timesvarsel vær
+                viewModel.getHourForecast().observe(this, Observer { hourForecast ->
+                    makeAboutPage(place, savedInstanceState, dayForecast, hourForecast)
+                })
             })
 
-        viewModel.isFavorite.observe(this, Observer { isFavorite ->
-            toggleFavorite.isChecked = isFavorite
-        })
-
-        viewModel.getHourForecast().observe(this, Observer { hourForecastList ->
-
-            setHourForecast(hourForecastList)
-
-            // nåværende badeplass, vær, vanntemperatur, havstrømninger, uv
-
-
-            textTempWater.text = getString(R.string.tempC, place.tempWater)
-            textTempAir.text = getString(R.string.tempC, hour[0].tempAir)
-            textRain.text = getString(R.string.place_rain, hour[0].precipitation)
-
-            var uvText = convertUV(hour[0].uv.toInt())
-            textUVResult.text = uvText
-            textUVResult.setTextColor(getColor(getResources().getIdentifier(getTextColor(uvText,
-                "uv"),"color", this.getPackageName())))
-
-            // timesvarsel vær
-            setForecastViews(hour[1], text1Hour, imageForecast1Hour, textTemp1Hour, textRain1Hour)
-            setForecastViews(hour[2], text2Hours, imageForecast2Hours, textTemp2Hours, textRain2Hours)
-            setForecastViews(hour[3], text3Hours, imageForecast3Hours, textTemp3Hours, textRain3Hours)
-            setForecastViews(hour[4], text4Hours, imageForecast4Hours, textTemp4Hours, textRain4Hours)
-            setForecastViews(hour[5], text5Hours, imageForecast5Hours, textTemp5Hours, textRain5Hours)
-
+            viewModel.isFavorite.observe(this, Observer { isFavorite ->
+                toggleFavorite.isChecked = isFavorite
+            })
         })
         Log.d("tagPlace", "ferdig")
     }
 
     /**
      * Lager infosiden om badeplassen
-     * @param place: badeplassen
-     * @param savedInstanceState: mapView trenger denne i makeMap
+     * @param place badeplassen
+     * @param savedInstanceState mapView trenger denne i makeMap
+     * @param dayForecast liste med værdata for langtidsvarsel
+     * @param hourForecast liste med værdata for timesvarsel
      */
-    private fun makeAboutPage(place: Place, savedInstanceState: Bundle?) {
-        // topBar
+    private fun makeAboutPage(place: Place, savedInstanceState: Bundle?, dayForecast: List<WeatherForecastDb>,
+                              hourForecast: List<WeatherForecastDb.WeatherForecast>) {
         buttonBack.setOnClickListener {
             finish()
         }
@@ -90,12 +78,33 @@ class PlaceActivity : AppCompatActivity() {
         textPlaceName.text = place.name
 
 
+        // vær nå, vanntemperatur
+        if (place.tempWater != Int.MAX_VALUE) {
+            //TODO(hente fra database og ikke place)
+            textTempWater.text = getString(R.string.tempC, place.tempWater)
+        }
+
+        if (hourForecast[0].tempAir.toInt() != Int.MAX_VALUE){
+            textTempAir.text = getString(R.string.tempC, hourForecast[0].tempAir.toInt())
+            imageWeather.setImageDrawable(getDrawable(resources.getIdentifier(hourForecast[0].symbol,
+                "drawable", this.packageName)))
+            textRain.text = getString(R.string.place_rain, hourForecast[0].precipitation)
+        }
+
+
+        // havstrømninger og uv views
         //TODO
 //        var currentsText = convertCurrents(hourForecast[0].currents)
 //        textCurrentsResult.text = currentsText
-//        textUVResult.setTextColor(getColor(getResources().getIdentifier(getTextColor(currentsText,
-//            "currents"), "color", this.getPackageName())))
+//        textUVResult.setTextColor(getColor(
+//            resources.getIdentifier(getTextColor(currentsText, "currents"),
+//                "color", this.packageName)))
 
+        var uvText = convertUV(hourForecast[0].uv.toInt())
+        textUVResult.text = uvText
+        textUVResult.setTextColor(getColor(
+            resources.getIdentifier(getTextColor(uvText, "uv"),
+                "color", this.packageName)))
 
 
         // infovinduer om havstrømninger og uv
@@ -135,15 +144,20 @@ class PlaceActivity : AppCompatActivity() {
         }
 
 
+        // timesvarsel vær
+        setForecastViews(hourForecast[1], text1Hour, imageForecast1Hour, textTemp1Hour, textRain1Hour)
+        setForecastViews(hourForecast[2], text2Hours, imageForecast2Hours, textTemp2Hours, textRain2Hours)
+        setForecastViews(hourForecast[3], text3Hours, imageForecast3Hours, textTemp3Hours, textRain3Hours)
+        setForecastViews(hourForecast[4], text4Hours, imageForecast4Hours, textTemp4Hours, textRain4Hours)
+        setForecastViews(hourForecast[5], text5Hours, imageForecast5Hours, textTemp5Hours, textRain5Hours)
 
-        viewModel.getDayForecast().observe(this, Observer { day ->
-            // langtidsvarsel vær
-            setForecastViews(day[0], textDate1Day, imageForecast1Day, textTemp1Day, textRain1Day)
-            setForecastViews(day[1], textDate2Days, imageForecast2Days, textTemp2Days, textRain2Days)
-            setForecastViews(day[2], textDate3Days, imageForecast3Days, textTemp3Days, textRain3Days)
-            setForecastViews(day[3], textDate4Days, imageForecast4Days, textTemp4Days, textRain4Days)
-            setForecastViews(day[4], textDate5Days, imageForecast5Days, textTemp5Days, textRain5Days)
-        })
+        // langtidsvarsel vær
+        setForecastViews(dayForecast[0], textDate1Day, imageForecast1Day, textTemp1Day, textRain1Day)
+        setForecastViews(dayForecast[1], textDate2Days, imageForecast2Days, textTemp2Days, textRain2Days)
+        setForecastViews(dayForecast[2], textDate3Days, imageForecast3Days, textTemp3Days, textRain3Days)
+        setForecastViews(dayForecast[3], textDate4Days, imageForecast4Days, textTemp4Days, textRain4Days)
+        setForecastViews(dayForecast[4], textDate5Days, imageForecast5Days, textTemp5Days, textRain5Days)
+
 
         // reisevei og kart
         buttonBike.setOnClickListener {
@@ -223,12 +237,18 @@ class PlaceActivity : AppCompatActivity() {
      * @return en stringrepresentasjon av den tilsvarende kategorien
      */
     private fun convertUV(value: Int): String = when {
-        value in 1..2 -> "Svak"
-        value in 3..5 -> "Moderat"
-        value in 6..7 -> "Sterk"
-        value in 8..10 -> "Svært sterk"
-        value > 10 -> "Ekstrem"
-        else -> "Ikke tilgjengelig"
+        value in 1..2 -> getString(resources.getIdentifier("place_info_weak",
+            "string", this.packageName))
+        value in 3..5 -> getString(resources.getIdentifier("place_info_moderate",
+            "string", this.packageName))
+        value in 6..7 -> getString(resources.getIdentifier("place_info_strong",
+            "string", this.packageName))
+        value in 8..10 -> getString(resources.getIdentifier("place_info_very_strong",
+            "string", this.packageName))
+        value > 10 -> getString(resources.getIdentifier("place_info_extreme",
+            "string", this.packageName))
+        else -> getString(resources.getIdentifier("no_data",
+            "string", this.packageName))
     }
 
 
@@ -239,7 +259,8 @@ class PlaceActivity : AppCompatActivity() {
      */
     private fun convertCurrents(value: Int): String {
         ///TODO
-        return "Ikke tilgjengelig"
+        return getString(resources.getIdentifier("no_data",
+            "string", this.packageName))
     }
 
 
@@ -254,8 +275,8 @@ class PlaceActivity : AppCompatActivity() {
             return "place_info_low"
         }
 
-        if (type.equals("uv")) {
-            return when(text) {
+        return if (type.equals("uv")) {
+            when(text) {
                 "Moderat" ->  "place_uv_info_moderate"
                 "Sterk" -> "place_uv_info_strong"
                 "Svært sterk" -> "place_uv_info_very_strong"
@@ -263,7 +284,7 @@ class PlaceActivity : AppCompatActivity() {
                 else -> "mainTextColor"
             }
         } else {
-            return when(text) {
+            when(text) {
                 "Moderat" -> "place_currents_info_moderate"
                 "Sterk" -> "place_currents_info_strong"
                 else -> "mainTextColor"
@@ -281,14 +302,29 @@ class PlaceActivity : AppCompatActivity() {
      * @param temp textView som viser lufttemperatur for gjeldende tid
      * @param rain textView som viser nedbørsmengde for gjeldende tid
      */
-    private fun setForecastViews(forecast: WeatherForecastDb, time: TextView, symbol: ImageView,
+    private fun setForecastViews(forecast: WeatherForecastDb.WeatherForecast, time: TextView, symbol: ImageView,
                                  temp: TextView, rain: TextView) {
-        //TODO(må testes når data er på plass)
-        time.text = forecast.time    //TODO(formatere string)
-        symbol.setImageDrawable(getDrawable(getResources().getIdentifier(forecast.symbol,
-            "drawable", this.getPackageName())))
-        temp.text = forecast.tempAir.toInt().toString()
-        rain.text = forecast.precipitation.toString()
+        if (forecast.tempAir.toInt() == Int.MAX_VALUE) {
+            // ingen værdata
+            return
+        } else {
+            // tilgjengelig værdata
+            val parser =  SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
+            val dateTime = parser.parse(forecast.time)
+
+            if (forecast is WeatherForecastDb.HourForecast) {
+                val formatter = SimpleDateFormat("HH")
+                time.text = "kl. " + formatter.format(dateTime)
+            } else {
+                val formatter = SimpleDateFormat("dd/MM")
+                time.text = formatter.format(dateTime)
+            }
+
+            temp.text = forecast.tempAir.toInt().toString()
+            rain.text = forecast.precipitation.toString()
+            symbol.setImageDrawable(getDrawable(resources.getIdentifier(forecast.symbol,
+                "drawable", this.packageName)))
+        }
     }
 
 
