@@ -90,7 +90,7 @@ object Util {
         val timeoutMilli = timeUnit.toMillis(timeout.toLong())
         Log.d("tagDatabase", "dateLastFetched: $dateLastFetched")
 
-        if(dateLastFetched == null){
+        if(dateLastFetched.equals(0)){
             return true
         }
         if (now - dateLastFetched > timeoutMilli) {

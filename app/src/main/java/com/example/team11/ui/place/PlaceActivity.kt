@@ -247,8 +247,6 @@ class PlaceActivity : AppCompatActivity() {
             return
         } else {
             // tilgjengelig værdata
-            val parser =  SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
-            val dateTime = parser.parse(forecast.time)
             time.text = forecast.time
             temp.text = forecast.tempAir.toInt().toString()
             rain.text = forecast.precipitation.toString()
