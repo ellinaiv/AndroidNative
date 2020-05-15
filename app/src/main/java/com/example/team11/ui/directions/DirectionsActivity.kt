@@ -14,7 +14,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
-import com.example.team11.Place
+import com.example.team11.database.entity.Place
 import com.example.team11.R
 import com.example.team11.Transportation
 import com.mapbox.android.core.permissions.PermissionsListener
@@ -49,7 +49,7 @@ import retrofit2.Response
 
 class DirectionsActivity : AppCompatActivity() , PermissionsListener {
 
-    private val viewModel: DirectionsActivityViewModel by viewModels{ DirectionsActivityViewModel.InstanceCreator() }
+    private val viewModel: DirectionsActivityViewModel by viewModels{ DirectionsActivityViewModel.InstanceCreator(applicationContext) }
     private var permissionManager = PermissionsManager(this)
     private var mapboxMap: MapboxMap? = null
     private var mapView: MapView? = null

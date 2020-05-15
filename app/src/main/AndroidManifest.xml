@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -12,15 +13,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <!-- android:theme="@style/Theme.AppCompat.Light.NoActionBar" -->
-        <activity android:name=".ui.filter.FilterActivity" />
+        <!-- android:theme="@style/Theme.AppCompat.Light.NoActionBar"-->
         <activity android:name=".ui.directions.DirectionsActivity" />
-        <activity android:name=".deprecated.MoreActivity" />
+        <activity android:name=".ui.filter.FilterActivity" />
         <activity android:name=".ui.place.PlaceActivity" />
-        <activity android:name=".deprecated.PlacesListActivity" />
-        <activity android:name=".deprecated.FavoritePlacesActivity" />
         <activity android:name=".ui.bottomNavigation.MainActivity">
-            <intent-filter>
+        <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
