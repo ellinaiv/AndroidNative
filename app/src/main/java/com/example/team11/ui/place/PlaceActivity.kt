@@ -168,15 +168,15 @@ class PlaceActivity : AppCompatActivity() {
             return
         } else {
             setForecastViews(forecast[0], textDate1Day, imageForecast1Day,
-                textTemp1Day, textRain1Day, false)
+                textTemp1Day, textRain1Day)
             setForecastViews(forecast[1], textDate2Days, imageForecast2Days,
-                textTemp2Days, textRain2Days, false)
+                textTemp2Days, textRain2Days)
             setForecastViews(forecast[2], textDate3Days, imageForecast3Days,
-                textTemp3Days, textRain3Days, false)
+                textTemp3Days, textRain3Days)
             setForecastViews(forecast[3], textDate4Days, imageForecast4Days,
-                textTemp4Days, textRain4Days, false)
+                textTemp4Days, textRain4Days)
             setForecastViews(forecast[4], textDate5Days, imageForecast5Days,
-                textTemp5Days, textRain5Days, false)
+                textTemp5Days, textRain5Days)
         }
         Log.d("tagPlace", "makeDayForecast ferdig")
     }
@@ -219,15 +219,15 @@ class PlaceActivity : AppCompatActivity() {
                     "color", this.packageName)))
 
             setForecastViews(forecast[1], text1Hour, imageForecast1Hour,
-                textTemp1Hour, textRain1Hour, true)
+                textTemp1Hour, textRain1Hour)
             setForecastViews(forecast[2], text2Hours, imageForecast2Hours,
-                textTemp2Hours, textRain2Hours, true)
+                textTemp2Hours, textRain2Hours)
             setForecastViews(forecast[3], text3Hours, imageForecast3Hours,
-                textTemp3Hours, textRain3Hours, true)
+                textTemp3Hours, textRain3Hours)
             setForecastViews(forecast[4], text4Hours, imageForecast4Hours,
-                textTemp4Hours, textRain4Hours, true)
+                textTemp4Hours, textRain4Hours)
             setForecastViews(forecast[5], text5Hours, imageForecast5Hours,
-                textTemp5Hours, textRain5Hours, true)
+                textTemp5Hours, textRain5Hours)
         }
         Log.d("tagPlace", "makeHourForecast ferdig")
     }
@@ -245,7 +245,7 @@ class PlaceActivity : AppCompatActivity() {
      * @param isHourForecast true hvis værvarselet er timesvarsel, false hvis langtidsvarsel
      */
     private fun setForecastViews(forecast: WeatherForecastDb, time: TextView, symbol: ImageView,
-                                 temp: TextView, rain: TextView, isHourForecast: Boolean) {
+                                 temp: TextView, rain: TextView) {
         if (forecast.tempAir.toInt() == Int.MAX_VALUE) {
             // ingen værdata
             return
@@ -253,15 +253,7 @@ class PlaceActivity : AppCompatActivity() {
             // tilgjengelig værdata
             val parser =  SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
             val dateTime = parser.parse(forecast.time)
-
-            if (isHourForecast) {
-                val formatter = SimpleDateFormat("HH")
-                time.text = getString(resources.getIdentifier("hour", "string", this.packageName), formatter.format(dateTime!!))
-            } else {
-                val formatter = SimpleDateFormat("dd/MM")
-                time.text = formatter.format(dateTime!!)
-            }
-
+            time.text = forecast.time
             temp.text = forecast.tempAir.toInt().toString()
             rain.text = forecast.precipitation.toString()
             symbol.setImageDrawable(getDrawable(resources.getIdentifier(forecast.symbol,
