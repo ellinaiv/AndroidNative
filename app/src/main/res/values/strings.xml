@@ -7,6 +7,7 @@
 
     <!--    textViews-->
     <string name="tempC">%1$d °C</string>
+    <string name="hour">kl. %1$s</string>
     <string name="place_rain">%1$d mm</string>
     <string name="notAvailable">Ikke tilgjengelig</string>
     <string name="no_data">Ingen data</string>
@@ -25,7 +26,7 @@
     <string name="place_currents_info_more"><u>Les mer på ...</u></string>
     <string name="place_uv">UV-stråling</string>
     <string name="place_uv_info_title">Informasjon om UV-stråling</string>
-    <string name="place_uv_info_weak">UV-indeks: 1-2 \nTiltak: Ingen. Vær ute og nyt sola!</string>
+    <string name="place_uv_info_weak">UV–indeks: 1–2 \nTiltak: Ingen. Vær ute og nyt sola!</string>
     <string name="place_uv_info_moderate">UV-indeks: 3-5
         \nTiltak: Klær, solhatt og solbriller. Ta pauser fra sola!</string>
     <string name="place_uv_info_strong">UV-indeks: 6-7

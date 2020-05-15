@@ -8,8 +8,8 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 
 object Util {
-    fun getForecastTimesHours(): List<String>{
-        var listTimer = arrayListOf<String>()
+    fun getWantedHoursForecastApi(): List<String>{
+        var listTider = arrayListOf<String>()
         val c: Calendar = GregorianCalendar()
         c.time = Date(System.currentTimeMillis())
         c.set(Calendar.MINUTE, 0)
@@ -17,14 +17,14 @@ object Util {
         val stringFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
         for (hour in 1..DbConstants.NUMB_HOURS_FORECAST){
             c.add(Calendar.HOUR, 1)
-            listTimer.add(stringFormat.format(c.time))
+            listTider.add(stringFormat.format(c.time))
             Log.d("Gattering times", stringFormat.format(c.time))
         }
-        return listTimer
+        return listTider
     }
 
-    fun getForecastTimesDays(): List<String>{
-        var listTimer = arrayListOf<String>()
+    fun getWantedDaysForecastApi(): List<String>{
+        var listTider = arrayListOf<String>()
         val c: Calendar = GregorianCalendar()
         c.time = Date(System.currentTimeMillis())
         c.set(Calendar.HOUR, 12)
@@ -33,25 +33,50 @@ object Util {
         val stringFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
         for (hour in 1..DbConstants.NUMB_HOURS_FORECAST){
             c.add(Calendar.DATE, 1)
-            listTimer.add(stringFormat.format(c.time))
+            listTider.add(stringFormat.format(c.time))
             Log.d("Gattering times", stringFormat.format(c.time))
         }
-        return listTimer
+        return listTider
     }
 
-    fun formatToHoursTime(forecasts: List<WeatherForecastDb>): List<WeatherForecastDb>{
-        forecasts.forEach{
-            val formatter = SimpleDateFormat("HH")
-            it.time = formatter.format(it.time)
-        }
-        return forecasts
+    fun formatToHoursTime(time: String): String{
+        val formatter = SimpleDateFormat("HH")
+        return formatter.format(time)
     }
-    fun formatToDaysTime(forecasts: List<WeatherForecastDb>): List<WeatherForecastDb>{
-        forecasts.forEach{
-            val formatter = SimpleDateFormat("dd/MM")
-            it.time = formatter.format(it.time)
+
+    fun formatToDaysTime(time: String): String{
+        val formatter = SimpleDateFormat("dd/MM")
+        return formatter.format(time)
+    }
+
+    fun getWantedHoursForecastDb(): List<String>{
+        var listTider = arrayListOf<String>()
+        val c: Calendar = GregorianCalendar()
+        c.time = Date(System.currentTimeMillis())
+        c.set(Calendar.MINUTE, 0)
+        c.set(Calendar.SECOND, 0)
+        val stringFormat = SimpleDateFormat("HH")
+        for (hour in 1..DbConstants.NUMB_HOURS_FORECAST){
+            c.add(Calendar.HOUR, 1)
+            listTider.add(stringFormat.format(c.time))
+            Log.d("Gattering times", stringFormat.format(c.time))
         }
-        return forecasts
+        return listTider
+    }
+    fun getWantedDaysForecastDb(): List<String>{
+        var listTider = arrayListOf<String>()
+        val c: Calendar = GregorianCalendar()
+        c.time = Date(System.currentTimeMillis())
+        c.set(Calendar.HOUR, 12)
+        c.set(Calendar.MINUTE, 0)
+        c.set(Calendar.SECOND, 0)
+        val stringFormat = SimpleDateFormat("dd/MM")
+        for (hour in 1..DbConstants.NUMB_HOURS_FORECAST){
+            c.add(Calendar.DATE, 1)
+            listTider.add(stringFormat.format(c.time))
+            Log.d("Gattering times", stringFormat.format(c.time))
+        }
+        return listTider
     }
 
     fun shouldFetch(metadataDao: MetadataDao, nameDatabase: String, timeout: Int, timeUnit: TimeUnit): Boolean{

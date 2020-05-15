@@ -15,8 +15,10 @@ import com.example.team11.util.DbConstants
 import com.example.team11.database.entity.MetadataTable
 import com.example.team11.util.Util.formatToDaysTime
 import com.example.team11.util.Util.formatToHoursTime
-import com.example.team11.util.Util.getForecastTimesDays
-import com.example.team11.util.Util.getForecastTimesHours
+import com.example.team11.util.Util.getWantedDaysForecastApi
+import com.example.team11.util.Util.getWantedDaysForecastDb
+import com.example.team11.util.Util.getWantedHoursForecastApi
+import com.example.team11.util.Util.getWantedHoursForecastDb
 import com.example.team11.util.Util.shouldFetch
 import com.example.team11.valueObjects.OceanForecast
 import com.example.team11.valueObjects.WeatherForecastApi
@@ -167,7 +169,7 @@ class PlaceRepository private constructor(context: Context) {
         val tag = "tagGetForecast"
         // TODO("Hvor ofte burde places fetches?")
         // TODO("Kan jeg gjøre non-assertive call her? Dersom favoritePlaces.value er null burde den stoppe å sjekke på første?"
-        val hourForecast: LiveData<List<WeatherForecastDb>> = weatherForecastDao.getHourForecast(place.id, getForecastTimesHours())
+        val hourForecast: LiveData<List<WeatherForecastDb>> = weatherForecastDao.getHourForecast(place.id, getWantedHoursForecastDb())
         Log.d(tag, "getHourForecast")
 
         AsyncTask.execute {
@@ -193,7 +195,7 @@ class PlaceRepository private constructor(context: Context) {
         val tag = "tagGetForecast"
         // TODO("Hvor ofte burde places fetches?")
         // TODO("Kan jeg gjøre non-assertive call her? Dersom favoritePlaces.value er null burde den stoppe å sjekke på første?"
-        val dayForecast: LiveData<List<WeatherForecastDb>> = weatherForecastDao.getDayForecast(place.id, getForecastTimesDays())
+        val dayForecast: LiveData<List<WeatherForecastDb>> = weatherForecastDao.getDayForecast(place.id, getWantedDaysForecastDb())
         Log.d(tag, "getHourForecast")
 
         AsyncTask.execute {
@@ -364,37 +366,37 @@ class PlaceRepository private constructor(context: Context) {
         call?.enqueue(object : Callback<WeatherForecastApi> {
             override fun onResponse(call: Call<WeatherForecastApi>, response: Response<WeatherForecastApi>) {
                 if (response.isSuccessful){
-                    val wantedTimesHours = getForecastTimesHours()
-                    val wantedTimesDays = getForecastTimesDays()
+                    val wantedTimesHours = getWantedHoursForecastApi()
+                    val wantedTimesDays = getWantedDaysForecastApi()
                     val wantedForecastApi =
-                        response.body()?.weatherForecastTimeSlotList?.list?.filter { timeSlot ->
-                        timeSlot.time in wantedTimesHours || timeSlot.time in wantedTimesDays
+                        response.body()?.weatherForecastTimeSlotList?.list?.filter {
+                        it.time in wantedTimesHours || it.time in wantedTimesDays
                         }
                     wantedForecastApi!!.forEach { forecast ->
                         var nextHours = forecast.types.nextOneHourForecast
-                        nextHours?.let { nextHours = forecast.types.nextSixHourForecast }
+                        var time = formatToHoursTime(forecast.time)
+
+                        if (nextHours == null){
+                            nextHours = forecast.types.nextSixHourForecast
+                            time = formatToDaysTime(forecast.time)
+                        }
                         wantedForecastDb.add(WeatherForecastDb(place.id,
-                            forecast.time,
-                            nextHours.summary.symbol,
+                            time,
+                            nextHours!!.summary.symbol,
                             forecast.types.instantWeatherForecast.details.temp,
                             nextHours.details.rainAmount,
                             forecast.types.instantWeatherForecast.details.uv)
                         )};
-
-                    Log.d(tag, wantedForecastApiHours.toString())
-                    Log.d(tag, wantedForecastApiDays.toString())
-                    wantedForecastDbAll.addAll(formatToHoursTime(wantedForecastDbHours))
-                    wantedForecastDbAll.addAll(formatToDaysTime(wantedForecastDbDays))
+                    Log.d(tag, wantedForecastApi.toString())
+                    Log.d(tag, wantedForecastDb.toString())
                 }
             }
             override fun onFailure(call: Call<WeatherForecastApi>, t: Throwable) {
                 Log.d(tag, "error")
             }
         })
-        Log.d("tagWeather1", wantedForecastDbAll.toString())
-        Log.d("tagWeather1", wantedForecastDbDays.toString())
-        Log.d("tagWeather1", wantedForecastDbHours.toString())
-        return wantedForecastDbAll
+        Log.d("tagWeather1", wantedForecastDb.toString())
+        return wantedForecastDb
     }
 
 
