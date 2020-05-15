@@ -396,8 +396,8 @@ class PlaceRepository private constructor(context: Context) {
                             it.types.nextSixHourForecast.details.rainAmount,
                             it.types.instantWeatherForecast.details.uv) };
 
-                    Log.d(wantedForecastApiHours)
-                    Log.d(wantedForecastApiDays)
+//                    Log.d(wantedForecastApiHours)
+//                    Log.d(wantedForecastApiDays)
                     wantedForecastDbAll.addAll(wantedForecastDbHours)
                     wantedForecastDbAll.addAll(wantedForecastDbDays)
                 }
