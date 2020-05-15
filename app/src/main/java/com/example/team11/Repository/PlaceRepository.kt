@@ -202,7 +202,7 @@ class PlaceRepository private constructor(context: Context) {
             if (shouldFetch(
                     metadataDao,
                     DbConstants.WEATHER_FORECAST_TABLE_NAME,
-                    0,
+                    1,
                     TimeUnit.HOURS
                 )
             ) {

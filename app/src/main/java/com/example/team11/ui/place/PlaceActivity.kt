@@ -250,8 +250,8 @@ class PlaceActivity : AppCompatActivity() {
             time.text = forecast.time
             temp.text = forecast.tempAir.toInt().toString()
             rain.text = forecast.precipitation.toString()
-            symbol.setImageDrawable(getDrawable(resources.getIdentifier(forecast.symbol,
-                "drawable", this.packageName)))
+            //symbol.setImageDrawable(getDrawable(resources.getIdentifier(forecast.symbol,
+            //    "drawable", this.packageName)))
         }
     }
 
