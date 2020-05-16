@@ -28,7 +28,6 @@ import com.mapbox.mapboxsdk.style.layers.PropertyFactory
 import com.mapbox.mapboxsdk.style.layers.SymbolLayer
 import com.mapbox.mapboxsdk.style.sources.GeoJsonSource
 import kotlinx.android.synthetic.main.activity_place.*
-import java.text.SimpleDateFormat
 
 
 class PlaceActivity : AppCompatActivity() {
@@ -214,6 +213,7 @@ class PlaceActivity : AppCompatActivity() {
                 resources.getIdentifier(getTextColor(uvText, "uv"),
                     "color", this.packageName)))
 
+            // timesvarsel
             setForecastViews(forecast[1], text1Hour, imageForecast1Hour,
                 textTemp1Hour, textRain1Hour)
             setForecastViews(forecast[2], text2Hours, imageForecast2Hours,
@@ -238,7 +238,6 @@ class PlaceActivity : AppCompatActivity() {
      * @param symbol imageView som viser værikonet for gjeldende tid
      * @param temp textView som viser lufttemperatur for gjeldende tid
      * @param rain textView som viser nedbørsmengde for gjeldende tid
-     * @param isHourForecast true hvis værvarselet er timesvarsel, false hvis langtidsvarsel
      */
     private fun setForecastViews(forecast: WeatherForecastDb, time: TextView, symbol: ImageView,
                                  temp: TextView, rain: TextView) {
@@ -247,7 +246,7 @@ class PlaceActivity : AppCompatActivity() {
             return
         } else {
             // tilgjengelig værdata
-            time.text = forecast.time
+            time.text = getString(R.string.place_hour, forecast.time)
             temp.text = forecast.tempAir.toInt().toString()
             rain.text = forecast.precipitation.toString()
             symbol.setImageDrawable(getDrawable(resources.getIdentifier(forecast.symbol,
@@ -273,7 +272,9 @@ class PlaceActivity : AppCompatActivity() {
             "string", this.packageName))
         value > 10 -> getString(resources.getIdentifier("place_info_extreme",
             "string", this.packageName))
-        else -> getString(resources.getIdentifier("no_data",
+        value == Int.MAX_VALUE -> getString(resources.getIdentifier("no_data",
+            "string", this.packageName))
+        else -> getString(resources.getIdentifier("not_available",
             "string", this.packageName))
     }
 
@@ -284,10 +285,22 @@ class PlaceActivity : AppCompatActivity() {
      * @param value verdi for måling av havstrømninger
      * @return en stringrepresentasjon av den tilsvarende kategorien
      */
-    private fun convertCurrents(value: Int): String {
-        ///TODO
-        return getString(resources.getIdentifier("no_data",
-            "string", this.packageName))
+    private fun convertCurrents(value: Float): String {
+        return if (value >= 0.0 && value < 0.4) {
+            "Svak"
+        } else if (value >= 0.4 && value < 0.8) {
+            "Moderat"
+        } else if (value >= 0.8 && value < 1.2) {
+            "Sterk"
+        } else if (value >= 1.2 && value < 10.0) {
+            "Svært sterk"
+        } else if (value.toInt() == Int.MAX_VALUE) {
+            getString(resources.getIdentifier("no_data",
+                "string", this.packageName))
+        } else {
+            getString(resources.getIdentifier("not_available",
+                "string", this.packageName))
+        }
     }
 
 
@@ -299,12 +312,9 @@ class PlaceActivity : AppCompatActivity() {
      * @return ID for fargekoden i colors.xml
      */
     private fun getTextColor(text: String, type: String): String {
-        if (text.equals("Svak"))  {
-            return "place_info_low"
-        }
-
         return if (type.equals("uv")) {
             when(text) {
+                "Svak" -> "place_uv_info_low"
                 "Moderat" ->  "place_uv_info_moderate"
                 "Sterk" -> "place_uv_info_strong"
                 "Svært sterk" -> "place_uv_info_very_strong"
@@ -313,8 +323,10 @@ class PlaceActivity : AppCompatActivity() {
             }
         } else {
             when(text) {
+                "Svak" -> "place_currents_info_weak"
                 "Moderat" -> "place_currents_info_moderate"
                 "Sterk" -> "place_currents_info_strong"
+                "Svært sterk" -> "place_currents_info_very_strong"
                 else -> "mainTextColor"
             }
         }

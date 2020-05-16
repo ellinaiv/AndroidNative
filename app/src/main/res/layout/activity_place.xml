@@ -183,9 +183,10 @@
                 android:fontFamily="@font/roboto_medium"
                 android:text="@string/no_data"
                 android:textColor="@color/mainTextColor"
-                tools:text="Lite"
-                tools:textColor="@color/place_info_low"
+                tools:text="Svak"
+                tools:textColor="@color/place_currents_info_weak"
                 android:textSize="20sp"
+                android:textStyle="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="12dp"
@@ -201,6 +202,7 @@
                 tools:text="Sterk"
                 tools:textColor="@color/place_currents_info_strong"
                 android:textSize="20sp"
+                android:textStyle="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="@+id/textUV"
@@ -940,7 +942,7 @@
                     android:id="@+id/textCurrentsInfoWeakTitle"
                     android:fontFamily="@font/roboto_medium"
                     android:text="@string/place_info_weak"
-                    android:textColor="@color/place_info_low"
+                    android:textColor="@color/place_currents_info_weak"
                     android:textSize="18sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -964,7 +966,7 @@
                     android:id="@+id/textCurrentsInfoModerateTitle"
                     android:fontFamily="@font/roboto_medium"
                     android:text="@string/place_info_moderate"
-                    android:textColor="@color/place_uv_info_moderate"
+                    android:textColor="@color/place_currents_info_moderate"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:layout_width="wrap_content"
@@ -1011,6 +1013,31 @@
                     app:layout_constraintTop_toBottomOf="@+id/textCurrentsInfoStrongTitle" />
 
                 <TextView
+                    android:id="@+id/textCurrentsInfoVeryStrongTitle"
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="@string/place_info_very_strong"
+                    android:textColor="@color/place_currents_info_very_strong"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    app:layout_constraintStart_toStartOf="@+id/textCurrentsInfoStrong"
+                    app:layout_constraintTop_toBottomOf="@+id/textCurrentsInfoStrong"/>
+
+                <TextView
+                    android:id="@+id/textCurrentsInfoVeryStrong"
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="@string/place_currents_info_strong"
+                    android:textColor="@color/mainTextColor"
+                    android:textSize="14sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    app:layout_constraintStart_toStartOf="@+id/textCurrentsInfoVeryStrongTitle"
+                    app:layout_constraintTop_toBottomOf="@+id/textCurrentsInfoVeryStrongTitle" />
+
+                <TextView
                     android:id="@+id/linkCurrentsInfoMore"
                     android:fontFamily="@font/roboto_medium"
                     android:text="@string/place_currents_info_more"
@@ -1022,7 +1049,7 @@
                     android:layout_marginTop="24dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textCurrentsInfoStrong"
+                    app:layout_constraintTop_toBottomOf="@+id/textCurrentsInfoVeryStrong"
                     android:clickable="true"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -1066,7 +1093,7 @@
                     android:id="@+id/textUVInfoWeakTitle"
                     android:fontFamily="@font/roboto_medium"
                     android:text="@string/place_info_weak"
-                    android:textColor="@color/place_info_low"
+                    android:textColor="@color/place_uv_info_low"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:layout_width="wrap_content"
