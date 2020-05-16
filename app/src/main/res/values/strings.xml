@@ -8,7 +8,7 @@
     <!--    textViews-->
     <string name="tempC">%1$d °C</string>
     <string name="rain_mm">%1$d mm</string>
-    <string name="place_rain">%1$f mm</string>
+    <string name="place_rain">%1$.1f mm</string>
     <string name="not_available">Ikke tilgjengelig</string>
     <string name="no_data">Ingen data</string>
     <string name="no_weather_data">Ingen værdata</string>
@@ -21,10 +21,10 @@
     <string name="place_info_very_strong">Svært sterk</string>
     <string name="place_info_extreme">Ekstrem</string>
     <string name="place_currents_info">Informasjon om havstrømninger</string>
-    <string name="place_currents_info_weak">0-0.4 m/s</string>
-    <string name="place_currents_info_moderate">0.4-0.8 m/s</string>
-    <string name="place_currents_info_strong">0.8-1.2 m/s</string>
-    <string name="place_currents_info_very_strong">1.2-1.8 m/s</string>
+    <string name="place_currents_info_weak">0–0.4 m/s</string>
+    <string name="place_currents_info_moderate">0.4–0.8 m/s</string>
+    <string name="place_currents_info_strong">0.8–1.2 m/s</string>
+    <string name="place_currents_info_very_strong">1.2–1.8 m/s</string>
     <string name="place_currents_info_more"><u>Les mer på ...</u></string>
     <string name="place_uv">UV-stråling</string>
     <string name="place_uv_info_title">Informasjon om UV-stråling</string>

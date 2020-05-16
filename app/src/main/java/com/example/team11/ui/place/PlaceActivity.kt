@@ -166,15 +166,15 @@ class PlaceActivity : AppCompatActivity() {
             return
         } else {
             setForecastViews(forecast[0], textDate1Day, imageForecast1Day,
-                textTemp1Day, textRain1Day)
+                textTemp1Day, textRain1Day, "")
             setForecastViews(forecast[1], textDate2Days, imageForecast2Days,
-                textTemp2Days, textRain2Days)
+                textTemp2Days, textRain2Days, "")
             setForecastViews(forecast[2], textDate3Days, imageForecast3Days,
-                textTemp3Days, textRain3Days)
+                textTemp3Days, textRain3Days, "")
             setForecastViews(forecast[3], textDate4Days, imageForecast4Days,
-                textTemp4Days, textRain4Days)
+                textTemp4Days, textRain4Days, "")
             setForecastViews(forecast[4], textDate5Days, imageForecast5Days,
-                textTemp5Days, textRain5Days)
+                textTemp5Days, textRain5Days, "")
         }
     }
 
@@ -215,15 +215,15 @@ class PlaceActivity : AppCompatActivity() {
 
             // timesvarsel
             setForecastViews(forecast[1], text1Hour, imageForecast1Hour,
-                textTemp1Hour, textRain1Hour)
+                textTemp1Hour, textRain1Hour, "kl. ")
             setForecastViews(forecast[2], text2Hours, imageForecast2Hours,
-                textTemp2Hours, textRain2Hours)
+                textTemp2Hours, textRain2Hours, "kl. ")
             setForecastViews(forecast[3], text3Hours, imageForecast3Hours,
-                textTemp3Hours, textRain3Hours)
+                textTemp3Hours, textRain3Hours, "kl. ")
             setForecastViews(forecast[4], text4Hours, imageForecast4Hours,
-                textTemp4Hours, textRain4Hours)
+                textTemp4Hours, textRain4Hours, "kl. ")
             setForecastViews(forecast[5], text5Hours, imageForecast5Hours,
-                textTemp5Hours, textRain5Hours)
+                textTemp5Hours, textRain5Hours, "kl. ")
         }
         Log.d("tagPlace", "makeHourForecast ferdig")
     }
@@ -240,15 +240,15 @@ class PlaceActivity : AppCompatActivity() {
      * @param rain textView som viser nedbørsmengde for gjeldende tid
      */
     private fun setForecastViews(forecast: WeatherForecastDb, time: TextView, symbol: ImageView,
-                                 temp: TextView, rain: TextView) {
+                                 temp: TextView, rain: TextView, format: String) {
         if (forecast.tempAir.toInt() == Int.MAX_VALUE) {
             // ingen værdata
             return
         } else {
             // tilgjengelig værdata
-            time.text = getString(R.string.place_hour, forecast.time)
-            temp.text = forecast.tempAir.toInt().toString()
-            rain.text = forecast.precipitation.toString()
+            time.text = format + forecast.time
+            temp.text = getString(R.string.tempC, forecast.tempAir.toInt())
+            rain.text = getString(R.string.place_rain, forecast.precipitation.toInt())
             symbol.setImageDrawable(getDrawable(resources.getIdentifier(forecast.symbol,
                 "drawable", this.packageName)))
         }
