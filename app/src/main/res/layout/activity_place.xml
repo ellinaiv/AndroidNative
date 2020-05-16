@@ -120,7 +120,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/imageWater"
                 android:contentDescription="@string/weather_icon"
-                app:srcCompat="@drawable/partlycloudy_night"
+                app:srcCompat="@drawable/ic_noweatherdata"
                 tools:srcCompat="@drawable/sun" />
 
             <TextView

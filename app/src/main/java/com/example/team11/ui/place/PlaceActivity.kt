@@ -56,11 +56,14 @@ class PlaceActivity : AppCompatActivity() {
 
         // henter langtidsvarsel vær
         viewModel.getDayForecast().observe(this, Observer { dayForecast ->
+            Log.d("Fra databasen", dayForecast.toString())
+
             makeDayForecast(dayForecast)
         })
 
         // henter timesvarsel vær
         viewModel.getHourForecast().observe(this, Observer { hourForecast ->
+            Log.d("Fra databasen", hourForecast.toString())
             makeHourForecast(hourForecast)
         })
 
@@ -85,8 +88,8 @@ class PlaceActivity : AppCompatActivity() {
         if (place.tempWater != Int.MAX_VALUE) {
             textTempWater.text = getString(R.string.tempC, place.tempWater)
             when(viewModel.redWave(place)){
-                true -> imageWater.setImageDrawable(getDrawable(R.drawable.water_red))
-                false -> imageWater.setImageDrawable(getDrawable(R.drawable.water_blue))
+               // true -> imageWater.setImageDrawable(getDrawable(R.drawable.water_red))
+                // false -> imageWater.setImageDrawable(getDrawable(R.drawable.water_blue))
             }
         }
 
@@ -213,6 +216,7 @@ class PlaceActivity : AppCompatActivity() {
             textUVResult.setTextColor(getColor(
                 resources.getIdentifier(getTextColor(uvText, "uv"),
                     "color", this.packageName)))
+            Log.d("Her er det!", forecast.toString())
 
             setForecastViews(forecast[1], text1Hour, imageForecast1Hour,
                 textTemp1Hour, textRain1Hour)
@@ -250,8 +254,8 @@ class PlaceActivity : AppCompatActivity() {
             time.text = forecast.time
             temp.text = forecast.tempAir.toInt().toString()
             rain.text = forecast.precipitation.toString()
-            //symbol.setImageDrawable(getDrawable(resources.getIdentifier(forecast.symbol,
-            //    "drawable", this.packageName)))
+            symbol.setImageDrawable(getDrawable(resources.getIdentifier(forecast.symbol,
+                "drawable", this.packageName)))
         }
     }
 

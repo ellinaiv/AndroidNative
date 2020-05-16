@@ -184,6 +184,7 @@ class PlaceRepository private constructor(context: Context) {
                 fetchWeatherForecast(place)
             }
         }
+        Log.d("Fra databasen", hourForecast.toString())
         return hourForecast
     }
 
@@ -202,7 +203,7 @@ class PlaceRepository private constructor(context: Context) {
             if (shouldFetch(
                     metadataDao,
                     DbConstants.WEATHER_FORECAST_TABLE_NAME,
-                    1,
+                    0,
                     TimeUnit.HOURS
                 )
             ) {
@@ -210,6 +211,7 @@ class PlaceRepository private constructor(context: Context) {
                 fetchWeatherForecast(place)
             }
         }
+        Log.d("Fra databasen", dayForecast.toString())
         return dayForecast
     }
     fun cachePlacesDb(places: List<Place>){
