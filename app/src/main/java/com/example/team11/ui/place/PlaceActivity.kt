@@ -85,7 +85,7 @@ class PlaceActivity : AppCompatActivity() {
         // vanntemperatur
         //TODO(hente fra database og ikke place)
         if (place.tempWater != Int.MAX_VALUE) {
-            textTempWater.text = getString(R.string.tempC, place.tempWater)
+            //textTempWater.text = getString(R.string.tempC, place.tempWater)
             when(viewModel.redWave(place)){
                // true -> imageWater.setImageDrawable(getDrawable(R.drawable.water_red))
                 // false -> imageWater.setImageDrawable(getDrawable(R.drawable.water_blue))
@@ -165,9 +165,7 @@ class PlaceActivity : AppCompatActivity() {
      * @param forecast liste med objekter som inneholder værdata
      */
     private fun makeDayForecast(forecast: List<WeatherForecastDb>) {
-        if (forecast.isEmpty()) {
-            return
-        } else {
+        if (forecast.size >= 5){
             setForecastViews(forecast[0], textDate1Day, imageForecast1Day,
                 textTemp1Day, textRain1Day, "")
             setForecastViews(forecast[1], textDate2Days, imageForecast2Days,
@@ -190,9 +188,7 @@ class PlaceActivity : AppCompatActivity() {
      * @param forecast liste med objekter som inneholder værdata
      */
     private fun makeHourForecast(forecast: List<WeatherForecastDb>) {
-        if (forecast.isEmpty()) {
-            return
-        } else {
+        if (forecast.size >= 6){
             // vær nå
             if (forecast[0].tempAir.toInt() != Int.MAX_VALUE){
                 textTempAir.text = getString(R.string.tempC, forecast[0].tempAir.toInt())
@@ -252,7 +248,7 @@ class PlaceActivity : AppCompatActivity() {
             // tilgjengelig værdata
             time.text = format + forecast.time
             temp.text = getString(R.string.tempC, forecast.tempAir.toInt())
-            rain.text = getString(R.string.place_rain, forecast.precipitation.toInt())
+            rain.text = getString(R.string.place_rain, forecast.precipitation)
             symbol.setImageDrawable(getDrawable(resources.getIdentifier(forecast.symbol,
                 "drawable", this.packageName)))
         }

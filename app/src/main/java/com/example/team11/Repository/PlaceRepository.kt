@@ -147,7 +147,7 @@ class PlaceRepository private constructor(context: Context) {
         AsyncTask.execute {
             if (shouldFetch(
                     metadataDao,
-                    DbConstants.PLACE_TABLE_NAME,
+                    DbConstants.MEATDATA_ENTRY_PLACE_TABLE,
                     10,
                     TimeUnit.DAYS
                 )
@@ -175,8 +175,8 @@ class PlaceRepository private constructor(context: Context) {
         AsyncTask.execute {
             if (shouldFetch(
                     metadataDao,
-                    DbConstants.WEATHER_FORECAST_TABLE_NAME,
-                    0,
+                    DbConstants.METADATA_ENTRY_WEATHER_FORECAST_TABLE + place.id,
+                    1,
                     TimeUnit.HOURS
                 )
             ) {
@@ -202,8 +202,8 @@ class PlaceRepository private constructor(context: Context) {
         AsyncTask.execute {
             if (shouldFetch(
                     metadataDao,
-                    DbConstants.WEATHER_FORECAST_TABLE_NAME,
-                    0,
+                    DbConstants.METADATA_ENTRY_WEATHER_FORECAST_TABLE + place.id,
+                    1,
                     TimeUnit.HOURS
                 )
             ) {
@@ -216,13 +216,13 @@ class PlaceRepository private constructor(context: Context) {
     }
     fun cachePlacesDb(places: List<Place>){
         Log.d("tagDatabase", "Lagrer nye steder")
-        metadataDao.updateDateLastCached(MetadataTable(DbConstants.PLACE_TABLE_NAME, currentTimeMillis()))
+        metadataDao.updateDateLastCached(MetadataTable(DbConstants.MEATDATA_ENTRY_PLACE_TABLE, currentTimeMillis()))
         placeDao.insertPlaceList(places)
     }
 
-    fun cacheWeatherForecastDb(weatherForecast: List<WeatherForecastDb>){
+    fun cacheWeatherForecastDb(weatherForecast: List<WeatherForecastDb>, placeId: Int){
         Log.d("tagDatabase", weatherForecast.toString())
-        metadataDao.updateDateLastCached(MetadataTable(DbConstants.WEATHER_FORECAST_TABLE_NAME, currentTimeMillis()))
+        metadataDao.updateDateLastCached(MetadataTable(DbConstants.METADATA_ENTRY_WEATHER_FORECAST_TABLE + placeId.toString(), currentTimeMillis()))
         weatherForecastDao.insertWeatherForecast(weatherForecast)
     }
 
@@ -356,6 +356,7 @@ class PlaceRepository private constructor(context: Context) {
         return speed
     }
 
+
     /**
      * Henter forecast til et sted fra met sitt api.
      * @param place stranden man ønsker forecast for
@@ -391,8 +392,7 @@ class PlaceRepository private constructor(context: Context) {
                             nextHours.details.rainAmount,
                             forecast.types.instantWeatherForecast.details.uv)
                         )};
-                    AsyncTask.execute{cacheWeatherForecastDb(wantedForecastDb)}
-
+                    AsyncTask.execute{cacheWeatherForecastDb(wantedForecastDb, place.id)}
                 }
             }
             override fun onFailure(call: Call<WeatherForecastApi>, t: Throwable) {

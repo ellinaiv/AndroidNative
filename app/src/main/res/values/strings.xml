@@ -7,7 +7,7 @@
 
     <!--    textViews-->
     <string name="tempC">%1$d °C</string>
-    <string name="rain_mm">%1$d mm</string>
+    <string name="rain_mm">%1$f mm</string>
     <string name="place_rain">%1$.1f mm</string>
     <string name="not_available">Ikke tilgjengelig</string>
     <string name="no_data">Ingen data</string>

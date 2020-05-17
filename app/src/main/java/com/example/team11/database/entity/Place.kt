@@ -6,7 +6,7 @@ import com.google.android.gms.maps.model.LatLng
 import java.io.Serializable
 import kotlin.random.Random
 
-@Entity(tableName = DbConstants.PLACE_TABLE_NAME)
+@Entity(tableName = "place")
 class Place(
     @PrimaryKey val id: Int,
     val name: String,

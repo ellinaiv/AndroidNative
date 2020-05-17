@@ -32,7 +32,7 @@ object Util {
         c.set(Calendar.MINUTE, 0)
         c.set(Calendar.SECOND, 0)
         val stringFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
-        for (hour in 1..DbConstants.NUMB_HOURS_FORECAST){
+        for (hour in 1..DbConstants.NUMB_DAYS_FORECAST){
             c.add(Calendar.DATE, 1)
             listTimes.add(stringFormat.format(c.time))
             Log.d("Gattering times", stringFormat.format(c.time))
@@ -76,7 +76,7 @@ object Util {
         c.set(Calendar.MINUTE, 0)
         c.set(Calendar.SECOND, 0)
         val stringFormat = SimpleDateFormat("dd/MM")
-        for (hour in 1..DbConstants.NUMB_HOURS_FORECAST){
+        for (hour in 1..DbConstants.NUMB_DAYS_FORECAST){
             c.add(Calendar.DATE, 1)
             listTider.add(stringFormat.format(c.time))
             Log.d("Gattering times", stringFormat.format(c.time))

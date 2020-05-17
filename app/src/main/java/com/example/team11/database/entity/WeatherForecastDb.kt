@@ -4,7 +4,7 @@ import androidx.room.*
 import com.example.team11.util.DbConstants
 
 
-@Entity(tableName = DbConstants.WEATHER_FORECAST_TABLE_NAME,
+@Entity(tableName = "weather_forecast",
     foreignKeys = [ForeignKey(entity = Place::class, parentColumns = arrayOf("id"), childColumns = arrayOf("place_id"), onDelete = ForeignKey.CASCADE)],
     primaryKeys = ["place_id","time"])
 data class WeatherForecastDb(

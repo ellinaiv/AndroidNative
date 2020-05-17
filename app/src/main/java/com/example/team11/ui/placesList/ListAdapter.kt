@@ -41,8 +41,8 @@ class ListAdapter(private val myDataSet: List<Place>, val context: Context,
     // TODO("Celsius burde komme fra string resource ")
     override fun onBindViewHolder(holder: MyViewHolder, position: Int){
         holder.itemName.text = myDataSet[position].name
-        holder.itemTempWater.text = context.getString(R.string.tempC, myDataSet[position].tempWater)
-        holder.itemTempAir.text = context.getString(R.string.tempC, myDataSet[position].tempAir)
+        holder.itemTempWater.text = context.getString(R.string.no_data)
+        holder.itemTempAir.text = context.getString(R.string.no_data)
 
         if(favorite){
             val favoritePlacesViewModel = viewModel as FavoritesFragmentViewModel
