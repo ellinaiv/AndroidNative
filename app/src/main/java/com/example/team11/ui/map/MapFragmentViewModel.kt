@@ -15,7 +15,6 @@ import com.mapbox.geojson.Point
 
 class MapFragmentViewModel(context: Context): ViewModel() {
     var places: LiveData<List<Place>>? = null
-    var forecasts: LiveData<List<WeatherForecastDb>>? = null
     var personalPreference: MutableLiveData<PersonalPreference>? = null
     private var placeRepository: PlaceRepository? = null
 
@@ -27,8 +26,6 @@ class MapFragmentViewModel(context: Context): ViewModel() {
             placeRepository = PlaceRepository.getInstance(context)
             places = placeRepository!!.getPlaces()
             personalPreference = placeRepository!!.getPersonalPreferences()
-            forecasts = placeRepository!!.getNowForecastsList(places!!.value!!)
-
         }
     }
 
@@ -36,6 +33,10 @@ class MapFragmentViewModel(context: Context): ViewModel() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T  {
             return modelClass.getConstructor(Context::class.java).newInstance(context)
         }
+    }
+
+    fun getNowForcast(place: Place): LiveData<List<WeatherForecastDb>>?{
+        return placeRepository?.getNowForecastsList(listOf(place))
     }
 
     /**

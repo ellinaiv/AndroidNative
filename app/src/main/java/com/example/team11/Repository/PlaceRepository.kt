@@ -50,7 +50,8 @@ class PlaceRepository private constructor(context: Context) {
 
     //Kotlin sin static
     companion object {
-        @Volatile private var instance: PlaceRepository? = null
+        @Volatile
+        private var instance: PlaceRepository? = null
 
         /**
          * getInstance: henter PlaceRepository objekt, hvis det ikke finnes noen
@@ -58,8 +59,8 @@ class PlaceRepository private constructor(context: Context) {
          * @return PlaceRepository
          */
         fun getInstance(context: Context) =
-            instance ?: synchronized(this){
-                instance?: PlaceRepository(context).also {
+            instance ?: synchronized(this) {
+                instance ?: PlaceRepository(context).also {
                     instance = it
                     it.personalPreferences.value = PersonalPreference()
                     it.wayOfTransportation.value = Transportation.BIKE
@@ -67,9 +68,9 @@ class PlaceRepository private constructor(context: Context) {
             }
     }
 
-    fun changeFalseData(newFalseData: Boolean){
-        if(personalPreferences.value!!.falseData != newFalseData){
-            personalPreferences.value!!.falseData  = newFalseData
+    fun changeFalseData(newFalseData: Boolean) {
+        if (personalPreferences.value!!.falseData != newFalseData) {
+            personalPreferences.value!!.falseData = newFalseData
         }
     }
 
@@ -83,15 +84,15 @@ class PlaceRepository private constructor(context: Context) {
      * Oppdaterer preferansene til brukeren
      * @param newPersonalPreference den nye preferansen
      */
-    fun updatePersonalPreference(newPersonalPreference: PersonalPreference){
-        personalPreferences.value =  newPersonalPreference
+    fun updatePersonalPreference(newPersonalPreference: PersonalPreference) {
+        personalPreferences.value = newPersonalPreference
         updatePlaces()
     }
 
     /**
      * Oppdatere listen med steder som liste og kart bruker basert på preferanser
      */
-    private fun updatePlaces(){
+    private fun updatePlaces() {
         val pp = personalPreferences.value!!
         //places.value = allPlaces.filter { place ->
         //    pp.isTempWaterOk(place) and pp.isTempAirOk(place)
@@ -102,8 +103,8 @@ class PlaceRepository private constructor(context: Context) {
      * Returnerer en liste med favoritt stedene til en bruker
      * @return LiveData<List<Place>> liste med brukerens favoritt steder
      */
-    fun getFavoritePlaces(): LiveData<List<Place>>{
-        val places =  placeDao.getFavoritePlaceList()
+    fun getFavoritePlaces(): LiveData<List<Place>> {
+        val places = placeDao.getFavoritePlaceList()
         Log.d("tagFavoritePlace", "Favorittsteder: ${places.value}")
         return places
 
@@ -112,16 +113,16 @@ class PlaceRepository private constructor(context: Context) {
     /**
      * Legger til favoritt sted
      */
-    fun addFavoritePlace(place: Place){
-        AsyncTask.execute { placeDao.addFavorite(place.id)}
+    fun addFavoritePlace(place: Place) {
+        AsyncTask.execute { placeDao.addFavorite(place.id) }
         Log.d("tagFavoritePlace", "Lagt til favorittsted i databasen")
     }
 
     /**
      * Fjern favoritt sted
      */
-    fun removeFavoritePlace(place: Place){
-        AsyncTask.execute { placeDao.removeFavorite(place.id)}
+    fun removeFavoritePlace(place: Place) {
+        AsyncTask.execute { placeDao.removeFavorite(place.id) }
         Log.d("tagFavoritePlace", "Fjernet favorittsted i databasen")
     }
 
@@ -185,16 +186,16 @@ class PlaceRepository private constructor(context: Context) {
     }
 
 
-
     /**
      * getPlaces funksjonen henter en liste til viewModel med vær for de netse timene
      * @return: LiveData<List<HourForecast>>, liste med badesteder
      */
-    fun getHourForecast(place: Place): LiveData<List<WeatherForecastDb>>{
+    fun getHourForecast(place: Place): LiveData<List<WeatherForecastDb>> {
         val tag = "tagGetForecast"
         // TODO("Hvor ofte burde places fetches?")
         // TODO("Kan jeg gjøre non-assertive call her? Dersom favoritePlaces.value er null burde den stoppe å sjekke på første?"
-        val hourForecast: LiveData<List<WeatherForecastDb>> = weatherForecastDao.getTimeForecast(place.id, getWantedHoursForecastDb())
+        val hourForecast: LiveData<List<WeatherForecastDb>> =
+            weatherForecastDao.getTimeForecast(place.id, getWantedHoursForecastDb())
         Log.d(tag, "getHourForecast")
 
         AsyncTask.execute {
@@ -217,11 +218,12 @@ class PlaceRepository private constructor(context: Context) {
      * getPlaces funksjonen henter en liste til viewModel med vær for de netse timene
      * @return: LiveData<List<DayForecast>>, liste med badesteder
      */
-    fun getDayForecast(place: Place): LiveData<List<WeatherForecastDb>>{
+    fun getDayForecast(place: Place): LiveData<List<WeatherForecastDb>> {
         val tag = "tagGetForecast"
         // TODO("Hvor ofte burde places fetches?")
         // TODO("Kan jeg gjøre non-assertive call her? Dersom favoritePlaces.value er null burde den stoppe å sjekke på første?"
-        val dayForecast: LiveData<List<WeatherForecastDb>> = weatherForecastDao.getTimeForecast(place.id, getWantedDaysForecastDb())
+        val dayForecast: LiveData<List<WeatherForecastDb>> =
+            weatherForecastDao.getTimeForecast(place.id, getWantedDaysForecastDb())
         Log.d(tag, "getHourForecast")
 
         AsyncTask.execute {
@@ -239,15 +241,26 @@ class PlaceRepository private constructor(context: Context) {
         Log.d("Fra databasen", dayForecast.toString())
         return dayForecast
     }
-    fun cachePlacesDb(places: List<Place>){
+
+    fun cachePlacesDb(places: List<Place>) {
         Log.d("tagDatabase", "Lagrer nye steder")
-        metadataDao.updateDateLastCached(MetadataTable(DbConstants.MEATDATA_ENTRY_PLACE_TABLE, currentTimeMillis()))
+        metadataDao.updateDateLastCached(
+            MetadataTable(
+                DbConstants.MEATDATA_ENTRY_PLACE_TABLE,
+                currentTimeMillis()
+            )
+        )
         placeDao.insertPlaceList(places)
     }
 
-    fun cacheWeatherForecastDb(weatherForecast: List<WeatherForecastDb>, placeId: Int){
+    fun cacheWeatherForecastDb(weatherForecast: List<WeatherForecastDb>, placeId: Int) {
         Log.d("tagDatabase", weatherForecast.toString())
-        metadataDao.updateDateLastCached(MetadataTable(DbConstants.METADATA_ENTRY_WEATHER_FORECAST_TABLE + placeId.toString(), currentTimeMillis()))
+        metadataDao.updateDateLastCached(
+            MetadataTable(
+                DbConstants.METADATA_ENTRY_WEATHER_FORECAST_TABLE + placeId.toString(),
+                currentTimeMillis()
+            )
+        )
         weatherForecastDao.insertWeatherForecast(weatherForecast)
     }
 
@@ -255,7 +268,7 @@ class PlaceRepository private constructor(context: Context) {
      * endrer currentplace
      * @param place: Stedet som skal endres til å være currentPlace
      */
-    fun changeCurrentPlace(place: Place){
+    fun changeCurrentPlace(place: Place) {
         Log.d("tagRepository", "current endra")
         currentPlace.value = place
     }
@@ -270,7 +283,7 @@ class PlaceRepository private constructor(context: Context) {
      * Endrer måten brukeren ønsker å komme seg til en strand
      * @param way: måten brukeren ønsker å komme seg til stranden
      */
-    fun changeWayOfTransportation(way: Transportation){
+    fun changeWayOfTransportation(way: Transportation) {
         wayOfTransportation.value = way
     }
 
@@ -288,10 +301,10 @@ class PlaceRepository private constructor(context: Context) {
      * @return: ArrayList<Place>, liste med badesteder
      */
 
-    private fun fetchPlaces(url : String) : List<Place>{
+    private fun fetchPlaces(url: String): List<Place> {
         val places = ArrayList<Place>()
         val tag = "getData() ---->"
-        runBlocking{
+        runBlocking {
             try {
 
                 val response = Fuel.get(url).awaitString()
@@ -309,13 +322,13 @@ class PlaceRepository private constructor(context: Context) {
 
                 while (eventType != XmlPullParser.END_DOCUMENT) {
                     if (eventType == XmlPullParser.START_TAG && xpp.name == "place") {
-                        for (i in 0 until xpp.attributeCount){
+                        for (i in 0 until xpp.attributeCount) {
                             val attrName = xpp.getAttributeName(i)
-                            if(attrName != null && attrName == "id"){
-                                id =  xpp.getAttributeValue(i).toInt()
+                            if (attrName != null && attrName == "id") {
+                                id = xpp.getAttributeValue(i).toInt()
                             }
                         }
-                    }else if (eventType == XmlPullParser.START_TAG && xpp.name == "name") {
+                    } else if (eventType == XmlPullParser.START_TAG && xpp.name == "name") {
                         xpp.next()
                         name = xpp.text
                         xpp.next()
@@ -328,7 +341,7 @@ class PlaceRepository private constructor(context: Context) {
                         xpp.next()
                         long = xpp.text
                         xpp.next()
-                    }else if(eventType == XmlPullParser.START_TAG && xpp.name == "temp_vann") {
+                    } else if (eventType == XmlPullParser.START_TAG && xpp.name == "temp_vann") {
                         if (xpp.next() != XmlPullParser.END_TAG) {
                             tempWater = xpp.text.toInt()
                             xpp.next()
@@ -372,23 +385,25 @@ class PlaceRepository private constructor(context: Context) {
         val tag = "tagFetchCurrentSeaSpeed"
         var speed = (-1).toDouble()
 
-        val call=
+        val call =
             ApiClient.build()?.getSeaSpeed(place.lat, place.lng)
 
         call?.enqueue(object : Callback<OceanForecast> {
             override fun onResponse(call: Call<OceanForecast>, response: Response<OceanForecast>) {
-                if (response.isSuccessful){
+                if (response.isSuccessful) {
                     val oceanForecasts = response.body()?.OceanForecastLayers
                     if ((oceanForecasts != null) && (oceanForecasts.size > 1)) {
 
                         // Verdien til speed blir bare endret dersom seaSpeed.content != null
-                        response.body()?.OceanForecastLayers?.get(1)?.OceanForecastDetails?.seaSpeed?.content?.toDouble()
+                        response.body()?.OceanForecastLayers?.get(1)
+                            ?.OceanForecastDetails?.seaSpeed?.content?.toDouble()
                             ?.let { speed = it }
                         Log.d(tag, place.toString())
                         Log.d(tag, speed.toString())
                     }
                 }
             }
+
             override fun onFailure(call: Call<OceanForecast>, t: Throwable) {
                 Log.v(tag, "error in fetchCurrentSeaSpeed")
             }
@@ -403,47 +418,55 @@ class PlaceRepository private constructor(context: Context) {
      * @return Når returnerer den bare temperatur, må se ann hvordan det skal være når databasen er på plass
      *
      */
-    fun fetchWeatherForecast(place: Place){
+    fun fetchWeatherForecast(place: Place) {
         val tag = "tagWeather"
         val wantedForecastDb = ArrayList<WeatherForecastDb>()
-        val call= ApiClient.build()?.getWeather(place.lat, place.lng)
+        val call = ApiClient.build()?.getWeather(place.lat, place.lng)
 
         call?.enqueue(object : Callback<WeatherForecastApi> {
-            override fun onResponse(call: Call<WeatherForecastApi>, response: Response<WeatherForecastApi>) {
-                if (response.isSuccessful){
+            override fun onResponse(
+                call: Call<WeatherForecastApi>,
+                response: Response<WeatherForecastApi>
+            ) {
+                if (response.isSuccessful) {
                     val wantedTimesHours = getWantedHoursForecastApi()
                     val wantedTimesDays = getWantedDaysForecastApi()
                     val wantedForecastApi =
                         response.body()?.weatherForecastTimeSlotList?.list?.filter {
-                        it.time in wantedTimesHours || it.time in wantedTimesDays
+                            it.time in wantedTimesHours || it.time in wantedTimesDays
                         }
                     wantedForecastApi!!.forEach { forecast ->
                         var nextHours = forecast.types.nextOneHourForecast
                         var time = formatToHoursTime(forecast.time)
 
-                        if (nextHours == null){
+                        if (nextHours == null) {
                             nextHours = forecast.types.nextSixHourForecast
                             time = formatToDaysTime(forecast.time)
                         }
-                        wantedForecastDb.add(WeatherForecastDb(place.id,
-                            time,
-                            nextHours!!.summary.symbol,
-                            forecast.types.instantWeatherForecast.details.temp.toInt(),
-                            nextHours.details.rainAmount,
-                            forecast.types.instantWeatherForecast.details.uv)
-                        )};
-                    AsyncTask.execute{cacheWeatherForecastDb(wantedForecastDb, place.id)}
+                        wantedForecastDb.add(
+                            WeatherForecastDb(
+                                place.id,
+                                time,
+                                nextHours!!.summary.symbol,
+                                forecast.types.instantWeatherForecast.details.temp.toInt(),
+                                nextHours.details.rainAmount,
+                                forecast.types.instantWeatherForecast.details.uv
+                            )
+                        )
+                    };
+                    AsyncTask.execute { cacheWeatherForecastDb(wantedForecastDb, place.id) }
                 }
             }
+
             override fun onFailure(call: Call<WeatherForecastApi>, t: Throwable) {
                 Log.d(tag, "error")
             }
         })
     }
-
-
-
-
 }
+
+
+
+
 
 
