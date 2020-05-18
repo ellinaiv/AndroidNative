@@ -84,12 +84,13 @@ class PlaceActivity : AppCompatActivity() {
         }
 
         buttonUVInfo.setOnClickListener {
-            if (layoutCurrentsInfo.visibility == VISIBLE) {
-                layoutCurrentsInfo.visibility = GONE
-            }
             layoutUVInfo.visibility = VISIBLE
         }
 
+        layoutInScrollView.setOnClickListener{
+            layoutCurrentsInfo.visibility = GONE
+            layoutUVInfo.visibility = GONE
+        }
         buttonUVCloseInfo.setOnClickListener {
             layoutUVInfo.visibility = GONE
         }
@@ -175,7 +176,7 @@ class PlaceActivity : AppCompatActivity() {
             mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(position), 2)
         }
     }
-
+    /* virker som om disse er redundant... hvem er ansvarlig for activity? kan vi slette disse?
     override fun onStart() {
         super.onStart()
         mapView?.onStart()
@@ -212,4 +213,5 @@ class PlaceActivity : AppCompatActivity() {
         super.onDestroy()
         mapView?.onDestroy()
     }
+    */
 }
