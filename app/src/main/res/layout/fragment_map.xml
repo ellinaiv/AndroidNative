@@ -154,7 +154,7 @@
                     android:layout_marginRight="12dp"
                     android:layout_marginLeft="12dp"
 
-                    android:src="@drawable/water_blue"
+                    android:src="@drawable/ic_nodatawave"
                     android:contentDescription="@string/water_temp_icon" />
 
                 <TextView
@@ -165,6 +165,7 @@
                     android:fontFamily="@font/roboto_medium"
                     android:layout_row="1"
                     android:layout_column="0"
+                    android:layout_marginEnd="12dp"
 
                     android:layout_gravity="center"
                     android:maxLines="1"
@@ -189,7 +190,7 @@
                     android:padding="4dp"
                     android:layout_marginEnd="12dp"
 
-                    android:src="@drawable/clearsky_day"
+                    android:src="@drawable/ic_noweatherdata"
                     android:contentDescription="@string/weather_icon" />
 
                 <TextView
@@ -206,6 +207,7 @@
                     android:ellipsize="end"
                     android:fontFamily="@font/roboto_medium"
                     android:maxLines="1"
+                    android:text="@string/no_data"
                     android:textColor="@color/mainTextColor"
                     android:textSize="12sp"/>
 

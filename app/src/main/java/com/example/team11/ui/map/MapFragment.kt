@@ -1,5 +1,6 @@
 package com.example.team11.ui.map
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.PointF
@@ -8,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import androidx.appcompat.content.res.AppCompatResources.getDrawable
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -128,7 +130,7 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
 
     /**
      * Det er denne metoden som registrerer om trykket faktisk traff et punkt på kartet, eller
-     * ikke, og hva man i såfall skal gjøre når man har trykket på noe. Her vil den da vise
+     * ikke, og hva man i så fall skal gjøre når man har trykket på noe. Her vil den da vise
      * et kort med informasjon om badestedet
      * @param screenPoint: det stedet på skjermen hvor brukeren trykket
      * @return Boolean: true, hvis det er et sted vi kan trykke på, false ellers
@@ -147,7 +149,7 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
         return false
     }
     /**
-     * Fjerner kortet som hviser informasjonen om et sted
+     * Fjerner kortet som viser informasjonen om et sted
      */
     private fun removePlace(){
         placeViewHolder.visibility = View.GONE
@@ -172,6 +174,7 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
      * Legger til kort over kartviewet, med infomrasjon om en bestemt badestrand
      * @param place: Stedet som skal ha informasjonen sin på display
      */
+    @SuppressLint("UseRequireInsteadOfGet")
     private fun showPlace(place: Place){
 
         textName.text = place.name
@@ -181,14 +184,20 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
                 false -> imageTempWater.setImageResource(R.drawable.water_blue)
             }
             textTempWater.text = getString(R.string.tempC, place.tempWater)
+        } else {
+            imageTempWater.setImageResource(R.drawable.ic_nodatawave)
+            textTempWater.text = getString(R.string.no_data)
         }
-        textTempAir.text = getString(R.string.not_available)
 
+        imageTempAir.setImageDrawable(getDrawable(this@MapFragment.context!!, R.drawable.ic_noweatherdata))
+        textTempAir.text = getString(R.string.no_data)
         mapFragmentViewModel.getNowForcast(place)?.observe(viewLifecycleOwner, Observer {forecast ->
             if(forecast != null && forecast.isNotEmpty()){
                 val placeForecast = forecast[0]
                 if(placeForecast.placeId == place.id && placeForecast.tempAir != Int.MAX_VALUE){
                     textTempAir.text = getString(R.string.tempC, placeForecast.tempAir)
+                    imageTempAir.setImageDrawable(getDrawable(this@MapFragment.context!!, resources.getIdentifier(placeForecast.symbol,
+                        "drawable", activity!!.packageName)))
                 }
             }
         })

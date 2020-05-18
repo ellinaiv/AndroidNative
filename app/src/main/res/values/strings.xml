@@ -15,7 +15,7 @@
     <string name="place_name">Badeplass</string>
     <string name="place_hour">kl. %1$s</string>
     <string name="place_currents">Havstrømninger</string>
-    <string name="place_info_weak">Svak</string>
+    <string name="place_info_weak"><b>Svak</b></string>
     <string name="place_info_moderate">Moderat</string>
     <string name="place_info_strong">Sterk</string>
     <string name="place_info_very_strong">Svært sterk</string>

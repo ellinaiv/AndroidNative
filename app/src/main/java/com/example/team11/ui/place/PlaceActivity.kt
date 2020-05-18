@@ -88,9 +88,8 @@ class PlaceActivity : AppCompatActivity() {
             textTempWater.text = getString(R.string.tempC, place.tempWater)
             textTempWater.setTypeface(null, Typeface.BOLD)
             when(viewModel.redWave(place)){
-//                TODO
-//                true -> imageWater.setImageDrawable(getDrawable(R.drawable.water_red))
-//                false -> imageWater.setImageDrawable(getDrawable(R.drawable.water_blue))
+                true -> imageWater.setImageDrawable(getDrawable(R.drawable.water_red))
+                false -> imageWater.setImageDrawable(getDrawable(R.drawable.water_blue))
             }
         }
 
