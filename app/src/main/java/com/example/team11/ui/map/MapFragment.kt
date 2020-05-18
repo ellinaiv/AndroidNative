@@ -68,7 +68,7 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
         val manager = context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val builder = NetworkRequest.Builder()
 
-        manager?.registerNetworkCallback(
+        manager.registerNetworkCallback(
             builder.build(),
             object : ConnectivityManager.NetworkCallback(){
 

@@ -229,7 +229,9 @@
 
         android:src="@drawable/wifi_off"
         android:visibility="gone"
-        />
+
+
+        android:contentDescription="@string/no_internet_image" />
 
     <TextView
         android:id="@+id/textNoInternet"
@@ -241,7 +243,7 @@
         mapbox:layout_constraintRight_toRightOf="parent"
         android:padding="6dp"
 
-        android:text="Ingen internettforbindelse"
+        android:text="@string/no_internet"
         android:textSize="12sp"
         android:fontFamily="@font/roboto_medium"
 
