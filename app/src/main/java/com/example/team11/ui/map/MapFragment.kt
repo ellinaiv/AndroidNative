@@ -1,17 +1,22 @@
 package com.example.team11.ui.map
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.PointF
+import android.net.ConnectivityManager
+import android.net.Network
+import android.net.NetworkRequest
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.team11.database.entity.Place
@@ -36,7 +41,7 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
     private val iconIdRed = "ICON_ID_RED"
     private val iconIdBlue = "ICON_ID_BLUE "
     private val geojsonId = "GEOJSON_ID"
-    private val listOfgeojsonId = mutableListOf<String>()
+    private var listOfGeojsonId = mutableListOf<String>()
     private val layerId = "LAYER_ID:"
     private var listOfLayerId = mutableListOf<String>()
     private val propertyId = "PROPERTY_ID"
@@ -53,20 +58,51 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        Log.d("INTERNET", "ONCREATEVIEW")
         //TODO("Context i fragment kan være null før onAttach() og etter onDetach(), men burde være ganske safe i oncreat, litt usikker på om jeg burde bruke !! her.")
         mapFragmentViewModel =
             ViewModelProvider(this, MapFragmentViewModel.InstanceCreator(requireContext())).get(MapFragmentViewModel::class.java)
 
         val root = inflater.inflate(R.layout.fragment_map, container, false)
-        mapFragmentViewModel.places!!.observe(viewLifecycleOwner, Observer {places->
-            makeMap(places)
-            searchText.doOnTextChanged { text, _, _, _ ->
-                if(text.toString().isEmpty()){
-                    removePlace()
+
+        val manager = context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val builder = NetworkRequest.Builder()
+
+        manager.registerNetworkCallback(
+            builder.build(),
+            object : ConnectivityManager.NetworkCallback(){
+
+                override fun onAvailable(network: Network) {
+                    super.onAvailable(network)
+                    activity?.runOnUiThread {
+                        mapFragmentViewModel.places!!.observe(viewLifecycleOwner, Observer {places->
+                            hasInternet()
+
+                            makeMap(places)
+                            Log.d("INTERNET", places.toString())
+                            searchText.doOnTextChanged { text, _, _, _ ->
+                                if(text.toString().isEmpty()){
+                                    removePlace()
+                                }
+                                search(text.toString(), places)
+                            }
+                        })
+                    }
+
                 }
-                search(text.toString(), places)
+
+                override fun onUnavailable() {
+
+                    super.onUnavailable()
+                    noInternet()
+                }
+
+                override fun onLost(network: Network) {
+                    super.onLost(network)
+                    noInternet()
+                }
             }
-        })
+        )
 
         val filterButton = root.findViewById<ImageButton>(R.id.filterButton)
         filterButton.setOnClickListener {
@@ -75,6 +111,25 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
 
         return root
     }
+
+    private fun noInternet(){
+        Log.d("INTERNET", "NO INTERNET")
+        activity?.runOnUiThread {
+            mapView?.visibility = View.GONE
+            val imageNoInternet = view?.findViewById<ImageView>(R.id.imageNoInternet)
+            val textNoInternet = view?.findViewById<TextView>(R.id.textNoInternet)
+            imageNoInternet?.visibility = View.VISIBLE
+            textNoInternet?.visibility = View.VISIBLE
+        }
+    }
+
+    private fun hasInternet(){
+        Log.d("INTERNET","HAS INTERNETT")
+        mapView?.visibility = View.VISIBLE
+        imageNoInternet.visibility = View.GONE
+        textNoInternet.visibility = View.GONE
+    }
+
 
     /**
      * Søkefunksjonen filtrerer places etter navn og zoomer til det stedet på kartet
@@ -123,9 +178,12 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
         listOfLayerId.forEach { layer ->
             style.removeLayer(layer)
         }
-        listOfgeojsonId.forEach { id ->
+        listOfGeojsonId.forEach { id ->
             style.removeSource(id)
         }
+
+        listOfGeojsonId = mutableListOf<String>()
+        listOfLayerId = mutableListOf<String>()
     }
 
     override fun onMapClick(point: LatLng): Boolean {
@@ -236,7 +294,7 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
         val id = layerId + place.id.toString()
         val geoId = geojsonId + place.id.toString()
 
-        if(listOfgeojsonId.contains(geoId) or listOfLayerId.contains(id)){
+        if(listOfGeojsonId.contains(geoId) or listOfLayerId.contains(id)){
             Log.d("TagMapFragment", "En id finnes fra før av")
             return
         }
@@ -260,7 +318,7 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
         )
         style.addLayer(symbolLayer)
         listOfLayerId.add(id)
-        listOfgeojsonId.add(geoId)
+        listOfGeojsonId.add(geoId)
     }
 
     override fun onStart() {

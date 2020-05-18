@@ -216,4 +216,37 @@
 
     </androidx.cardview.widget.CardView>
 
+
+    <ImageView
+        android:id="@+id/imageNoInternet"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+
+        mapbox:layout_constraintTop_toTopOf="parent"
+        mapbox:layout_constraintLeft_toLeftOf="parent"
+        mapbox:layout_constraintRight_toRightOf="parent"
+        mapbox:layout_constraintBottom_toBottomOf="parent"
+
+        android:src="@drawable/wifi_off"
+        android:visibility="gone"
+        />
+
+    <TextView
+        android:id="@+id/textNoInternet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        mapbox:layout_constraintTop_toBottomOf="@id/imageNoInternet"
+        mapbox:layout_constraintLeft_toLeftOf="parent"
+        mapbox:layout_constraintRight_toRightOf="parent"
+        android:padding="6dp"
+
+        android:text="Ingen internettforbindelse"
+        android:textSize="12sp"
+        android:fontFamily="@font/roboto_medium"
+
+        android:visibility="gone"
+        />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
