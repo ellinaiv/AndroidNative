@@ -17,7 +17,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.team11.database.entity.Place
@@ -58,7 +57,6 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Log.d("INTERNET", "ONCREATEVIEW")
         //TODO("Context i fragment kan være null før onAttach() og etter onDetach(), men burde være ganske safe i oncreat, litt usikker på om jeg burde bruke !! her.")
         mapFragmentViewModel =
             ViewModelProvider(this, MapFragmentViewModel.InstanceCreator(requireContext())).get(MapFragmentViewModel::class.java)
@@ -79,8 +77,7 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
                     }
                 }
 
-                override fun onUnavailable() {
-                    Log.d("INTERNET", "onUnavailable")
+                override fun onUnavailable(){
                     super.onUnavailable()
                     activity?.runOnUiThread {
                         mapFragmentViewModel.hasInternet.value = false
@@ -121,7 +118,6 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
     }
 
     private fun noInternet(){
-        Log.d("INTERNET", "NO INTERNET")
         activity?.runOnUiThread {
             mapView?.visibility = View.GONE
             val imageNoInternet = view?.findViewById<ImageView>(R.id.imageNoInternet)
@@ -132,7 +128,6 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
     }
 
     private fun hasInternet(){
-        Log.d("INTERNET","HAS INTERNETT")
         mapView?.visibility = View.VISIBLE
         imageNoInternet.visibility = View.GONE
         textNoInternet.visibility = View.GONE
@@ -200,8 +195,8 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
             style.removeSource(id)
         }
 
-        listOfGeojsonId = mutableListOf<String>()
-        listOfLayerId = mutableListOf<String>()
+        listOfGeojsonId = mutableListOf()
+        listOfLayerId = mutableListOf()
     }
 
     override fun onMapClick(point: LatLng): Boolean {
@@ -352,7 +347,6 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
 
     override fun onPause() {
         super.onPause()
-        Log.d("INTERNETT", "onPause")
         mapView?.onPause()
 
     }
