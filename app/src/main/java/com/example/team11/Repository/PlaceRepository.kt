@@ -190,7 +190,7 @@ class PlaceRepository private constructor(context: Context) {
      * getPlaces funksjonen henter en liste til viewModel med vær for de netse timene
      * @return: LiveData<List<HourForecast>>, liste med badesteder
      */
-    fun getHourForecast(place: Place): LiveData<List<WeatherForecastDb>> {
+    /*fun getHourForecast(place: Place): LiveData<List<WeatherForecastDb>> {
         val tag = "tagGetForecast"
         // TODO("Hvor ofte burde places fetches?")
         // TODO("Kan jeg gjøre non-assertive call her? Dersom favoritePlaces.value er null burde den stoppe å sjekke på første?"
@@ -212,18 +212,46 @@ class PlaceRepository private constructor(context: Context) {
         }
         Log.d("Fra databasen", hourForecast.toString())
         return hourForecast
+    }*/
+
+    /**
+     * getPlaces funksjonen henter en liste til viewModel med vær for de netse timene
+     * @return: LiveData<List<HourForecast>>, liste med badesteder
+     */
+    fun getForecast(place: Place, hour: Boolean): LiveData<List<WeatherForecastDb>> {
+        val tag = "tagGetForecast"
+        val forecast: LiveData<List<WeatherForecastDb>> = when(hour){
+            true -> weatherForecastDao.getTimeForecast(place.id, getWantedHoursForecastDb())
+            false -> weatherForecastDao.getTimeForecast(place.id, getWantedDaysForecastDb())
+        }
+        Log.d(tag, "getForecast")
+
+        AsyncTask.execute {
+            if (shouldFetch(
+                    metadataDao,
+                    DbConstants.METADATA_ENTRY_WEATHER_FORECAST_TABLE + place.id,
+                    1,
+                    TimeUnit.HOURS
+                )
+            ) {
+                Log.d(tag, "fetcherForecast")
+                fetchWeatherForecast(place)
+            }
+        }
+        Log.d("Fra databasen", forecast.toString())
+        return forecast
     }
 
     /**
      * getPlaces funksjonen henter en liste til viewModel med vær for de netse timene
      * @return: LiveData<List<DayForecast>>, liste med badesteder
      */
-    fun getDayForecast(place: Place): LiveData<List<WeatherForecastDb>> {
+    /*fun getDayForecast(place: Place): LiveData<List<WeatherForecastDb>> {
         val tag = "tagGetForecast"
         // TODO("Hvor ofte burde places fetches?")
         // TODO("Kan jeg gjøre non-assertive call her? Dersom favoritePlaces.value er null burde den stoppe å sjekke på første?"
         val dayForecast: LiveData<List<WeatherForecastDb>> =
-            weatherForecastDao.getTimeForecast(place.id, getWantedDaysForecastDb())
+
         Log.d(tag, "getHourForecast")
 
         AsyncTask.execute {
@@ -240,7 +268,7 @@ class PlaceRepository private constructor(context: Context) {
         }
         Log.d("Fra databasen", dayForecast.toString())
         return dayForecast
-    }
+    }*/
 
     fun cachePlacesDb(places: List<Place>) {
         Log.d("tagDatabase", "Lagrer nye steder")
