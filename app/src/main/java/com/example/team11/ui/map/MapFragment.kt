@@ -117,6 +117,10 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
         return root
     }
 
+    /**
+     * Det som skjer hvis enheten ikke har noe internett
+     * Kartet blir borte og bilde og bedskjed om at det ikke er internett dukker opp
+     */
     private fun noInternet(){
         activity?.runOnUiThread {
             mapView?.visibility = View.GONE
@@ -127,6 +131,10 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
         }
     }
 
+    /**
+     * Det som skjer hvis enheten har noe internett
+     * Fjerner beskjed og bilde om at det ikke er internett og gjør kartet synlig
+     */
     private fun hasInternet(){
         mapView?.visibility = View.VISIBLE
         imageNoInternet.visibility = View.GONE

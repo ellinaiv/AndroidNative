@@ -219,8 +219,8 @@
 
     <ImageView
         android:id="@+id/imageNoInternet"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
 
         mapbox:layout_constraintTop_toTopOf="parent"
         mapbox:layout_constraintLeft_toLeftOf="parent"
