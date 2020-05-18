@@ -196,6 +196,8 @@ class PlaceActivity : AppCompatActivity() {
                 textTempAir.text = getString(R.string.tempC, forecast[0].tempAir)
                 imageWeather.setImageDrawable(getDrawable(resources.getIdentifier(forecast[0].symbol,
                     "drawable", this.packageName)))
+                imageWeather.contentDescription = getString(R.string.place_weather_icon_description,
+                    forecast[0].symbol)
                 textRain.text = getString(R.string.place_rain, forecast[0].precipitation.toInt())
             }
 
@@ -254,6 +256,8 @@ class PlaceActivity : AppCompatActivity() {
             rain.text = getString(R.string.place_rain, forecast.precipitation.toInt())
             symbol.setImageDrawable(getDrawable(resources.getIdentifier(forecast.symbol,
                 "drawable", this.packageName)))
+            symbol.contentDescription = getString(R.string.place_weather_icon_description,
+                forecast.symbol)
         }
     }
 

@@ -336,8 +336,8 @@
                 app:layout_constraintStart_toStartOf="@+id/text1Hour"
                 app:layout_constraintTop_toBottomOf="@+id/text1Hour"
                 android:layout_marginTop="8dp"
-                android:contentDescription="TODO"
-                tools:srcCompat="@drawable/clearsky_day" />
+                tools:srcCompat="@drawable/clearsky_day"
+                android:contentDescription="@string/empty" />
 
             <ImageView
                 android:id="@+id/imageForecast2Hours"
@@ -346,8 +346,8 @@
                 app:layout_constraintBottom_toBottomOf="@+id/imageForecast1Hour"
                 app:layout_constraintEnd_toEndOf="@+id/text2Hours"
                 app:layout_constraintStart_toStartOf="@+id/text2Hours"
-                android:contentDescription="TODO"
-                tools:srcCompat="@drawable/clearsky_day" />
+                tools:srcCompat="@drawable/clearsky_day"
+                android:contentDescription="@string/empty" />
 
             <ImageView
                 android:id="@+id/imageForecast3Hours"
@@ -356,9 +356,9 @@
                 app:layout_constraintBottom_toBottomOf="@+id/imageForecast2Hours"
                 app:layout_constraintEnd_toEndOf="@+id/text3Hours"
                 app:layout_constraintStart_toStartOf="@+id/text3Hours"
-                android:contentDescription="TODO"
                 app:srcCompat="@drawable/ic_noweatherdata"
-                tools:srcCompat="@drawable/cloudy" />
+                tools:srcCompat="@drawable/cloudy"
+                android:contentDescription="@string/empty"/>
 
             <ImageView
                 android:id="@+id/imageForecast4Hours"
@@ -367,7 +367,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/imageForecast3Hours"
                 app:layout_constraintEnd_toEndOf="@+id/text4Hours"
                 app:layout_constraintStart_toStartOf="@+id/text4Hours"
-                android:contentDescription="TODO"
+                android:contentDescription="@string/empty"
                 tools:srcCompat="@drawable/clearsky_day" />
 
             <ImageView
@@ -377,7 +377,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/imageForecast4Hours"
                 app:layout_constraintEnd_toEndOf="@+id/text5Hours"
                 app:layout_constraintStart_toStartOf="@+id/text5Hours"
-                android:contentDescription="TODO"
+                android:contentDescription="@string/empty"
                 tools:srcCompat="@drawable/cloudy" />
 
             <TextView
@@ -606,7 +606,7 @@
                 app:layout_constraintStart_toStartOf="@+id/textDate1Day"
                 app:layout_constraintTop_toBottomOf="@+id/textDate1Day"
                 android:layout_marginTop="8dp"
-                android:contentDescription="TODO"
+                android:contentDescription="@string/empty"
                 tools:srcCompat="@drawable/clearsky_day" />
 
             <ImageView
@@ -616,7 +616,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/imageForecast1Day"
                 app:layout_constraintEnd_toEndOf="@+id/textDate2Days"
                 app:layout_constraintStart_toStartOf="@+id/textDate2Days"
-                android:contentDescription="TODO"
+                android:contentDescription="@string/empty"
                 tools:srcCompat="@drawable/clearsky_day" />
 
             <ImageView
@@ -626,7 +626,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/imageForecast2Days"
                 app:layout_constraintEnd_toEndOf="@+id/textDate3Days"
                 app:layout_constraintStart_toStartOf="@+id/textDate3Days"
-                android:contentDescription="TODO"
+                android:contentDescription="@string/empty"
                 app:srcCompat="@drawable/ic_noweatherdata"
                 tools:srcCompat="@drawable/cloudy" />
 
@@ -637,7 +637,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/imageForecast3Days"
                 app:layout_constraintEnd_toEndOf="@+id/textDate4Days"
                 app:layout_constraintStart_toStartOf="@+id/textDate4Days"
-                android:contentDescription="TODO"
+                android:contentDescription="@string/empty"
                 tools:srcCompat="@drawable/clearsky_day" />
 
             <ImageView
@@ -647,7 +647,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/imageForecast4Days"
                 app:layout_constraintEnd_toEndOf="@+id/textDate5Days"
                 app:layout_constraintStart_toStartOf="@+id/textDate5Days"
-                android:contentDescription="TODO"
+                android:contentDescription="@string/empty"
                 tools:srcCompat="@drawable/cloudy" />
 
             <TextView
@@ -881,7 +881,8 @@
                 app:layout_constraintHorizontal_bias="0.979"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/mapView"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintVertical_bias="0.0"
+                android:contentDescription="@string/place_icon_public_transport"/>
 
             <TextView
                 android:id="@+id/linkPublicTransport"
@@ -889,6 +890,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:clickable="true"
+                android:focusable="true"
                 android:text="@string/place_public_transport_link"
                 android:textColor="@color/colorPrimary"
                 android:textSize="20sp"
@@ -918,7 +920,8 @@
                     android:background="@color/backgroundDark"
                     android:src="@drawable/xclose"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:contentDescription="@string/place_button_close_info"/>
 
                 <TextView
                     android:id="@+id/textCurrentsInfoTitle"
@@ -1018,7 +1021,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="14dp"
                     app:layout_constraintStart_toStartOf="@+id/textCurrentsInfoStrong"
-                    app:layout_constraintTop_toBottomOf="@+id/textCurrentsInfoStrong"/>
+                    app:layout_constraintTop_toBottomOf="@+id/textCurrentsInfoStrong"
+                    tools:ignore="TooManyViews" />
 
                 <TextView
                     android:id="@+id/textCurrentsInfoVeryStrong"
@@ -1045,7 +1049,8 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textCurrentsInfoVeryStrong"
-                    android:clickable="true"/>
+                    android:clickable="true"
+                    android:focusable="true" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -1069,7 +1074,8 @@
                     android:layout_marginTop="16dp"
                     android:src="@drawable/xclose"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:contentDescription="@string/place_button_close_info" />
 
                 <TextView
                     android:id="@+id/textUVInfoTitle"
@@ -1221,7 +1227,8 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textUVInfoExtreme"
-                    android:clickable="true"/>
+                    android:clickable="true"
+                    android:focusable="true" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

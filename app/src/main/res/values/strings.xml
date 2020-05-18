@@ -114,6 +114,7 @@
     <string name="place_button_walk">Vis gangvei til badestedet</string>
     <string name="place_button_info_currents">Vis informasjon om måling av havstrømninger</string>
     <string name="place_button_info_uv">Vis informasjon om måling av UV-stråling</string>
+    <string name="place_button_close_info">Trykk her for å lukke infovinduet</string>
     <string name="infoRefreshButton">Oppdater rute</string>
     <string name="addFilter">Legg til filter</string>
     <string name="reset">Nullstill</string>
@@ -127,6 +128,8 @@
     <string name="water_temp_icon">ikon som viser om vanntemperaturen er varm eller kald i forhold til gjeldende preferanser</string>
     <string name="empty_shark">En hai som symboliserer at du ikke har noen favoritter</string>
     <string name="search_image">Bilde av et forstørrelsesglass</string>
+    <string name="place_weather_icon_description">Ikon som viser været: %1$s</string>
+    <string name="place_icon_public_transport">Ikon for offentlig transport</string>
 
     <!--    map stuff-->
     <string name="access_token">sk.eyJ1IjoiamFyaG9sdCIsImEiOiJjazg0ZDBsMHkwMTN4M2prNzJpcHZnMXFkIn0.k3JYH8gx2QewGmE4Vf2GsQ</string>
