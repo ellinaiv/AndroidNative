@@ -9,11 +9,13 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.team11.PersonalPreference
 import com.example.team11.database.entity.Place
 import com.example.team11.Repository.PlaceRepository
+import com.example.team11.database.entity.WeatherForecastDb
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Point
 
 class MapFragmentViewModel(context: Context): ViewModel() {
     var places: LiveData<List<Place>>? = null
+    var forecasts: LiveData<List<WeatherForecastDb>>? = null
     var personalPreference: MutableLiveData<PersonalPreference>? = null
     private var placeRepository: PlaceRepository? = null
 
@@ -25,6 +27,8 @@ class MapFragmentViewModel(context: Context): ViewModel() {
             placeRepository = PlaceRepository.getInstance(context)
             places = placeRepository!!.getPlaces()
             personalPreference = placeRepository!!.getPersonalPreferences()
+            forecasts = placeRepository!!.getNowForecastsList(places!!.value!!)
+
         }
     }
 
