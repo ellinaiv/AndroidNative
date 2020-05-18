@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.widget.SeekBar
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
-import com.example.team11.PersonalPreference
+import com.example.team11.database.entity.PersonalPreference
 import com.example.team11.R
 import kotlinx.android.synthetic.main.activity_filter.*
 import kotlinx.android.synthetic.main.activity_filter.textTempMidWater
@@ -70,7 +70,8 @@ class FilterActivity : AppCompatActivity() {
                 showWaterWarm = checkBoxWarmWater.isChecked,
                 showBasedOnWater = waterRepresentation,
                 falseData = viewModel.personalPreferences!!.value!!.falseData
-        ))
+            )
+        )
     }
 
     /**

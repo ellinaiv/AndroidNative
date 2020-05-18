@@ -4,9 +4,8 @@ import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.team11.PersonalPreference
+import com.example.team11.database.entity.PersonalPreference
 import com.example.team11.Repository.PlaceRepository
-import kotlin.coroutines.coroutineContext
 
 class FilterActivityViewModel(context: Context): ViewModel(){
 
@@ -34,8 +33,10 @@ class FilterActivityViewModel(context: Context): ViewModel(){
      * Reseter personlige preferanser til det vi har valgt som standar
      */
     fun resetPersonalPreference(){
-        placeRepository!!.updatePersonalPreference(PersonalPreference(
-            falseData = personalPreferences!!.value!!.falseData)
+        placeRepository!!.updatePersonalPreference(
+            PersonalPreference(
+                falseData = personalPreferences!!.value!!.falseData
+            )
         )
     }
 

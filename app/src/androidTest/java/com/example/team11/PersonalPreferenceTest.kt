@@ -1,5 +1,6 @@
 package com.example.team11
 
+import com.example.team11.database.entity.PersonalPreference
 import org.junit.Assert.*
 import org.junit.Test
 

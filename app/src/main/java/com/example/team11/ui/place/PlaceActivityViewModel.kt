@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.team11.database.entity.Place
-import com.example.team11.PersonalPreference
+import com.example.team11.database.entity.PersonalPreference
 import com.example.team11.Repository.PlaceRepository
 import com.example.team11.Transportation
 import com.mapbox.geojson.Feature
