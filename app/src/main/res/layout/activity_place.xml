@@ -105,7 +105,7 @@
                 android:textSize="16sp"
                 android:layout_width="44dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="2dp"
                 app:layout_constraintEnd_toEndOf="@+id/imageWater"
                 app:layout_constraintStart_toStartOf="@+id/imageWater"
                 app:layout_constraintTop_toBottomOf="@+id/imageWater"
@@ -125,19 +125,17 @@
 
             <TextView
                 android:id="@+id/textTempAir"
+                android:layout_width="44dp"
+                android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_medium"
-                android:gravity="center"
+                android:gravity="center_horizontal"
                 android:text="@string/no_data"
                 android:textColor="@color/mainTextColor"
                 android:textSize="16sp"
-                android:layout_width="44dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="@+id/textTempWater"
                 app:layout_constraintEnd_toEndOf="@+id/imageWeather"
                 app:layout_constraintStart_toStartOf="@+id/imageWeather"
                 app:layout_constraintTop_toTopOf="@+id/textTempWater"
-                tools:text="20&#176;C"
-                />
+                tools:text="20&#176;C" />
 
             <TextView
                 android:id="@+id/textRain"
@@ -186,7 +184,6 @@
                 tools:text="Svak"
                 tools:textColor="@color/place_currents_info_weak"
                 android:textSize="20sp"
-                android:textStyle="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="12dp"
@@ -202,7 +199,6 @@
                 tools:text="Sterk"
                 tools:textColor="@color/place_currents_info_strong"
                 android:textSize="20sp"
-                android:textStyle="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="@+id/textUV"
@@ -394,7 +390,6 @@
                 android:textSize="16sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 app:layout_constraintEnd_toEndOf="@+id/imageForecast1Hour"
                 app:layout_constraintStart_toStartOf="@+id/imageForecast1Hour"
                 app:layout_constraintTop_toBottomOf="@+id/imageForecast1Hour" />

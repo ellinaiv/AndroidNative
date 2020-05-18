@@ -2,6 +2,7 @@ package com.example.team11.ui.place
 
 import android.content.Intent
 import android.graphics.BitmapFactory
+import android.graphics.Typeface
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -83,12 +84,12 @@ class PlaceActivity : AppCompatActivity() {
         textPlaceName.text = place.name
 
         // vanntemperatur
-        //TODO(hente fra database og ikke place)
         if (place.tempWater != Int.MAX_VALUE) {
-            //textTempWater.text = getString(R.string.tempC, place.tempWater)
+            textTempWater.text = getString(R.string.tempC, place.tempWater)
+            textTempWater.setTypeface(null, Typeface.BOLD)
             when(viewModel.redWave(place)){
-               // true -> imageWater.setImageDrawable(getDrawable(R.drawable.water_red))
-                // false -> imageWater.setImageDrawable(getDrawable(R.drawable.water_blue))
+//                true -> imageWater.setImageDrawable(getDrawable(R.drawable.water_red))
+//                false -> imageWater.setImageDrawable(getDrawable(R.drawable.water_blue))
             }
         }
 
@@ -195,7 +196,7 @@ class PlaceActivity : AppCompatActivity() {
                 textTempAir.text = getString(R.string.tempC, forecast[0].tempAir)
                 imageWeather.setImageDrawable(getDrawable(resources.getIdentifier(forecast[0].symbol,
                     "drawable", this.packageName)))
-                textRain.text = getString(R.string.place_rain, forecast[0].precipitation)
+                textRain.text = getString(R.string.place_rain, forecast[0].precipitation.toInt())
             }
 
             // havstrømninger
@@ -212,6 +213,7 @@ class PlaceActivity : AppCompatActivity() {
             textUVResult.setTextColor(getColor(
                 resources.getIdentifier(getTextColor(uvText, "uv"),
                     "color", this.packageName)))
+            textUVResult.setTypeface(null, Typeface.BOLD)
             Log.d("Her er det!", forecast.toString())
 
             // timesvarsel
@@ -249,7 +251,7 @@ class PlaceActivity : AppCompatActivity() {
             // tilgjengelig værdata
             time.text = format + forecast.time
             temp.text = getString(R.string.tempC, forecast.tempAir)
-            rain.text = getString(R.string.place_rain, forecast.precipitation)
+            rain.text = getString(R.string.place_rain, forecast.precipitation.toInt())
             symbol.setImageDrawable(getDrawable(resources.getIdentifier(forecast.symbol,
                 "drawable", this.packageName)))
         }
