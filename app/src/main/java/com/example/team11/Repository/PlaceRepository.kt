@@ -17,9 +17,8 @@ import com.example.team11.util.Util.formatToDaysTime
 import com.example.team11.util.Util.formatToHoursTime
 import com.example.team11.util.Util.getNowHourForecastDb
 import com.example.team11.util.Util.getWantedDaysForecastApi
-import com.example.team11.util.Util.getWantedDaysForecastDb
+import com.example.team11.util.Util.getWantedForecastDb
 import com.example.team11.util.Util.getWantedHoursForecastApi
-import com.example.team11.util.Util.getWantedHoursForecastDb
 import com.example.team11.util.Util.shouldFetch
 import com.example.team11.valueObjects.OceanForecast
 import com.example.team11.valueObjects.WeatherForecastApi
@@ -220,10 +219,8 @@ class PlaceRepository private constructor(context: Context) {
      */
     fun getForecast(place: Place, hour: Boolean): LiveData<List<WeatherForecastDb>> {
         val tag = "tagGetForecast"
-        val forecast: LiveData<List<WeatherForecastDb>> = when(hour){
-            true -> weatherForecastDao.getTimeForecast(place.id, getWantedHoursForecastDb())
-            false -> weatherForecastDao.getTimeForecast(place.id, getWantedDaysForecastDb())
-        }
+        val forecast: LiveData<List<WeatherForecastDb>> =
+            weatherForecastDao.getTimeForecast(place.id, getWantedForecastDb(hour))
         Log.d(tag, "getForecast")
 
         AsyncTask.execute {

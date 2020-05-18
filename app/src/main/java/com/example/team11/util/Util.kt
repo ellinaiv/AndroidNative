@@ -42,6 +42,66 @@ object Util {
         return listTimes
     }
 
+    /*
+    fun getWantedHoursForecastDb(): List<String>{
+        var listTimes = arrayListOf<String>()
+        val c: Calendar = GregorianCalendar()
+        c.time = Date(System.currentTimeMillis())
+        c.set(Calendar.MINUTE, 0)
+        c.set(Calendar.SECOND, 0)
+        val stringFormat = SimpleDateFormat("HH")
+        for (hour in 0..DbConstants.NUMB_HOURS_FORECAST){
+            listTimes.add(stringFormat.format(c.time))
+            c.add(Calendar.HOUR, 1)
+            Log.d("Gattering times", stringFormat.format(c.time))
+        }
+        return listTimes
+    }
+
+    fun getWantedDaysForecastDb(): List<String>{
+        var listTimes = arrayListOf<String>()
+        val c: Calendar = GregorianCalendar()
+        c.time = Date(System.currentTimeMillis())
+        c.set(Calendar.HOUR, 12)
+        c.set(Calendar.MINUTE, 0)
+        c.set(Calendar.SECOND, 0)
+        val stringFormat = SimpleDateFormat("dd/MM")
+        for (hour in 0..DbConstants.NUMB_DAYS_FORECAST){
+            c.add(Calendar.DATE, 1)
+            listTimes.add(stringFormat.format(c.time))
+            Log.d("Gattering times", stringFormat.format(c.time))
+        }
+        return listTimes
+    }*/
+
+    fun getWantedForecastDb(hour: Boolean): List<String>{
+        val listTimes = arrayListOf<String>()
+        val c: Calendar = GregorianCalendar()
+        c.time = Date(System.currentTimeMillis())
+        var timeType = Calendar.HOUR
+        var cnt = DbConstants.NUMB_HOURS_FORECAST
+        if(! hour){
+            Log.d("FORCAST", "DAY")
+            c.set(Calendar.HOUR, 12)
+            timeType = Calendar.DATE
+            cnt = DbConstants.NUMB_DAYS_FORECAST
+        }
+        c.set(Calendar.MINUTE, 0)
+        c.set(Calendar.SECOND, 0)
+        val stringFormat = when(hour){
+            true-> SimpleDateFormat("HH")
+            false->SimpleDateFormat("dd/MM")
+        }
+
+        for(time in 0..cnt){
+            c.add(timeType, 1)
+            listTimes.add(stringFormat.format(c.time))
+            Log.d("Gattering times", stringFormat.format(c.time))
+        }
+        Log.d("FORCAST", listTimes.toString())
+        return listTimes
+    }
+
     fun formatToHoursTime(time: String): String{
         val parser =  SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
         val dateTime = parser.parse(time)
@@ -65,36 +125,6 @@ object Util {
         val stringFormat = SimpleDateFormat("HH")
         Log.d("Getting nowTime", stringFormat.format(c.time))
         listTimes.add(stringFormat.format(c.time))
-        return listTimes
-    }
-
-    fun getWantedHoursForecastDb(): List<String>{
-        var listTimes = arrayListOf<String>()
-        val c: Calendar = GregorianCalendar()
-        c.time = Date(System.currentTimeMillis())
-        c.set(Calendar.MINUTE, 0)
-        c.set(Calendar.SECOND, 0)
-        val stringFormat = SimpleDateFormat("HH")
-        for (hour in 0..DbConstants.NUMB_HOURS_FORECAST){
-            listTimes.add(stringFormat.format(c.time))
-            c.add(Calendar.HOUR, 1)
-            Log.d("Gattering times", stringFormat.format(c.time))
-        }
-        return listTimes
-    }
-    fun getWantedDaysForecastDb(): List<String>{
-        var listTimes = arrayListOf<String>()
-        val c: Calendar = GregorianCalendar()
-        c.time = Date(System.currentTimeMillis())
-        c.set(Calendar.HOUR, 12)
-        c.set(Calendar.MINUTE, 0)
-        c.set(Calendar.SECOND, 0)
-        val stringFormat = SimpleDateFormat("dd/MM")
-        for (hour in 0..DbConstants.NUMB_DAYS_FORECAST){
-            c.add(Calendar.DATE, 1)
-            listTimes.add(stringFormat.format(c.time))
-            Log.d("Gattering times", stringFormat.format(c.time))
-        }
         return listTimes
     }
 
