@@ -185,6 +185,7 @@ class PlaceRepository private constructor(context: Context) {
     }
 
 
+
     /**
      * getPlaces funksjonen henter en liste til viewModel med vær for de netse timene
      * @return: LiveData<List<HourForecast>>, liste med badesteder
