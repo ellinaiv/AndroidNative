@@ -204,18 +204,18 @@ class PlaceActivity : AppCompatActivity() {
             // havstrømninger
             //TODO
 //        var currentsText = convertCurrents(hourForecast[0].currents)
-//        textCurrentsResult.text = currentsText
+//        textCurrentsResult.text = getString(R.string.place_currents_result, currentsText)
 //        textUVResult.setTextColor(getColor(
 //            resources.getIdentifier(getTextColor(currentsText, "currents"),
-//                "color", this.packageName)))
+//                    "color", this.packageName)))
 
             // uv
             val uvText = convertUV(forecast[0].uv.toInt())
-            textUVResult.text = uvText
+            textUVResult.text = getString(R.string.place_uv_result, uvText)
             textUVResult.setTextColor(getColor(
                 resources.getIdentifier(getTextColor(uvText, "uv"),
                     "color", this.packageName)))
-            textUVResult.setTypeface(null, Typeface.BOLD)
+
             Log.d("Her er det!", forecast.toString())
 
             // timesvarsel
@@ -281,7 +281,7 @@ class PlaceActivity : AppCompatActivity() {
             "string", this.packageName))
         value == Int.MAX_VALUE -> getString(resources.getIdentifier("no_data",
             "string", this.packageName))
-        else -> getString(resources.getIdentifier("not_available",
+        else -> getString(resources.getIdentifier("no_data",
             "string", this.packageName))
     }
 
