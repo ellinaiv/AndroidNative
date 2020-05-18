@@ -1,5 +1,7 @@
 package com.example.team11.ui.map
 
+import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.PointF
@@ -7,6 +9,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.ImageButton
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
@@ -124,6 +127,7 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
     }
 
     override fun onMapClick(point: LatLng): Boolean {
+        hideKeyboard()
         return handleClickIcon(mapBoxMap.projection.toScreenLocation(point))
     }
 
@@ -249,6 +253,20 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
         )
         style.addLayer(symbolLayer)
         listOfLayerId.add(id)
+    }
+
+
+    fun Fragment.hideKeyboard() {
+        view?.let { activity?.hideKeyboard(it) }
+    }
+
+    fun Activity.hideKeyboard() {
+        hideKeyboard(currentFocus ?: View(this))
+    }
+
+    fun Context.hideKeyboard(view: View) {
+        val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
     override fun onStart() {

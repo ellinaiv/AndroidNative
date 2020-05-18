@@ -1,10 +1,13 @@
 package com.example.team11.ui.placesList
 
+import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.ImageButton
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
@@ -52,6 +55,9 @@ class PlacesListFragment : Fragment() {
             searchText.doOnTextChanged { text, _, _, _ ->
                 search(text.toString(), places)
             }
+            parent_layout.setOnClickListener {
+                hideKeyboard()
+            }
         })
 
         val filterButton = root.findViewById<ImageButton>(R.id.filterButton)
@@ -81,6 +87,19 @@ class PlacesListFragment : Fragment() {
             imageEmptyListShark.visibility = View.GONE
             textNoElementInList.visibility = View.GONE
         }
+    }
+
+    fun Fragment.hideKeyboard() {
+        view?.let { activity?.hideKeyboard(it) }
+    }
+
+    fun Activity.hideKeyboard() {
+        hideKeyboard(currentFocus ?: View(this))
+    }
+
+    fun Context.hideKeyboard(view: View) {
+        val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
 }

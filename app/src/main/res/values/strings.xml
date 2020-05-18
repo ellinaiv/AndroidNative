@@ -42,30 +42,29 @@
     <string name="place_long_forecast">Langtidsvarsel</string>
     <string name="place_public_transport_link"><u>Finn reise på ruter.no</u></string>
     <string name="place_select_route_type">Vis rute til badeplass:</string>
-    <string name="aboutApp">Om appen</string>
+    <string name="aboutApp">Om Splæsj</string>
     <string name="aboutAPI">Om API</string>
     <string name="settingsTitle">Innstillinger</string>
     <string name="waterPreference">Preferanse for vanntemperatur</string>
     <string name="noFavorites">Du har ikke lagt til noen favorittbadeplasser enda!</string>
-    <string name="aboutAppText"> Splæsj er appen for deg som er glad i å bade i Oslo! Her har
-        vi samlet relevant informasjon om værforhold, vanntemperatur og reisevei til forskjellige \
+    <string name="aboutAppText">Splæsj er appen for deg som er glad i å bade i Oslo! Her har
+        vi samlet relevant informasjon om værforhold, vanntemperatur og reisevei til forskjellige
         badeplasser på ett sted, for at det skal være enklere å ta et informert valg om hvilken
         badeplass som passer best for deg.
-
-        \n\nAppen er designet og utviklet av Ellina Ivleva, Johanna P. Haarseth, Maria Løvland Johansson,
-        Marlen Jarholt, Melanie Østbøll og Silje H. Lund. Appen er produktet av teamarbeidet i
-        IN2000 - Software Engineering med prosjektarbeid ved Institutt for Informatikk,
-        Universitetet i Oslo, våren 2020.</string>
-    <string name="aboutAPIText">
-        <b>MET</b>
+        \n\nSplæsj er designet og utviklet av Ellina Ivleva, Johanna P. Haarseth,
+        Maria Løvland Johansson, Marlen Jarholt, Melanie Østbøll og Silje H. Lund. Appen er utviklet
+        som en del av teamarbeidet i IN2000 - Software Engineering med prosjektarbeid ved Institutt
+        for Informatikk, Universitetet i Oslo, våren 2020.</string>
+    <string name="aboutAPIText"><b>MET</b>
         \nSplæsj bruker værdata fra WeatherAPI-et til Meteorologisk institutt.
-        Dette gir appen informasjon om værforhold som lufttemperatur, UV-stråling,
+        Dette gir appen informasjon om værforhold som lufttemperatur, UV-stråling
         og havstrømninger ved ulike badeplasser.
         \n\n<b>Mapbox</b>
-        \nAPIsom muliggjør opptegning av kart i appen, samt å vise reisevei fra en gitt posisjon
+        \nAPI som muliggjør opptegning av kart i appen, samt å vise reisevei fra en gitt posisjon
         til en badeplass.
-        \n\n<b>Oslo Kommune</b>
-        \nAppen benytter API-er fra Oslo Kommune for data om ulike badeplasser og badetemperatur.
+        \n\n<b>Oslo kommune</b>
+        \nSplæsj innhenter data om lokasjon og vanntemperatur for de ulike badeplassene ved å
+        benytte API fra Oslo kommune.
     </string>
     <string name="aboutSettings">
         Målingene av badetemperaturene fra Oslo kommune er tilgjengelige mellom juni og august.
