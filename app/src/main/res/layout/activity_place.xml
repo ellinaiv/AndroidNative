@@ -121,7 +121,7 @@
                 app:layout_constraintTop_toTopOf="@+id/imageWater"
                 android:contentDescription="@string/weather_icon"
                 app:srcCompat="@drawable/ic_noweatherdata"
-                tools:srcCompat="@drawable/sun" />
+                tools:srcCompat="@drawable/clearsky_day" />
 
             <TextView
                 android:id="@+id/textTempAir"
@@ -337,7 +337,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/text1Hour"
                 android:layout_marginTop="8dp"
                 android:contentDescription="TODO"
-                tools:srcCompat="@drawable/sun" />
+                tools:srcCompat="@drawable/clearsky_day" />
 
             <ImageView
                 android:id="@+id/imageForecast2Hours"
@@ -347,7 +347,7 @@
                 app:layout_constraintEnd_toEndOf="@+id/text2Hours"
                 app:layout_constraintStart_toStartOf="@+id/text2Hours"
                 android:contentDescription="TODO"
-                tools:srcCompat="@drawable/sun" />
+                tools:srcCompat="@drawable/clearsky_day" />
 
             <ImageView
                 android:id="@+id/imageForecast3Hours"
@@ -358,7 +358,7 @@
                 app:layout_constraintStart_toStartOf="@+id/text3Hours"
                 android:contentDescription="TODO"
                 app:srcCompat="@drawable/ic_noweatherdata"
-                tools:srcCompat="@drawable/cloud" />
+                tools:srcCompat="@drawable/cloudy" />
 
             <ImageView
                 android:id="@+id/imageForecast4Hours"
@@ -368,7 +368,7 @@
                 app:layout_constraintEnd_toEndOf="@+id/text4Hours"
                 app:layout_constraintStart_toStartOf="@+id/text4Hours"
                 android:contentDescription="TODO"
-                tools:srcCompat="@drawable/sun" />
+                tools:srcCompat="@drawable/clearsky_day" />
 
             <ImageView
                 android:id="@+id/imageForecast5Hours"
@@ -378,7 +378,7 @@
                 app:layout_constraintEnd_toEndOf="@+id/text5Hours"
                 app:layout_constraintStart_toStartOf="@+id/text5Hours"
                 android:contentDescription="TODO"
-                tools:srcCompat="@drawable/cloud" />
+                tools:srcCompat="@drawable/cloudy" />
 
             <TextView
                 android:id="@+id/textTemp1Hour"
@@ -607,7 +607,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textDate1Day"
                 android:layout_marginTop="8dp"
                 android:contentDescription="TODO"
-                tools:srcCompat="@drawable/sun" />
+                tools:srcCompat="@drawable/clearsky_day" />
 
             <ImageView
                 android:id="@+id/imageForecast2Days"
@@ -617,7 +617,7 @@
                 app:layout_constraintEnd_toEndOf="@+id/textDate2Days"
                 app:layout_constraintStart_toStartOf="@+id/textDate2Days"
                 android:contentDescription="TODO"
-                tools:srcCompat="@drawable/sun" />
+                tools:srcCompat="@drawable/clearsky_day" />
 
             <ImageView
                 android:id="@+id/imageForecast3Days"
@@ -628,7 +628,7 @@
                 app:layout_constraintStart_toStartOf="@+id/textDate3Days"
                 android:contentDescription="TODO"
                 app:srcCompat="@drawable/ic_noweatherdata"
-                tools:srcCompat="@drawable/cloud" />
+                tools:srcCompat="@drawable/cloudy" />
 
             <ImageView
                 android:id="@+id/imageForecast4Days"
@@ -638,7 +638,7 @@
                 app:layout_constraintEnd_toEndOf="@+id/textDate4Days"
                 app:layout_constraintStart_toStartOf="@+id/textDate4Days"
                 android:contentDescription="TODO"
-                tools:srcCompat="@drawable/sun" />
+                tools:srcCompat="@drawable/clearsky_day" />
 
             <ImageView
                 android:id="@+id/imageForecast5Days"
@@ -648,7 +648,7 @@
                 app:layout_constraintEnd_toEndOf="@+id/textDate5Days"
                 app:layout_constraintStart_toStartOf="@+id/textDate5Days"
                 android:contentDescription="TODO"
-                tools:srcCompat="@drawable/cloud" />
+                tools:srcCompat="@drawable/cloudy" />
 
             <TextView
                 android:id="@+id/textTemp1Day"
