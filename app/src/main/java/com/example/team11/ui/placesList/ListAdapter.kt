@@ -47,11 +47,11 @@ class ListAdapter(private val places: List<Place>, private val forecasts: List<W
         holder.itemName.text = places[position].name
         Log.d("tagStørrelse", places.size.toString())
         Log.d("tagStørrelse", forecasts.size.toString())
-        Log.d("tagTemp", places[position].id.toString())
-        Log.d("tagTemp", forecasts[position].placeId.toString())
         if(places.size == forecasts.size) {
             if(places[position].tempWater != Int.MAX_VALUE){
                 holder.itemTempWater.text = context.getString(R.string.tempC, places[position].tempWater)
+                Log.d("tagTemp", places[position].id.toString())
+                Log.d("tagTemp", forecasts[position].placeId.toString())
             }
             if(forecasts[position].tempAir != Int.MAX_VALUE) {
                 holder.itemTempAir.text =
