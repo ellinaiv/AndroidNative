@@ -25,10 +25,10 @@
     <color name="transparent">#00FFFFFF</color>
     <color name="pinkIconColor">#F08C8E</color>
     <color name="searchIconsColor">#909090</color>
-    <color name="place_uv_info_low">#6CA754</color>
-    <color name="place_uv_info_moderate">#FED86F</color>
-    <color name="place_uv_info_strong">#FD9927</color>
-    <color name="place_uv_info_very_strong">#FC0D1B</color>
+    <color name="place_uv_info_low">#2B9700</color>
+    <color name="place_uv_info_moderate">#DEAD00</color>
+    <color name="place_uv_info_strong">#FF7E00</color>
+    <color name="place_uv_info_very_strong">#FF2E00</color>
     <color name="place_uv_info_extreme">#9725FA</color>
     <color name="place_currents_info_weak">#0064F9</color>
     <color name="place_currents_info_moderate">#00FFFE</color>
