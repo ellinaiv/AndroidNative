@@ -15,7 +15,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.team11.database.entity.Place
 import com.example.team11.ui.place.PlaceActivity
 import com.example.team11.R
-import com.example.team11.database.entity.WeatherForecastDb
 import com.example.team11.ui.filter.FilterActivity
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
@@ -57,18 +56,13 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
 
         val root = inflater.inflate(R.layout.fragment_map, container, false)
         mapFragmentViewModel.places!!.observe(viewLifecycleOwner, Observer {places->
-            mapFragmentViewModel.forecasts!!.observe(viewLifecycleOwner, Observer { forecasts ->
-                if (places.size == forecasts.size){
-                    makeMap(places, forecasts)
-                    searchText.doOnTextChanged { text, _, _, _ ->
-                        if (text.toString().isEmpty()) {
-                            removePlace()
-                        }
-                        search(text.toString(), places, forecasts)
-                    }
+            makeMap(places)
+            searchText.doOnTextChanged { text, _, _, _ ->
+                if (text.toString().isEmpty()) {
+                    removePlace()
                 }
-
-            })
+                search(text.toString(), places)
+            }
         })
 
         val filterButton = root.findViewById<ImageButton>(R.id.filterButton)
@@ -84,7 +78,7 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
      * @param name: en input-streng som skal brukes for å filtrere places
      * @param places: en liste med badesteder som skal filtreres
      */
-    private fun search(name: String, places: List<Place>, forecasts: List<WeatherForecastDb>) {
+    private fun search(name: String, places: List<Place>) {
         filterPlaces = places.filter{ it.name.contains(name, ignoreCase = true)}
         if(filterPlaces.size == 1){
             val position = CameraPosition.Builder()
@@ -92,7 +86,7 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
                 .zoom(15.0)
                 .build()
             mapBoxMap.animateCamera(CameraUpdateFactory.newCameraPosition(position), 2)
-            showPlace(filterPlaces[0], forecasts.filter{ it.placeId == filterPlaces[0].id}[0])
+            showPlace(filterPlaces[0])
         }
     }
 
@@ -100,7 +94,7 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
      * Tegner opp kartet og passer på at alle steden blir plassert på kartet
      * @param places: en liste med steder som skal plasseres på kartet
      */
-    private fun makeMap(places: List<Place>, forecasts: List<WeatherForecastDb>){
+    private fun makeMap(places: List<Place>){
         mapView?.getMapAsync {mapBoxMap ->
             this.mapBoxMap = mapBoxMap
             mapBoxMap.setStyle(Style.MAPBOX_STREETS)
@@ -146,9 +140,7 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
             val place = mapFragmentViewModel.places!!.value!!.filter {
                 it.id == (feature.getNumberProperty(propertyId).toInt()) }[0]
             //TODO("Tror ikke det går ann å hente forecast på samme måte som places. Og places burde vel egentlig kommet fra observer den også")
-            val forecast = mapFragmentViewModel.forecasts!!.value!!.filter{
-                it.placeId == place.id }[0]
-            showPlace(place, forecast)
+            showPlace(place)
             return true
         }
         removePlace()
@@ -180,7 +172,7 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
      * Legger til kort over kartviewet, med infomrasjon om en bestemt badestrand
      * @param place: Stedet som skal ha informasjonen sin på display
      */
-    private fun showPlace(place: Place, forecast: WeatherForecastDb){
+    private fun showPlace(place: Place){
 
         textName.text = place.name
         if(place.tempWater != Int.MAX_VALUE) {
@@ -191,6 +183,15 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
             textTempWater.text = getString(R.string.tempC, place.tempWater)
         }
         textTempAir.text = getString(R.string.not_available)
+
+        mapFragmentViewModel.getNowForcast(place)?.observe(viewLifecycleOwner, Observer {forecast ->
+            if(forecast != null && forecast.isNotEmpty()){
+                val placeForecast = forecast[0]
+                if(placeForecast.placeId == place.id && placeForecast.tempAir != Int.MAX_VALUE){
+                    textTempAir.text = getString(R.string.tempC, placeForecast.tempAir)
+                }
+            }
+        })
 
 
         //zoomer til stedet på kartet
