@@ -101,6 +101,16 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
                     super.onLost(network)
                     noInternet()
                 }
+
+                override fun onBlockedStatusChanged(network: Network, blocked: Boolean) {
+                    super.onBlockedStatusChanged(network, blocked)
+                    noInternet()
+                }
+
+                override fun onLosing(network: Network, maxMsToLive: Int) {
+                    super.onLosing(network, maxMsToLive)
+                    noInternet()
+                }
             }
         )
 
