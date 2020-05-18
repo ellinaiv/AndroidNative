@@ -15,6 +15,7 @@ import com.example.team11.util.DbConstants
 import com.example.team11.database.entity.MetadataTable
 import com.example.team11.util.Util.formatToDaysTime
 import com.example.team11.util.Util.formatToHoursTime
+import com.example.team11.util.Util.getNowHourForecastDb
 import com.example.team11.util.Util.getWantedDaysForecastApi
 import com.example.team11.util.Util.getWantedDaysForecastDb
 import com.example.team11.util.Util.getWantedHoursForecastApi
@@ -159,6 +160,29 @@ class PlaceRepository private constructor(context: Context) {
         return places
     }
 
+    fun getNowForecastsList(places: List<Place>): LiveData<List<WeatherForecastDb>>? {
+        val tag = "tagGetForecast"
+        val placeIds = places.map { it.id }
+        val nowForecasts: LiveData<List<WeatherForecastDb>> =
+            weatherForecastDao.getTimeForecastsList(placeIds, getNowHourForecastDb())
+        Log.d(tag, "getHourForecast")
+        for (place in places) {
+            AsyncTask.execute {
+                if (shouldFetch(
+                        metadataDao,
+                        DbConstants.METADATA_ENTRY_WEATHER_FORECAST_TABLE + place.id,
+                        1,
+                        TimeUnit.HOURS
+                    )
+                ) {
+                    Log.d(tag, "fetcherForecast")
+                    fetchWeatherForecast(place)
+                }
+            }
+        }
+        Log.d("Fra databasen", nowForecasts.toString())
+        return nowForecasts
+    }
 
 
     /**
@@ -169,7 +193,7 @@ class PlaceRepository private constructor(context: Context) {
         val tag = "tagGetForecast"
         // TODO("Hvor ofte burde places fetches?")
         // TODO("Kan jeg gjøre non-assertive call her? Dersom favoritePlaces.value er null burde den stoppe å sjekke på første?"
-        val hourForecast: LiveData<List<WeatherForecastDb>> = weatherForecastDao.getHourForecast(place.id, getWantedHoursForecastDb())
+        val hourForecast: LiveData<List<WeatherForecastDb>> = weatherForecastDao.getTimeForecast(place.id, getWantedHoursForecastDb())
         Log.d(tag, "getHourForecast")
 
         AsyncTask.execute {
@@ -196,7 +220,7 @@ class PlaceRepository private constructor(context: Context) {
         val tag = "tagGetForecast"
         // TODO("Hvor ofte burde places fetches?")
         // TODO("Kan jeg gjøre non-assertive call her? Dersom favoritePlaces.value er null burde den stoppe å sjekke på første?"
-        val dayForecast: LiveData<List<WeatherForecastDb>> = weatherForecastDao.getDayForecast(place.id, getWantedDaysForecastDb())
+        val dayForecast: LiveData<List<WeatherForecastDb>> = weatherForecastDao.getTimeForecast(place.id, getWantedDaysForecastDb())
         Log.d(tag, "getHourForecast")
 
         AsyncTask.execute {
@@ -279,10 +303,18 @@ class PlaceRepository private constructor(context: Context) {
                 lateinit var name: String
                 lateinit var lat: String
                 lateinit var long: String
+                var tempWater = Int.MAX_VALUE
                 var id = 0
 
                 while (eventType != XmlPullParser.END_DOCUMENT) {
-                    if (eventType == XmlPullParser.START_TAG && xpp.name == "name") {
+                    if (eventType == XmlPullParser.START_TAG && xpp.name == "place") {
+                        for (i in 0 until xpp.attributeCount){
+                            val attrName = xpp.getAttributeName(i)
+                            if(attrName != null && attrName == "id"){
+                                id =  xpp.getAttributeValue(i).toInt()
+                            }
+                        }
+                    }else if (eventType == XmlPullParser.START_TAG && xpp.name == "name") {
                         xpp.next()
                         name = xpp.text
                         xpp.next()
@@ -295,12 +327,19 @@ class PlaceRepository private constructor(context: Context) {
                         xpp.next()
                         long = xpp.text
                         xpp.next()
+                    }else if(eventType == XmlPullParser.START_TAG && xpp.name == "temp_vann") {
+                        if (xpp.next() != XmlPullParser.END_TAG) {
+                            tempWater = xpp.text.toInt()
+                            xpp.next()
+                        }
+                        Log.d("tag2", tempWater.toString())
                         places.add(
                             Place(
                                 id++,
                                 name,
                                 lat.toDouble(),
-                                long.toDouble()
+                                long.toDouble(),
+                                tempWater
                             )
                         )
                     }
@@ -388,7 +427,7 @@ class PlaceRepository private constructor(context: Context) {
                         wantedForecastDb.add(WeatherForecastDb(place.id,
                             time,
                             nextHours!!.summary.symbol,
-                            forecast.types.instantWeatherForecast.details.temp,
+                            forecast.types.instantWeatherForecast.details.temp.toInt(),
                             nextHours.details.rainAmount,
                             forecast.types.instantWeatherForecast.details.uv)
                         )};
@@ -400,6 +439,8 @@ class PlaceRepository private constructor(context: Context) {
             }
         })
     }
+
+
 
 
 }

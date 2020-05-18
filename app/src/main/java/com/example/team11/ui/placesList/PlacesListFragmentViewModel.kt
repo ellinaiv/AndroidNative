@@ -9,10 +9,12 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.team11.database.entity.Place
 import com.example.team11.PersonalPreference
 import com.example.team11.Repository.PlaceRepository
+import com.example.team11.database.entity.WeatherForecastDb
 
 
 class PlacesListFragmentViewModel(context: Context) : ViewModel() {
     var places: LiveData<List<Place>>? = null
+    var forecasts: LiveData<List<WeatherForecastDb>>? = null
     private var placeRepository: PlaceRepository? = null
     private var personalPreference: MutableLiveData<PersonalPreference>? = null
 
@@ -21,7 +23,6 @@ class PlacesListFragmentViewModel(context: Context) : ViewModel() {
             placeRepository = PlaceRepository.getInstance(context)
             places = placeRepository!!.getPlaces()
             personalPreference = placeRepository!!.getPersonalPreferences()
-
         }
     }
     class InstanceCreator(val context: Context) : ViewModelProvider.Factory {
@@ -33,6 +34,8 @@ class PlacesListFragmentViewModel(context: Context) : ViewModel() {
     fun changeCurrentPlace(place: Place){
         placeRepository?.changeCurrentPlace(place)
     }
+
+    fun getForecasts(placesIn: List<Place>) = placeRepository!!.getNowForecastsList(placesIn)
 
     /**
      * Sjekker om et sted skal ha rød eller blaa boolge

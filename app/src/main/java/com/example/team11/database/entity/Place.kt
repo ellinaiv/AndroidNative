@@ -12,9 +12,8 @@ class Place(
     val name: String,
     val lat: Double,
     val lng: Double,
-    var favorite: Boolean? = false,
-    var tempWater: Int = Random.nextInt(0, 35),
-    var tempAir: Int = Random.nextInt(-30, 35)
+    var tempWater: Int,
+    var favorite: Boolean? = false
 ) {
 
     override fun toString(): String {

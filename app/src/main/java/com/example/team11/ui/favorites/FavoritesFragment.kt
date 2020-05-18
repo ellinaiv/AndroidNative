@@ -1,6 +1,7 @@
 package com.example.team11.ui.favorites
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,15 +29,19 @@ class FavoritesFragment : Fragment() {
             ViewModelProvider(this, FavoritesFragmentViewModel.InstanceCreator(requireContext())).get(FavoritesFragmentViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_favorites, container, false)
         viewModel.favoritePlaces!!.observe(viewLifecycleOwner, Observer { favoritePlaces: List<Place> ->
-            recycler_view.layoutManager = layoutManager
-            recycler_view.adapter = ListAdapter(favoritePlaces, requireContext(), viewModel, true)
-            if (recycler_view.adapter!!.itemCount == 0) {
-                imageEmptyListShark.visibility = View.VISIBLE
-                textNoElementInList.visibility = View.VISIBLE
-            } else {
-                imageEmptyListShark.visibility = View.GONE
-                textNoElementInList.visibility = View.GONE
-            }
+            viewModel.getForecasts(favoritePlaces)!!.observe(viewLifecycleOwner, Observer{ forecasts ->
+                Log.d("TagTemp", forecasts.toString())
+                recycler_view.layoutManager = layoutManager
+                recycler_view.adapter =
+                    ListAdapter(favoritePlaces, forecasts, requireContext(), viewModel, true)
+                if (recycler_view.adapter!!.itemCount == 0) {
+                    imageEmptyListShark.visibility = View.VISIBLE
+                    textNoElementInList.visibility = View.VISIBLE
+                } else {
+                    imageEmptyListShark.visibility = View.GONE
+                    textNoElementInList.visibility = View.GONE
+                }
+            })
         })
 
         return root

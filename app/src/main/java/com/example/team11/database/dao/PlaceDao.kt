@@ -42,14 +42,14 @@ interface PlaceDao {
      * Henter ut alle steder
      * @return liste med alle steder
      */
-    @Query("SELECT * FROM place")
+    @Query("SELECT * FROM place ORDER BY id")
     fun getPlaceList(): LiveData<List<Place>>
 
     /**
      * Henter ut liste med alle steder som er favoritter
      * @return liste med steder som er favoritter
      */
-    @Query("SELECT * FROM place WHERE favorite = 1")
+    @Query("SELECT * FROM place WHERE favorite = 1 ORDER BY id")
     fun getFavoritePlaceList(): LiveData<List<Place>>
 
 }

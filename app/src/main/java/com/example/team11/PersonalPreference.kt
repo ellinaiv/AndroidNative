@@ -35,9 +35,10 @@ class PersonalPreference(
       * @param place stedet som skal sjekkes
       * @return true hvis den oppfyller kriteriene false ellers
       */
-     fun isTempAirOk(place: Place): Boolean{
+    //TODO("This:")
+    /* fun isTempAirOk(place: Place): Boolean{
          if(place.tempAir == Int.MAX_VALUE) return true
          return ((showAirWarm and (place.tempAir >= airTempMid))
                  or (showAirCold and (place.tempAir < airTempMid)))
-     }
+     }*/
  }

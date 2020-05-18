@@ -2,6 +2,7 @@ package com.example.team11.ui.placesList
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.team11.database.entity.Place
 import com.example.team11.R
+import com.example.team11.database.entity.WeatherForecastDb
 import com.example.team11.ui.filter.FilterActivity
 import kotlinx.android.synthetic.main.fragment_places_list.*
 import kotlinx.android.synthetic.main.fragment_places_list.searchText
@@ -35,23 +37,27 @@ class PlacesListFragment : Fragment() {
 
         placesListViewModel.places!!.observe(viewLifecycleOwner, Observer { places ->
             recycler_viewPlaces.layoutManager = layoutManager
-            recycler_viewPlaces.adapter =
-                ListAdapter(
-                    places,
-                    requireContext(),
-                    placesListViewModel,
-                    false
-                )
-            if (recycler_viewPlaces.adapter!!.itemCount == 0) {
-                imageEmptyListShark.visibility = View.VISIBLE
-                textNoElementInList.visibility = View.VISIBLE
-            } else {
-                imageEmptyListShark.visibility = View.GONE
-                textNoElementInList.visibility = View.GONE
-            }
-            searchText.doOnTextChanged { text, _, _, _ ->
-                search(text.toString(), places)
-            }
+            placesListViewModel.getForecasts(places)!!.observe(viewLifecycleOwner, Observer { forecasts ->
+                Log.d("TagTemp", forecasts.toString())
+                recycler_viewPlaces.adapter =
+                    ListAdapter(
+                        places,
+                        forecasts,
+                        requireContext(),
+                        placesListViewModel,
+                        false
+                    )
+                if (recycler_viewPlaces.adapter!!.itemCount == 0) {
+                    imageEmptyListShark.visibility = View.VISIBLE
+                    textNoElementInList.visibility = View.VISIBLE
+                } else {
+                    imageEmptyListShark.visibility = View.GONE
+                    textNoElementInList.visibility = View.GONE
+                }
+                searchText.doOnTextChanged { text, _, _, _ ->
+                    search(text.toString(), places, forecasts)
+                }
+            })
         })
 
         val filterButton = root.findViewById<ImageButton>(R.id.filterButton)
@@ -65,11 +71,12 @@ class PlacesListFragment : Fragment() {
      * @param name: en input-streng som skal brukes for å filtrere places
      * @param places: en liste med badesteder som skal filtreres
      */
-    private fun search(name: String, places: List<Place>){
+    private fun search(name: String, places: List<Place>, forecasts: List<WeatherForecastDb>){
         filterPlaces = places.filter{ it.name.contains(name, ignoreCase = true)}
         recycler_viewPlaces.adapter =
             ListAdapter(
                 filterPlaces,
+                forecasts,
                 requireContext(),
                 placesListViewModel,
                 false

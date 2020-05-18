@@ -190,8 +190,9 @@ class PlaceActivity : AppCompatActivity() {
     private fun makeHourForecast(forecast: List<WeatherForecastDb>) {
         if (forecast.size >= 6){
             // vær nå
-            if (forecast[0].tempAir.toInt() != Int.MAX_VALUE){
-                textTempAir.text = getString(R.string.tempC, forecast[0].tempAir.toInt())
+            Log.d("tagTemp", forecast.toString())
+            if (forecast[0].tempAir != Int.MAX_VALUE){
+                textTempAir.text = getString(R.string.tempC, forecast[0].tempAir)
                 imageWeather.setImageDrawable(getDrawable(resources.getIdentifier(forecast[0].symbol,
                     "drawable", this.packageName)))
                 textRain.text = getString(R.string.place_rain, forecast[0].precipitation)
@@ -241,13 +242,13 @@ class PlaceActivity : AppCompatActivity() {
      */
     private fun setForecastViews(forecast: WeatherForecastDb, time: TextView, symbol: ImageView,
                                  temp: TextView, rain: TextView, format: String) {
-        if (forecast.tempAir.toInt() == Int.MAX_VALUE) {
+        if (forecast.tempAir == Int.MAX_VALUE) {
             // ingen værdata
             return
         } else {
             // tilgjengelig værdata
             time.text = format + forecast.time
-            temp.text = getString(R.string.tempC, forecast.tempAir.toInt())
+            temp.text = getString(R.string.tempC, forecast.tempAir)
             rain.text = getString(R.string.place_rain, forecast.precipitation)
             symbol.setImageDrawable(getDrawable(resources.getIdentifier(forecast.symbol,
                 "drawable", this.packageName)))

@@ -60,7 +60,8 @@ class MapFragmentViewModel(context: Context): ViewModel() {
             if(personalPreferenceValue.waterTempMid <= place.tempWater) return true
             return false
         }
-        if(personalPreferenceValue.airTempMid <= place.tempAir) return true
+        //TODO("This:")
+        //if(personalPreferenceValue.airTempMid <= place.tempAir) return true
         return false
     }
 

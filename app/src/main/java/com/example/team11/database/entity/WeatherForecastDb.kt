@@ -13,7 +13,7 @@ data class WeatherForecastDb(
     var time: String,
     var symbol: String,
     @ColumnInfo(name = "temp_air")
-    var tempAir: Float,
+    var tempAir: Int,
     var precipitation: Float,
     var uv: Float
 )

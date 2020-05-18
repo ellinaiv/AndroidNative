@@ -29,6 +29,7 @@ class FavoritesFragmentViewModel(context: Context): ViewModel() {
             return modelClass.getConstructor(Context::class.java).newInstance(context)
         }
     }
+    fun getForecasts(placesIn: List<Place>) = placeRepository!!.getNowForecastsList(placesIn)
 
     /**
      * Sender beskjed til repository om at stedet man vil lese mer om skal endre seg.

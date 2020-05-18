@@ -9,6 +9,8 @@ import java.util.concurrent.TimeUnit
 
 //TODO("Hadde vært smooth om vi kunne refaktorert noe av dette, her er det mye kode som går igjen mange steder")
 object Util {
+
+
     fun getWantedHoursForecastApi(): List<String>{
         var listTimes = arrayListOf<String>()
         val c: Calendar = GregorianCalendar()
@@ -16,9 +18,9 @@ object Util {
         c.set(Calendar.MINUTE, 0)
         c.set(Calendar.SECOND, 0)
         val stringFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
-        for (hour in 1..DbConstants.NUMB_HOURS_FORECAST){
-            c.add(Calendar.HOUR, 1)
+        for (hour in 0..DbConstants.NUMB_HOURS_FORECAST){
             listTimes.add(stringFormat.format(c.time))
+            c.add(Calendar.HOUR, 1)
             Log.d("Gattering times", stringFormat.format(c.time))
         }
         return listTimes
@@ -54,34 +56,46 @@ object Util {
         return formatter.format(dateTime)
     }
 
-    fun getWantedHoursForecastDb(): List<String>{
-        var listTider = arrayListOf<String>()
+    fun getNowHourForecastDb(): List<String>{
+        var listTimes = arrayListOf<String>()
         val c: Calendar = GregorianCalendar()
         c.time = Date(System.currentTimeMillis())
         c.set(Calendar.MINUTE, 0)
         c.set(Calendar.SECOND, 0)
         val stringFormat = SimpleDateFormat("HH")
-        for (hour in 1..DbConstants.NUMB_HOURS_FORECAST){
+        Log.d("Getting nowTime", stringFormat.format(c.time))
+        listTimes.add(stringFormat.format(c.time))
+        return listTimes
+    }
+
+    fun getWantedHoursForecastDb(): List<String>{
+        var listTimes = arrayListOf<String>()
+        val c: Calendar = GregorianCalendar()
+        c.time = Date(System.currentTimeMillis())
+        c.set(Calendar.MINUTE, 0)
+        c.set(Calendar.SECOND, 0)
+        val stringFormat = SimpleDateFormat("HH")
+        for (hour in 0..DbConstants.NUMB_HOURS_FORECAST){
+            listTimes.add(stringFormat.format(c.time))
             c.add(Calendar.HOUR, 1)
-            listTider.add(stringFormat.format(c.time))
             Log.d("Gattering times", stringFormat.format(c.time))
         }
-        return listTider
+        return listTimes
     }
     fun getWantedDaysForecastDb(): List<String>{
-        var listTider = arrayListOf<String>()
+        var listTimes = arrayListOf<String>()
         val c: Calendar = GregorianCalendar()
         c.time = Date(System.currentTimeMillis())
         c.set(Calendar.HOUR, 12)
         c.set(Calendar.MINUTE, 0)
         c.set(Calendar.SECOND, 0)
         val stringFormat = SimpleDateFormat("dd/MM")
-        for (hour in 1..DbConstants.NUMB_DAYS_FORECAST){
+        for (hour in 0..DbConstants.NUMB_DAYS_FORECAST){
             c.add(Calendar.DATE, 1)
-            listTider.add(stringFormat.format(c.time))
+            listTimes.add(stringFormat.format(c.time))
             Log.d("Gattering times", stringFormat.format(c.time))
         }
-        return listTider
+        return listTimes
     }
 
     fun shouldFetch(metadataDao: MetadataDao, nameDatabase: String, timeout: Int, timeUnit: TimeUnit): Boolean{

@@ -15,17 +15,17 @@ interface WeatherForecastDao {
     fun insertWeatherForecast(forecast: List<WeatherForecastDb>)
 
     /**
-     * Henter ut alle forecast for de neste timene
+     * Henter ut alle forecast for alle steder med tidspunkt nå
      * @return liste med HourForecast
      */
-    @Query("SELECT * FROM weather_forecast WHERE place_id = :placeId AND time IN (:wantedTimes)")
-    fun getHourForecast(placeId: Int, wantedTimes: List<String>): LiveData<List<WeatherForecastDb>>
+    @Query("SELECT * FROM weather_forecast WHERE time IN (:wantedTimes) AND place_id in (:placeIds) ORDER BY place_id")
+    fun getTimeForecastsList(placeIds: List<Int>, wantedTimes: List<String>): LiveData<List<WeatherForecastDb>>
 
     /**
      * Henter ut liste med alle steder som er favoritter
      * @return liste med steder som er favoritter
      */
     @Query("SELECT * FROM weather_forecast WHERE place_id = :placeId AND time IN (:wantedTimes)")
-    fun getDayForecast(placeId: Int, wantedTimes: List<String>): LiveData<List<WeatherForecastDb>>
+    fun getTimeForecast(placeId: Int, wantedTimes: List<String>): LiveData<List<WeatherForecastDb>>
 
 }
