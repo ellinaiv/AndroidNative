@@ -17,6 +17,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.team11.database.entity.Place
@@ -50,7 +51,6 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
     private lateinit var mapBoxMap: MapboxMap
 
     private lateinit var mapFragmentViewModel: MapFragmentViewModel
-
     private lateinit var filterPlaces: List<Place>
 
     override fun onCreateView(
@@ -68,56 +68,54 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
         val manager = context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val builder = NetworkRequest.Builder()
 
-        manager.registerNetworkCallback(
+        manager?.registerNetworkCallback(
             builder.build(),
             object : ConnectivityManager.NetworkCallback(){
 
                 override fun onAvailable(network: Network) {
                     super.onAvailable(network)
                     activity?.runOnUiThread {
-                        mapFragmentViewModel.places!!.observe(viewLifecycleOwner, Observer {places->
-                            hasInternet()
-
-                            makeMap(places)
-                            Log.d("INTERNET", places.toString())
-                            searchText.doOnTextChanged { text, _, _, _ ->
-                                if(text.toString().isEmpty()){
-                                    removePlace()
-                                }
-                                search(text.toString(), places)
-                            }
-                        })
+                        mapFragmentViewModel.hasInternet.value = true
                     }
-
                 }
 
                 override fun onUnavailable() {
-
+                    Log.d("INTERNET", "onUnavailable")
                     super.onUnavailable()
-                    noInternet()
+                    activity?.runOnUiThread {
+                        mapFragmentViewModel.hasInternet.value = false
+                    }
                 }
 
                 override fun onLost(network: Network) {
                     super.onLost(network)
-                    noInternet()
-                }
-
-                override fun onBlockedStatusChanged(network: Network, blocked: Boolean) {
-                    super.onBlockedStatusChanged(network, blocked)
-                    noInternet()
+                    activity?.runOnUiThread {
+                        mapFragmentViewModel.hasInternet.value = false
+                    }
                 }
 
                 override fun onLosing(network: Network, maxMsToLive: Int) {
                     super.onLosing(network, maxMsToLive)
-                    noInternet()
+                    activity?.runOnUiThread {
+                        mapFragmentViewModel.hasInternet.value = false
+                    }
                 }
             }
         )
+
 
         val filterButton = root.findViewById<ImageButton>(R.id.filterButton)
         filterButton.setOnClickListener {
             startActivity(Intent(this.requireContext(), FilterActivity::class.java))
         }
+
+        mapFragmentViewModel.hasInternet.observe(viewLifecycleOwner, Observer{internet ->
+            if(internet){
+                hasInternet()
+            }else{
+                noInternet()
+            }
+        })
 
         return root
     }
@@ -138,6 +136,16 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
         mapView?.visibility = View.VISIBLE
         imageNoInternet.visibility = View.GONE
         textNoInternet.visibility = View.GONE
+
+        mapFragmentViewModel.places!!.observe(viewLifecycleOwner, Observer {places->
+            makeMap(places)
+            searchText.doOnTextChanged { text, _, _, _ ->
+                if(text.toString().isEmpty()){
+                    removePlace()
+                }
+                search(text.toString(), places)
+            }
+        })
     }
 
 
@@ -334,6 +342,7 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
     override fun onStart() {
         super.onStart()
         mapView?.onStart()
+
     }
 
     override fun onResume() {
@@ -343,7 +352,9 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
 
     override fun onPause() {
         super.onPause()
+        Log.d("INTERNETT", "onPause")
         mapView?.onPause()
+
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
