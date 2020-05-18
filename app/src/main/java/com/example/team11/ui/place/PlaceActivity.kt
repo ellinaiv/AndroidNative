@@ -176,7 +176,6 @@ class PlaceActivity : AppCompatActivity() {
             mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(position), 2)
         }
     }
-    /* virker som om disse er redundant... hvem er ansvarlig for activity? kan vi slette disse?
     override fun onStart() {
         super.onStart()
         mapView?.onStart()
@@ -213,5 +212,4 @@ class PlaceActivity : AppCompatActivity() {
         super.onDestroy()
         mapView?.onDestroy()
     }
-    */
 }
