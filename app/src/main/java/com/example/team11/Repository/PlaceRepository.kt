@@ -65,6 +65,8 @@ class PlaceRepository private constructor(context: Context) {
                 instance ?: PlaceRepository(context).also {
                     instance = it
                     it.wayOfTransportation.value = Transportation.BIKE
+
+
                 }
             }
     }

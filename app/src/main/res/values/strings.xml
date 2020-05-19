@@ -35,13 +35,12 @@
     <string name="place_uv_info_strong">UV-indeks: 6-7
         \nTiltak: Klær, solhatt og solbriller. Ta pauser fra solen mellom kl. 12-15.
         Bruk solkrem med middels faktor (SPF 15) og UVA-beskyttelse.</string>
-    <string name="place_uv_info_very_strong">UV-indeks: 8-10
+    <string name="place_uv_info_very_strong"><b>UV-indeks: 8-10
         \nTiltak: Unngå solen mellom kl. 12-15 og søk skygge.
-        Bruk klær, solhatt og solbriller.</string>
+        Bruk klær, solhatt og solbriller.</b></string>
     <string name="place_uv_info_extreme">UV-indeks: >11
         \nTiltak: Unngå solen mellom kl. 12-15. Søk skygge.
-        Klær, solhatt og solbriller absolutt nødvendig.
-</string>
+        Klær, solhatt og solbriller absolutt nødvendig.</string>
     <string name="place_info_more"><u>Se mer på yr.no</u></string>
     <string name="place_forecast">Værvarsel</string>
     <string name="place_hour_forecast">Timesvarsel</string>
@@ -134,8 +133,8 @@
 
     <!--    map stuff-->
     <string name="access_token">sk.eyJ1IjoiamFyaG9sdCIsImEiOiJjazg0ZDBsMHkwMTN4M2prNzJpcHZnMXFkIn0.k3JYH8gx2QewGmE4Vf2GsQ</string>
-    <string name="ikkeViseVei">Kan ikke vise vei uten lokasjon</string>
-    <string name="viTrengerPosFordi">Kan ikke vise veien til badeplassen uten din posisjon</string>
+    <string name="noCommute">Kan ikke vise vei uten lokasjon</string>
+    <string name="needUsersPosition">Kan ikke vise veien til badeplassen uten din posisjon</string>
     <string name="title_activity_bottom_navigation">BottomNavigation</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>

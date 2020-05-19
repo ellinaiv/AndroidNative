@@ -199,6 +199,7 @@
                 tools:text="Sterk"
                 tools:textColor="@color/place_currents_info_strong"
                 android:textSize="20sp"
+                android:textStyle="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="@+id/textUV"
@@ -1184,6 +1185,7 @@
                 <TextView
                     android:id="@+id/textUVInfoExtremeTitle"
                     android:text="@string/place_info_extreme"
+                    android:fontFamily="@font/roboto_medium"
                     android:textColor="@color/place_uv_info_extreme"
                     android:textSize="18sp"
                     android:layout_width="wrap_content"

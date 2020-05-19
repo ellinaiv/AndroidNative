@@ -341,7 +341,7 @@ class PlaceActivity : AppCompatActivity() {
                 val geoId = "GEO_ID"
                 val icon = BitmapFactory.decodeResource(
                     this@PlaceActivity.resources,
-                    R.drawable.marker_place
+                    R.drawable.marker_blue
                 )
                 style.addImage(markerPlace, icon)
 
