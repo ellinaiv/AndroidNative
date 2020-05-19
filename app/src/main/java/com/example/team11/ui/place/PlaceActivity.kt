@@ -85,7 +85,6 @@ class PlaceActivity : AppCompatActivity() {
         // vanntemperatur
         if (place.tempWater != Int.MAX_VALUE) {
             textTempWater.text = getString(R.string.tempC, place.tempWater)
-            textTempWater.setTypeface(null, Typeface.BOLD)
             when(viewModel.redWave(place)){
                 true -> imageWater.setImageDrawable(getDrawable(R.drawable.water_red))
                 false -> imageWater.setImageDrawable(getDrawable(R.drawable.water_blue))
