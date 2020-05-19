@@ -46,7 +46,6 @@ class PlaceActivity : AppCompatActivity() {
         //Observerer stedet som er valgt
         viewModel.place!!.observe(this, Observer { place ->
             Log.d("tagPlace", place.toString())
-
             makeAboutPage(place, savedInstanceState)
 
             viewModel.isFavorite.observe(this, Observer { isFavorite ->
@@ -112,12 +111,13 @@ class PlaceActivity : AppCompatActivity() {
         }
 
         buttonUVInfo.setOnClickListener {
-            if (layoutCurrentsInfo.visibility == VISIBLE) {
-                layoutCurrentsInfo.visibility = GONE
-            }
             layoutUVInfo.visibility = VISIBLE
         }
 
+        layoutInScrollView.setOnClickListener{
+            layoutCurrentsInfo.visibility = GONE
+            layoutUVInfo.visibility = GONE
+        }
         buttonUVCloseInfo.setOnClickListener {
             layoutUVInfo.visibility = GONE
         }

@@ -5,13 +5,13 @@ import android.os.AsyncTask
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.team11.PersonalPreference
+import com.example.team11.database.entity.PersonalPreference
 import com.example.team11.database.entity.Place
 import com.example.team11.Transportation
 import com.example.team11.api.ApiClient
 import com.example.team11.database.AppDatabase
 import com.example.team11.database.entity.WeatherForecastDb
-import com.example.team11.util.DbConstants
+import com.example.team11.util.Constants
 import com.example.team11.database.entity.MetadataTable
 import com.example.team11.util.Util.formatToDaysTime
 import com.example.team11.util.Util.formatToHoursTime
@@ -47,6 +47,8 @@ class PlaceRepository private constructor(context: Context) {
     private val placeDao = database.placeDao()
     private val metadataDao = database.metadataDao()
     private val weatherForecastDao = database.weatherForecastDao()
+    private val personalPreferenceDao = database.personalPreferenceDao()
+
 
     //Kotlin sin static
     companion object {
@@ -62,7 +64,6 @@ class PlaceRepository private constructor(context: Context) {
             instance ?: synchronized(this) {
                 instance ?: PlaceRepository(context).also {
                     instance = it
-                    it.personalPreferences.value = PersonalPreference()
                     it.wayOfTransportation.value = Transportation.BIKE
                 }
             }
@@ -78,15 +79,20 @@ class PlaceRepository private constructor(context: Context) {
      * Returnerer en peker til preferansene til brukeren
      * @return brukerens preferance
      */
-    fun getPersonalPreferences() = personalPreferences
+    fun getPersonalPreferences(): LiveData<List<PersonalPreference>>{
+        val pp = personalPreferenceDao.getPersonalPreference()
+        Log.d("tagPersonal", pp.value.toString())
+        return pp
+    }
 
     /**
      * Oppdaterer preferansene til brukeren
      * @param newPersonalPreference den nye preferansen
      */
-    fun updatePersonalPreference(newPersonalPreference: PersonalPreference) {
-        personalPreferences.value = newPersonalPreference
-        updatePlaces()
+    fun updatePersonalPreference(personalPreference: PersonalPreference) {
+        AsyncTask.execute {
+            personalPreferenceDao.addPersonalPreference(personalPreference)
+        }
     }
 
     /**
@@ -149,7 +155,7 @@ class PlaceRepository private constructor(context: Context) {
         AsyncTask.execute {
             if (shouldFetch(
                     metadataDao,
-                    DbConstants.MEATDATA_ENTRY_PLACE_TABLE,
+                    Constants.MEATDATA_ENTRY_PLACE_TABLE,
                     10,
                     TimeUnit.DAYS
                 )
@@ -171,7 +177,7 @@ class PlaceRepository private constructor(context: Context) {
             AsyncTask.execute {
                 if (shouldFetch(
                         metadataDao,
-                        DbConstants.METADATA_ENTRY_WEATHER_FORECAST_TABLE + place.id,
+                        Constants.METADATA_ENTRY_WEATHER_FORECAST_TABLE + place.id,
                         1,
                         TimeUnit.HOURS
                     )
@@ -229,7 +235,7 @@ class PlaceRepository private constructor(context: Context) {
         AsyncTask.execute {
             if (shouldFetch(
                     metadataDao,
-                    DbConstants.METADATA_ENTRY_WEATHER_FORECAST_TABLE + place.id,
+                    Constants.METADATA_ENTRY_WEATHER_FORECAST_TABLE + place.id,
                     1,
                     TimeUnit.HOURS
                 )
@@ -274,7 +280,7 @@ class PlaceRepository private constructor(context: Context) {
         Log.d("tagDatabase", "Lagrer nye steder")
         metadataDao.updateDateLastCached(
             MetadataTable(
-                DbConstants.MEATDATA_ENTRY_PLACE_TABLE,
+                Constants.MEATDATA_ENTRY_PLACE_TABLE,
                 currentTimeMillis()
             )
         )
@@ -285,7 +291,7 @@ class PlaceRepository private constructor(context: Context) {
         Log.d("tagDatabase", weatherForecast.toString())
         metadataDao.updateDateLastCached(
             MetadataTable(
-                DbConstants.METADATA_ENTRY_WEATHER_FORECAST_TABLE + placeId.toString(),
+                Constants.METADATA_ENTRY_WEATHER_FORECAST_TABLE + placeId.toString(),
                 currentTimeMillis()
             )
         )
