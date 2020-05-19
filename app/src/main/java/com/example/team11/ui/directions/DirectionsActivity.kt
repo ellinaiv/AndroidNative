@@ -252,7 +252,7 @@ class DirectionsActivity : AppCompatActivity() , PermissionsListener {
         val geoId = "GEO_ID"
         val icon = BitmapFactory.decodeResource(
             this@DirectionsActivity.resources,
-            R.drawable.marker_place
+            R.drawable.marker_blue
         )
         style.addImage(iconIdRed, icon)
 
@@ -391,7 +391,7 @@ class DirectionsActivity : AppCompatActivity() , PermissionsListener {
     }
 
     override fun onExplanationNeeded(permissionsToExplain: MutableList<String>?) {
-        Toast.makeText(this, getString(R.string.viTrengerPosFordi), Toast.LENGTH_LONG).show()
+        Toast.makeText(this, getString(R.string.needUsersPosition), Toast.LENGTH_LONG).show()
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
@@ -403,7 +403,7 @@ class DirectionsActivity : AppCompatActivity() , PermissionsListener {
             enableLocationComponent(mapboxMap!!.style!!)
             getRoute(viewModel.place!!.value!!)
         }else{
-            Toast.makeText(this, getString(R.string.ikkeViseVei), Toast.LENGTH_LONG).show()
+            Toast.makeText(this, getString(R.string.noCommute), Toast.LENGTH_LONG).show()
             finish()
         }
     }

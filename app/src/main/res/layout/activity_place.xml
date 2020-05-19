@@ -160,7 +160,7 @@
             <TextView
                 android:id="@+id/textCurrentsResult"
                 android:fontFamily="@font/roboto_medium"
-                android:text="Lite"
+                android:text="@string/place_info_box_little_title"
                 android:textColor="@color/place_info_low"
                 android:textSize="20sp"
                 android:layout_width="wrap_content"
@@ -173,9 +173,10 @@
             <TextView
                 android:id="@+id/textUVResult"
                 android:fontFamily="@font/roboto_medium"
-                android:text="Sterk"
+                android:text="@string/place_info_strong_title"
                 android:textColor="@color/place_currents_info_strong"
                 android:textSize="20sp"
+                android:textStyle="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="@+id/textUV"
@@ -1108,9 +1109,9 @@
                 <TextView
                     android:id="@+id/textUVInfoExtremeTitle"
                     android:text="@string/place_info_extreme_title"
+                    android:fontFamily="@font/roboto_medium"
                     android:textColor="@color/place_uv_info_extreme"
                     android:textSize="18sp"
-                    android:textStyle="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="14dp"
