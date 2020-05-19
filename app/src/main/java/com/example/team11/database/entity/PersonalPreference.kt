@@ -1,9 +1,11 @@
-package com.example.team11
+package com.example.team11.database.entity
 
-import com.example.team11.database.entity.Place
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
-
+@Entity(tableName = "personal_preference")
 class PersonalPreference(
+    @PrimaryKey(autoGenerate = true) val id: Int,
     val waterTempLow: Int = 0,
     var waterTempMid : Int = 15,
     val waterTempHigh: Int = 30,
@@ -17,7 +19,8 @@ class PersonalPreference(
     var showBasedOnWater: Boolean = true,
     var falseData: Boolean = false
 ){
-     /**
+
+    /**
       * Sjekker om et gitt sted har riktig kriterier mtp vanntempratur for å vises.
       * Hvis det ikke er noe data vil stedet fortsatt vises.
       * @param place stedet som skal sjekkes

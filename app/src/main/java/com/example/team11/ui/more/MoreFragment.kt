@@ -33,6 +33,7 @@ class MoreFragment : Fragment() {
 
         viewModel.personalPreference!!.observe(viewLifecycleOwner, Observer {personalPreference ->
             switchSetting.isChecked = personalPreference.falseData
+            viewModel.updatePersonalPreference(personalPreference)
         })
 
         val aboutAppTitle = root.findViewById<TextView>(R.id.textAboutAppTitle)

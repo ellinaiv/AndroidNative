@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.widget.SeekBar
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
-import com.example.team11.PersonalPreference
+import com.example.team11.database.entity.PersonalPreference
 import com.example.team11.R
 import kotlinx.android.synthetic.main.activity_filter.*
 import kotlinx.android.synthetic.main.activity_filter.textTempMidWater
@@ -51,7 +51,6 @@ class FilterActivity : AppCompatActivity() {
                 buttonWaterTemp.setImageResource(R.drawable.rep_false)
             }
             makeCheckBoxes(personalPreferences)
-
         })
 
     }
@@ -60,17 +59,18 @@ class FilterActivity : AppCompatActivity() {
      * Lager et nytt objekt som er den nye preferansen til brukeren
      */
     private fun setFilter(){
-        viewModel.updatePersonalPreference(
-            PersonalPreference(
-                waterTempMid = seekBarWater.progress,
-                airTempMid = seekBarAir.progress + viewModel.personalPreferences!!.value!!.airTempLow,
-                showAirCold = checkBoxColdAir.isChecked,
-                showAirWarm = checkBoxWarmAir.isChecked,
-                showWaterCold = checkBoxColdWater.isChecked,
-                showWaterWarm = checkBoxWarmWater.isChecked,
-                showBasedOnWater = waterRepresentation,
-                falseData = viewModel.personalPreferences!!.value!!.falseData
-        ))
+        viewModel.personalPreferences!!.observe(this, Observer { pp ->
+            pp.waterTempMid = seekBarWater.progress
+            pp.airTempMid =
+                seekBarAir.progress + viewModel.personalPreferences!!.value!!.airTempLow
+            pp.showAirCold = checkBoxColdAir.isChecked
+            pp.showAirWarm = checkBoxWarmAir.isChecked
+            pp.showWaterCold = checkBoxColdWater.isChecked
+            pp.showWaterWarm = checkBoxWarmWater.isChecked
+            pp.showBasedOnWater = waterRepresentation
+            pp.falseData = viewModel.personalPreferences!!.value!!.falseData
+            viewModel.updatePersonalPreference(pp)
+        })
     }
 
     /**

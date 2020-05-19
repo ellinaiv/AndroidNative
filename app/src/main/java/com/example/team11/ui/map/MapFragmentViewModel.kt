@@ -1,12 +1,11 @@
 package com.example.team11.ui.map
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
-import com.example.team11.PersonalPreference
+import com.example.team11.database.entity.PersonalPreference
 import com.example.team11.database.entity.Place
 import com.example.team11.Repository.PlaceRepository
 import com.example.team11.database.entity.WeatherForecastDb
@@ -15,7 +14,7 @@ import com.mapbox.geojson.Point
 
 class MapFragmentViewModel(context: Context): ViewModel() {
     var places: LiveData<List<Place>>? = null
-    var personalPreference: MutableLiveData<PersonalPreference>? = null
+    var personalPreference: LiveData<PersonalPreference>? = null
     private var placeRepository: PlaceRepository? = null
 
     /**
@@ -60,11 +59,11 @@ class MapFragmentViewModel(context: Context): ViewModel() {
      * @return true hvis stedet er varmt, false hvis kaldt
      */
     fun isPlaceWarm(place: Place): Boolean{
-        val personalPreferenceValue = personalPreference!!.value!!
-        if(personalPreferenceValue.showBasedOnWater){
-            if(personalPreferenceValue.waterTempMid <= place.tempWater) return true
-            return false
-        }
+//        val personalPreferenceValue = personalPreference!!.value!!
+//       if(personalPreferenceValue.showBasedOnWater){
+//        if(personalPreferenceValue.waterTempMid <= place.tempWater) return true
+//       return false
+//        }
         //TODO("This:")
         //if(personalPreferenceValue.airTempMid <= place.tempAir) return true
         return false
