@@ -26,7 +26,6 @@
     <string name="place_currents_info_moderate">0.4–0.8 m/s</string>
     <string name="place_currents_info_strong">0.8–1.2 m/s</string>
     <string name="place_currents_info_very_strong">1.2–1.8 m/s</string>
-    <string name="place_currents_info_more"><u>Les mer på ...</u></string>
     <string name="place_uv">UV-stråling</string>
     <string name="place_uv_result"><b>%1$s</b></string>
     <string name="place_uv_info_title">Informasjon om UV-stråling</string>
@@ -43,7 +42,7 @@
         \nTiltak: Unngå solen mellom kl. 12-15. Søk skygge.
         Klær, solhatt og solbriller absolutt nødvendig.
 </string>
-    <string name="place_uv_info_more"><u>Les mer på yr.no</u></string>
+    <string name="place_info_more"><u>Se mer på yr.no</u></string>
     <string name="place_forecast">Værvarsel</string>
     <string name="place_hour_forecast">Timesvarsel</string>
     <string name="place_long_forecast">Langtidsvarsel</string>
@@ -127,7 +126,8 @@
     <!--    content description for images-->
     <string name="water_icon">Badevann ikon</string>
     <string name="weather_icon">Ikon som viser været</string>
-    <string name="water_temp_icon">ikon som viser om vanntemperaturen er varm eller kald i forhold til gjeldende preferanser</string>
+    <string name="water_temp_icon">ikon som viser om vanntemperaturen er varm eller kald i forhold
+        til gjeldende preferanser</string>
     <string name="empty_shark">En hai som symboliserer at du ikke har noen favoritter</string>
     <string name="search_image">Bilde av et forstørrelsesglass</string>
     <string name="place_weather_icon_description">Ikon som viser været: %1$s</string>

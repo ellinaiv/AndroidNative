@@ -1035,7 +1035,7 @@
                 <TextView
                     android:id="@+id/linkCurrentsInfoMore"
                     android:fontFamily="@font/roboto_medium"
-                    android:text="@string/place_currents_info_more"
+                    android:text="@string/place_info_more"
                     android:textColor="@color/colorPrimary"
                     android:textSize="15sp"
                     android:layout_width="wrap_content"
@@ -1207,7 +1207,7 @@
                 <TextView
                     android:id="@+id/linkUVInfoMore"
                     android:fontFamily="@font/roboto_medium"
-                    android:text="@string/place_uv_info_more"
+                    android:text="@string/place_info_more"
                     android:textColor="@color/colorPrimary"
                     android:textSize="15sp"
                     android:layout_width="wrap_content"

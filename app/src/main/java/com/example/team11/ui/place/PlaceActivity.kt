@@ -93,7 +93,6 @@ class PlaceActivity : AppCompatActivity() {
             }
         }
 
-
         // infovinduer om havstrømninger og uv
         buttonCurrentsInfo.setOnClickListener {
             if (layoutUVInfo.visibility == VISIBLE) {
@@ -107,10 +106,9 @@ class PlaceActivity : AppCompatActivity() {
         }
 
         linkCurrentsInfoMore.setOnClickListener {
-//            TODO(sett inn uri)
-//            val link = Intent(Intent.ACTION_VIEW)
-//            link.data = Uri.parse("<uri>")
-//            startActivity(link)
+            val link = Intent(Intent.ACTION_VIEW)
+            link.data = Uri.parse("https://www.yr.no/kart/#lat=61.85326&lon=0.82085&zoom=3&laga=straum&proj=3575")
+            startActivity(link)
         }
 
         buttonUVInfo.setOnClickListener {
@@ -203,18 +201,14 @@ class PlaceActivity : AppCompatActivity() {
 
             // havstrømninger
             //TODO
-//        var currentsText = convertCurrents(hourForecast[0].currents)
-//        textCurrentsResult.text = getString(R.string.place_currents_result, currentsText)
-//        textUVResult.setTextColor(getColor(
-//            resources.getIdentifier(getTextColor(currentsText, "currents"),
-//                    "color", this.packageName)))
+//            var currentsText = convertCurrents(hourForecast[0].currents)
+//            textCurrentsResult.text = getString(R.string.place_currents_result, currentsText)
+//            setColor(textCurrentsResult, currentsText)
 
             // uv
             val uvText = convertUV(forecast[0].uv.toInt())
             textUVResult.text = getString(R.string.place_uv_result, uvText)
-            textUVResult.setTextColor(getColor(
-                resources.getIdentifier(getTextColor(uvText, "uv"),
-                    "color", this.packageName)))
+            setColor(textUVResult, uvText)
 
             Log.d("Her er det!", forecast.toString())
 
@@ -269,20 +263,13 @@ class PlaceActivity : AppCompatActivity() {
      * @return en stringrepresentasjon av den tilsvarende kategorien
      */
     private fun convertUV(value: Int): String = when {
-        value in 1..2 -> getString(resources.getIdentifier("place_info_weak",
-            "string", this.packageName))
-        value in 3..5 -> getString(resources.getIdentifier("place_info_moderate",
-            "string", this.packageName))
-        value in 6..7 -> getString(resources.getIdentifier("place_info_strong",
-            "string", this.packageName))
-        value in 8..10 -> getString(resources.getIdentifier("place_info_very_strong",
-            "string", this.packageName))
-        value > 10 -> getString(resources.getIdentifier("place_info_extreme",
-            "string", this.packageName))
-        value == Int.MAX_VALUE -> getString(resources.getIdentifier("no_data",
-            "string", this.packageName))
-        else -> getString(resources.getIdentifier("no_data",
-            "string", this.packageName))
+        value in 1..2 -> getString(R.string.place_info_weak)
+        value in 3..5 -> getString(R.string.place_info_moderate)
+        value in 6..7 -> getString(R.string.place_info_strong)
+        value in 8..10 -> getString(R.string.place_info_very_strong)
+        value > 10 -> getString(R.string.place_info_extreme)
+        value == Int.MAX_VALUE -> getString(R.string.no_data)
+        else -> getString(R.string.no_data)
     }
 
 
@@ -294,19 +281,17 @@ class PlaceActivity : AppCompatActivity() {
      */
     private fun convertCurrents(value: Float): String {
         return if (value >= 0.0 && value < 0.4) {
-            "Svak"
+            getString(R.string.place_info_weak)
         } else if (value >= 0.4 && value < 0.8) {
-            "Moderat"
+            getString(R.string.place_info_moderate)
         } else if (value >= 0.8 && value < 1.2) {
-            "Sterk"
+            getString(R.string.place_info_strong)
         } else if (value >= 1.2 && value < 10.0) {
-            "Svært sterk"
+            getString(R.string.place_info_very_strong)
         } else if (value.toInt() == Int.MAX_VALUE) {
-            getString(resources.getIdentifier("no_data",
-                "string", this.packageName))
+            getString(R.string.no_data)
         } else {
-            getString(resources.getIdentifier("not_available",
-                "string", this.packageName))
+            getString(R.string.no_data)
         }
     }
 
@@ -318,23 +303,23 @@ class PlaceActivity : AppCompatActivity() {
      * @param type "uv" eller "currents"
      * @return ID for fargekoden i colors.xml
      */
-    private fun getTextColor(text: String, type: String): String {
-        return if (type.equals("uv")) {
+    private fun setColor(resultView: TextView, text: String) {
+        if (resultView == textUVResult) {
             when(text) {
-                "Svak" -> "place_uv_info_low"
-                "Moderat" ->  "place_uv_info_moderate"
-                "Sterk" -> "place_uv_info_strong"
-                "Svært sterk" -> "place_uv_info_very_strong"
-                "Ekstrem" -> "place_uv_info_extreme"
-                else -> "mainTextColor"
+                getString(R.string.place_info_weak) -> resultView.setTextColor(getColor(R.color.place_uv_info_low))
+                getString(R.string.place_info_moderate) ->  resultView.setTextColor(getColor(R.color.place_uv_info_moderate))
+                getString(R.string.place_info_strong) -> resultView.setTextColor(getColor(R.color.place_uv_info_strong))
+                getString(R.string.place_info_very_strong) -> resultView.setTextColor(getColor(R.color.place_uv_info_very_strong))
+                getString(R.string.place_info_extreme) -> resultView.setTextColor(getColor(R.color.place_uv_info_extreme))
+                else -> resultView.setTextColor(getColor(R.color.mainTextColor))
             }
         } else {
             when(text) {
-                "Svak" -> "place_currents_info_weak"
-                "Moderat" -> "place_currents_info_moderate"
-                "Sterk" -> "place_currents_info_strong"
-                "Svært sterk" -> "place_currents_info_very_strong"
-                else -> "mainTextColor"
+                getString(R.string.place_info_weak) -> resultView.setTextColor(getColor(R.color.place_currents_info_weak))
+                getString(R.string.place_info_moderate) -> resultView.setTextColor(getColor(R.color.place_currents_info_moderate))
+                getString(R.string.place_info_strong) -> resultView.setTextColor(getColor(R.color.place_currents_info_strong))
+                getString(R.string.place_info_very_strong) -> resultView.setTextColor(getColor(R.color.place_currents_info_very_strong))
+                else -> resultView.setTextColor(getColor(R.color.mainTextColor))
             }
         }
     }
