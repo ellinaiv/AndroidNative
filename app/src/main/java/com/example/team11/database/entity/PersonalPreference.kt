@@ -5,19 +5,15 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "personal_preference")
 class PersonalPreference(
-    @PrimaryKey(autoGenerate = true) val id: Int,
-    val waterTempLow: Int = 0,
     var waterTempMid : Int = 15,
-    val waterTempHigh: Int = 30,
-    val airTempLow: Int = -30,
     var airTempMid : Int = 10,
-    val airTempHigh: Int = 30,
     var showWaterCold: Boolean = true,
     var showWaterWarm: Boolean = true,
     var showAirCold: Boolean = true,
     var showAirWarm: Boolean = true,
     var showBasedOnWater: Boolean = true,
-    var falseData: Boolean = false
+    var falseData: Boolean = false,
+    @PrimaryKey() val id: Int = 0
 ){
 
     /**

@@ -11,7 +11,7 @@ import com.example.team11.database.entity.Place
 
 class FilterActivityViewModel(context: Context): ViewModel(){
 
-    var personalPreferences: LiveData<PersonalPreference>? = null
+    var personalPreferences: LiveData<List<PersonalPreference>>? = null
 
     private var placeRepository: PlaceRepository? = null
     /**
@@ -30,8 +30,6 @@ class FilterActivityViewModel(context: Context): ViewModel(){
             return modelClass.getConstructor(Context::class.java).newInstance(context)
         }
     }
-
-
 
     /**
      * Oppdaterer repository med den nye preferansen til brukeren

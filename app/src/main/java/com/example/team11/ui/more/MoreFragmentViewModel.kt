@@ -11,7 +11,7 @@ import com.example.team11.Repository.PlaceRepository
 
 class MoreFragmentViewModel(context: Context) : ViewModel() {
     private var placeRepository: PlaceRepository? = null
-    var personalPreference: LiveData<PersonalPreference>? = null
+    var personalPreference: LiveData<List<PersonalPreference>>? = null
 
     init {
         if(personalPreference == null){

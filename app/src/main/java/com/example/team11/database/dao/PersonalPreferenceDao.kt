@@ -17,5 +17,5 @@ interface PersonalPreferenceDao{
      * @param tableName_, navnet på den databasen man vil sjekke, hent navnet fra dbConstants-filen
      */
     @Query("SELECT * FROM personal_preference")
-    fun getPersonalPreference(): LiveData<PersonalPreference>
+    fun getPersonalPreference(): LiveData<List<PersonalPreference>>
 }
