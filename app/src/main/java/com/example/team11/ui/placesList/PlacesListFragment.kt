@@ -66,6 +66,8 @@ class PlacesListFragment : Fragment() {
             })
         })
 
+        placesListViewModel.personalPreference!!.observe(viewLifecycleOwner, Observer {})
+
         val filterButton = root.findViewById<ImageButton>(R.id.filterButton)
         filterButton.setOnClickListener {
             startActivity(Intent(this.requireContext(), FilterActivity::class.java))

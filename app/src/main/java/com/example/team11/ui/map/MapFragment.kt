@@ -7,6 +7,7 @@ import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.PointF
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -70,6 +71,8 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
                 search(text.toString(), places)
             }
         })
+        //TODO("EHm denne gjør ingenting, men trneger den for at pp ikke ksal vøre null i viewmodel, dette kan umulig være riktige måte å gjøre det på...")
+        mapFragmentViewModel.personalPreference!!.observe(viewLifecycleOwner, Observer {  })
 
         val filterButton = root.findViewById<ImageButton>(R.id.filterButton)
         filterButton.setOnClickListener {
@@ -180,7 +183,7 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
      */
     @SuppressLint("UseRequireInsteadOfGet")
     private fun showPlace(place: Place){
-
+        Log.d("tagPlace", place.toString())
         textName.text = place.name
         if(place.tempWater != Int.MAX_VALUE) {
             when (mapFragmentViewModel.redWave(place)) {
