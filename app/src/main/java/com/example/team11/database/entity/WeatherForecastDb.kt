@@ -1,7 +1,6 @@
 package com.example.team11.database.entity
 
 import androidx.room.*
-import com.example.team11.util.DbConstants
 
 
 @Entity(tableName = "weather_forecast",

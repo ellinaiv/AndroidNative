@@ -2,7 +2,6 @@ package com.example.team11.util
 
 import android.util.Log
 import com.example.team11.database.dao.MetadataDao
-import com.example.team11.database.entity.WeatherForecastDb
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -18,7 +17,7 @@ object Util {
         c.set(Calendar.MINUTE, 0)
         c.set(Calendar.SECOND, 0)
         val stringFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
-        for (hour in 0..DbConstants.NUMB_HOURS_FORECAST){
+        for (hour in 0..Constants.NUMB_HOURS_FORECAST){
             listTimes.add(stringFormat.format(c.time))
             c.add(Calendar.HOUR, 1)
             Log.d("Gattering times", stringFormat.format(c.time))
@@ -34,7 +33,7 @@ object Util {
         c.set(Calendar.MINUTE, 0)
         c.set(Calendar.SECOND, 0)
         val stringFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
-        for (hour in 1..DbConstants.NUMB_DAYS_FORECAST){
+        for (hour in 1..Constants.NUMB_DAYS_FORECAST){
             c.add(Calendar.DATE, 1)
             listTimes.add(stringFormat.format(c.time))
             Log.d("Gattering times", stringFormat.format(c.time))
@@ -50,7 +49,7 @@ object Util {
         c.set(Calendar.MINUTE, 0)
         c.set(Calendar.SECOND, 0)
         val stringFormat = SimpleDateFormat("HH")
-        for (hour in 0..DbConstants.NUMB_HOURS_FORECAST){
+        for (hour in 0..Constants.NUMB_HOURS_FORECAST){
             listTimes.add(stringFormat.format(c.time))
             c.add(Calendar.HOUR, 1)
             Log.d("Gattering times", stringFormat.format(c.time))
@@ -66,7 +65,7 @@ object Util {
         c.set(Calendar.MINUTE, 0)
         c.set(Calendar.SECOND, 0)
         val stringFormat = SimpleDateFormat("dd/MM")
-        for (hour in 0..DbConstants.NUMB_DAYS_FORECAST){
+        for (hour in 0..Constants.NUMB_DAYS_FORECAST){
             c.add(Calendar.DATE, 1)
             listTimes.add(stringFormat.format(c.time))
             Log.d("Gattering times", stringFormat.format(c.time))
