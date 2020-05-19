@@ -37,7 +37,8 @@ import kotlinx.android.synthetic.main.fragment_map.*
 class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
 
     private val iconIdRed = "ICON_ID_RED"
-    private val iconIdBlue = "ICON_ID_BLUE "
+    private val iconIdBlue = "ICON_ID_BLUE"
+    private val iconIdGray = "ICON_ID_GRAY"
     private val geojsonId = "GEOJSON_ID"
     private val layerId = "LAYER_ID:"
     private var listOfLayerId = mutableListOf<String>()
@@ -237,6 +238,12 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
             R.drawable.marker_blue
         )
         style.addImage(iconIdBlue, icon)
+
+        icon = BitmapFactory.decodeResource(
+            this.resources,
+            R.drawable.marker_no_data
+        )
+        style.addImage(iconIdGray, icon)
     }
     
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -261,9 +268,14 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
             arrayListOf(feature)))
         style.addSource(geoJsonSource)
 
-        val iconId = when(mapFragmentViewModel.isPlaceWarm(place)){
+
+        var iconId = when(mapFragmentViewModel.isPlaceWarm(place)){
             true -> iconIdRed
             false -> iconIdBlue
+        }
+
+        if(mapFragmentViewModel.isPinGray(place)){
+            iconId = iconIdGray
         }
 
         val symbolLayer = SymbolLayer(id, geoId)

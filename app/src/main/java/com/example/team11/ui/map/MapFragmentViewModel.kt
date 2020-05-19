@@ -64,8 +64,28 @@ class MapFragmentViewModel(context: Context): ViewModel() {
 //        if(personalPreferenceValue.waterTempMid <= place.tempWater) return true
 //       return false
 //        }
+        val personalPreferenceValue = personalPreference?.value ?: return false
+        if(personalPreferenceValue.showBasedOnWater){
+            if(personalPreferenceValue.waterTempMid <= place.tempWater) return true
+            return false
+        }
         //TODO("This:")
         //if(personalPreferenceValue.airTempMid <= place.tempAir) return true
+        return false
+    }
+
+    /**
+     * Sjekker om stedet man er på skal ha en graa pin
+     * @param place: stedet som man vil finne ut om skal være graa
+     * @return true hvis graa, false ellers
+     */
+    fun isPinGray(place: Place): Boolean{
+        val personalPreferenceValue = personalPreference?.value ?: return true
+        if(personalPreferenceValue.showBasedOnWater){
+            if(place.tempWater == Int.MAX_VALUE) return true
+            return false
+        }
+        //TODO("This: for tempAir")
         return false
     }
 

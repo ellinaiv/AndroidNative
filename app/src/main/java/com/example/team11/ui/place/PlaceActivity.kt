@@ -196,24 +196,26 @@ class PlaceActivity : AppCompatActivity() {
                 textTempAir.text = getString(R.string.tempC, forecast[0].tempAir)
                 imageWeather.setImageDrawable(getDrawable(resources.getIdentifier(forecast[0].symbol,
                     "drawable", this.packageName)))
+                imageWeather.contentDescription = getString(R.string.place_weather_icon_description,
+                    forecast[0].symbol)
                 textRain.text = getString(R.string.place_rain, forecast[0].precipitation.toInt())
             }
 
             // havstrømninger
             //TODO
 //        var currentsText = convertCurrents(hourForecast[0].currents)
-//        textCurrentsResult.text = currentsText
+//        textCurrentsResult.text = getString(R.string.place_currents_result, currentsText)
 //        textUVResult.setTextColor(getColor(
 //            resources.getIdentifier(getTextColor(currentsText, "currents"),
-//                "color", this.packageName)))
+//                    "color", this.packageName)))
 
             // uv
             val uvText = convertUV(forecast[0].uv.toInt())
-            textUVResult.text = uvText
+            textUVResult.text = getString(R.string.place_uv_result, uvText)
             textUVResult.setTextColor(getColor(
                 resources.getIdentifier(getTextColor(uvText, "uv"),
                     "color", this.packageName)))
-            textUVResult.setTypeface(null, Typeface.BOLD)
+
             Log.d("Her er det!", forecast.toString())
 
             // timesvarsel
@@ -254,6 +256,8 @@ class PlaceActivity : AppCompatActivity() {
             rain.text = getString(R.string.place_rain, forecast.precipitation.toInt())
             symbol.setImageDrawable(getDrawable(resources.getIdentifier(forecast.symbol,
                 "drawable", this.packageName)))
+            symbol.contentDescription = getString(R.string.place_weather_icon_description,
+                forecast.symbol)
         }
     }
 
@@ -277,7 +281,7 @@ class PlaceActivity : AppCompatActivity() {
             "string", this.packageName))
         value == Int.MAX_VALUE -> getString(resources.getIdentifier("no_data",
             "string", this.packageName))
-        else -> getString(resources.getIdentifier("not_available",
+        else -> getString(resources.getIdentifier("no_data",
             "string", this.packageName))
     }
 

@@ -15,11 +15,12 @@
     <string name="place_name">Badeplass</string>
     <string name="place_hour">kl. %1$s</string>
     <string name="place_currents">Havstrømninger</string>
+    <string name="place_currents_result"><b>%1$s</b></string>
     <string name="place_info_weak"><b>Svak</b></string>
-    <string name="place_info_moderate">Moderat</string>
-    <string name="place_info_strong">Sterk</string>
-    <string name="place_info_very_strong">Svært sterk</string>
-    <string name="place_info_extreme">Ekstrem</string>
+    <string name="place_info_moderate"><b>Moderat</b></string>
+    <string name="place_info_strong"><b>Sterk</b></string>
+    <string name="place_info_very_strong"><b>Svært sterk</b></string>
+    <string name="place_info_extreme"><b>Ekstrem</b></string>
     <string name="place_currents_info">Informasjon om havstrømninger</string>
     <string name="place_currents_info_weak">0–0.4 m/s</string>
     <string name="place_currents_info_moderate">0.4–0.8 m/s</string>
@@ -27,6 +28,7 @@
     <string name="place_currents_info_very_strong">1.2–1.8 m/s</string>
     <string name="place_currents_info_more"><u>Les mer på ...</u></string>
     <string name="place_uv">UV-stråling</string>
+    <string name="place_uv_result"><b>%1$s</b></string>
     <string name="place_uv_info_title">Informasjon om UV-stråling</string>
     <string name="place_uv_info_weak">UV–indeks: 1–2 \nTiltak: Ingen. Vær ute og nyt sola!</string>
     <string name="place_uv_info_moderate">UV-indeks: 3-5
@@ -113,6 +115,7 @@
     <string name="place_button_walk">Vis gangvei til badestedet</string>
     <string name="place_button_info_currents">Vis informasjon om måling av havstrømninger</string>
     <string name="place_button_info_uv">Vis informasjon om måling av UV-stråling</string>
+    <string name="place_button_close_info">Trykk her for å lukke infovinduet</string>
     <string name="infoRefreshButton">Oppdater rute</string>
     <string name="addFilter">Legg til filter</string>
     <string name="reset">Nullstill</string>
@@ -126,6 +129,8 @@
     <string name="water_temp_icon">ikon som viser om vanntemperaturen er varm eller kald i forhold til gjeldende preferanser</string>
     <string name="empty_shark">En hai som symboliserer at du ikke har noen favoritter</string>
     <string name="search_image">Bilde av et forstørrelsesglass</string>
+    <string name="place_weather_icon_description">Ikon som viser været: %1$s</string>
+    <string name="place_icon_public_transport">Ikon for offentlig transport</string>
 
     <!--    map stuff-->
     <string name="access_token">sk.eyJ1IjoiamFyaG9sdCIsImEiOiJjazg0ZDBsMHkwMTN4M2prNzJpcHZnMXFkIn0.k3JYH8gx2QewGmE4Vf2GsQ</string>

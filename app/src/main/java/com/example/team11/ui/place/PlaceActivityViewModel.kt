@@ -51,13 +51,13 @@ class PlaceActivityViewModel(context: Context): ViewModel() {
      * @param place
      * @return Livedata<List<HourForecast>>
      */
-    fun getHourForecast() = placeRepository!!.getHourForecast(place!!.value!!)
+    fun getHourForecast() = placeRepository!!.getForecast(place!!.value!!, true)
     /**
      * Henter forecast for de neste dagene fra database
      * @param place
      * @return Livedata<List<HourForecast>>
      */
-    fun getDayForecast() = placeRepository!!.getDayForecast(place!!.value!!)
+    fun getDayForecast() = placeRepository!!.getForecast(place!!.value!!, false)
 
 
     /**
