@@ -28,4 +28,7 @@ interface WeatherForecastDao {
     @Query("SELECT * FROM weather_forecast WHERE place_id = :placeId AND time IN (:wantedTimes)")
     fun getTimeForecast(placeId: Int, wantedTimes: List<String>): LiveData<List<WeatherForecastDb>>
 
+    @Query("SELECT COUNT(*) FROM weather_forecast")
+    fun getNumbForecast(): Int
+
 }
