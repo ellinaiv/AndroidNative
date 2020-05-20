@@ -1,6 +1,13 @@
+/**
+ * TODO må fikses!
+ * har kommentert ut pga feilmeldinger pga place pga endring i arkitektur   //melanie
+ */
+
 package com.example.team11
 
 import com.example.team11.database.entity.PersonalPreference
+import com.example.team11.database.entity.Place
+
 import org.junit.Assert.*
 import org.junit.Test
 
