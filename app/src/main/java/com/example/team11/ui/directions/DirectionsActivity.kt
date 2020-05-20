@@ -3,7 +3,6 @@ package com.example.team11.ui.directions
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.BitmapFactory
-import android.graphics.Color
 import android.graphics.Typeface
 import android.net.ConnectivityManager
 import android.net.Network
@@ -13,7 +12,6 @@ import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.StyleSpan
-import android.util.Log
 import android.view.View
 import android.widget.ImageButton
 import android.widget.Toast
@@ -49,8 +47,6 @@ import com.mapbox.mapboxsdk.style.layers.PropertyFactory
 import com.mapbox.mapboxsdk.style.layers.SymbolLayer
 import com.mapbox.mapboxsdk.style.sources.GeoJsonSource
 import kotlinx.android.synthetic.main.activity_directions.*
-import kotlinx.android.synthetic.main.activity_directions.imageNoInternet
-import kotlinx.android.synthetic.main.activity_directions.textNoInternet
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -143,7 +139,7 @@ class DirectionsActivity : AppCompatActivity() , PermissionsListener {
      * Fjerner beskjed og bilde om at det ikke er internett og gjør kartet synlig
      */
     private fun hasInternet(savedInstanceState: Bundle?) {
-        mapView?.visibility = View.VISIBLE
+        mapViewDir?.visibility = View.VISIBLE
         imageNoInternet.visibility = View.GONE
         textNoInternet.visibility = View.GONE
         buttonDirections.visibility = View.VISIBLE
@@ -264,7 +260,7 @@ class DirectionsActivity : AppCompatActivity() , PermissionsListener {
      * @param savedInstanceState: mapView trenger denne til onCreate metoden sin
      */
     private fun makeMap(place: Place, savedInstanceState: Bundle?) {
-        mapView = findViewById(R.id.mapView)
+        mapView = findViewById(R.id.mapViewDir)
         mapView?.onCreate(savedInstanceState)
         mapView?.getMapAsync { mapboxMap ->
             disableButtons()

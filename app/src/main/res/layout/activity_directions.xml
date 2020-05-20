@@ -11,8 +11,9 @@
 
     <com.mapbox.mapboxsdk.maps.MapView
         android:id="@+id/mapViewDir"
-        android:layout_width="361dp"
-        android:layout_height="319dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/backgroundLight"
 
         app:layout_constraintBottom_toBottomOf="parent"
 
