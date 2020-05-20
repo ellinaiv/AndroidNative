@@ -158,7 +158,7 @@ class PlaceRepository private constructor(context: Context) {
             if (placeDao.getNumbPlaces() == 0 || shouldFetch(
                     metadataDao,
                     Constants.MEATDATA_ENTRY_PLACE_TABLE,
-                    0,
+                    1,
                     TimeUnit.DAYS
                 )
             ) {
@@ -283,6 +283,7 @@ class PlaceRepository private constructor(context: Context) {
     private fun fetchPlaces(url: String): List<Place> {
         val places = ArrayList<Place>()
         val tag = "getData() ---->"
+        Log.d("tagGetPlaces", "Fetcher nye steder")
         runBlocking {
             try {
 
