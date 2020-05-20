@@ -30,35 +30,35 @@ class FavoritesFragmentTest{
         launchFragmentInContainer<PlacesListFragment>(themeResId = R.style.AppTheme)
 
         onView(withId(R.id.toggleFavourite))
-         //   .perform(click())
+           .perform(click())
     }
 
     @Test
     fun testFavouriteMarked(){
 
-//        launchFragmentInContainer<PlacesListFragment>(themeResId = R.style.AppTheme)
-  //      onView(withId(R.id.recycler_viewPlaces))
-  //              .perform(ViewActions.swipeUp())
-   //     onView(allOf(withId(R.id.recycler_viewPlaces), isDisplayed()))
-    //        .perform(click())
-     //   onView(withId(R.id.toggleFavourite))
-      //      .perform(click())
+       launchFragmentInContainer<PlacesListFragment>(themeResId = R.style.AppTheme)
+        onView(withId(R.id.recycler_viewPlaces))
+                .perform(ViewActions.swipeUp())
+   onView(allOf(withId(R.id.recycler_viewPlaces), isDisplayed()))
+            .perform(click())
+        onView(withId(R.id.toggleFavourite))
+          .perform(click())
 
-        //launchFragmentInContainer<FavoritesFragment>(themeResId = R.style.AppTheme)
-       // onView(withId(R.id.recycler_view))
-        //    .check( RecyclerViewItemCountAssertion(2))
+        launchFragmentInContainer<FavoritesFragment>(themeResId = R.style.AppTheme)
+        onView(withId(R.id.recycler_view))
+            .check( RecyclerViewItemCountAssertion(2))
     }
 
     @Test
     fun testFavouriteUnmarked(){
-        //launchFragmentInContainer<FavoritesFragment>(themeResId = R.style.AppTheme)
-        //onView(withId(R.id.recycler_view))
-        //    .perform(click())
-        //onView(withId(R.id.toggleFavourite))
-          //  .perform(click())
-        //launchFragmentInContainer<FavoritesFragment>(themeResId = R.style.AppTheme)
-     //   onView(withId(R.id.recycler_view))
-       //     .check( RecyclerViewItemCountAssertion(1))
+        launchFragmentInContainer<FavoritesFragment>(themeResId = R.style.AppTheme)
+        onView(withId(R.id.recycler_view))
+        .perform(click())
+        onView(withId(R.id.toggleFavourite))
+          .perform(click())
+        launchFragmentInContainer<FavoritesFragment>(themeResId = R.style.AppTheme)
+       onView(withId(R.id.recycler_view))
+         .check( RecyclerViewItemCountAssertion(1))
     }
 }
 
