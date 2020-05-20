@@ -16,12 +16,11 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
+import com.example.team11.database.entity.Place
 import com.example.team11.ui.placesList.PlacesListFragment
 import org.hamcrest.Matchers.allOf
 
 class PlaceActivityTest {
-
-
 
     @get:Rule
     val activityTestRule = ActivityTestRule(MainActivity::class.java)
@@ -30,6 +29,9 @@ class PlaceActivityTest {
     fun setup() {
         launchFragmentInContainer<PlacesListFragment>(themeResId = R.style.AppTheme)
     }
+
+    private val testPlace = Place(-1, "Badeplass", 0.1, 0.2, 16)
+
 
     @Test
     fun testClickable(){
