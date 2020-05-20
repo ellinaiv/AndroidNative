@@ -75,12 +75,7 @@ class PlaceRepository private constructor(context: Context) {
         if (personalPreferenceDao.getFalseData() != newFalseData) {
             if(newFalseData){
                 personalPreferenceDao.changeToFalseData()
-                AsyncTask.execute {
-                    val allPlaces = placeDao.getAllPlaces()
-                    allPlaces.value?.forEach { place ->
-                        placeDao.changeToFalseData(12, place.id, Int.MAX_VALUE)
-                    }
-                }
+                placeDao.changeToFalseData(Int.MAX_VALUE, Constants.waterTempHigh, Constants.waterTempLow)
             }else{
                 personalPreferenceDao.changeToRealData()
                 cachePlacesDb(fetchPlaces(urlAPI))
