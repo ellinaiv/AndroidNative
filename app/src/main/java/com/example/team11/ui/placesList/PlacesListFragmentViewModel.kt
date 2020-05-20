@@ -14,7 +14,7 @@ import com.example.team11.database.entity.WeatherForecastDb
 class PlacesListFragmentViewModel(context: Context) : ViewModel() {
     var places: LiveData<List<Place>>? = null
     var forecasts: LiveData<List<WeatherForecastDb>>? = null
-    var personalPreference: LiveData<List<PersonalPreference>>? = null
+    lateinit var personalPreference: LiveData<List<PersonalPreference>>
     private var placeRepository: PlaceRepository? = null
 
     init {
@@ -41,7 +41,7 @@ class PlacesListFragmentViewModel(context: Context) : ViewModel() {
      * @param place: Stedet man vil sjekke
      */
     fun redWave(place: Place): Boolean{
-        if(personalPreference!!.value!![0].waterTempMid <= place.tempWater) return true
+        if(personalPreference.value!![0].waterTempMid <= place.tempWater) return true
         return false
     }
 
