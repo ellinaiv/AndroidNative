@@ -9,6 +9,7 @@
     <color name="mainTextColor">#000000</color>
     <color name="subTextColor">#424242</color>
     <color name="whiteTextColor">#FFFFFF</color>
+    <color name="gray_text_color">#6A6969</color>
 
 <!--    backgrounds-->
     <color name="backgroundLight">#FFFFFF</color>
