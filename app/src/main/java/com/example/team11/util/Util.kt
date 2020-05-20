@@ -78,12 +78,12 @@ object Util {
         val c: Calendar = GregorianCalendar()
         c.time = Date(System.currentTimeMillis())
         var timeType = Calendar.HOUR
-        var cnt = DbConstants.NUMB_HOURS_FORECAST
+        var cnt = Constants.NUMB_HOURS_FORECAST
         if(! hour){
             Log.d("FORCAST", "DAY")
             c.set(Calendar.HOUR, 12)
             timeType = Calendar.DATE
-            cnt = DbConstants.NUMB_DAYS_FORECAST
+            cnt = Constants.NUMB_DAYS_FORECAST
         }
         c.set(Calendar.MINUTE, 0)
         c.set(Calendar.SECOND, 0)
