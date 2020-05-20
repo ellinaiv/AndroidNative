@@ -273,10 +273,12 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
         Log.d("tagPlace", place.toString())
         textName.text = place.name
         if(place.tempWater != Int.MAX_VALUE) {
-            when (mapFragmentViewModel.redWave(place)) {
-                true -> imageTempWater.setImageResource(R.drawable.water_red)
-                false -> imageTempWater.setImageResource(R.drawable.water_blue)
-            }
+            mapFragmentViewModel.personalPreference.observe(viewLifecycleOwner, Observer { _ ->
+                when (mapFragmentViewModel.redWave(place)) {
+                    true -> imageTempWater.setImageResource(R.drawable.water_red)
+                    false -> imageTempWater.setImageResource(R.drawable.water_blue)
+                }
+            })
             textTempWater.text = getString(R.string.tempC, place.tempWater)
         } else {
             imageTempWater.setImageResource(R.drawable.ic_nodatawave)
@@ -365,14 +367,19 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
         style.addSource(geoJsonSource)
 
 
-        var iconId = when(mapFragmentViewModel.isPlaceWarm(place)){
-            true -> iconIdRed
-            false -> iconIdBlue
-        }
+        var iconId = iconIdGray
 
-        if(mapFragmentViewModel.isPinGray(place)){
-            iconId = iconIdGray
-        }
+
+        mapFragmentViewModel.personalPreference.observe(viewLifecycleOwner, Observer { _ ->
+            iconId = when(mapFragmentViewModel.isPlaceWarm(place)){
+                true -> iconIdRed
+                false -> iconIdBlue
+            }
+
+            if(mapFragmentViewModel.isPinGray(place)){
+                iconId = iconIdGray
+            }
+        })
 
         val symbolLayer = SymbolLayer(id, geoId)
         symbolLayer.withProperties(
