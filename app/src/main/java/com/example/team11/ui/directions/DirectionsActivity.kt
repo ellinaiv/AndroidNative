@@ -3,6 +3,7 @@ package com.example.team11.ui.directions
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.graphics.Typeface
 import android.net.ConnectivityManager
 import android.net.Network
@@ -48,6 +49,8 @@ import com.mapbox.mapboxsdk.style.layers.PropertyFactory
 import com.mapbox.mapboxsdk.style.layers.SymbolLayer
 import com.mapbox.mapboxsdk.style.sources.GeoJsonSource
 import kotlinx.android.synthetic.main.activity_directions.*
+import kotlinx.android.synthetic.main.activity_directions.imageNoInternet
+import kotlinx.android.synthetic.main.activity_directions.textNoInternet
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -128,7 +131,7 @@ class DirectionsActivity : AppCompatActivity() , PermissionsListener {
      * Kartet blir borte og bilde og beskjed om at det ikke er internett dukker opp
      */
     private fun noInternet(){
-        mapView?.visibility = View.GONE
+        mapViewDir?.visibility = View.GONE
         imageNoInternet.visibility = View.VISIBLE
         textNoInternet.visibility = View.VISIBLE
         buttonDirections.visibility = View.GONE
