@@ -233,7 +233,7 @@
         android:visibility="gone"
 
 
-        android:contentDescription="@string/no_internet_image" />
+        android:contentDescription="@string/map_no_internet_image" />
 
     <TextView
         android:id="@+id/textNoInternet"
@@ -245,7 +245,7 @@
         mapbox:layout_constraintRight_toRightOf="parent"
         android:padding="6dp"
 
-        android:text="@string/no_internet"
+        android:text="@string/map_no_internet"
         android:textSize="15sp"
         android:textColor="@color/gray_text_color"
         android:fontFamily="@font/roboto_medium"

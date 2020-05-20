@@ -120,7 +120,7 @@
     <string name="filter_button">Trykk her for å filtrer badeplassene</string>
     <string name="rep_button_water">Hvis markert, vises markørene i kartet vanntempratur </string>
     <string name="rep_button_air">Hvis markert, vises markørene i kartet lufttempratur </string>
-    <string name="no_internet">Ingen internettforbindelse</string>
+    <string name="map_no_internet">Ingen internettforbindelse</string>
 
     <!--    content description for images-->
     <string name="water_icon">Badevann ikon</string>
@@ -129,6 +129,7 @@
         til gjeldende preferanser</string>
     <string name="empty_shark">En hai som symboliserer at du ikke har noen favoritter</string>
     <string name="search_image">Bilde av et forstørrelsesglass</string>
+    <string name="map_no_internet_image">Symbol som viser at det ikke er noe internettforbindelse</string>
     <string name="no_internet_image">Symbol som viser at det ikke er noe internettforbindelse</string>
     <string name="place_weather_icon_description">Ikon som viser været: %1$s</string>
     <string name="place_icon_public_transport">Ikon for offentlig transport</string>
