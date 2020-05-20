@@ -53,6 +53,8 @@ class PlaceRepository private constructor(context: Context) {
                     instance = it
                     it.personalPreferences.value = PersonalPreference()
                     it.wayOfTransportation.value = Transportation.BIKE
+
+
                 }
             }
     }

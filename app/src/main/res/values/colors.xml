@@ -21,7 +21,7 @@
 
 <!--    other colors-->
     <color name="coldBlue">#167EB9</color>
-    <color name="warmRed">#FF4040</color>
+    <color name="warmRed">#E87577</color>
     <color name="seekThumb">#6A6969</color>
     <color name="transparent">#00FFFFFF</color>
     <color name="pinkIconColor">#F08C8E</color>
@@ -33,4 +33,5 @@
     <color name="place_uv_info_extreme">#9725FA</color>
     <color name="place_currents_info_moderate">#FD9927</color>
     <color name="place_currents_info_strong">#FC0D1B</color>
+
 </resources>

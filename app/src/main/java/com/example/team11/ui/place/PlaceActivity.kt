@@ -84,12 +84,13 @@ class PlaceActivity : AppCompatActivity() {
         }
 
         buttonUVInfo.setOnClickListener {
-            if (layoutCurrentsInfo.visibility == VISIBLE) {
-                layoutCurrentsInfo.visibility = GONE
-            }
             layoutUVInfo.visibility = VISIBLE
         }
 
+        layoutInScrollView.setOnClickListener{
+            layoutCurrentsInfo.visibility = GONE
+            layoutUVInfo.visibility = GONE
+        }
         buttonUVCloseInfo.setOnClickListener {
             layoutUVInfo.visibility = GONE
         }
@@ -151,7 +152,7 @@ class PlaceActivity : AppCompatActivity() {
                 val geoId = "GEO_ID"
                 val icon = BitmapFactory.decodeResource(
                     this@PlaceActivity.resources,
-                    R.drawable.marker_place
+                    R.drawable.marker_blue
                 )
                 style.addImage(markerPlace, icon)
 
@@ -175,7 +176,6 @@ class PlaceActivity : AppCompatActivity() {
             mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(position), 2)
         }
     }
-
     override fun onStart() {
         super.onStart()
         mapView?.onStart()

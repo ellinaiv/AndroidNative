@@ -10,11 +10,12 @@
     <string name="notAvailable">Ikke tilgjengelig</string>
     <string name="place_name">Badeplass</string>
     <string name="place_currents">Havstrømninger</string>
-    <string name="place_info_weak_title">Svak</string>
-    <string name="place_info_moderate_title">Moderat</string>
-    <string name="place_info_strong_title">Sterk</string>
-    <string name="place_info_very_strong_title">Svært sterk</string>
-    <string name="place_info_extreme_title">Ekstrem</string>
+    <string name="place_info_weak_title"><b>Svak</b></string>
+    <string name="place_info_moderate_title"><b>Moderat</b></string>
+    <string name="place_info_strong_title"><b>Sterk</b></string>
+    <string name="place_info_very_strong_title"><b>Svært sterk</b></string>
+    <string name="place_info_extreme_title"><b>Ekstrem</b></string>
+    <string name="place_info_box_little_title"><b>Lite</b></string>
     <string name="place_currents_info_title">Informasjon om havstrømninger</string>
     <string name="place_currents_info_weak">TODO</string>
     <string name="place_currents_info_moderate">TODO</string>
@@ -22,49 +23,48 @@
     <string name="place_currents_info_more"><u>Les mer på ...</u></string>
     <string name="place_uv">UV-stråling</string>
     <string name="place_uv_info_title">Informasjon om UV-stråling</string>
-    <string name="place_uv_info_weak">UV-indeks: 1-2 \nTiltak: Ingen. Vær ute og nyt sola!</string>
-    <string name="place_uv_info_moderate">UV-indeks: 3-5
-        \nTiltak: Klær, solhatt og solbriller. Ta pauser fra sola!</string>
-    <string name="place_uv_info_strong">UV-indeks: 6-7
+    <string name="place_uv_info_weak"><b>UV-indeks: 1-2 \nTiltak: Ingen. Vær ute og nyt sola!</b>></string>
+    <string name="place_uv_info_moderate"><b>UV-indeks: 3-5
+        \nTiltak: Klær, solhatt og solbriller. Ta pauser fra sola!</b></string>
+    <string name="place_uv_info_strong"><b>UV-indeks: 6-7
         \nTiltak: Klær, solhatt og solbriller. Ta pauser fra solen mellom kl. 12-15.
-        Bruk solkrem med middels faktor (SPF 15) og UVA-beskyttelse.</string>
-    <string name="place_uv_info_very_strong">UV-indeks: 8-10
+        Bruk solkrem med middels faktor (SPF 15) og UVA-beskyttelse.</b></string>
+    <string name="place_uv_info_very_strong"><b>UV-indeks: 8-10
         \nTiltak: Unngå solen mellom kl. 12-15 og søk skygge.
-        Bruk klær, solhatt og solbriller.</string>
-    <string name="place_uv_info_extreme">UV-indeks: >11
+        Bruk klær, solhatt og solbriller.</b></string>
+    <string name="place_uv_info_extreme"><b>UV-indeks: >11
         \nTiltak: Unngå solen mellom kl. 12-15. Søk skygge.
-        Klær, solhatt og solbriller absolutt nødvendig.
-</string>
+        Klær, solhatt og solbriller absolutt nødvendig.</b>
+    </string>
     <string name="place_uv_info_more"><u>Les mer på yr.no</u></string>
     <string name="place_forecast">Værvarsel</string>
     <string name="place_hour_forecast">Timesvarsel</string>
     <string name="place_long_forecast">Langtidsvarsel</string>
     <string name="place_public_transport_link"><u>Finn reise på ruter.no</u></string>
     <string name="place_select_route_type">Vis rute til badeplass:</string>
-    <string name="aboutApp">Om appen</string>
+    <string name="aboutApp">Om Splæsj</string>
     <string name="aboutAPI">Om API</string>
     <string name="settingsTitle">Innstillinger</string>
     <string name="waterPreference">Preferanse for vanntemperatur</string>
     <string name="noFavorites">Du har ikke lagt til noen favorittbadeplasser enda!</string>
-    <string name="aboutAppText"> Splæsj er appen for deg som er glad i å bade i Oslo! Her har
-        vi samlet relevant informasjon om værforhold, vanntemperatur og reisevei til forskjellige \
+    <string name="aboutAppText">Splæsj er appen for deg som er glad i å bade i Oslo! Her har
+        vi samlet relevant informasjon om værforhold, vanntemperatur og reisevei til forskjellige
         badeplasser på ett sted, for at det skal være enklere å ta et informert valg om hvilken
         badeplass som passer best for deg.
-
-        \n\nAppen er designet og utviklet av Ellina Ivleva, Johanna P. Haarseth, Maria Løvland Johansson,
-        Marlen Jarholt, Melanie Østbøll og Silje H. Lund. Appen er produktet av teamarbeidet i
-        IN2000 - Software Engineering med prosjektarbeid ved Institutt for Informatikk,
-        Universitetet i Oslo, våren 2020.</string>
-    <string name="aboutAPIText">
-        <b>MET</b>
+        \n\nSplæsj er designet og utviklet av Ellina Ivleva, Johanna P. Haarseth,
+        Maria Løvland Johansson, Marlen Jarholt, Melanie Østbøll og Silje H. Lund. Appen er utviklet
+        som en del av teamarbeidet i IN2000 - Software Engineering med prosjektarbeid ved Institutt
+        for Informatikk, Universitetet i Oslo, våren 2020.</string>
+    <string name="aboutAPIText"><b>MET</b>
         \nSplæsj bruker værdata fra WeatherAPI-et til Meteorologisk institutt.
-        Dette gir appen informasjon om værforhold som lufttemperatur, UV-stråling,
+        Dette gir appen informasjon om værforhold som lufttemperatur, UV-stråling
         og havstrømninger ved ulike badeplasser.
         \n\n<b>Mapbox</b>
-        \nAPIsom muliggjør opptegning av kart i appen, samt å vise reisevei fra en gitt posisjon
+        \nAPI som muliggjør opptegning av kart i appen, samt å vise reisevei fra en gitt posisjon
         til en badeplass.
-        \n\n<b>Oslo Kommune</b>
-        \nAppen benytter API-er fra Oslo Kommune for data om ulike badeplasser og badetemperatur.
+        \n\n<b>Oslo kommune</b>
+        \nSplæsj innhenter data om lokasjon og vanntemperatur for de ulike badeplassene ved å
+        benytte API fra Oslo kommune.
     </string>
     <string name="aboutSettings">
         Målingene av badetemperaturene fra Oslo kommune er tilgjengelige mellom juni og august.
@@ -119,15 +119,15 @@
     <!--    content description for images-->
     <string name="water_icon">Badevann ikon</string>
     <string name="weather_icon">Ikon som viser været</string>
-    <string name="water_temp_icon">ikon som viser om vanntemperaturen er varm eller kald i forhold til gjeldende preferanser</string>
+    <string name="water_temp_icon">ikon som viser om vanntemperaturen er varm eller kald i forhold til gjeldende preferansƒer</string>
     <string name="empty_shark">En hai som symboliserer at du ikke har noen favoritter</string>
     <string name="search_image">Bilde av et forstørrelsesglass</string>
     <string name="no_internet_image">Symbol som viser at det ikke er noe internettforbindelse</string>
 
     <!--    map stuff-->
     <string name="access_token">sk.eyJ1IjoiamFyaG9sdCIsImEiOiJjazg0ZDBsMHkwMTN4M2prNzJpcHZnMXFkIn0.k3JYH8gx2QewGmE4Vf2GsQ</string>
-    <string name="ikkeViseVei">Kan ikke vise vei uten lokasjon</string>
-    <string name="viTrengerPosFordi">Kan ikke vise veien til badeplassen uten din posisjon</string>
+    <string name="noCommute">Kan ikke vise vei uten lokasjon</string>
+    <string name="needUsersPosition">Kan ikke vise veien til badeplassen uten din posisjon</string>
     <string name="title_activity_bottom_navigation">BottomNavigation</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
