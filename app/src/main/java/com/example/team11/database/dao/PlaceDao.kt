@@ -13,7 +13,7 @@ interface PlaceDao {
      * skal bevares
      * @param place en liste med alle stedene
      */
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertPlaceList(place: List<Place>)
 
     /**
@@ -44,7 +44,10 @@ interface PlaceDao {
      * @return Livedata<Boolean>
      */
     @Query("SELECT favorite FROM place WHERE id  = :placeId")
-    fun isPlaceFavoriteNonLivedata(placeId: Int): LiveData<Boolean>
+    fun isPlaceFavoriteNonLiveData(placeId: Int): Boolean
+
+    @Query("SELECT COUNT(*) FROM place WHERE id = :placeId")
+    fun placeExists(placeId: Int): Boolean
 
     /**
      * Henter ut alle steder

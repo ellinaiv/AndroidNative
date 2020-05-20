@@ -35,8 +35,6 @@ import java.io.StringReader
 import java.lang.System.currentTimeMillis
 import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
-import kotlin.random.Random
-import kotlin.random.nextInt
 
 class PlaceRepository private constructor(context: Context) {
     private var allPlaces = mutableListOf<Place>()
@@ -152,7 +150,7 @@ class PlaceRepository private constructor(context: Context) {
             if (placeDao.getNumbPlaces() == 0 || shouldFetch(
                     metadataDao,
                     Constants.MEATDATA_ENTRY_PLACE_TABLE,
-                    10,
+                    0,
                     TimeUnit.DAYS
                 )
             ) {
@@ -322,13 +320,17 @@ class PlaceRepository private constructor(context: Context) {
                             xpp.next()
                         }
                         Log.d("tag2", tempWater.toString())
+                        var favorite = false
+                        Log.d("tagDatabasePlaceExists", placeDao.placeExists(id).toString())
+                        if (placeDao.placeExists(id)) favorite = placeDao.isPlaceFavoriteNonLiveData(id)
                         places.add(
                             Place(
-                                id++,
+                                id,
                                 name,
                                 lat.toDouble(),
                                 long.toDouble(),
-                                tempWater
+                                tempWater,
+                                favorite
                             )
                         )
                     }

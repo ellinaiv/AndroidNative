@@ -377,6 +377,7 @@ class PlaceActivity : AppCompatActivity() {
     }
 
     override fun onPause() {
+        Log.d("tagPause", "Nå er jeg paused!")
         if (toggleFavorite.isChecked) viewModel.addFavoritePlace()
         else viewModel.removeFavoritePlace()
         super.onPause()
