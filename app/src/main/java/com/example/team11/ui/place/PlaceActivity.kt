@@ -13,6 +13,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
 import com.example.team11.database.entity.Place
 import com.example.team11.R
 import com.example.team11.Transportation
@@ -32,9 +33,10 @@ import kotlinx.android.synthetic.main.activity_place.*
 
 
 class PlaceActivity : AppCompatActivity() {
-    private val viewModel: PlaceActivityViewModel by viewModels{
+    val viewModel: PlaceActivityViewModel by viewModels{
         PlaceActivityViewModel.InstanceCreator(applicationContext)
     }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
