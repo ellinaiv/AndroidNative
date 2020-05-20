@@ -108,8 +108,8 @@ interface PlaceDao {
     @Query("SELECT * FROM place WHERE favorite = 1 ORDER BY id")
     fun getFavoritePlaceList(): LiveData<List<Place>>
 
-    @Query("UPDATE place SET tempWater = RANDOM()*(:maxValue - :minValue) + :minValue WHERE tempWater != :noDatValue")
-    fun changeToFalseData(noDatValue: Int, maxValue: Int, minValue: Int)
+    @Query("UPDATE place SET tempWater = ABS(RANDOM()) % (:maxValue - :minValue) + :minValue WHERE tempWater = :noDataValue")
+    fun changeToFalseData(noDataValue: Int, maxValue: Int, minValue: Int)
 
 
 }

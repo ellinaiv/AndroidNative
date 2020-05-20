@@ -22,9 +22,6 @@ interface PersonalPreferenceDao{
     @Query("SELECT falseData FROM personal_preference LIMIT 1")
     fun getFalseData(): Boolean
 
-    @Query("UPDATE personal_preference SET falseData = 1")
-    fun changeToFalseData()
-
-    @Query("UPDATE personal_preference  SET falseData = 0")
-    fun changeToRealData()
+    @Query("UPDATE personal_preference SET falseData = :boolean")
+    fun changeFalseData(boolean: Boolean)
 }

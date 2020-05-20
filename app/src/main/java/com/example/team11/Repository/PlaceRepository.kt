@@ -73,13 +73,16 @@ class PlaceRepository private constructor(context: Context) {
     }
 
     fun changeFalseData(newFalseData: Boolean) {
-        if (personalPreferenceDao.getFalseData() != newFalseData) {
-            if(newFalseData){
-                personalPreferenceDao.changeToFalseData()
-                placeDao.changeToFalseData(Int.MAX_VALUE, Constants.waterTempHigh, Constants.waterTempLow)
-            }else{
-                personalPreferenceDao.changeToRealData()
-                cachePlacesDb(fetchPlaces(urlAPI))
+        Log.d("FALSE", "changeFalseData")
+        AsyncTask.execute {
+            if (personalPreferenceDao.getFalseData() != newFalseData) {
+                personalPreferenceDao.changeFalseData(newFalseData)
+                if(newFalseData){
+                    Log.d("FALSE", "changeFalseData")
+                    placeDao.changeToFalseData(Int.MAX_VALUE, Constants.waterTempHigh, Constants.waterTempLow)
+                }else{
+                    cachePlacesDb(fetchPlaces(urlAPI))
+                }
             }
         }
     }

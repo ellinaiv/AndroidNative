@@ -119,6 +119,8 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
             }
         })
 
+
+
         return root
     }
 
@@ -158,11 +160,6 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
         })
         //TODO("EHm denne gjør ingenting, men trneger den for at pp ikke ksal vøre null i viewmodel, dette kan umulig være riktige måte å gjøre det på...")
         mapFragmentViewModel.personalPreference!!.observe(viewLifecycleOwner, Observer {  })
-
-        val filterButton = root.findViewById<ImageButton>(R.id.filterButton)
-        filterButton.setOnClickListener {
-            startActivity(Intent(this.requireContext(), FilterActivity::class.java))
-        }
     }
 
 
