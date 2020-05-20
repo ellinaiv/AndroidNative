@@ -17,9 +17,8 @@ import com.example.team11.util.Util.formatToDaysTime
 import com.example.team11.util.Util.formatToHoursTime
 import com.example.team11.util.Util.getNowHourForecastDb
 import com.example.team11.util.Util.getWantedDaysForecastApi
-import com.example.team11.util.Util.getWantedDaysForecastDb
+import com.example.team11.util.Util.getWantedForecastDb
 import com.example.team11.util.Util.getWantedHoursForecastApi
-import com.example.team11.util.Util.getWantedHoursForecastDb
 import com.example.team11.util.Util.shouldFetch
 import com.example.team11.valueObjects.OceanForecast
 import com.example.team11.valueObjects.WeatherForecastApi
@@ -36,6 +35,7 @@ import java.lang.System.currentTimeMillis
 import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
 import kotlin.random.Random
+import kotlin.random.nextInt
 
 class PlaceRepository private constructor(context: Context) {
     private var allPlaces = mutableListOf<Place>()
@@ -73,8 +73,17 @@ class PlaceRepository private constructor(context: Context) {
     }
 
     fun changeFalseData(newFalseData: Boolean) {
-        if (personalPreferences.value!!.falseData != newFalseData) {
-            personalPreferences.value!!.falseData = newFalseData
+        Log.d("FALSE", "changeFalseData")
+        AsyncTask.execute {
+            if (personalPreferenceDao.getFalseData() != newFalseData) {
+                personalPreferenceDao.changeFalseData(newFalseData)
+                if(newFalseData){
+                    Log.d("FALSE", "changeFalseData")
+                    placeDao.changeToFalseData(Int.MAX_VALUE, Constants.waterTempHigh, Constants.waterTempLow)
+                }else{
+                    cachePlacesDb(fetchPlaces(urlAPI))
+                }
+            }
         }
     }
 
@@ -170,7 +179,7 @@ class PlaceRepository private constructor(context: Context) {
         Log.d(tag, "getHourForecast")
         for (place in places) {
             AsyncTask.execute {
-                if (shouldFetch(
+                if (weatherForecastDao.getNumbForecast() == 0 || shouldFetch(
                         metadataDao,
                         Constants.METADATA_ENTRY_WEATHER_FORECAST_TABLE + place.id,
                         1,
@@ -193,14 +202,12 @@ class PlaceRepository private constructor(context: Context) {
      */
     fun getForecast(place: Place, hour: Boolean): LiveData<List<WeatherForecastDb>> {
         val tag = "tagGetForecast"
-        val forecast: LiveData<List<WeatherForecastDb>> = when(hour){
-            true -> weatherForecastDao.getTimeForecast(place.id, getWantedHoursForecastDb())
-            false -> weatherForecastDao.getTimeForecast(place.id, getWantedDaysForecastDb())
-        }
+        val forecast: LiveData<List<WeatherForecastDb>> =
+            weatherForecastDao.getTimeForecast(place.id, getWantedForecastDb(hour))
         Log.d(tag, "getForecast")
 
         AsyncTask.execute {
-            if (shouldFetch(
+            if (weatherForecastDao.getNumbForecast() == 0 || shouldFetch(
                     metadataDao,
                     Constants.METADATA_ENTRY_WEATHER_FORECAST_TABLE + place.id,
                     1,

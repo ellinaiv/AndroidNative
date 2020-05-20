@@ -39,6 +39,14 @@ interface PlaceDao {
     fun isPlaceFavorite(placeId: Int): LiveData<Boolean>
 
     /**
+     * Sjekker om et sted er favoritt
+     * @param placeId iden til stedet
+     * @return Livedata<Boolean>
+     */
+    @Query("SELECT favorite FROM place WHERE id  = :placeId")
+    fun isPlaceFavoriteNonLivedata(placeId: Int): LiveData<Boolean>
+
+    /**
      * Henter ut alle steder
      * @return liste med alle steder
      */
@@ -56,10 +64,11 @@ interface PlaceDao {
         OR place.tempWater > (
             SElECT pp.waterTempMid 
             FROM personal_preference as pp
-        ) AND (
+        ) AND  (
             SELECT pp.showWaterWarm
             FROM personal_preference as pp
-        )) AND ((
+        )) AND (((SELECT COUNT(*) FROM weather_forecast as wf WHERE wf.place_id = place.id AND wf.time = :timeNow) = 0)
+         OR ((
             SELECT wf.temp_air 
             FROM weather_forecast as wf 
             WHERE place_id = place.id
@@ -71,10 +80,10 @@ interface PlaceDao {
         ) AND (
             SELECT pp.showAirCold
             FROM personal_preference as pp
-        ) OR (
+        ) OR ((
             SELECT wf.temp_air 
             FROM weather_forecast as wf 
-            WHERE place_id = place.id
+            WHERE wf.place_id = place.id
             AND wf.time = :timeNow
             LIMIT 1
         ) > (
@@ -83,7 +92,7 @@ interface PlaceDao {
         ) AND (
             SELECT pp.showAirWarm
             FROM personal_preference as pp
-        ))
+        ))))
             ORDER BY id
         """)
     fun getPlaceList(timeNow: String): LiveData<List<Place>>
@@ -98,5 +107,9 @@ interface PlaceDao {
      */
     @Query("SELECT * FROM place WHERE favorite = 1 ORDER BY id")
     fun getFavoritePlaceList(): LiveData<List<Place>>
+
+    @Query("UPDATE place SET tempWater = ABS(RANDOM()) % (:maxValue - :minValue) + :minValue WHERE tempWater = :noDataValue")
+    fun changeToFalseData(noDataValue: Int, maxValue: Int, minValue: Int)
+
 
 }

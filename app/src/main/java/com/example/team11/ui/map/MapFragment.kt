@@ -6,6 +6,9 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.PointF
+import android.net.ConnectivityManager
+import android.net.Network
+import android.net.NetworkRequest
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -14,6 +17,8 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageButton
 import androidx.appcompat.content.res.AppCompatResources.getDrawable
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -41,6 +46,7 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
     private val iconIdBlue = "ICON_ID_BLUE"
     private val iconIdGray = "ICON_ID_GRAY"
     private val geojsonId = "GEOJSON_ID"
+    private var listOfGeojsonId = mutableListOf<String>()
     private val layerId = "LAYER_ID:"
     private var listOfLayerId = mutableListOf<String>()
     private val propertyId = "PROPERTY_ID"
@@ -49,7 +55,6 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
     private lateinit var mapBoxMap: MapboxMap
 
     private lateinit var mapFragmentViewModel: MapFragmentViewModel
-
     private lateinit var filterPlaces: List<Place>
 
     override fun onCreateView(
@@ -62,6 +67,88 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
             ViewModelProvider(this, MapFragmentViewModel.InstanceCreator(requireContext())).get(MapFragmentViewModel::class.java)
 
         val root = inflater.inflate(R.layout.fragment_map, container, false)
+
+        val manager = context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val builder = NetworkRequest.Builder()
+
+        manager.registerNetworkCallback(
+            builder.build(),
+            object : ConnectivityManager.NetworkCallback(){
+
+                override fun onAvailable(network: Network) {
+                    super.onAvailable(network)
+                    activity?.runOnUiThread {
+                        mapFragmentViewModel.hasInternet.value = true
+                    }
+                }
+
+                override fun onUnavailable(){
+                    super.onUnavailable()
+                    activity?.runOnUiThread {
+                        mapFragmentViewModel.hasInternet.value = false
+                    }
+                }
+
+                override fun onLost(network: Network) {
+                    super.onLost(network)
+                    activity?.runOnUiThread {
+                        mapFragmentViewModel.hasInternet.value = false
+                    }
+                }
+
+                override fun onLosing(network: Network, maxMsToLive: Int) {
+                    super.onLosing(network, maxMsToLive)
+                    activity?.runOnUiThread {
+                        mapFragmentViewModel.hasInternet.value = false
+                    }
+                }
+            }
+        )
+
+
+        val filterButton = root.findViewById<ImageButton>(R.id.filterButton)
+        filterButton.setOnClickListener {
+            startActivity(Intent(this.requireContext(), FilterActivity::class.java))
+        }
+
+        mapFragmentViewModel.hasInternet.observe(viewLifecycleOwner, Observer{internet ->
+            if(internet){
+                hasInternet()
+            }else{
+                noInternet()
+            }
+        })
+
+
+
+        return root
+    }
+
+    /**
+     * Det som skjer hvis enheten ikke har internett
+     * Kartet blir borte og bilde og beskjed om at det ikke er internett dukker opp
+     */
+    private fun noInternet(){
+        mapView?.visibility = View.GONE
+        val imageNoInternet = view?.findViewById<ImageView>(R.id.imageNoInternet)
+        val textNoInternet = view?.findViewById<TextView>(R.id.textNoInternet)
+        imageNoInternet?.visibility = View.VISIBLE
+        textNoInternet?.visibility = View.VISIBLE
+        searchText.isEnabled = false
+        searchText.text.clear()
+        removePlace()
+    }
+
+    /**
+     * Det som skjer hvis enheten har internett
+     * Fjerner beskjed og bilde om at det ikke er internett og gjør kartet synlig
+     */
+    private fun hasInternet(){
+        mapView?.visibility = View.VISIBLE
+        imageNoInternet.visibility = View.GONE
+        textNoInternet.visibility = View.GONE
+        searchText.isEnabled = true
+
         mapFragmentViewModel.places!!.observe(viewLifecycleOwner, Observer {places->
             makeMap(places)
             searchText.doOnTextChanged { text, _, _, _ ->
@@ -73,14 +160,8 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
         })
         //TODO("EHm denne gjør ingenting, men trneger den for at pp ikke ksal vøre null i viewmodel, dette kan umulig være riktige måte å gjøre det på...")
         mapFragmentViewModel.personalPreference!!.observe(viewLifecycleOwner, Observer {  })
-
-        val filterButton = root.findViewById<ImageButton>(R.id.filterButton)
-        filterButton.setOnClickListener {
-            startActivity(Intent(this.requireContext(), FilterActivity::class.java))
-        }
-
-        return root
     }
+
 
     /**
      * Søkefunksjonen filtrerer places etter navn og zoomer til det stedet på kartet
@@ -129,6 +210,12 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
         listOfLayerId.forEach { layer ->
             style.removeLayer(layer)
         }
+        listOfGeojsonId.forEach { id ->
+            style.removeSource(id)
+        }
+
+        listOfGeojsonId = mutableListOf()
+        listOfLayerId = mutableListOf()
     }
 
     override fun onMapClick(point: LatLng): Boolean {
@@ -265,6 +352,12 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
     private fun addMarker(place: Place, style: Style){
         val id = layerId + place.id.toString()
         val geoId = geojsonId + place.id.toString()
+
+        if(listOfGeojsonId.contains(geoId) or listOfLayerId.contains(id)){
+            Log.d("TagMapFragment", "En id finnes fra før av")
+            return
+        }
+
         val feature = mapFragmentViewModel.getFeature(place)
         feature.addNumberProperty(propertyId, place.id)
         val geoJsonSource = GeoJsonSource(geoId, FeatureCollection.fromFeatures(
@@ -289,6 +382,7 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
         )
         style.addLayer(symbolLayer)
         listOfLayerId.add(id)
+        listOfGeojsonId.add(geoId)
     }
 
 
