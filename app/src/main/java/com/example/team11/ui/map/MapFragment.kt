@@ -124,13 +124,12 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
      * Kartet blir borte og bilde og bedskjed om at det ikke er internett dukker opp
      */
     private fun noInternet(){
-        activity?.runOnUiThread {
-            mapView?.visibility = View.GONE
-            val imageNoInternet = view?.findViewById<ImageView>(R.id.imageNoInternet)
-            val textNoInternet = view?.findViewById<TextView>(R.id.textNoInternet)
-            imageNoInternet?.visibility = View.VISIBLE
-            textNoInternet?.visibility = View.VISIBLE
-        }
+        mapView?.visibility = View.GONE
+        val imageNoInternet = view?.findViewById<ImageView>(R.id.imageNoInternet)
+        val textNoInternet = view?.findViewById<TextView>(R.id.textNoInternet)
+        imageNoInternet?.visibility = View.VISIBLE
+        textNoInternet?.visibility = View.VISIBLE
+        removePlace()
     }
 
     /**
