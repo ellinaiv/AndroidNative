@@ -39,9 +39,12 @@ class PlacesListFragment : Fragment() {
         val layoutManager = LinearLayoutManager(context)
 
         placesListViewModel.places!!.observe(viewLifecycleOwner, Observer { places ->
+            Log.d("tagDatabaseStørrelsePlace", places.size.toString())
+            Log.d("tagDatabasePrintList", places.toString())
             recycler_viewPlaces.layoutManager = layoutManager
             placesListViewModel.getForecasts(places)!!.observe(viewLifecycleOwner, Observer { forecasts ->
-                Log.d("TagTemp", forecasts.toString())
+                Log.d("tagDatabaseStørrelseForecast", forecasts.size.toString())
+                Log.d("tagDatabasePrintList", forecasts.toString())
                 recycler_viewPlaces.adapter =
                     ListAdapter(
                         places,
@@ -65,6 +68,8 @@ class PlacesListFragment : Fragment() {
                 }
             })
         })
+
+        placesListViewModel.personalPreference!!.observe(viewLifecycleOwner, Observer {})
 
         val filterButton = root.findViewById<ImageButton>(R.id.filterButton)
         filterButton.setOnClickListener {

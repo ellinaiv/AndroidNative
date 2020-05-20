@@ -21,7 +21,7 @@ class FilterActivity : AppCompatActivity() {
 
         supportActionBar!!.hide()
         buttonBack.setOnClickListener {
-            setFilter()
+            updateFilter()
             finish()
         }
 
@@ -59,7 +59,7 @@ class FilterActivity : AppCompatActivity() {
     /**
      * Lager et nytt objekt som er den nye preferansen til brukeren
      */
-    private fun setFilter(){
+    private fun updateFilter(){
         val pp = PersonalPreference(
             waterTempMid = seekBarWater.progress + Constants.waterTempLow,
             airTempMid = seekBarAir.progress + Constants.airTempLow,
@@ -141,6 +141,6 @@ class FilterActivity : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
-        setFilter()
+        updateFilter()
     }
 }
