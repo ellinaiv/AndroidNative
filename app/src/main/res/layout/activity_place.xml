@@ -1184,6 +1184,7 @@
                 <TextView
                     android:id="@+id/textUVInfoExtremeTitle"
                     android:text="@string/place_info_extreme"
+                    android:fontFamily="@font/roboto_medium"
                     android:textColor="@color/place_uv_info_extreme"
                     android:textSize="18sp"
                     android:layout_width="wrap_content"

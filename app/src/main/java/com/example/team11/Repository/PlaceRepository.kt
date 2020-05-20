@@ -34,6 +34,7 @@ import java.io.StringReader
 import java.lang.System.currentTimeMillis
 import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
+import kotlin.random.Random
 
 class PlaceRepository private constructor(context: Context) {
     private var allPlaces = mutableListOf<Place>()
@@ -64,6 +65,8 @@ class PlaceRepository private constructor(context: Context) {
                 instance ?: PlaceRepository(context).also {
                     instance = it
                     it.wayOfTransportation.value = Transportation.BIKE
+
+
                 }
             }
     }
@@ -92,16 +95,6 @@ class PlaceRepository private constructor(context: Context) {
         AsyncTask.execute {
             personalPreferenceDao.addPersonalPreference(personalPreference)
         }
-    }
-
-    /**
-     * Oppdatere listen med steder som liste og kart bruker basert på preferanser
-     */
-    private fun updatePlaces() {
-        val pp = personalPreferences.value!!
-        //places.value = allPlaces.filter { place ->
-        //    pp.isTempWaterOk(place) and pp.isTempAirOk(place)
-        //}
     }
 
     /**
@@ -148,11 +141,13 @@ class PlaceRepository private constructor(context: Context) {
         val tag = "tagGetPlaces"
         // TODO("Hvor ofte burde places fetches?")
         // TODO("Kan jeg gjøre non-assertive call her? Dersom favoritePlaces.value er null burde den stoppe å sjekke på første?"
-        val places: LiveData<List<Place>> = placeDao.getPlaceList()
+        val places: LiveData<List<Place>> = placeDao.getPlaceList(getNowHourForecastDb()[0])
         Log.d(tag, "getPlaces")
-
         AsyncTask.execute {
-            if (shouldFetch(
+            Log.d("tagDatabase", placeDao.getNumbPlaces().toString())
+        }
+        AsyncTask.execute {
+            if (placeDao.getNumbPlaces() == 0 || shouldFetch(
                     metadataDao,
                     Constants.MEATDATA_ENTRY_PLACE_TABLE,
                     10,
@@ -195,34 +190,6 @@ class PlaceRepository private constructor(context: Context) {
      * getPlaces funksjonen henter en liste til viewModel med vær for de netse timene
      * @return: LiveData<List<HourForecast>>, liste med badesteder
      */
-    /*fun getHourForecast(place: Place): LiveData<List<WeatherForecastDb>> {
-        val tag = "tagGetForecast"
-        // TODO("Hvor ofte burde places fetches?")
-        // TODO("Kan jeg gjøre non-assertive call her? Dersom favoritePlaces.value er null burde den stoppe å sjekke på første?"
-        val hourForecast: LiveData<List<WeatherForecastDb>> =
-            weatherForecastDao.getTimeForecast(place.id, getWantedHoursForecastDb())
-        Log.d(tag, "getHourForecast")
-
-        AsyncTask.execute {
-            if (shouldFetch(
-                    metadataDao,
-                    DbConstants.METADATA_ENTRY_WEATHER_FORECAST_TABLE + place.id,
-                    1,
-                    TimeUnit.HOURS
-                )
-            ) {
-                Log.d(tag, "fetcherForecast")
-                fetchWeatherForecast(place)
-            }
-        }
-        Log.d("Fra databasen", hourForecast.toString())
-        return hourForecast
-    }*/
-
-    /**
-     * getPlaces funksjonen henter en liste til viewModel med vær for de netse timene
-     * @return: LiveData<List<HourForecast>>, liste med badesteder
-     */
     fun getForecast(place: Place, hour: Boolean): LiveData<List<WeatherForecastDb>> {
         val tag = "tagGetForecast"
         val forecast: LiveData<List<WeatherForecastDb>> =
@@ -245,33 +212,6 @@ class PlaceRepository private constructor(context: Context) {
         return forecast
     }
 
-    /**
-     * getPlaces funksjonen henter en liste til viewModel med vær for de netse timene
-     * @return: LiveData<List<DayForecast>>, liste med badesteder
-     */
-    /*fun getDayForecast(place: Place): LiveData<List<WeatherForecastDb>> {
-        val tag = "tagGetForecast"
-        // TODO("Hvor ofte burde places fetches?")
-        // TODO("Kan jeg gjøre non-assertive call her? Dersom favoritePlaces.value er null burde den stoppe å sjekke på første?"
-        val dayForecast: LiveData<List<WeatherForecastDb>> =
-
-        Log.d(tag, "getHourForecast")
-
-        AsyncTask.execute {
-            if (shouldFetch(
-                    metadataDao,
-                    DbConstants.METADATA_ENTRY_WEATHER_FORECAST_TABLE + place.id,
-                    1,
-                    TimeUnit.HOURS
-                )
-            ) {
-                Log.d(tag, "fetcherForecast")
-                fetchWeatherForecast(place)
-            }
-        }
-        Log.d("Fra databasen", dayForecast.toString())
-        return dayForecast
-    }*/
 
     fun cachePlacesDb(places: List<Place>) {
         Log.d("tagDatabase", "Lagrer nye steder")
