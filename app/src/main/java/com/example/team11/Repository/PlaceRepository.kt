@@ -36,6 +36,7 @@ import java.lang.System.currentTimeMillis
 import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
 import kotlin.random.Random
+import kotlin.random.nextInt
 
 class PlaceRepository private constructor(context: Context) {
     private var allPlaces = mutableListOf<Place>()
@@ -170,7 +171,7 @@ class PlaceRepository private constructor(context: Context) {
         Log.d(tag, "getHourForecast")
         for (place in places) {
             AsyncTask.execute {
-                if (shouldFetch(
+                if (weatherForecastDao.getNumbForecast() == 0 || shouldFetch(
                         metadataDao,
                         Constants.METADATA_ENTRY_WEATHER_FORECAST_TABLE + place.id,
                         1,
@@ -200,7 +201,7 @@ class PlaceRepository private constructor(context: Context) {
         Log.d(tag, "getForecast")
 
         AsyncTask.execute {
-            if (shouldFetch(
+            if (weatherForecastDao.getNumbForecast() == 0 || shouldFetch(
                     metadataDao,
                     Constants.METADATA_ENTRY_WEATHER_FORECAST_TABLE + place.id,
                     1,
