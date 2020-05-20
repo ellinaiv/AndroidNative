@@ -42,8 +42,55 @@ interface PlaceDao {
      * Henter ut alle steder
      * @return liste med alle steder
      */
-    @Query("SELECT * FROM place ORDER BY id")
-    fun getPlaceList(): LiveData<List<Place>>
+    @Query("""
+        SELECT * 
+        FROM place 
+        WHERE (place.tempWater < (
+            SElECT pp.waterTempMid 
+            FROM personal_preference as pp
+        ) 
+        AND (
+            SELECT pp.showWaterCold 
+            FROM personal_preference as pp
+        ) 
+        OR place.tempWater > (
+            SElECT pp.waterTempMid 
+            FROM personal_preference as pp
+        ) AND (
+            SELECT pp.showWaterWarm
+            FROM personal_preference as pp
+        )) AND ((
+            SELECT wf.temp_air 
+            FROM weather_forecast as wf 
+            WHERE place_id = place.id
+            AND wf.time = :timeNow
+            LIMIT 1
+        ) < (
+            SElECT pp.airTempMid 
+            FROM personal_preference as pp
+        ) AND (
+            SELECT pp.showAirCold
+            FROM personal_preference as pp
+        ) OR (
+            SELECT wf.temp_air 
+            FROM weather_forecast as wf 
+            WHERE place_id = place.id
+            AND wf.time = :timeNow
+            LIMIT 1
+        ) > (
+            SElECT pp.airTempMid 
+            FROM personal_preference as pp
+        ) AND (
+            SELECT pp.showAirWarm
+            FROM personal_preference as pp
+        ))
+            ORDER BY id
+        """)
+    fun getPlaceList(timeNow: String): LiveData<List<Place>>
+
+    @Query("SELECT COUNT(*) FROM place")
+    fun getNumbPlaces(): Int
+
 
     /**
      * Henter ut liste med alle steder som er favoritter

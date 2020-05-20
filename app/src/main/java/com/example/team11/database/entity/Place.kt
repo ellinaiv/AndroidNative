@@ -13,6 +13,6 @@ class Place(
 ) {
 
     override fun toString(): String {
-        return "$id:$name[$lat,$lng] tempwater: $tempWater"
+        return "$id:$name[$lat,$lng] tempwater: $tempWater\n"
     }
 }
