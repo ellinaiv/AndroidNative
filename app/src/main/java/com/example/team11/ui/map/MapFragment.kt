@@ -129,6 +129,8 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
         val textNoInternet = view?.findViewById<TextView>(R.id.textNoInternet)
         imageNoInternet?.visibility = View.VISIBLE
         textNoInternet?.visibility = View.VISIBLE
+        searchText.isEnabled = false
+        searchText.text.clear()
         removePlace()
     }
 
@@ -140,6 +142,7 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
         mapView?.visibility = View.VISIBLE
         imageNoInternet.visibility = View.GONE
         textNoInternet.visibility = View.GONE
+        searchText.isEnabled = true
 
         mapFragmentViewModel.places!!.observe(viewLifecycleOwner, Observer {places->
             makeMap(places)
