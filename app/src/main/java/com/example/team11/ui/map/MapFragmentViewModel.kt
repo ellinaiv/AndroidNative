@@ -16,6 +16,7 @@ class MapFragmentViewModel(context: Context): ViewModel() {
     var places: LiveData<List<Place>>? = null
     var personalPreference: LiveData<List<PersonalPreference>>? = null
     private var placeRepository: PlaceRepository? = null
+    val hasInternet = MutableLiveData<Boolean>()
 
     /**
      * Setter verdier
@@ -25,6 +26,7 @@ class MapFragmentViewModel(context: Context): ViewModel() {
             placeRepository = PlaceRepository.getInstance(context)
             places = placeRepository!!.getPlaces()
             personalPreference = placeRepository!!.getPersonalPreferences()
+            hasInternet.value = false
         }
     }
 

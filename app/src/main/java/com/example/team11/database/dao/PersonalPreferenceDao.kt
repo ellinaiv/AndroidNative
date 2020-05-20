@@ -18,4 +18,10 @@ interface PersonalPreferenceDao{
      */
     @Query("SELECT * FROM personal_preference")
     fun getPersonalPreference(): LiveData<List<PersonalPreference>>
+
+    @Query("SELECT falseData FROM personal_preference LIMIT 1")
+    fun getFalseData(): Boolean
+
+    @Query("UPDATE personal_preference SET falseData = :boolean")
+    fun changeFalseData(boolean: Boolean)
 }
