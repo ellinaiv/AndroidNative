@@ -13,11 +13,11 @@ import com.example.team11.database.AppDatabase
 import com.example.team11.database.entity.WeatherForecastDb
 import com.example.team11.util.Constants
 import com.example.team11.database.entity.MetadataTable
+import com.example.team11.util.Util
 import com.example.team11.util.Util.formatToDaysTime
 import com.example.team11.util.Util.formatToHoursTime
 import com.example.team11.util.Util.getNowHourForecastDb
 import com.example.team11.util.Util.getWantedDaysForecastApi
-import com.example.team11.util.Util.getWantedForecastDb
 import com.example.team11.util.Util.getWantedHoursForecastApi
 import com.example.team11.util.Util.shouldFetch
 import com.example.team11.valueObjects.OceanForecast
@@ -25,17 +25,12 @@ import com.example.team11.valueObjects.WeatherForecastApi
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.coroutines.awaitString
 import kotlinx.coroutines.runBlocking
-import org.xmlpull.v1.XmlPullParser
-import org.xmlpull.v1.XmlPullParserFactory
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.io.StringReader
 import java.lang.System.currentTimeMillis
 import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
-import kotlin.random.Random
-import kotlin.random.nextInt
 
 class PlaceRepository private constructor(context: Context) {
     private var allPlaces = mutableListOf<Place>()
@@ -66,8 +61,6 @@ class PlaceRepository private constructor(context: Context) {
                 instance ?: PlaceRepository(context).also {
                     instance = it
                     it.wayOfTransportation.value = Transportation.BIKE
-
-
                 }
             }
     }
@@ -151,7 +144,8 @@ class PlaceRepository private constructor(context: Context) {
         val tag = "tagGetPlaces"
         // TODO("Hvor ofte burde places fetches?")
         // TODO("Kan jeg gjøre non-assertive call her? Dersom favoritePlaces.value er null burde den stoppe å sjekke på første?"
-        val places: LiveData<List<Place>> = placeDao.getPlaceList(getNowHourForecastDb()[0])
+        val places: LiveData<List<Place>> = placeDao.getPlaceList(getNowHourForecastDb(
+            currentTimeMillis())[0])
         Log.d(tag, "getPlaces")
         AsyncTask.execute {
             Log.d("tagDatabase", placeDao.getNumbPlaces().toString())
@@ -160,7 +154,7 @@ class PlaceRepository private constructor(context: Context) {
             if (placeDao.getNumbPlaces() == 0 || shouldFetch(
                     metadataDao,
                     Constants.MEATDATA_ENTRY_PLACE_TABLE,
-                    10,
+                    1,
                     TimeUnit.DAYS
                 )
             ) {
@@ -175,7 +169,7 @@ class PlaceRepository private constructor(context: Context) {
         val tag = "tagGetForecast"
         val placeIds = places.map { it.id }
         val nowForecasts: LiveData<List<WeatherForecastDb>> =
-            weatherForecastDao.getTimeForecastsList(placeIds, getNowHourForecastDb())
+            weatherForecastDao.getTimeForecastsList(placeIds, getNowHourForecastDb(currentTimeMillis()))
         Log.d(tag, "getHourForecast")
         for (place in places) {
             AsyncTask.execute {
@@ -202,9 +196,10 @@ class PlaceRepository private constructor(context: Context) {
      */
     fun getForecast(place: Place, hour: Boolean): LiveData<List<WeatherForecastDb>> {
         val tag = "tagGetForecast"
-        val forecast: LiveData<List<WeatherForecastDb>> =
-            weatherForecastDao.getTimeForecast(place.id, getWantedForecastDb(hour))
-        Log.d(tag, "getForecast")
+        val forecast: LiveData<List<WeatherForecastDb>> = weatherForecastDao.getTimeForecast(
+            place.id,
+            Util.getWantedForecastDb(hour, currentTimeMillis())
+        )
 
         AsyncTask.execute {
             if (weatherForecastDao.getNumbForecast() == 0 || shouldFetch(
@@ -225,24 +220,26 @@ class PlaceRepository private constructor(context: Context) {
 
     fun cachePlacesDb(places: List<Place>) {
         Log.d("tagDatabase", "Lagrer nye steder")
+        placeDao.insertPlaceList(places)
         metadataDao.updateDateLastCached(
             MetadataTable(
                 Constants.MEATDATA_ENTRY_PLACE_TABLE,
                 currentTimeMillis()
             )
         )
-        placeDao.insertPlaceList(places)
     }
 
     fun cacheWeatherForecastDb(weatherForecast: List<WeatherForecastDb>, placeId: Int) {
-        Log.d("tagDatabase", weatherForecast.toString())
+        if(weatherForecastDao.forecastsExist(placeId)){
+           // weatherForecastDao.deleteForecastsForPlace(placeId)
+        }
+        weatherForecastDao.insertWeatherForecast(weatherForecast)
         metadataDao.updateDateLastCached(
             MetadataTable(
                 Constants.METADATA_ENTRY_WEATHER_FORECAST_TABLE + placeId.toString(),
                 currentTimeMillis()
             )
         )
-        weatherForecastDao.insertWeatherForecast(weatherForecast)
     }
 
     /**
@@ -283,65 +280,21 @@ class PlaceRepository private constructor(context: Context) {
      */
 
     private fun fetchPlaces(url: String): List<Place> {
-        val places = ArrayList<Place>()
+        var places = listOf<Place>()
         val tag = "getData() ---->"
+        Log.d("tagGetPlaces", "Fetcher nye steder")
         runBlocking {
             try {
 
                 val response = Fuel.get(url).awaitString()
-                val factory = XmlPullParserFactory.newInstance()
-                factory.isNamespaceAware = true
-                val xpp = factory.newPullParser()
-                xpp.setInput(StringReader(response))
-                var eventType = xpp.eventType
-
-                lateinit var name: String
-                lateinit var lat: String
-                lateinit var long: String
-                var tempWater = Int.MAX_VALUE
-                var id = 0
-
-                while (eventType != XmlPullParser.END_DOCUMENT) {
-                    if (eventType == XmlPullParser.START_TAG && xpp.name == "place") {
-                        for (i in 0 until xpp.attributeCount) {
-                            val attrName = xpp.getAttributeName(i)
-                            if (attrName != null && attrName == "id") {
-                                id = xpp.getAttributeValue(i).toInt()
-                            }
-                        }
-                    } else if (eventType == XmlPullParser.START_TAG && xpp.name == "name") {
-                        xpp.next()
-                        name = xpp.text
-                        xpp.next()
-                    } else if (eventType == XmlPullParser.START_TAG && xpp.name == "lat") {
-                        xpp.next()
-                        lat = xpp.text
-                        xpp.next()
-
-                    } else if (eventType == XmlPullParser.START_TAG && xpp.name == "long") {
-                        xpp.next()
-                        long = xpp.text
-                        xpp.next()
-                    } else if (eventType == XmlPullParser.START_TAG && xpp.name == "temp_vann") {
-                        if (xpp.next() != XmlPullParser.END_TAG) {
-                            tempWater = xpp.text.toInt()
-                            xpp.next()
-                        }
-                        Log.d("tag2", tempWater.toString())
-                        places.add(
-                            Place(
-                                id++,
-                                name,
-                                lat.toDouble(),
-                                long.toDouble(),
-                                tempWater
-                            )
-                        )
+                places = Util.parseXMLPlace(response)
+                places.forEach { place ->
+                    if (placeDao.placeExists(place.id)) {
+                        place.favorite = placeDao.isPlaceFavoriteNonLiveData(place.id)
                     }
-
-                    eventType = xpp.next()
-
                 }
+
+
             } catch (e: Exception) {
                 Log.e(tag, e.message.toString())
             }

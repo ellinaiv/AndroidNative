@@ -281,10 +281,12 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
             })
             textTempWater.text = getString(R.string.tempC, place.tempWater)
         } else {
+            //TODO("Kan dette settes i xml, så er dette kallet unødvendig?")
             imageTempWater.setImageResource(R.drawable.ic_nodatawave)
             textTempWater.text = getString(R.string.no_data)
         }
 
+        //TODO("Kan dette settes i xml, så er dette kallet unødvendig?")
         imageTempAir.setImageDrawable(getDrawable(this@MapFragment.context!!, R.drawable.ic_noweatherdata))
         textTempAir.text = getString(R.string.no_data)
         mapFragmentViewModel.getNowForcast(place)?.observe(viewLifecycleOwner, Observer {forecast ->
@@ -331,6 +333,7 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
         )
         style.addImage(iconIdBlue, icon)
 
+        //TODO("Kan dette settes i xml, så er dette kallet unødvendig?")
         icon = BitmapFactory.decodeResource(
             this.resources,
             R.drawable.marker_no_data
