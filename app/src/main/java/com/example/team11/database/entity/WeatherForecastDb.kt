@@ -1,10 +1,11 @@
 package com.example.team11.database.entity
 
 import androidx.room.*
+import androidx.room.ForeignKey.CASCADE
 
 
 @Entity(tableName = "weather_forecast",
-    foreignKeys = [ForeignKey(entity = Place::class, parentColumns = arrayOf("id"), childColumns = arrayOf("place_id"), onDelete = ForeignKey.CASCADE)],
+    foreignKeys = [ForeignKey(entity = Place::class, parentColumns = arrayOf("id"), childColumns = arrayOf("place_id"), onDelete = CASCADE)],
     primaryKeys = ["place_id","time"])
 data class WeatherForecastDb(
     @ColumnInfo(name = "place_id")

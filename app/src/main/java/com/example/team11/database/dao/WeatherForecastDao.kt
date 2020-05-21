@@ -14,10 +14,10 @@ interface WeatherForecastDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertWeatherForecast(forecast: List<WeatherForecastDb>)
 
-    @Query("DELETE FROM place WHERE id = :placeId")
+    @Query("DELETE FROM weather_forecast WHERE place_id = :placeId")
     fun deleteForecastsForPlace(placeId: Int)
 
-    @Query("SELECT COUNT(*) FROM place WHERE id = :placeId")
+    @Query("SELECT COUNT(*) FROM weather_forecast WHERE place_id = :placeId")
     fun forecastsExist(placeId: Int): Boolean
 
     /**

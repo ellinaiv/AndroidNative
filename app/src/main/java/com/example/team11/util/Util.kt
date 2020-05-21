@@ -17,10 +17,10 @@ object Util {
         c.set(Calendar.MINUTE, 0)
         c.set(Calendar.SECOND, 0)
         val stringFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
-        for (hour in 0..Constants.NUMB_HOURS_FORECAST){
+        for (hour in 0..(Constants.NUMB_HOURS_FORECAST + 1)){
             listTimes.add(stringFormat.format(c.time))
             c.add(Calendar.HOUR, 1)
-            Log.d("Gattering times", stringFormat.format(c.time))
+            Log.d("Gattering times API", stringFormat.format(c.time))
         }
         return listTimes
     }
@@ -32,11 +32,12 @@ object Util {
         c.set(Calendar.HOUR, 12)
         c.set(Calendar.MINUTE, 0)
         c.set(Calendar.SECOND, 0)
+        Log.d("Gattering times now: ", c.toString())
         val stringFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
-        for (hour in 1..Constants.NUMB_DAYS_FORECAST){
-            c.add(Calendar.DATE, 1)
+        for (hour in 0..Constants.NUMB_DAYS_FORECAST){
             listTimes.add(stringFormat.format(c.time))
-            Log.d("Gattering times", stringFormat.format(c.time))
+            Log.d("Gattering times API", stringFormat.format(c.time))
+            c.add(Calendar.DATE, 1)
         }
         return listTimes
     }
@@ -93,9 +94,9 @@ object Util {
         }
 
         for(time in 0..cnt){
-            c.add(timeType, 1)
             listTimes.add(stringFormat.format(c.time))
-            Log.d("Gattering times", stringFormat.format(c.time))
+            c.add(timeType, 1)
+            Log.d("Gattering times Db", stringFormat.format(c.time))
         }
         Log.d("FORCAST", listTimes.toString())
         return listTimes
