@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginBottom="?attr/actionBarSize"
+    android:background="@color/backgroundLight"
     tools:context=".ui.map.MapFragment">
 
     <com.mapbox.mapboxsdk.maps.MapView
