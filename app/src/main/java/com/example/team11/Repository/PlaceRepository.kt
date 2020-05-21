@@ -223,24 +223,25 @@ class PlaceRepository private constructor(context: Context) {
 
     fun cachePlacesDb(places: List<Place>) {
         Log.d("tagDatabase", "Lagrer nye steder")
+        placeDao.insertPlaceList(places)
         metadataDao.updateDateLastCached(
             MetadataTable(
                 Constants.MEATDATA_ENTRY_PLACE_TABLE,
                 currentTimeMillis()
             )
         )
-        placeDao.insertPlaceList(places)
     }
 
     fun cacheWeatherForecastDb(weatherForecast: List<WeatherForecastDb>, placeId: Int) {
         Log.d("tagDatabase", weatherForecast.toString())
+        weatherForecastDao.deleteForecastsForPlace(placeId)
+        weatherForecastDao.insertWeatherForecast(weatherForecast)
         metadataDao.updateDateLastCached(
             MetadataTable(
                 Constants.METADATA_ENTRY_WEATHER_FORECAST_TABLE + placeId.toString(),
                 currentTimeMillis()
             )
         )
-        weatherForecastDao.insertWeatherForecast(weatherForecast)
     }
 
     /**
