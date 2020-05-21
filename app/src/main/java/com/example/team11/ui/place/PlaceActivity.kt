@@ -114,6 +114,9 @@ class PlaceActivity : AppCompatActivity() {
         }
 
         buttonUVInfo.setOnClickListener {
+            if (layoutCurrentsInfo.visibility == VISIBLE) {
+                layoutCurrentsInfo.visibility = GONE
+            }
             layoutUVInfo.visibility = VISIBLE
         }
 
@@ -190,9 +193,11 @@ class PlaceActivity : AppCompatActivity() {
      * @param forecast liste med objekter som inneholder værdata
      */
     private fun makeHourForecast(forecast: List<WeatherForecastDb>) {
+        Log.d("tagTemp", forecast.size.toString())
+
         if (forecast.size >= 6){
-            // vær nå
             Log.d("tagTemp", forecast.toString())
+            // vær nå
             if (forecast[0].tempAir != Int.MAX_VALUE){
                 textTempAir.text = getString(R.string.tempC, forecast[0].tempAir)
                 imageWeather.setImageDrawable(getDrawable(resources.getIdentifier(forecast[0].symbol,
