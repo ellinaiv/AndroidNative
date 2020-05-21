@@ -13,6 +13,7 @@ import com.example.team11.database.AppDatabase
 import com.example.team11.database.entity.WeatherForecastDb
 import com.example.team11.util.Constants
 import com.example.team11.database.entity.MetadataTable
+import com.example.team11.util.Util
 import com.example.team11.util.Util.formatToDaysTime
 import com.example.team11.util.Util.formatToHoursTime
 import com.example.team11.util.Util.getNowHourForecastDb
@@ -25,12 +26,9 @@ import com.example.team11.valueObjects.WeatherForecastApi
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.coroutines.awaitString
 import kotlinx.coroutines.runBlocking
-import org.xmlpull.v1.XmlPullParser
-import org.xmlpull.v1.XmlPullParserFactory
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.io.StringReader
 import java.lang.System.currentTimeMillis
 import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
@@ -64,8 +62,6 @@ class PlaceRepository private constructor(context: Context) {
                 instance ?: PlaceRepository(context).also {
                     instance = it
                     it.wayOfTransportation.value = Transportation.BIKE
-
-
                 }
             }
     }
@@ -284,70 +280,22 @@ class PlaceRepository private constructor(context: Context) {
      */
 
     private fun fetchPlaces(url: String): List<Place> {
-        val places = ArrayList<Place>()
+        var places = listOf<Place>()
         val tag = "getData() ---->"
         Log.d("tagGetPlaces", "Fetcher nye steder")
         runBlocking {
             try {
 
                 val response = Fuel.get(url).awaitString()
-                val factory = XmlPullParserFactory.newInstance()
-                factory.isNamespaceAware = true
-                val xpp = factory.newPullParser()
-                xpp.setInput(StringReader(response))
-                var eventType = xpp.eventType
-
-                lateinit var name: String
-                lateinit var lat: String
-                lateinit var long: String
-                var tempWater = Int.MAX_VALUE
-                var id = 0
-
-                while (eventType != XmlPullParser.END_DOCUMENT) {
-                    if (eventType == XmlPullParser.START_TAG && xpp.name == "place") {
-                        for (i in 0 until xpp.attributeCount) {
-                            val attrName = xpp.getAttributeName(i)
-                            if (attrName != null && attrName == "id") {
-                                id = xpp.getAttributeValue(i).toInt()
-                            }
-                        }
-                    } else if (eventType == XmlPullParser.START_TAG && xpp.name == "name") {
-                        xpp.next()
-                        name = xpp.text
-                        xpp.next()
-                    } else if (eventType == XmlPullParser.START_TAG && xpp.name == "lat") {
-                        xpp.next()
-                        lat = xpp.text
-                        xpp.next()
-
-                    } else if (eventType == XmlPullParser.START_TAG && xpp.name == "long") {
-                        xpp.next()
-                        long = xpp.text
-                        xpp.next()
-                    } else if (eventType == XmlPullParser.START_TAG && xpp.name == "temp_vann") {
-                        if (xpp.next() != XmlPullParser.END_TAG) {
-                            tempWater = xpp.text.toInt()
-                            xpp.next()
-                        }
-                        Log.d("tag2", tempWater.toString())
-                        var favorite = false
-                        Log.d("tagDatabasePlaceExists", placeDao.placeExists(id).toString())
-                        if (placeDao.placeExists(id)) favorite = placeDao.isPlaceFavoriteNonLiveData(id)
-                        places.add(
-                            Place(
-                                id,
-                                name,
-                                lat.toDouble(),
-                                long.toDouble(),
-                                tempWater,
-                                favorite
-                            )
-                        )
+                Log.d("TAG%", response)
+                places = Util.parseXMLPlace(response)
+                places.forEach { place ->
+                    if (placeDao.placeExists(place.id)) {
+                        place.favorite = placeDao.isPlaceFavoriteNonLiveData(place.id)
                     }
-
-                    eventType = xpp.next()
-
                 }
+
+
             } catch (e: Exception) {
                 Log.e(tag, e.message.toString())
             }

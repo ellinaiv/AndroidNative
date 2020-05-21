@@ -2,6 +2,10 @@ package com.example.team11.util
 
 import android.util.Log
 import com.example.team11.database.dao.MetadataDao
+import com.example.team11.database.entity.Place
+import org.xmlpull.v1.XmlPullParser
+import org.xmlpull.v1.XmlPullParserFactory
+import java.io.StringReader
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -143,4 +147,65 @@ object Util {
         return false
 
     }
+
+    fun parseXMLPlace(response: String): List<Place>{
+        Log.d("TEST", response)
+        val places = ArrayList<Place>()
+        val factory = XmlPullParserFactory.newInstance()
+        factory.isNamespaceAware = true
+        val xpp = factory.newPullParser()
+        xpp.setInput(StringReader(response))
+        var eventType = xpp.eventType
+
+        lateinit var name: String
+        lateinit var lat: String
+        lateinit var long: String
+        var tempWater = Int.MAX_VALUE
+        var id = 0
+
+        while (eventType != XmlPullParser.END_DOCUMENT) {
+            if (eventType == XmlPullParser.START_TAG && xpp.name == "place") {
+                for (i in 0 until xpp.attributeCount) {
+                    val attrName = xpp.getAttributeName(i)
+                    if (attrName != null && attrName == "id") {
+                        id = xpp.getAttributeValue(i).toInt()
+                    }
+                }
+            } else if (eventType == XmlPullParser.START_TAG && xpp.name == "name") {
+                xpp.next()
+                name = xpp.text
+                xpp.next()
+            } else if (eventType == XmlPullParser.START_TAG && xpp.name == "lat") {
+                xpp.next()
+                lat = xpp.text
+                xpp.next()
+
+            } else if (eventType == XmlPullParser.START_TAG && xpp.name == "long") {
+                xpp.next()
+                long = xpp.text
+                xpp.next()
+            } else if (eventType == XmlPullParser.START_TAG && xpp.name == "temp_vann") {
+                tempWater = Int.MAX_VALUE
+                if (xpp.next() != XmlPullParser.END_TAG) {
+                    tempWater = xpp.text.toInt()
+                    xpp.next()
+                }
+                Log.d("tag2", tempWater.toString())
+                places.add(
+                    Place(
+                        id,
+                        name,
+                        lat.toDouble(),
+                        long.toDouble(),
+                        tempWater,
+                        false
+                    )
+                )
+            }
+            eventType = xpp.next()
+
+        }
+        return places
+    }
+
 }
