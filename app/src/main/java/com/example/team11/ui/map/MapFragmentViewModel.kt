@@ -14,7 +14,7 @@ import com.mapbox.geojson.Point
 
 class MapFragmentViewModel(context: Context): ViewModel() {
     var places: LiveData<List<Place>>? = null
-    var personalPreference: LiveData<List<PersonalPreference>>? = null
+    lateinit var personalPreference: LiveData<List<PersonalPreference>>
     private var placeRepository: PlaceRepository? = null
     val hasInternet = MutableLiveData<Boolean>()
 
@@ -66,7 +66,7 @@ class MapFragmentViewModel(context: Context): ViewModel() {
 //        if(personalPreferenceValue.waterTempMid <= place.tempWater) return true
 //       return false
 //        }
-        val personalPreferenceValue = personalPreference?.value?.get(0)?: return false
+        val personalPreferenceValue = personalPreference.value?.get(0)?: return false
         if(personalPreferenceValue.showBasedOnWater){
             if(personalPreferenceValue.waterTempMid <= place.tempWater) return true
             return false
@@ -82,7 +82,7 @@ class MapFragmentViewModel(context: Context): ViewModel() {
      * @return true hvis graa, false ellers
      */
     fun isPinGray(place: Place): Boolean{
-        val personalPreferenceValue = personalPreference?.value?.get(0)?: return true
+        val personalPreferenceValue = personalPreference.value?.get(0)?: return true
         if(personalPreferenceValue.showBasedOnWater){
             if(place.tempWater == Int.MAX_VALUE) return true
             return false
@@ -96,7 +96,7 @@ class MapFragmentViewModel(context: Context): ViewModel() {
      * @param place: Stedet man vil sjekke
      */
     fun redWave(place: Place): Boolean{
-        if(personalPreference!!.value!![0]!!.waterTempMid <= place.tempWater) return true
+        if(personalPreference.value?.get(0)?.waterTempMid!! <= place.tempWater) return true
         return false
     }
 

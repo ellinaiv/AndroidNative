@@ -30,17 +30,19 @@ class FavoritesFragment : Fragment() {
         val root = inflater.inflate(R.layout.fragment_favorites, container, false)
         viewModel.favoritePlaces!!.observe(viewLifecycleOwner, Observer { favoritePlaces: List<Place> ->
             viewModel.getForecasts(favoritePlaces)!!.observe(viewLifecycleOwner, Observer{ forecasts ->
-                Log.d("TagTemp", forecasts.toString())
-                recycler_view.layoutManager = layoutManager
-                recycler_view.adapter =
-                    ListAdapter(favoritePlaces, forecasts, requireContext(), viewModel, true)
-                if (recycler_view.adapter!!.itemCount == 0) {
-                    imageEmptyListShark.visibility = View.VISIBLE
-                    textNoElementInList.visibility = View.VISIBLE
-                } else {
-                    imageEmptyListShark.visibility = View.GONE
-                    textNoElementInList.visibility = View.GONE
-                }
+                viewModel.personalPreference.observe(viewLifecycleOwner, Observer { _ ->
+                    Log.d("TagTemp", forecasts.toString())
+                    recycler_view.layoutManager = layoutManager
+                    recycler_view.adapter =
+                        ListAdapter(favoritePlaces, forecasts, requireContext(), viewModel, true)
+                    if (recycler_view.adapter!!.itemCount == 0) {
+                        imageEmptyListShark.visibility = View.VISIBLE
+                        textNoElementInList.visibility = View.VISIBLE
+                    } else {
+                        imageEmptyListShark.visibility = View.GONE
+                        textNoElementInList.visibility = View.GONE
+                    }
+                })
             })
         })
 

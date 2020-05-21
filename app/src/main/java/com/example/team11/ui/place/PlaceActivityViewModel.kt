@@ -17,7 +17,7 @@ class PlaceActivityViewModel(context: Context): ViewModel() {
     var place: MutableLiveData<Place>? = null
     lateinit var isFavorite: LiveData<Boolean>
     private var placeRepository: PlaceRepository? = null
-    private var personalPreference: MutableLiveData<PersonalPreference>? = null
+    lateinit var personalPreference: LiveData<List<PersonalPreference>>
 
     /**
      * Setter verdier
@@ -27,6 +27,7 @@ class PlaceActivityViewModel(context: Context): ViewModel() {
             placeRepository = PlaceRepository.getInstance(context)
             place = placeRepository!!.getCurrentPlace()
             isFavorite = placeRepository!!.isPlaceFavorite(place!!.value!!)
+            personalPreference = placeRepository!!.getPersonalPreferences()
         }
     }
 
@@ -81,7 +82,7 @@ class PlaceActivityViewModel(context: Context): ViewModel() {
      * @param place: Stedet man vil sjekke
      */
     fun redWave(place: Place): Boolean{
-        if(personalPreference!!.value!!.waterTempMid <= place.tempWater) return true
+        if(personalPreference.value?.get(0)?.waterTempMid!! <= place.tempWater) return true
         return false
     }
 }
