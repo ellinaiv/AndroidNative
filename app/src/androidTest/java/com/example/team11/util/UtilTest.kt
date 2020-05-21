@@ -1,5 +1,6 @@
 package com.example.team11.util
 
+import android.util.Log
 import com.example.team11.database.entity.Place
 import org.junit.Assert.*
 import org.junit.Test
@@ -199,11 +200,27 @@ class UtilTest{
         assertEquals(answer, placesFromXML)
     }
 
+    @Test
+    fun testGetWantedForecastDbDay(){
+        val time: Long = 1590066907777
+        val answer = listOf("22/05", "23/05", "24/05", "25/05", "26/05", "27/05")
+        val timesDay = Util.getWantedForecastDb(false, time)
+        assertEquals(answer, timesDay)
+    }
 
+    @Test
+    fun testGetWantedForecastDbHour(){
+        val time: Long = 1590066907777
+        val answer = listOf("15", "16", "17", "18", "19", "20", "21")
+        val timesHour = Util.getWantedForecastDb(true, time)
+        assertEquals(answer, timesHour)
+    }
 
-
-
-
-
-
+    @Test
+    fun testGetNowHourForecastDb(){
+        val time: Long = 1590066907777
+        val answer = listOf("15")
+        val timesHour = Util.getNowHourForecastDb(time)
+        assertEquals(answer, timesHour)
+    }
 }

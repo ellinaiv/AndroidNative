@@ -18,7 +18,6 @@ import com.example.team11.util.Util.formatToDaysTime
 import com.example.team11.util.Util.formatToHoursTime
 import com.example.team11.util.Util.getNowHourForecastDb
 import com.example.team11.util.Util.getWantedDaysForecastApi
-import com.example.team11.util.Util.getWantedForecastDb
 import com.example.team11.util.Util.getWantedHoursForecastApi
 import com.example.team11.util.Util.shouldFetch
 import com.example.team11.valueObjects.OceanForecast
@@ -145,7 +144,8 @@ class PlaceRepository private constructor(context: Context) {
         val tag = "tagGetPlaces"
         // TODO("Hvor ofte burde places fetches?")
         // TODO("Kan jeg gjøre non-assertive call her? Dersom favoritePlaces.value er null burde den stoppe å sjekke på første?"
-        val places: LiveData<List<Place>> = placeDao.getPlaceList(getNowHourForecastDb()[0])
+        val places: LiveData<List<Place>> = placeDao.getPlaceList(getNowHourForecastDb(
+            currentTimeMillis())[0])
         Log.d(tag, "getPlaces")
         AsyncTask.execute {
             Log.d("tagDatabase", placeDao.getNumbPlaces().toString())
@@ -169,7 +169,7 @@ class PlaceRepository private constructor(context: Context) {
         val tag = "tagGetForecast"
         val placeIds = places.map { it.id }
         val nowForecasts: LiveData<List<WeatherForecastDb>> =
-            weatherForecastDao.getTimeForecastsList(placeIds, getNowHourForecastDb())
+            weatherForecastDao.getTimeForecastsList(placeIds, getNowHourForecastDb(currentTimeMillis()))
         Log.d(tag, "getHourForecast")
         for (place in places) {
             AsyncTask.execute {
@@ -196,9 +196,10 @@ class PlaceRepository private constructor(context: Context) {
      */
     fun getForecast(place: Place, hour: Boolean): LiveData<List<WeatherForecastDb>> {
         val tag = "tagGetForecast"
-        val forecast: LiveData<List<WeatherForecastDb>> =
-            weatherForecastDao.getTimeForecast(place.id, getWantedForecastDb(hour))
-        Log.d(tag, "getForecast")
+        val forecast: LiveData<List<WeatherForecastDb>> = weatherForecastDao.getTimeForecast(
+            place.id,
+            Util.getWantedForecastDb(hour, currentTimeMillis())
+        )
 
         AsyncTask.execute {
             if (weatherForecastDao.getNumbForecast() == 0 || shouldFetch(
@@ -229,7 +230,6 @@ class PlaceRepository private constructor(context: Context) {
     }
 
     fun cacheWeatherForecastDb(weatherForecast: List<WeatherForecastDb>, placeId: Int) {
-        Log.d("tagDatabase", weatherForecast.toString())
         if(weatherForecastDao.forecastsExist(placeId)){
            // weatherForecastDao.deleteForecastsForPlace(placeId)
         }
@@ -287,7 +287,6 @@ class PlaceRepository private constructor(context: Context) {
             try {
 
                 val response = Fuel.get(url).awaitString()
-                Log.d("TAG%", response)
                 places = Util.parseXMLPlace(response)
                 places.forEach { place ->
                     if (placeDao.placeExists(place.id)) {

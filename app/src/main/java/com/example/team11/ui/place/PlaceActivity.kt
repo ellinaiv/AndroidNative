@@ -165,6 +165,7 @@ class PlaceActivity : AppCompatActivity() {
      * @param forecast liste med objekter som inneholder værdata
      */
     private fun makeDayForecast(forecast: List<WeatherForecastDb>) {
+        Log.d("TESTER", forecast.size.toString())
         if (forecast.size >= 5){
             setForecastViews(forecast[0], textDate1Day, imageForecast1Day,
                 textTemp1Day, textRain1Day, "")

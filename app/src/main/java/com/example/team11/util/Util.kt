@@ -15,7 +15,7 @@ object Util {
 
 
     fun getWantedHoursForecastApi(): List<String>{
-        var listTimes = arrayListOf<String>()
+        val listTimes = arrayListOf<String>()
         val c: Calendar = GregorianCalendar()
         c.time = Date(System.currentTimeMillis())
         c.set(Calendar.MINUTE, 0)
@@ -30,7 +30,7 @@ object Util {
     }
 
     fun getWantedDaysForecastApi(): List<String>{
-        var listTimes = arrayListOf<String>()
+        val listTimes = arrayListOf<String>()
         val c: Calendar = GregorianCalendar()
         c.time = Date(System.currentTimeMillis())
         c.set(Calendar.HOUR, 12)
@@ -45,64 +45,36 @@ object Util {
         return listTimes
     }
 
-    /*
-    fun getWantedHoursForecastDb(): List<String>{
-        var listTimes = arrayListOf<String>()
-        val c: Calendar = GregorianCalendar()
-        c.time = Date(System.currentTimeMillis())
-        c.set(Calendar.MINUTE, 0)
-        c.set(Calendar.SECOND, 0)
-        val stringFormat = SimpleDateFormat("HH")
+
+    private fun getWantedHoursForecastDb(c: Calendar, stringFormat: SimpleDateFormat): List<String>{
+        val listTimes = arrayListOf<String>()
         for (hour in 0..Constants.NUMB_HOURS_FORECAST){
             listTimes.add(stringFormat.format(c.time))
             c.add(Calendar.HOUR, 1)
             Log.d("Gattering times", stringFormat.format(c.time))
         }
+        Log.d("HOUR", listTimes.toString())
         return listTimes
     }
 
-    fun getWantedDaysForecastDb(): List<String>{
-        var listTimes = arrayListOf<String>()
-        val c: Calendar = GregorianCalendar()
-        c.time = Date(System.currentTimeMillis())
-        c.set(Calendar.HOUR, 12)
-        c.set(Calendar.MINUTE, 0)
-        c.set(Calendar.SECOND, 0)
-        val stringFormat = SimpleDateFormat("dd/MM")
-        for (hour in 0..Constants.NUMB_DAYS_FORECAST){
-            c.add(Calendar.DATE, 1)
-            listTimes.add(stringFormat.format(c.time))
-            Log.d("Gattering times", stringFormat.format(c.time))
-        }
-        return listTimes
-    }*/
-
-    fun getWantedForecastDb(hour: Boolean): List<String>{
+    private fun getWantedDaysForecastDb(c : Calendar, stringFormat: SimpleDateFormat): List<String>{
         val listTimes = arrayListOf<String>()
-        val c: Calendar = GregorianCalendar()
-        c.time = Date(System.currentTimeMillis())
-        var timeType = Calendar.HOUR
-        var cnt = Constants.NUMB_HOURS_FORECAST
-        if(! hour){
-            Log.d("FORCAST", "DAY")
-            c.set(Calendar.HOUR, 12)
-            timeType = Calendar.DATE
-            cnt = Constants.NUMB_DAYS_FORECAST
+        c.set(Calendar.HOUR, 12)
+        for (hour in 0 .. Constants.NUMB_DAYS_FORECAST){
+            listTimes.add(stringFormat.format(c.time))
+            c.add(Calendar.DATE, 1)
         }
+        Log.d("DAY", listTimes.toString())
+        return listTimes
+    }
+
+    fun getWantedForecastDb(hour: Boolean, currentTime: Long): List<String>{
+        val c: Calendar = GregorianCalendar()
+        c.time = Date(currentTime)
         c.set(Calendar.MINUTE, 0)
         c.set(Calendar.SECOND, 0)
-        val stringFormat = when(hour){
-            true-> SimpleDateFormat("HH")
-            false->SimpleDateFormat("dd/MM")
-        }
-
-        for(time in 0..cnt){
-            c.add(timeType, 1)
-            listTimes.add(stringFormat.format(c.time))
-            Log.d("Gattering times", stringFormat.format(c.time))
-        }
-        Log.d("FORCAST", listTimes.toString())
-        return listTimes
+        if(hour) return getWantedHoursForecastDb(c, SimpleDateFormat("HH"))
+        return getWantedDaysForecastDb(c, SimpleDateFormat("dd/MM"))
     }
 
     fun formatToHoursTime(time: String): String{
@@ -119,10 +91,10 @@ object Util {
         return formatter.format(dateTime)
     }
 
-    fun getNowHourForecastDb(): List<String>{
-        var listTimes = arrayListOf<String>()
+    fun getNowHourForecastDb(currentTime: Long): List<String>{
+        val listTimes = arrayListOf<String>()
         val c: Calendar = GregorianCalendar()
-        c.time = Date(System.currentTimeMillis())
+        c.time = Date(currentTime)
         c.set(Calendar.MINUTE, 0)
         c.set(Calendar.SECOND, 0)
         val stringFormat = SimpleDateFormat("HH")
