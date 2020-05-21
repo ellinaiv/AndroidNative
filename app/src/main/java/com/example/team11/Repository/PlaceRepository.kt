@@ -234,7 +234,9 @@ class PlaceRepository private constructor(context: Context) {
 
     fun cacheWeatherForecastDb(weatherForecast: List<WeatherForecastDb>, placeId: Int) {
         Log.d("tagDatabase", weatherForecast.toString())
-        weatherForecastDao.deleteForecastsForPlace(placeId)
+        if(weatherForecastDao.forecastsExist(placeId)){
+            weatherForecastDao.deleteForecastsForPlace(placeId)
+        }
         weatherForecastDao.insertWeatherForecast(weatherForecast)
         metadataDao.updateDateLastCached(
             MetadataTable(

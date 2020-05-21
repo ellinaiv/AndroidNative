@@ -17,6 +17,9 @@ interface WeatherForecastDao {
     @Query("DELETE FROM place WHERE id = :placeId")
     fun deleteForecastsForPlace(placeId: Int)
 
+    @Query("SELECT COUNT(*) FROM place WHERE id = :placeId")
+    fun forecastsExist(placeId: Int): Boolean
+
     /**
      * Henter ut alle forecast for alle steder med tidspunkt nå
      * @return liste med HourForecast
