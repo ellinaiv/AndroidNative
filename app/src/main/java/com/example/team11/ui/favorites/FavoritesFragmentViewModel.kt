@@ -13,12 +13,13 @@ class FavoritesFragmentViewModel(context: Context): ViewModel() {
 
     var favoritePlaces: LiveData<List<Place>>? = null
     private var placeRepository: PlaceRepository? = null
-    private var personalPreference: MutableLiveData<PersonalPreference>? = null
+    lateinit var personalPreference: LiveData<List<PersonalPreference>>
 
     init {
         if(favoritePlaces == null){
             placeRepository = PlaceRepository.getInstance(context)
             favoritePlaces = placeRepository!!.getFavoritePlaces()
+            personalPreference = placeRepository!!.getPersonalPreferences()
         }
     }
     class InstanceCreator(val context: Context) : ViewModelProvider.Factory {
@@ -42,7 +43,7 @@ class FavoritesFragmentViewModel(context: Context): ViewModel() {
      * @param place: Stedet man vil sjekke
      */
     fun redWave(place: Place): Boolean{
-        if(personalPreference!!.value!!.waterTempMid <= place.tempWater) return true
+        if(personalPreference.value?.get(0)!!.waterTempMid <= place.tempWater) return true
         return false
     }
 }
