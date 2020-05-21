@@ -149,7 +149,6 @@ object Util {
     }
 
     fun parseXMLPlace(response: String): List<Place>{
-        Log.d("TEST", response)
         val places = ArrayList<Place>()
         val factory = XmlPullParserFactory.newInstance()
         factory.isNamespaceAware = true
@@ -190,7 +189,6 @@ object Util {
                     tempWater = xpp.text.toInt()
                     xpp.next()
                 }
-                Log.d("tag2", tempWater.toString())
                 places.add(
                     Place(
                         id,
