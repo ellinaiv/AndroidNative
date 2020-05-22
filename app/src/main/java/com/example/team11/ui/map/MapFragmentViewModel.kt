@@ -74,10 +74,7 @@ class MapFragmentViewModel(context: Context): ViewModel() {
             if(personalPreferenceValue.waterTempMid <= place.tempWater) return true
             return false
         }
-        Log.d("isPlaceWarm", "BEASET PÅ AIR")
         val tempAir = getPlaceNowForecast(place) ?: return false
-        Log.d("isPlaceWarm", tempAir.tempAir.toString() + " <> " + personalPreferenceValue.airTempMid.toString())
-        Log.d("aitTemp", personalPreferenceValue.airTempMid.toString())
         if(personalPreferenceValue.airTempMid <= tempAir.tempAir) return true
         return false
     }

@@ -11,6 +11,7 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
@@ -42,12 +43,15 @@ class PlaceActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         Mapbox.getInstance(this, getString(R.string.access_token))
         setContentView(R.layout.activity_place)
-        Log.d("tagPlace", "kommet inn ")
         supportActionBar!!.hide()
 
         //Observerer stedet som er valgt
-        viewModel.place!!.observe(this, Observer { place ->
-            Log.d("tagPlace", place.toString())
+        viewModel.place?.observe(this, Observer { place ->
+            if(place == null){
+                Toast.makeText(this, getString(R.string.no_place), Toast.LENGTH_LONG).show()
+                finish()
+            }
+
             makeAboutPage(place, savedInstanceState)
 
             viewModel.isFavorite.observe(this, Observer { isFavorite ->
@@ -57,14 +61,14 @@ class PlaceActivity : AppCompatActivity() {
 
         // henter langtidsvarsel vær
         viewModel.getDayForecast().observe(this, Observer { dayForecast ->
-            Log.d("Fra databasen", dayForecast.toString())
+            Log.d("Fra databasen day", dayForecast.toString())
 
             makeDayForecast(dayForecast)
         })
 
         // henter timesvarsel vær
         viewModel.getHourForecast().observe(this, Observer { hourForecast ->
-            Log.d("Fra databasen", hourForecast.toString())
+            Log.d("Fra databasen hour", hourForecast.toString())
             makeHourForecast(hourForecast)
         })
 

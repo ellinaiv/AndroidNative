@@ -12,8 +12,8 @@ import com.example.team11.R
 
 class DirectionsActivityViewModel(context: Context): ViewModel() {
     var place: LiveData<Place>? = null
-    var wayOfTransportation: MutableLiveData<Transportation>? = null
-    private var placeRepository: PlaceRepository? = null
+    lateinit var wayOfTransportation: MutableLiveData<Transportation>
+    lateinit var placeRepository: PlaceRepository
 
 
     /**
@@ -22,8 +22,8 @@ class DirectionsActivityViewModel(context: Context): ViewModel() {
     init {
         if(place == null){
             placeRepository = PlaceRepository.getInstance(context)
-            place = placeRepository!!.getCurrentPlace()
-            wayOfTransportation = placeRepository!!.getWayOfTransportation()
+            place = placeRepository.getCurrentPlace()
+            wayOfTransportation = placeRepository.getWayOfTransportation()
         }
     }
 
@@ -47,7 +47,7 @@ class DirectionsActivityViewModel(context: Context): ViewModel() {
      * @param way: måten brukeren ønsker å komme seg til stranden
      */
     fun changeWayOfTransportation(way: Transportation){
-        placeRepository!!.changeWayOfTransportation(way)
+        placeRepository.changeWayOfTransportation(way)
     }
 
     /**
