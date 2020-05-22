@@ -249,6 +249,7 @@ class PlaceRepository private constructor(context: Context) {
 
     private fun fetchPlaces(url: String): List<Place> {
         var places = listOf<Place>()
+        val tag = "getData() ---->"
         runBlocking {
             try {
 
@@ -261,7 +262,9 @@ class PlaceRepository private constructor(context: Context) {
                 }
 
 
-            } catch (e: Exception) { }
+            } catch (e: Exception) {
+                Log.e(tag, e.message.toString())
+            }
         }
         return places
     }
@@ -288,13 +291,16 @@ class PlaceRepository private constructor(context: Context) {
                         response.body()?.OceanForecastLayers?.get(1)
                             ?.OceanForecastDetails?.seaSpeed?.content?.toDouble()
                             ?.let {
+                                Log.d("tagSpeed", place.name + it.toString())
                                 AsyncTask.execute{weatherForecastDao.addSpeed(place.id, it)}
                             }
                     }
                 }
             }
 
-            override fun onFailure(call: Call<OceanForecast>, t: Throwable) {}
+            override fun onFailure(call: Call<OceanForecast>, t: Throwable) {
+                Log.v(tag, "error in fetchCurrentSeaSpeed")
+            }
         })
     }
 
@@ -305,7 +311,8 @@ class PlaceRepository private constructor(context: Context) {
      * @return Når returnerer den bare temperatur, må se ann hvordan det skal være når databasen er på plass
      *
      */
-    private fun fetchWeatherForecast(place: Place) {
+    fun fetchWeatherForecast(place: Place) {
+        val tag = "tagWeather"
         val wantedForecastDb = ArrayList<WeatherForecastDb>()
         val call = ApiClient.build()?.getWeather(place.lat, place.lng)
         var forecastId = 0
@@ -332,6 +339,7 @@ class PlaceRepository private constructor(context: Context) {
                         if (nextHours == null) {
                             nextHours = forecast.types.nextSixHourForecast
                         }
+                        Log.d("tagDatabaseTime", time)
                         wantedForecastDb.add(
                             WeatherForecastDb(
                                 place.id,
@@ -350,7 +358,9 @@ class PlaceRepository private constructor(context: Context) {
                 fetchSeaCurrentSpeed(place)
             }
 
-            override fun onFailure(call: Call<WeatherForecastApi>, t: Throwable) {}
+            override fun onFailure(call: Call<WeatherForecastApi>, t: Throwable) {
+                Log.d(tag, "error")
+            }
         })
     }
 }
