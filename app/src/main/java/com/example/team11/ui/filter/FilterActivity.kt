@@ -68,8 +68,6 @@ class FilterActivity : AppCompatActivity() {
             showWaterCold = checkBoxColdWater.isChecked,
             showWaterWarm = checkBoxWarmWater.isChecked,
             showBasedOnWater = waterRepresentation
-            //TODO("This:")
-            //falseData = pp.falseData,
         )
         viewModel.updatePersonalPreference(pp)
     }

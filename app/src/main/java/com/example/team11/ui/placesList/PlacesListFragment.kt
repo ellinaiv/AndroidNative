@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Parcelable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -20,7 +21,9 @@ import com.example.team11.R
 import com.example.team11.database.entity.WeatherForecastDb
 import com.example.team11.ui.filter.FilterActivity
 import kotlinx.android.synthetic.main.fragment_places_list.*
+import kotlinx.android.synthetic.main.fragment_places_list.imageEmptyListShark
 import kotlinx.android.synthetic.main.fragment_places_list.searchText
+import kotlinx.android.synthetic.main.fragment_places_list.textNoElementInList
 
 class PlacesListFragment : Fragment() {
 
@@ -32,19 +35,14 @@ class PlacesListFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        //TODO("Context i fragment kan være null før onAttach() og etter onDetach(), men burde være ganske safe i oncreat, litt usikker på om jeg burde bruke !! her.")
         placesListViewModel =
             ViewModelProvider(this, PlacesListFragmentViewModel.InstanceCreator(requireContext())).get(PlacesListFragmentViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_places_list, container, false)
         val layoutManager = LinearLayoutManager(context)
 
         placesListViewModel.places!!.observe(viewLifecycleOwner, Observer { places ->
-            Log.d("tagDatabaseStørrelsePlace", places.size.toString())
-            Log.d("tagDatabasePrintList", places.toString())
             recycler_viewPlaces.layoutManager = layoutManager
             placesListViewModel.getForecasts(places)!!.observe(viewLifecycleOwner, Observer { forecasts ->
-                Log.d("tagDatabaseStørrelseForecast", forecasts.size.toString())
-                Log.d("tagDatabasePrintList", forecasts.toString())
                 recycler_viewPlaces.adapter =
                     ListAdapter(
                         places,
@@ -53,12 +51,15 @@ class PlacesListFragment : Fragment() {
                         placesListViewModel,
                         false
                     )
+
+
                 if (recycler_viewPlaces.adapter!!.itemCount == 0) {
                     imageEmptyListShark.visibility = View.VISIBLE
                     textNoElementInList.visibility = View.VISIBLE
                 } else {
                     imageEmptyListShark.visibility = View.GONE
                     textNoElementInList.visibility = View.GONE
+
                 }
                 searchText.doOnTextChanged { text, _, _, _ ->
                     search(text.toString(), places, forecasts)
@@ -68,8 +69,7 @@ class PlacesListFragment : Fragment() {
                 }
             })
         })
-
-        placesListViewModel.personalPreference!!.observe(viewLifecycleOwner, Observer {})
+        placesListViewModel.personalPreference.observe(viewLifecycleOwner, Observer {})
 
         val filterButton = root.findViewById<ImageButton>(R.id.filterButton)
         filterButton.setOnClickListener {
@@ -101,7 +101,7 @@ class PlacesListFragment : Fragment() {
         }
     }
 
-    fun Fragment.hideKeyboard() {
+    private fun Fragment.hideKeyboard() {
         view?.let { activity?.hideKeyboard(it) }
     }
 
@@ -109,9 +109,8 @@ class PlacesListFragment : Fragment() {
         hideKeyboard(currentFocus ?: View(this))
     }
 
-    fun Context.hideKeyboard(view: View) {
+    private fun Context.hideKeyboard(view: View) {
         val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
     }
-
 }
