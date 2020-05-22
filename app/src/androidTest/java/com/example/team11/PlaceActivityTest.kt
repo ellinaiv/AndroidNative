@@ -7,7 +7,6 @@ import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.testing.launchFragmentInContainer
-import androidx.lifecycle.Observer
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.scrollTo
@@ -66,6 +65,11 @@ class PlaceActivityTest {
     @Test
     fun testWaterTemp(){
         //TODO
+//        goToPlaceActivity()
+//        val activityInstance = getActivityInstance() as PlaceActivity
+//        val placeInstance = activityInstance.viewModel.place
+//        onView(withId(R.id.textTempWater))
+//            .check(matches(withText(placeInstance!!.value!!.tempWater.toString())))
     }
 
     @Test
