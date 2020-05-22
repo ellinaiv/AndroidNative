@@ -10,6 +10,8 @@ import androidx.room.ForeignKey.CASCADE
 data class WeatherForecastDb(
     @ColumnInfo(name = "place_id")
     val placeId: Int,
+    @ColumnInfo(name = "forecast_id")
+    val forecastId: Int,
     var time: String,
     var symbol: String,
     @ColumnInfo(name = "temp_air")

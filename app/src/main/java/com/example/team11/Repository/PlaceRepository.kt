@@ -2,6 +2,7 @@ package com.example.team11.Repository
 
 import android.content.Context
 import android.os.AsyncTask
+import android.text.format.DateUtils.isToday
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -13,6 +14,7 @@ import com.example.team11.database.AppDatabase
 import com.example.team11.database.entity.WeatherForecastDb
 import com.example.team11.util.Constants
 import com.example.team11.database.entity.MetadataTable
+import com.example.team11.util.Util
 import com.example.team11.util.Util.formatToDaysTime
 import com.example.team11.util.Util.formatToHoursTime
 import com.example.team11.util.Util.getNowHourForecastDb
@@ -25,13 +27,13 @@ import com.example.team11.valueObjects.WeatherForecastApi
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.coroutines.awaitString
 import kotlinx.coroutines.runBlocking
-import org.xmlpull.v1.XmlPullParser
-import org.xmlpull.v1.XmlPullParserFactory
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.io.StringReader
 import java.lang.System.currentTimeMillis
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
 
@@ -64,8 +66,6 @@ class PlaceRepository private constructor(context: Context) {
                 instance ?: PlaceRepository(context).also {
                     instance = it
                     it.wayOfTransportation.value = Transportation.BIKE
-
-
                 }
             }
     }
@@ -149,7 +149,8 @@ class PlaceRepository private constructor(context: Context) {
         val tag = "tagGetPlaces"
         // TODO("Hvor ofte burde places fetches?")
         // TODO("Kan jeg gjøre non-assertive call her? Dersom favoritePlaces.value er null burde den stoppe å sjekke på første?"
-        val places: LiveData<List<Place>> = placeDao.getPlaceList(getNowHourForecastDb()[0])
+        val places: LiveData<List<Place>> = placeDao.getPlaceList(getNowHourForecastDb(
+            currentTimeMillis())[0])
         Log.d(tag, "getPlaces")
         AsyncTask.execute {
             Log.d("tagDatabase", placeDao.getNumbPlaces().toString())
@@ -173,7 +174,7 @@ class PlaceRepository private constructor(context: Context) {
         val tag = "tagGetForecast"
         val placeIds = places.map { it.id }
         val nowForecasts: LiveData<List<WeatherForecastDb>> =
-            weatherForecastDao.getTimeForecastsList(placeIds, getNowHourForecastDb())
+            weatherForecastDao.getTimeForecastsList(placeIds, getNowHourForecastDb(currentTimeMillis()))
         Log.d(tag, "getHourForecast")
         for (place in places) {
             AsyncTask.execute {
@@ -200,9 +201,10 @@ class PlaceRepository private constructor(context: Context) {
      */
     fun getForecast(place: Place, hour: Boolean): LiveData<List<WeatherForecastDb>> {
         val tag = "tagGetForecast"
-        val forecast: LiveData<List<WeatherForecastDb>> =
-            weatherForecastDao.getTimeForecast(place.id, getWantedForecastDb(hour))
-        Log.d(tag, "getForecast")
+        val forecast: LiveData<List<WeatherForecastDb>> = weatherForecastDao.getTimeForecast(
+            place.id,
+            Util.getWantedForecastDb(hour, currentTimeMillis())
+        )
 
         AsyncTask.execute {
             if (weatherForecastDao.getNumbForecast() == 0 || shouldFetch(
@@ -233,8 +235,7 @@ class PlaceRepository private constructor(context: Context) {
     }
 
     fun cacheWeatherForecastDb(weatherForecast: List<WeatherForecastDb>, placeId: Int) {
-        Log.d("tagDatabase", weatherForecast.toString())
-        weatherForecastDao.deleteForecastsForPlace(placeId)
+       weatherForecastDao.deleteForecastsForPlace(placeId)
         weatherForecastDao.insertWeatherForecast(weatherForecast)
         metadataDao.updateDateLastCached(
             MetadataTable(
@@ -282,70 +283,21 @@ class PlaceRepository private constructor(context: Context) {
      */
 
     private fun fetchPlaces(url: String): List<Place> {
-        val places = ArrayList<Place>()
+        var places = listOf<Place>()
         val tag = "getData() ---->"
         Log.d("tagGetPlaces", "Fetcher nye steder")
         runBlocking {
             try {
 
                 val response = Fuel.get(url).awaitString()
-                val factory = XmlPullParserFactory.newInstance()
-                factory.isNamespaceAware = true
-                val xpp = factory.newPullParser()
-                xpp.setInput(StringReader(response))
-                var eventType = xpp.eventType
-
-                lateinit var name: String
-                lateinit var lat: String
-                lateinit var long: String
-                var tempWater = Int.MAX_VALUE
-                var id = 0
-
-                while (eventType != XmlPullParser.END_DOCUMENT) {
-                    if (eventType == XmlPullParser.START_TAG && xpp.name == "place") {
-                        for (i in 0 until xpp.attributeCount) {
-                            val attrName = xpp.getAttributeName(i)
-                            if (attrName != null && attrName == "id") {
-                                id = xpp.getAttributeValue(i).toInt()
-                            }
-                        }
-                    } else if (eventType == XmlPullParser.START_TAG && xpp.name == "name") {
-                        xpp.next()
-                        name = xpp.text
-                        xpp.next()
-                    } else if (eventType == XmlPullParser.START_TAG && xpp.name == "lat") {
-                        xpp.next()
-                        lat = xpp.text
-                        xpp.next()
-
-                    } else if (eventType == XmlPullParser.START_TAG && xpp.name == "long") {
-                        xpp.next()
-                        long = xpp.text
-                        xpp.next()
-                    } else if (eventType == XmlPullParser.START_TAG && xpp.name == "temp_vann") {
-                        if (xpp.next() != XmlPullParser.END_TAG) {
-                            tempWater = xpp.text.toInt()
-                            xpp.next()
-                        }
-                        Log.d("tag2", tempWater.toString())
-                        var favorite = false
-                        Log.d("tagDatabasePlaceExists", placeDao.placeExists(id).toString())
-                        if (placeDao.placeExists(id)) favorite = placeDao.isPlaceFavoriteNonLiveData(id)
-                        places.add(
-                            Place(
-                                id,
-                                name,
-                                lat.toDouble(),
-                                long.toDouble(),
-                                tempWater,
-                                favorite
-                            )
-                        )
+                places = Util.parseXMLPlace(response)
+                places.forEach { place ->
+                    if (placeDao.placeExists(place.id)) {
+                        place.favorite = placeDao.isPlaceFavoriteNonLiveData(place.id)
                     }
-
-                    eventType = xpp.next()
-
                 }
+
+
             } catch (e: Exception) {
                 Log.e(tag, e.message.toString())
             }
@@ -407,6 +359,7 @@ class PlaceRepository private constructor(context: Context) {
         val tag = "tagWeather"
         val wantedForecastDb = ArrayList<WeatherForecastDb>()
         val call = ApiClient.build()?.getWeather(place.lat, place.lng)
+        var forecastId = 0
 
         call?.enqueue(object : Callback<WeatherForecastApi> {
             override fun onResponse(
@@ -420,17 +373,24 @@ class PlaceRepository private constructor(context: Context) {
                         response.body()?.weatherForecastTimeSlotList?.list?.filter {
                             it.time in wantedTimesHours || it.time in wantedTimesDays
                         }
+                    Log.d("tagDatabase", wantedForecastApi.toString())
                     wantedForecastApi!!.forEach { forecast ->
                         var nextHours = forecast.types.nextOneHourForecast
+                        Log.d("tagDatabaseTime", forecast.time)
                         var time = formatToHoursTime(forecast.time)
-
-                        if (nextHours == null) {
-                            nextHours = forecast.types.nextSixHourForecast
+                        val parser =  SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
+                        if (!isToday(parser.parse(forecast.time).time)){
+                            Log.d("tagDatabaseToday", forecast.time)
                             time = formatToDaysTime(forecast.time)
                         }
+                        if (nextHours == null) {
+                            nextHours = forecast.types.nextSixHourForecast
+                        }
+                        Log.d("tagDatabaseTime", time)
                         wantedForecastDb.add(
                             WeatherForecastDb(
                                 place.id,
+                                forecastId++,
                                 time,
                                 nextHours!!.summary.symbol,
                                 forecast.types.instantWeatherForecast.details.temp.toInt(),

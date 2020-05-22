@@ -26,7 +26,12 @@ data class WeatherForecastTimeSlot(
 
     @SerializedName("data")
     val types: WeatherForecastTypes
-)
+
+){
+    override fun toString(): String {
+        return "$time\n"
+    }
+}
 
 
 data class WeatherForecastTypes(
