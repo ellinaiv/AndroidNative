@@ -26,6 +26,8 @@ import com.example.team11.valueObjects.OceanForecast
 import com.example.team11.valueObjects.WeatherForecastApi
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.coroutines.awaitString
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import retrofit2.Call
 import retrofit2.Callback
@@ -68,7 +70,7 @@ class PlaceRepository private constructor(context: Context) {
     }
 
     fun changeFalseData(newFalseData: Boolean) {
-        AsyncTask.execute {
+        GlobalScope.launch{
             if (personalPreferenceDao.getFalseData() != newFalseData) {
                 personalPreferenceDao.changeFalseData(newFalseData)
                 if(newFalseData){
@@ -129,7 +131,7 @@ class PlaceRepository private constructor(context: Context) {
     fun getPlaces(): LiveData<List<Place>> {
         val places: LiveData<List<Place>> = placeDao.getPlaceList(getNowHourForecastDb(
             currentTimeMillis())[0])
-        AsyncTask.execute {
+        GlobalScope.launch {
             if (placeDao.getNumbPlaces() == 0 || shouldFetch(
                     metadataDao,
                     Constants.MEATDATA_ENTRY_PLACE_TABLE,
@@ -191,6 +193,7 @@ class PlaceRepository private constructor(context: Context) {
 
 
     private fun cachePlacesDb(places: List<Place>) {
+        Log.d("tagStørrelseRep2", places.size.toString())
         placeDao.insertPlaceList(places)
         metadataDao.updateDateLastCached(
             MetadataTable(
@@ -247,24 +250,20 @@ class PlaceRepository private constructor(context: Context) {
      * @return: ArrayList<Place>, liste med badesteder
      */
 
-    private fun fetchPlaces(url: String): List<Place> {
+    private suspend fun fetchPlaces(url: String): List<Place>{
         var places = listOf<Place>()
         val tag = "getData() ---->"
-        runBlocking {
-            try {
-
-                val response = Fuel.get(url).awaitString()
-                places = Util.parseXMLPlace(response)
-                places.forEach { place ->
-                    if (placeDao.placeExists(place.id)) {
-                        place.favorite = placeDao.isPlaceFavoriteNonLiveData(place.id)
-                    }
+        try {
+            val response = Fuel.get(url).awaitString()
+            places = Util.parseXMLPlace(response)
+            places.forEach { place ->
+                if (placeDao.placeExists(place.id)) {
+                    place.favorite = placeDao.isPlaceFavoriteNonLiveData(place.id)
                 }
-
-
-            } catch (e: Exception) {
-                Log.e(tag, e.message.toString())
             }
+            Log.d("tagStørrelseRep", places.size.toString())
+        } catch (e: Exception) {
+            Log.e(tag, e.message.toString())
         }
         return places
     }

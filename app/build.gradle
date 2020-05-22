@@ -100,7 +100,6 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-moshi:2.6.2"
     implementation 'androidx.room:room-runtime:2.2.5'
     annotationProcessor 'androidx.room:room-compiler:2.2.5'
-    implementation 'com.squareup.okhttp3:okhttp:3.12.3'
 
     //Rooms
     def room_version = "2.2.5"

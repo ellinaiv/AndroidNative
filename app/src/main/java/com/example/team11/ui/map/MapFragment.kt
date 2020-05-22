@@ -149,6 +149,7 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
         searchText.isEnabled = true
 
         mapFragmentViewModel.places?.observe(viewLifecycleOwner, Observer {places->
+            Log.d("tagStørrelseMap", places.size.toString())
             mapFragmentViewModel.getNowForecast(places)?.observe(viewLifecycleOwner, Observer { forecast ->
                 mapFragmentViewModel.listOfNowForecast = forecast
                 mapFragmentViewModel.personalPreference.observe(viewLifecycleOwner, Observer {
