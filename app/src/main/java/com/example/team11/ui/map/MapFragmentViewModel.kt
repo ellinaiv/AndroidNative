@@ -38,8 +38,8 @@ class MapFragmentViewModel(context: Context): ViewModel() {
         }
     }
 
-    fun getNowForecast(places: List<Place>): LiveData<List<WeatherForecastDb>>?{
-        return placeRepository.getNowForecastsList(places)
+    fun getNowForecast(placesList: List<Place>): LiveData<List<WeatherForecastDb>>?{
+        return placeRepository.getNowForecastsList(placesList)
     }
 
     /**

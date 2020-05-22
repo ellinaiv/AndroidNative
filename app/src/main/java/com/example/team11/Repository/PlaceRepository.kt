@@ -132,6 +132,8 @@ class PlaceRepository private constructor(context: Context) {
         val places: LiveData<List<Place>> = placeDao.getPlaceList(getNowHourForecastDb(
             currentTimeMillis())[0])
         GlobalScope.launch {
+            Log.d("tagStørrelseRep3", placeDao.getNumbPlaces().toString())
+            Log.d("tagStørrelseRep3", personalPreferenceDao.getPersonalPreference().value.toString())
             if (placeDao.getNumbPlaces() == 0 || shouldFetch(
                     metadataDao,
                     Constants.MEATDATA_ENTRY_PLACE_TABLE,
