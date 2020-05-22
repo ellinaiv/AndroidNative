@@ -18,13 +18,15 @@ object Util {
         val listTimes = arrayListOf<String>()
         val c: Calendar = GregorianCalendar()
         c.time = Date(System.currentTimeMillis())
+        Log.d("Gattering time before: ", c.time.toString())
         c.set(Calendar.MINUTE, 0)
         c.set(Calendar.SECOND, 0)
+        Log.d("Gattering time After: ", c.time.toString())
         val stringFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
         for (hour in 0..Constants.NUMB_HOURS_FORECAST){
             listTimes.add(stringFormat.format(c.time))
-            c.add(Calendar.HOUR, 1)
             Log.d("Gattering times", stringFormat.format(c.time))
+            c.add(Calendar.HOUR_OF_DAY, 1)
         }
         return listTimes
     }
@@ -33,14 +35,16 @@ object Util {
         val listTimes = arrayListOf<String>()
         val c: Calendar = GregorianCalendar()
         c.time = Date(System.currentTimeMillis())
-        c.set(Calendar.HOUR, 12)
+        Log.d("Gattering time before: ", c.time.toString())
+        c.set(Calendar.HOUR_OF_DAY, 12)
         c.set(Calendar.MINUTE, 0)
         c.set(Calendar.SECOND, 0)
+        Log.d("Gattering time After: ", c.time.toString())
         val stringFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
-        for (hour in 1..Constants.NUMB_DAYS_FORECAST){
+        for (hour in 0 until Constants.NUMB_DAYS_FORECAST){
             c.add(Calendar.DATE, 1)
             listTimes.add(stringFormat.format(c.time))
-            Log.d("Gattering times", stringFormat.format(c.time))
+            Log.d("Gattering times API", stringFormat.format(c.time))
         }
         return listTimes
     }
@@ -48,10 +52,10 @@ object Util {
 
     private fun getWantedHoursForecastDb(c: Calendar, stringFormat: SimpleDateFormat): List<String>{
         val listTimes = arrayListOf<String>()
-        for (hour in 0..Constants.NUMB_HOURS_FORECAST){
+        for (hour in 0 until Constants.NUMB_HOURS_FORECAST){
             listTimes.add(stringFormat.format(c.time))
-            c.add(Calendar.HOUR, 1)
-            Log.d("Gattering times", stringFormat.format(c.time))
+            Log.d("Gattering times DB", stringFormat.format(c.time))
+            c.add(Calendar.HOUR_OF_DAY, 1)
         }
         Log.d("HOUR", listTimes.toString())
         return listTimes
@@ -59,10 +63,11 @@ object Util {
 
     private fun getWantedDaysForecastDb(c : Calendar, stringFormat: SimpleDateFormat): List<String>{
         val listTimes = arrayListOf<String>()
-        c.set(Calendar.HOUR, 12)
-        for (hour in 0 .. Constants.NUMB_DAYS_FORECAST){
-            listTimes.add(stringFormat.format(c.time))
+        c.set(Calendar.HOUR_OF_DAY, 12)
+        for (hour in 0 until Constants.NUMB_DAYS_FORECAST){
             c.add(Calendar.DATE, 1)
+            listTimes.add(stringFormat.format(c.time))
+            Log.d("Gattering times DB", stringFormat.format(c.time))
         }
         Log.d("DAY", listTimes.toString())
         return listTimes

@@ -2,6 +2,7 @@ package com.example.team11.Repository
 
 import android.content.Context
 import android.os.AsyncTask
+import android.text.format.DateUtils.isToday
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -18,6 +19,7 @@ import com.example.team11.util.Util.formatToDaysTime
 import com.example.team11.util.Util.formatToHoursTime
 import com.example.team11.util.Util.getNowHourForecastDb
 import com.example.team11.util.Util.getWantedDaysForecastApi
+import com.example.team11.util.Util.getWantedForecastDb
 import com.example.team11.util.Util.getWantedHoursForecastApi
 import com.example.team11.util.Util.shouldFetch
 import com.example.team11.valueObjects.OceanForecast
@@ -29,6 +31,9 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.lang.System.currentTimeMillis
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
 
@@ -182,6 +187,7 @@ class PlaceRepository private constructor(context: Context) {
                 ) {
                     Log.d(tag, "fetcherForecast")
                     fetchWeatherForecast(place)
+                    fetchSeaCurrentSpeed(place)
                 }
             }
         }
@@ -230,9 +236,7 @@ class PlaceRepository private constructor(context: Context) {
     }
 
     fun cacheWeatherForecastDb(weatherForecast: List<WeatherForecastDb>, placeId: Int) {
-        if(weatherForecastDao.forecastsExist(placeId)){
-           // weatherForecastDao.deleteForecastsForPlace(placeId)
-        }
+       weatherForecastDao.deleteForecastsForPlace(placeId)
         weatherForecastDao.insertWeatherForecast(weatherForecast)
         metadataDao.updateDateLastCached(
             MetadataTable(
@@ -302,22 +306,14 @@ class PlaceRepository private constructor(context: Context) {
         return places
     }
 
-    /**
-     * Henter ut hvor mye strømninger det er på en gitt badestrand
-     * @param place stranden man ønsker å vite strømningen på
-     * @return en Double. Hvis veriden < 0 er det ikke noen målinger på det stedet
-     */
-    fun getSeaCurrentSpeed(place: Place) = fetchSeaCurrentSpeed(place)
-
 
     /**
      * Henter strømningene til et sted fra met sitt api.
      * @param place stranden man ønsker å vite strømningen på
      * @return en Double. Hvis verdien < 0 er det ikke noen målinger på det stedet
      */
-    private fun fetchSeaCurrentSpeed(place: Place): Double {
+    private fun fetchSeaCurrentSpeed(place: Place) {
         val tag = "tagFetchCurrentSeaSpeed"
-        var speed = (-1).toDouble()
 
         val call =
             ApiClient.build()?.getSeaSpeed(place.lat, place.lng)
@@ -331,9 +327,10 @@ class PlaceRepository private constructor(context: Context) {
                         // Verdien til speed blir bare endret dersom seaSpeed.content != null
                         response.body()?.OceanForecastLayers?.get(1)
                             ?.OceanForecastDetails?.seaSpeed?.content?.toDouble()
-                            ?.let { speed = it }
-                        Log.d(tag, place.toString())
-                        Log.d(tag, speed.toString())
+                            ?.let {
+                                Log.d("tagSpeed", place.name + it.toString())
+                                AsyncTask.execute{weatherForecastDao.addSpeed(place.id, it)}
+                            }
                     }
                 }
             }
@@ -342,7 +339,6 @@ class PlaceRepository private constructor(context: Context) {
                 Log.v(tag, "error in fetchCurrentSeaSpeed")
             }
         })
-        return speed
     }
 
 
@@ -356,6 +352,7 @@ class PlaceRepository private constructor(context: Context) {
         val tag = "tagWeather"
         val wantedForecastDb = ArrayList<WeatherForecastDb>()
         val call = ApiClient.build()?.getWeather(place.lat, place.lng)
+        var forecastId = 0
 
         call?.enqueue(object : Callback<WeatherForecastApi> {
             override fun onResponse(
@@ -372,24 +369,30 @@ class PlaceRepository private constructor(context: Context) {
                     wantedForecastApi!!.forEach { forecast ->
                         var nextHours = forecast.types.nextOneHourForecast
                         var time = formatToHoursTime(forecast.time)
-
-                        if (nextHours == null) {
-                            nextHours = forecast.types.nextSixHourForecast
+                        val parser =  SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
+                        if (!isToday(parser.parse(forecast.time).time)){
                             time = formatToDaysTime(forecast.time)
                         }
+                        if (nextHours == null) {
+                            nextHours = forecast.types.nextSixHourForecast
+                        }
+                        Log.d("tagDatabaseTime", time)
                         wantedForecastDb.add(
                             WeatherForecastDb(
                                 place.id,
+                                forecastId++,
                                 time,
                                 nextHours!!.summary.symbol,
                                 forecast.types.instantWeatherForecast.details.temp.toInt(),
                                 nextHours.details.rainAmount,
-                                forecast.types.instantWeatherForecast.details.uv
+                                forecast.types.instantWeatherForecast.details.uv,
+                                (-1).toDouble()
                             )
                         )
                     };
                     AsyncTask.execute { cacheWeatherForecastDb(wantedForecastDb, place.id) }
                 }
+                fetchSeaCurrentSpeed(place)
             }
 
             override fun onFailure(call: Call<WeatherForecastApi>, t: Throwable) {
