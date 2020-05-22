@@ -62,7 +62,6 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        //TODO("Context i fragment kan være null før onAttach() og etter onDetach(), men burde være ganske safe i oncreat, litt usikker på om jeg burde bruke !! her.")
         mapFragmentViewModel =
             ViewModelProvider(this, MapFragmentViewModel.InstanceCreator(requireContext())).get(MapFragmentViewModel::class.java)
 
@@ -149,17 +148,20 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
         textNoInternet.visibility = View.GONE
         searchText.isEnabled = true
 
-        mapFragmentViewModel.places!!.observe(viewLifecycleOwner, Observer {places->
-            makeMap(places)
-            searchText.doOnTextChanged { text, _, _, _ ->
-                if (text.toString().isEmpty()) {
-                    removePlace()
-                }
-                search(text.toString(), places)
-            }
+        mapFragmentViewModel.places?.observe(viewLifecycleOwner, Observer {places->
+            mapFragmentViewModel.getNowForecast(places)?.observe(viewLifecycleOwner, Observer { forecast ->
+                mapFragmentViewModel.listOfNowForecast = forecast
+                mapFragmentViewModel.personalPreference.observe(viewLifecycleOwner, Observer {
+                    makeMap(places)
+                    searchText.doOnTextChanged { text, _, _, _ ->
+                        if (text.toString().isEmpty()) {
+                            removePlace()
+                        }
+                        search(text.toString(), places)
+                    }
+                })
+            })
         })
-        //TODO("EHm denne gjør ingenting, men trneger den for at pp ikke ksal vøre null i viewmodel, dette kan umulig være riktige måte å gjøre det på...")
-        mapFragmentViewModel.personalPreference!!.observe(viewLifecycleOwner, Observer {  })
     }
 
 
@@ -270,35 +272,28 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
      */
     @SuppressLint("UseRequireInsteadOfGet")
     private fun showPlace(place: Place){
-        Log.d("tagPlace", place.toString())
         textName.text = place.name
         if(place.tempWater != Int.MAX_VALUE) {
-            mapFragmentViewModel.personalPreference.observe(viewLifecycleOwner, Observer { _ ->
-                when (mapFragmentViewModel.redWave(place)) {
-                    true -> imageTempWater.setImageResource(R.drawable.water_red)
-                    false -> imageTempWater.setImageResource(R.drawable.water_blue)
-                }
-            })
+            when (mapFragmentViewModel.redWave(place)) {
+                true -> imageTempWater.setImageResource(R.drawable.water_red)
+                false -> imageTempWater.setImageResource(R.drawable.water_blue)
+            }
             textTempWater.text = getString(R.string.tempC, place.tempWater)
         } else {
-            //TODO("Kan dette settes i xml, så er dette kallet unødvendig?")
             imageTempWater.setImageResource(R.drawable.ic_nodatawave)
             textTempWater.text = getString(R.string.no_data)
         }
 
-        //TODO("Kan dette settes i xml, så er dette kallet unødvendig?")
         imageTempAir.setImageDrawable(getDrawable(this@MapFragment.context!!, R.drawable.ic_noweatherdata))
         textTempAir.text = getString(R.string.no_data)
-        mapFragmentViewModel.getNowForcast(place)?.observe(viewLifecycleOwner, Observer {forecast ->
-            if(forecast != null && forecast.isNotEmpty()){
-                val placeForecast = forecast[0]
-                if(placeForecast.placeId == place.id && placeForecast.tempAir != Int.MAX_VALUE){
-                    textTempAir.text = getString(R.string.tempC, placeForecast.tempAir)
-                    imageTempAir.setImageDrawable(getDrawable(this@MapFragment.context!!, resources.getIdentifier(placeForecast.symbol,
-                        "drawable", activity!!.packageName)))
-                }
+        val placeForecast = mapFragmentViewModel.getPlaceNowForecast(place)
+        if(placeForecast != null){
+            if(placeForecast.tempAir != Int.MAX_VALUE){
+                textTempAir.text = getString(R.string.tempC, placeForecast.tempAir)
+                imageTempAir.setImageDrawable(getDrawable(this@MapFragment.context!!, resources.getIdentifier(placeForecast.symbol,
+                    "drawable", activity!!.packageName)))
             }
-        })
+        }
 
 
         //zoomer til stedet på kartet
@@ -333,7 +328,6 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
         )
         style.addImage(iconIdBlue, icon)
 
-        //TODO("Kan dette settes i xml, så er dette kallet unødvendig?")
         icon = BitmapFactory.decodeResource(
             this.resources,
             R.drawable.marker_no_data
@@ -358,10 +352,7 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
         val id = layerId + place.id.toString()
         val geoId = geojsonId + place.id.toString()
 
-        if(listOfGeojsonId.contains(geoId) or listOfLayerId.contains(id)){
-            Log.d("TagMapFragment", "En id finnes fra før av")
-            return
-        }
+        if(listOfGeojsonId.contains(geoId) or listOfLayerId.contains(id)) return
 
         val feature = mapFragmentViewModel.getFeature(place)
         feature.addNumberProperty(propertyId, place.id)
@@ -369,20 +360,14 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
             arrayListOf(feature)))
         style.addSource(geoJsonSource)
 
-
-        var iconId = iconIdGray
-
-
-        mapFragmentViewModel.personalPreference.observe(viewLifecycleOwner, Observer { _ ->
-            iconId = when(mapFragmentViewModel.isPlaceWarm(place)){
+        val iconId = if(mapFragmentViewModel.isPinGray(place)){
+            iconIdGray
+        }else{
+            when(mapFragmentViewModel.isPlaceWarm(place)){
                 true -> iconIdRed
                 false -> iconIdBlue
             }
-
-            if(mapFragmentViewModel.isPinGray(place)){
-                iconId = iconIdGray
-            }
-        })
+        }
 
         val symbolLayer = SymbolLayer(id, geoId)
         symbolLayer.withProperties(
@@ -396,7 +381,7 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
     }
 
 
-    fun Fragment.hideKeyboard() {
+    private fun Fragment.hideKeyboard() {
         view?.let { activity?.hideKeyboard(it) }
     }
 
@@ -404,7 +389,7 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
         hideKeyboard(currentFocus ?: View(this))
     }
 
-    fun Context.hideKeyboard(view: View) {
+    private fun Context.hideKeyboard(view: View) {
         val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
     }

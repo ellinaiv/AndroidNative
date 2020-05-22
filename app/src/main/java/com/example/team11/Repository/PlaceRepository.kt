@@ -38,12 +38,9 @@ import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
 
 class PlaceRepository private constructor(context: Context) {
-    private var allPlaces = mutableListOf<Place>()
     private val urlAPI = "http://oslokommune.msolution.no/friluft/badetemperaturer.jsp"
     private var currentPlace = MutableLiveData<Place>()
     private var wayOfTransportation = MutableLiveData<Transportation>()
-    private var favoritePlaces = MutableLiveData<List<Place>>()
-    private var personalPreferences = MutableLiveData<PersonalPreference>()
     private val database: AppDatabase = AppDatabase.getInstance(context)
     private val placeDao = database.placeDao()
     private val metadataDao = database.metadataDao()
@@ -71,12 +68,10 @@ class PlaceRepository private constructor(context: Context) {
     }
 
     fun changeFalseData(newFalseData: Boolean) {
-        Log.d("FALSE", "changeFalseData")
         AsyncTask.execute {
             if (personalPreferenceDao.getFalseData() != newFalseData) {
                 personalPreferenceDao.changeFalseData(newFalseData)
                 if(newFalseData){
-                    Log.d("FALSE", "changeFalseData")
                     placeDao.changeToFalseData(Int.MAX_VALUE, Constants.waterTempHigh, Constants.waterTempLow)
                 }else{
                     cachePlacesDb(fetchPlaces(urlAPI))
@@ -89,11 +84,7 @@ class PlaceRepository private constructor(context: Context) {
      * Returnerer en peker til preferansene til brukeren
      * @return brukerens preferance
      */
-    fun getPersonalPreferences(): LiveData<List<PersonalPreference>>{
-        val pp = personalPreferenceDao.getPersonalPreference()
-        Log.d("tagPersonal", pp.value.toString())
-        return pp
-    }
+    fun getPersonalPreferences() = personalPreferenceDao.getPersonalPreference()
 
     /**
      * Oppdaterer preferansene til brukeren
@@ -101,6 +92,7 @@ class PlaceRepository private constructor(context: Context) {
      */
     fun updatePersonalPreference(personalPreference: PersonalPreference) {
         AsyncTask.execute {
+            personalPreference.falseData = personalPreferenceDao.getFalseData()
             personalPreferenceDao.addPersonalPreference(personalPreference)
         }
     }
@@ -109,19 +101,13 @@ class PlaceRepository private constructor(context: Context) {
      * Returnerer en liste med favoritt stedene til en bruker
      * @return LiveData<List<Place>> liste med brukerens favoritt steder
      */
-    fun getFavoritePlaces(): LiveData<List<Place>> {
-        val places = placeDao.getFavoritePlaceList()
-        Log.d("tagFavoritePlace", "Favorittsteder: ${places.value}")
-        return places
-
-    }
+    fun getFavoritePlaces() = placeDao.getFavoritePlaceList()
 
     /**
      * Legger til favoritt sted
      */
     fun addFavoritePlace(place: Place) {
         AsyncTask.execute { placeDao.addFavorite(place.id) }
-        Log.d("tagFavoritePlace", "Lagt til favorittsted i databasen")
     }
 
     /**
@@ -129,32 +115,20 @@ class PlaceRepository private constructor(context: Context) {
      */
     fun removeFavoritePlace(place: Place) {
         AsyncTask.execute { placeDao.removeFavorite(place.id) }
-        Log.d("tagFavoritePlace", "Fjernet favorittsted i databasen")
     }
 
     /**
      * Sjekker om sted er favoritt
      */
-    fun isPlaceFavorite(place: Place): LiveData<Boolean> {
-        val returnValue = placeDao.isPlaceFavorite(place.id)
-        Log.d("tagIsPlaceFavorite", "${returnValue.value}")
-        return returnValue
-    }
+    fun isPlaceFavorite(place: Place) = placeDao.isPlaceFavorite(place.id)
 
     /**
      * getPlaces funksjonen henter en liste til viewModel med badesteder
      * @return: MutableLiveData<List<Place>>, liste med badesteder
      */
     fun getPlaces(): LiveData<List<Place>> {
-        val tag = "tagGetPlaces"
-        // TODO("Hvor ofte burde places fetches?")
-        // TODO("Kan jeg gjøre non-assertive call her? Dersom favoritePlaces.value er null burde den stoppe å sjekke på første?"
         val places: LiveData<List<Place>> = placeDao.getPlaceList(getNowHourForecastDb(
             currentTimeMillis())[0])
-        Log.d(tag, "getPlaces")
-        AsyncTask.execute {
-            Log.d("tagDatabase", placeDao.getNumbPlaces().toString())
-        }
         AsyncTask.execute {
             if (placeDao.getNumbPlaces() == 0 || shouldFetch(
                     metadataDao,
@@ -163,7 +137,6 @@ class PlaceRepository private constructor(context: Context) {
                     TimeUnit.DAYS
                 )
             ) {
-                Log.d(tag, "fetcherPlaces")
                 cachePlacesDb(fetchPlaces(urlAPI))
             }
         }
@@ -171,11 +144,9 @@ class PlaceRepository private constructor(context: Context) {
     }
 
     fun getNowForecastsList(places: List<Place>): LiveData<List<WeatherForecastDb>>? {
-        val tag = "tagGetForecast"
         val placeIds = places.map { it.id }
         val nowForecasts: LiveData<List<WeatherForecastDb>> =
             weatherForecastDao.getTimeForecastsList(placeIds, getNowHourForecastDb(currentTimeMillis()))
-        Log.d(tag, "getHourForecast")
         for (place in places) {
             AsyncTask.execute {
                 if (weatherForecastDao.getNumbForecast() == 0 || shouldFetch(
@@ -185,13 +156,11 @@ class PlaceRepository private constructor(context: Context) {
                         TimeUnit.HOURS
                     )
                 ) {
-                    Log.d(tag, "fetcherForecast")
                     fetchWeatherForecast(place)
                     fetchSeaCurrentSpeed(place)
                 }
             }
         }
-        Log.d("Fra databasen", nowForecasts.toString())
         return nowForecasts
     }
 
@@ -201,10 +170,9 @@ class PlaceRepository private constructor(context: Context) {
      * @return: LiveData<List<HourForecast>>, liste med badesteder
      */
     fun getForecast(place: Place, hour: Boolean): LiveData<List<WeatherForecastDb>> {
-        val tag = "tagGetForecast"
         val forecast: LiveData<List<WeatherForecastDb>> = weatherForecastDao.getTimeForecast(
             place.id,
-            Util.getWantedForecastDb(hour, currentTimeMillis())
+            getWantedForecastDb(hour, currentTimeMillis())
         )
 
         AsyncTask.execute {
@@ -215,17 +183,14 @@ class PlaceRepository private constructor(context: Context) {
                     TimeUnit.HOURS
                 )
             ) {
-                Log.d(tag, "fetcherForecast")
                 fetchWeatherForecast(place)
             }
         }
-        Log.d("Fra databasen", forecast.toString())
         return forecast
     }
 
 
-    fun cachePlacesDb(places: List<Place>) {
-        Log.d("tagDatabase", "Lagrer nye steder")
+    private fun cachePlacesDb(places: List<Place>) {
         placeDao.insertPlaceList(places)
         metadataDao.updateDateLastCached(
             MetadataTable(
@@ -251,7 +216,6 @@ class PlaceRepository private constructor(context: Context) {
      * @param place: Stedet som skal endres til å være currentPlace
      */
     fun changeCurrentPlace(place: Place) {
-        Log.d("tagRepository", "current endra")
         currentPlace.value = place
     }
 
@@ -286,7 +250,6 @@ class PlaceRepository private constructor(context: Context) {
     private fun fetchPlaces(url: String): List<Place> {
         var places = listOf<Place>()
         val tag = "getData() ---->"
-        Log.d("tagGetPlaces", "Fetcher nye steder")
         runBlocking {
             try {
 
