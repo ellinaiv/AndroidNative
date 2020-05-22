@@ -7,14 +7,11 @@ import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.testing.launchFragmentInContainer
-import androidx.lifecycle.Observer
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.scrollTo
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
-import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.espresso.matcher.ViewMatchers.withText
+import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
 import androidx.test.rule.ActivityTestRule
 import androidx.test.runner.lifecycle.ActivityLifecycleMonitorRegistry
@@ -22,6 +19,7 @@ import androidx.test.runner.lifecycle.Stage
 import com.example.team11.ui.bottomNavigation.MainActivity
 import com.example.team11.ui.place.PlaceActivity
 import com.example.team11.ui.placesList.PlacesListFragment
+import junit.framework.Assert.assertTrue
 import org.hamcrest.Matchers.allOf
 import org.hamcrest.Matchers.not
 import org.junit.Before
@@ -43,11 +41,11 @@ class PlaceActivityTest {
 
     @Test
     fun testBackButton() {
-        //TODO
-//        goToPlaceActivity()
-//        onView(withId(R.id.buttonBack))
-//            .perform(click())
-//        FragmentManager.findFragment<Fragment>()
+        goToPlaceActivity()
+        val activityInstance = getActivityInstance() as PlaceActivity
+        onView(withId(R.id.buttonBack))
+            .perform(click())
+        assertTrue(activityInstance.isFinishing)
     }
 
     @Test
@@ -65,7 +63,17 @@ class PlaceActivityTest {
 
     @Test
     fun testWaterTemp(){
-        //TODO
+        goToPlaceActivity()
+        val activityInstance = getActivityInstance() as PlaceActivity
+        val placeInstance = activityInstance.viewModel.place
+
+        if (placeInstance!!.value!!.tempWater == Int.MAX_VALUE) {
+            onView(withId(R.id.textTempWater))
+                .check(matches(withText(R.string.no_data)))
+        } else {
+            onView(withId(R.id.textTempWater))
+                .check(matches(withSubstring(placeInstance.value!!.tempWater.toString())))
+        }
     }
 
     @Test
