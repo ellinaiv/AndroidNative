@@ -17,5 +17,6 @@ data class WeatherForecastDb(
     @ColumnInfo(name = "temp_air")
     var tempAir: Int,
     var precipitation: Float,
-    var uv: Float
+    var uv: Float,
+    var speed: Double
 )

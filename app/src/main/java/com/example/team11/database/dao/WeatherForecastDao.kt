@@ -14,6 +14,9 @@ interface WeatherForecastDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertWeatherForecast(forecast: List<WeatherForecastDb>)
 
+    @Query("UPDATE weather_forecast SET speed = :speed WHERE place_id = :placeId")
+    fun addSpeed(placeId: Int, speed: Double)
+
     @Query("DELETE FROM weather_forecast WHERE place_id = :placeId")
     fun deleteForecastsForPlace(placeId: Int)
 

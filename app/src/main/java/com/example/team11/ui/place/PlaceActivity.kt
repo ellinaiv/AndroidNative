@@ -209,10 +209,9 @@ class PlaceActivity : AppCompatActivity() {
             }
 
             // havstrømninger
-            //TODO
-//            var currentsText = convertCurrents(hourForecast[0].currents)
-//            textCurrentsResult.text = getString(R.string.place_currents_result, currentsText)
-//            setColor(textCurrentsResult, currentsText)
+            var currentsText = convertCurrents(forecast[0].speed)
+            textCurrentsResult.text = getString(R.string.place_currents_result, currentsText)
+            setColor(textCurrentsResult, currentsText)
 
             // uv
             val uvText = convertUV(forecast[0].uv.toInt())
@@ -288,7 +287,7 @@ class PlaceActivity : AppCompatActivity() {
      * @param value verdi for måling av havstrømninger
      * @return en stringrepresentasjon av den tilsvarende kategorien
      */
-    private fun convertCurrents(value: Float): String {
+    private fun convertCurrents(value: Double): String {
         return if (value >= 0.0 && value < 0.4) {
             getString(R.string.place_info_weak)
         } else if (value >= 0.4 && value < 0.8) {
