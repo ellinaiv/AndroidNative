@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
+import com.example.team11.Color
 import com.example.team11.database.entity.PersonalPreference
 import com.example.team11.database.entity.Place
 import com.example.team11.Repository.PlaceRepository
@@ -95,13 +96,15 @@ class MapFragmentViewModel(context: Context): ViewModel() {
     }
 
     /**
-     * Sjekker om et sted skal ha rød eller blaa boolge
+     * Sjekker om et sted skal ha graa, rood eller blaa boolge
      * @param place: Stedet man vil sjekke
+     * @return fargen boolgen skal veare
      */
-    fun redWave(place: Place): Boolean{
-        val waterTemp = personalPreference.value?.get(0)?.waterTempMid ?: return false
-        if(waterTemp <= place.tempWater) return true
-        return false
+    fun colorWave(place: Place): Color{
+        if(place.tempWater == Int.MAX_VALUE) return Color.GRAY
+        val waterTemp = personalPreference.value?.get(0)?.waterTempMid ?: return Color.GRAY
+        if(waterTemp <= place.tempWater) return Color.RED
+        return Color.BLUE
     }
 
 

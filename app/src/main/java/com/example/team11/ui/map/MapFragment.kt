@@ -22,6 +22,7 @@ import android.widget.TextView
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.*
+import com.example.team11.Color
 import com.example.team11.database.entity.Place
 import com.example.team11.ui.place.PlaceActivity
 import com.example.team11.R
@@ -276,15 +277,20 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
     @SuppressLint("UseRequireInsteadOfGet")
     private fun showPlace(place: Place){
         textName.text = place.name
-        if(place.tempWater != Int.MAX_VALUE) {
-            when (mapFragmentViewModel.redWave(place)) {
-                true -> imageTempWater.setImageResource(R.drawable.water_red)
-                false -> imageTempWater.setImageResource(R.drawable.water_blue)
+
+        when(mapFragmentViewModel.colorWave(place)){
+            Color.GRAY -> {
+                imageTempWater.setImageResource(R.drawable.ic_nodatawave)
+                textTempWater.text = getString(R.string.no_data)
             }
-            textTempWater.text = getString(R.string.tempC, place.tempWater)
-        } else {
-            imageTempWater.setImageResource(R.drawable.ic_nodatawave)
-            textTempWater.text = getString(R.string.no_data)
+            Color.RED -> {
+                imageTempWater.setImageResource(R.drawable.water_red)
+
+            }
+            Color.BLUE -> {
+                imageTempWater.setImageResource(R.drawable.water_blue)
+                textTempWater.text = getString(R.string.tempC, place.tempWater)
+            }
         }
 
         imageTempAir.setImageDrawable(getDrawable(this@MapFragment.context!!, R.drawable.ic_noweatherdata))
