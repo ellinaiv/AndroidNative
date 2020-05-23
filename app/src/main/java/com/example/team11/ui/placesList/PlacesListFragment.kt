@@ -25,7 +25,7 @@ import kotlinx.android.synthetic.main.fragment_places_list.imageEmptyListShark
 import kotlinx.android.synthetic.main.fragment_places_list.searchText
 import kotlinx.android.synthetic.main.fragment_places_list.textNoElementInList
 
-class PlacesListFragment : Fragment() {
+class PlacesListFragment : Fragment(){
 
     private lateinit var placesListViewModel: PlacesListFragmentViewModel
     private lateinit var filterPlaces: List<Place>
@@ -52,8 +52,7 @@ class PlacesListFragment : Fragment() {
                         places,
                         forecasts,
                         requireContext(),
-                        placesListViewModel,
-                        false
+                        placesListViewModel
                     )
 
 
@@ -93,8 +92,7 @@ class PlacesListFragment : Fragment() {
                 filterPlaces,
                 forecasts,
                 requireContext(),
-                placesListViewModel,
-                false
+                placesListViewModel
             )
         if (recycler_viewPlaces.adapter!!.itemCount == 0) {
             imageEmptyListShark.visibility = View.VISIBLE

@@ -35,7 +35,7 @@ class FavoritesFragment : Fragment() {
                 val favoritePlaces = viewModel.favoritePlaces!!.value ?: emptyList()
                 recycler_view.layoutManager = layoutManager
                 recycler_view.adapter =
-                    ListAdapter(favoritePlaces, forecasts, requireContext(), viewModel, true)
+                    ListAdapter(favoritePlaces, forecasts, requireContext(), viewModel)
                 if (recycler_view.adapter!!.itemCount == 0) {
                     imageEmptyListShark.visibility = View.VISIBLE
                     textNoElementInList.visibility = View.VISIBLE

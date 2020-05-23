@@ -86,9 +86,7 @@ class PlaceActivityViewModel(context: Context): ViewModel() {
      */
     fun colorWave(place: Place): Color {
         if(place.tempWater == Int.MAX_VALUE) return Color.GRAY
-        Log.d("TESTING", "KOM MEG HIT")
         val waterTempPp = personalPreference.value?.get(0)?.waterTempMid ?: return Color.GRAY
-        Log.d("TESTING", "KOM MEG LITT LENGERE")
         if(waterTempPp <= place.tempWater) return Color.RED
         return Color.BLUE
     }
