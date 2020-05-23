@@ -1,7 +1,6 @@
 package com.example.team11.ui.favorites
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.team11.ui.placesList.ListAdapter
 import com.example.team11.R
 import kotlinx.android.synthetic.main.fragment_favorites.*
-import com.example.team11.database.entity.Place
 
 
 class FavoritesFragment : Fragment() {

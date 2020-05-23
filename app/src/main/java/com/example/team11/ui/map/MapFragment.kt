@@ -25,7 +25,6 @@ import androidx.lifecycle.*
 import com.example.team11.database.entity.Place
 import com.example.team11.ui.place.PlaceActivity
 import com.example.team11.R
-import com.example.team11.database.entity.WeatherForecastDb
 import com.example.team11.ui.filter.FilterActivity
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
