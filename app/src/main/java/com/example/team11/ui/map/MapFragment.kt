@@ -369,13 +369,10 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
             arrayListOf(feature)))
         style.addSource(geoJsonSource)
 
-        val iconId = if(mapFragmentViewModel.isPinGray(place)){
-            iconIdGray
-        }else{
-            when(mapFragmentViewModel.isPlaceWarm(place)){
-                true -> iconIdRed
-                false -> iconIdBlue
-            }
+        val iconId = when(mapFragmentViewModel.getPinColor(place)){
+            Color.GRAY -> iconIdGray
+            Color.RED -> iconIdRed
+            Color.BLUE -> iconIdBlue
         }
 
         val symbolLayer = SymbolLayer(id, geoId)

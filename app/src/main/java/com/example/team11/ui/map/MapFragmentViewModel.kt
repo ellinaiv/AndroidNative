@@ -65,34 +65,20 @@ class MapFragmentViewModel(context: Context): ViewModel() {
     }
 
     /**
-     * Sjekker om stedet er varmt, basert på brukeren sin preferance
+     * Sjekker om stedet er varmt (rodt, blaat (graat hvis det ikke er noe data)
      * @param place: stedet som man vil finne ut om er varmt
      * @return true hvis stedet er varmt, false hvis kaldt
      */
-    fun isPlaceWarm(place: Place): Boolean{
-        val personalPreferenceValue = personalPreference.value?.get(0)?: return false
+    fun getPinColor(place: Place): Color{
+        val personalPreferenceValue = personalPreference.value?.get(0)?: return Color.GRAY
         if(personalPreferenceValue.showBasedOnWater){
-            if(personalPreferenceValue.waterTempMid <= place.tempWater) return true
-            return false
+            if(place.tempWater == Int.MAX_VALUE) return Color.GRAY
+            if(personalPreferenceValue.waterTempMid <= place.tempWater) return Color.RED
+            return Color.BLUE
         }
-        val tempAir = getPlaceNowForecast(place) ?: return false
-        if(personalPreferenceValue.airTempMid <= tempAir.tempAir) return true
-        return false
-    }
-
-    /**
-     * Sjekker om stedet man er på skal ha en graa pin
-     * @param place: stedet som man vil finne ut om skal være graa
-     * @return true hvis graa, false ellers
-     */
-    fun isPinGray(place: Place): Boolean{
-        val personalPreferenceValue = personalPreference.value?.get(0)?: return true
-        if(personalPreferenceValue.showBasedOnWater){
-            if(place.tempWater == Int.MAX_VALUE) return true
-            return false
-        }
-        if(getPlaceNowForecast(place) == null) return true
-        return false
+        val tempAir = getPlaceNowForecast(place) ?: return Color.GRAY
+        if(personalPreferenceValue.airTempMid <= tempAir.tempAir) return Color.RED
+        return Color.BLUE
     }
 
     /**
