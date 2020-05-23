@@ -133,7 +133,6 @@ class PlaceRepository private constructor(context: Context) {
             currentTimeMillis())[0])
         GlobalScope.launch {
             Log.d("tagStørrelseRep3", placeDao.getNumbPlaces().toString())
-            Log.d("tagStørrelseRep3", personalPreferenceDao.getPersonalPreference().value.toString())
             if (placeDao.getNumbPlaces() == 0 || shouldFetch(
                     metadataDao,
                     Constants.MEATDATA_ENTRY_PLACE_TABLE,
@@ -331,12 +330,9 @@ class PlaceRepository private constructor(context: Context) {
                             it.time in wantedTimesHours || it.time in wantedTimesDays
                         } ?: emptyList()
                     wantedForecastApi.forEach { forecast ->
+                        var time = formatToDaysTime(forecast.time)
+                        if (forecast.time in wantedTimesHours) time = formatToHoursTime(forecast.time)
                         var nextHours = forecast.types.nextOneHourForecast
-                        var time = formatToHoursTime(forecast.time)
-                        val parser =  SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
-                        if (!isToday(parser.parse(forecast.time).time)){
-                            time = formatToDaysTime(forecast.time)
-                        }
                         if (nextHours == null) {
                             nextHours = forecast.types.nextSixHourForecast
                         }
