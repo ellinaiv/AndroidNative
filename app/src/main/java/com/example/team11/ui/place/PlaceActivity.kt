@@ -15,6 +15,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
+import com.example.team11.Color
 import com.example.team11.database.entity.Place
 import com.example.team11.R
 import com.example.team11.Transportation
@@ -71,7 +72,6 @@ class PlaceActivity : AppCompatActivity() {
             Log.d("Fra databasen hour", hourForecast.toString())
             makeHourForecast(hourForecast)
         })
-
         Log.d("tagPlace", "ferdig")
     }
 
@@ -88,16 +88,20 @@ class PlaceActivity : AppCompatActivity() {
 
         textPlaceName.text = place.name
 
-        // vanntemperatur
-        if (place.tempWater != Int.MAX_VALUE) {
-            textTempWater.text = getString(R.string.tempC, place.tempWater)
-            viewModel.personalPreference!!.observe(this, Observer { _ ->
-                when(viewModel.redWave(place)){
-                    true -> imageWater.setImageDrawable(getDrawable(R.drawable.water_red))
-                    false -> imageWater.setImageDrawable(getDrawable(R.drawable.water_blue))
+        viewModel.personalPreference.observe(this, Observer {
+            //Setter fargen paa boolgen
+            when(viewModel.colorWave(place)){
+                Color.GRAY -> imageWater.setImageDrawable(getDrawable(R.drawable.ic_nodatawave))
+                Color.RED -> {
+                    imageWater.setImageDrawable(getDrawable(R.drawable.water_red))
+                    textTempWater.text = getString(R.string.tempC, place.tempWater)
                 }
-            })
-        }
+                Color.BLUE -> {
+                    imageWater.setImageDrawable(getDrawable(R.drawable.water_blue))
+                    textTempWater.text = getString(R.string.tempC, place.tempWater)
+                }
+            }
+        })
 
         // infovinduer om havstrømninger og uv
         buttonCurrentsInfo.setOnClickListener {

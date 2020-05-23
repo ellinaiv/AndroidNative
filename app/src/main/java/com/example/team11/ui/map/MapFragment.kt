@@ -285,7 +285,7 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
             }
             Color.RED -> {
                 imageTempWater.setImageResource(R.drawable.water_red)
-
+                textTempWater.text = getString(R.string.tempC, place.tempWater)
             }
             Color.BLUE -> {
                 imageTempWater.setImageResource(R.drawable.water_blue)
