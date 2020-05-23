@@ -48,8 +48,6 @@ class ListAdapter(private val places: List<Place>,
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int){
         holder.itemName.text = places[position].name
-        Log.d("tagStørrelse", places.size.toString())
-        Log.d("tagStørrelse", forecasts.size.toString())
         val forecastList = forecasts.filter { it.placeId == places[position].id}
         if(forecastList.isNotEmpty()) {
             val forecast = forecastList[0]
