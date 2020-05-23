@@ -99,7 +99,8 @@ class MapFragmentViewModel(context: Context): ViewModel() {
      * @param place: Stedet man vil sjekke
      */
     fun redWave(place: Place): Boolean{
-        if(personalPreference.value?.get(0)?.waterTempMid!! <= place.tempWater) return true
+        val waterTemp = personalPreference.value?.get(0)?.waterTempMid ?: return false
+        if(waterTemp <= place.tempWater) return true
         return false
     }
 

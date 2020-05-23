@@ -329,8 +329,8 @@ class PlaceRepository private constructor(context: Context) {
                     val wantedForecastApi =
                         response.body()?.weatherForecastTimeSlotList?.list?.filter {
                             it.time in wantedTimesHours || it.time in wantedTimesDays
-                        }
-                    wantedForecastApi!!.forEach { forecast ->
+                        } ?: emptyList()
+                    wantedForecastApi.forEach { forecast ->
                         var nextHours = forecast.types.nextOneHourForecast
                         var time = formatToHoursTime(forecast.time)
                         val parser =  SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
@@ -353,7 +353,7 @@ class PlaceRepository private constructor(context: Context) {
                                 (-1).toDouble()
                             )
                         )
-                    };
+                    }
                     AsyncTask.execute { cacheWeatherForecastDb(wantedForecastDb, place.id) }
                 }
                 fetchSeaCurrentSpeed(place)

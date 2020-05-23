@@ -12,14 +12,14 @@ import com.example.team11.Repository.PlaceRepository
 class FavoritesFragmentViewModel(context: Context): ViewModel() {
 
     var favoritePlaces: LiveData<List<Place>>? = null
-    private var placeRepository: PlaceRepository? = null
+    private lateinit var placeRepository: PlaceRepository
     lateinit var personalPreference: LiveData<List<PersonalPreference>>
 
     init {
         if(favoritePlaces == null){
             placeRepository = PlaceRepository.getInstance(context)
-            favoritePlaces = placeRepository!!.getFavoritePlaces()
-            personalPreference = placeRepository!!.getPersonalPreferences()
+            favoritePlaces = placeRepository.getFavoritePlaces()
+            personalPreference = placeRepository.getPersonalPreferences()
         }
     }
     class InstanceCreator(val context: Context) : ViewModelProvider.Factory {
@@ -27,7 +27,7 @@ class FavoritesFragmentViewModel(context: Context): ViewModel() {
             return modelClass.getConstructor(Context::class.java).newInstance(context)
         }
     }
-    fun getForecasts(placesIn: List<Place>) = placeRepository!!.getNowForecastsList(placesIn)
+    fun getForecasts(placesIn: List<Place>) = placeRepository.getNowForecastsList(placesIn)
 
     /**
      * Sender beskjed til repository om at stedet man vil lese mer om skal endre seg.
@@ -35,7 +35,7 @@ class FavoritesFragmentViewModel(context: Context): ViewModel() {
      * @param place: stedet man ønsker å dra til
      */
     fun changeCurrentPlace(place: Place){
-        placeRepository?.changeCurrentPlace(place)
+        placeRepository.changeCurrentPlace(place)
     }
 
     /**
@@ -43,7 +43,8 @@ class FavoritesFragmentViewModel(context: Context): ViewModel() {
      * @param place: Stedet man vil sjekke
      */
     fun redWave(place: Place): Boolean{
-        if(personalPreference.value?.get(0)!!.waterTempMid <= place.tempWater) return true
+        val waterTemp = personalPreference.value?.get(0)?.waterTempMid ?: return false
+        if(waterTemp <= place.tempWater) return true
         return false
     }
 }

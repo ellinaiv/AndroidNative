@@ -13,14 +13,14 @@ class FilterActivityViewModel(context: Context): ViewModel(){
 
     var personalPreferences: LiveData<List<PersonalPreference>>? = null
 
-    private var placeRepository: PlaceRepository? = null
+    private lateinit  var placeRepository: PlaceRepository
     /**
      * Setter verdier
      */
     init {
         if(personalPreferences == null){
             placeRepository = PlaceRepository.getInstance(context)
-            personalPreferences = placeRepository!!.getPersonalPreferences()
+            personalPreferences = placeRepository.getPersonalPreferences()
         }
     }
 
@@ -35,6 +35,6 @@ class FilterActivityViewModel(context: Context): ViewModel(){
      * Oppdaterer repository med den nye preferansen til brukeren
      */
     fun updatePersonalPreference(personalPreference: PersonalPreference){
-        placeRepository!!.updatePersonalPreference(personalPreference)
+        placeRepository.updatePersonalPreference(personalPreference)
     }
 }
