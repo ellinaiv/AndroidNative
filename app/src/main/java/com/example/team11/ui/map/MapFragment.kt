@@ -153,7 +153,8 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
                 mapFragmentViewModel.getNowForecast(places)
             }.observe(viewLifecycleOwner, Observer { forecast ->
                 mapFragmentViewModel.listOfNowForecast = forecast
-                val placesList = mapFragmentViewModel.places!!.value!!
+                val placesList = mapFragmentViewModel.places!!.value ?: emptyList()
+                Log.d("tagStørrelseMap", placesList.size.toString())
 
                 makeMap(placesList)
                 searchText.doOnTextChanged { text, _, _, _ ->

@@ -14,6 +14,7 @@ import android.widget.ImageButton
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.team11.database.entity.Place
@@ -40,9 +41,13 @@ class PlacesListFragment : Fragment() {
         val root = inflater.inflate(R.layout.fragment_places_list, container, false)
         val layoutManager = LinearLayoutManager(context)
 
-        placesListViewModel.places!!.observe(viewLifecycleOwner, Observer { places ->
-            recycler_viewPlaces.layoutManager = layoutManager
-            placesListViewModel.getForecasts(places)!!.observe(viewLifecycleOwner, Observer { forecasts ->
+        if(placesListViewModel.places != null){
+            Transformations.switchMap(placesListViewModel.places!!) {places ->
+                placesListViewModel.getForecasts(places)
+            }.observe(viewLifecycleOwner, Observer {forecasts ->
+                recycler_viewPlaces.layoutManager = layoutManager
+                val places = placesListViewModel.places!!.value ?: emptyList()
+                Log.d("tagStørrelseListe", places.size.toString())
                 recycler_viewPlaces.adapter =
                     ListAdapter(
                         places,
@@ -68,7 +73,7 @@ class PlacesListFragment : Fragment() {
                     hideKeyboard()
                 }
             })
-        })
+        }
         placesListViewModel.personalPreference.observe(viewLifecycleOwner, Observer {})
 
         val filterButton = root.findViewById<ImageButton>(R.id.filterButton)
