@@ -311,7 +311,7 @@ class PlaceRepository private constructor(context: Context) {
      * @return Når returnerer den bare temperatur, må se ann hvordan det skal være når databasen er på plass
      *
      */
-    fun fetchWeatherForecast(place: Place) {
+    private fun fetchWeatherForecast(place: Place) {
         val tag = "tagWeather"
         val wantedForecastDb = ArrayList<WeatherForecastDb>()
         val call = ApiClient.build()?.getWeather(place.lat, place.lng)
