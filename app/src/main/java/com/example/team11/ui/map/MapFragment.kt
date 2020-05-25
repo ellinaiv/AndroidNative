@@ -21,8 +21,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.*
+import com.example.team11.Color
 import com.example.team11.database.entity.Place
 import com.example.team11.ui.place.PlaceActivity
 import com.example.team11.R
@@ -148,20 +148,24 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
         textNoInternet.visibility = View.GONE
         searchText.isEnabled = true
 
-        mapFragmentViewModel.places?.observe(viewLifecycleOwner, Observer {places->
-            mapFragmentViewModel.getNowForecast(places)?.observe(viewLifecycleOwner, Observer { forecast ->
+        if (mapFragmentViewModel.places != null){
+            Transformations.switchMap(mapFragmentViewModel.places!!) { places ->
+                mapFragmentViewModel.getNowForecast(places)
+            }.observe(viewLifecycleOwner, Observer { forecast ->
                 mapFragmentViewModel.listOfNowForecast = forecast
-                mapFragmentViewModel.personalPreference.observe(viewLifecycleOwner, Observer {
-                    makeMap(places)
-                    searchText.doOnTextChanged { text, _, _, _ ->
-                        if (text.toString().isEmpty()) {
-                            removePlace()
-                        }
-                        search(text.toString(), places)
+                val placesList = mapFragmentViewModel.places!!.value ?: emptyList()
+                Log.d("tagStørrelseMap", placesList.size.toString())
+
+                makeMap(placesList)
+                searchText.doOnTextChanged { text, _, _, _ ->
+                    if (text.toString().isEmpty()) {
+                        removePlace()
                     }
-                })
+                    search(text.toString(), placesList)
+                }
             })
-        })
+        }
+        mapFragmentViewModel.personalPreference.observe(viewLifecycleOwner, Observer {  })
     }
 
 
@@ -273,15 +277,20 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
     @SuppressLint("UseRequireInsteadOfGet")
     private fun showPlace(place: Place){
         textName.text = place.name
-        if(place.tempWater != Int.MAX_VALUE) {
-            when (mapFragmentViewModel.redWave(place)) {
-                true -> imageTempWater.setImageResource(R.drawable.water_red)
-                false -> imageTempWater.setImageResource(R.drawable.water_blue)
+
+        when(mapFragmentViewModel.colorWave(place)){
+            Color.GRAY -> {
+                imageTempWater.setImageResource(R.drawable.ic_nodatawave)
+                textTempWater.text = getString(R.string.no_data)
             }
-            textTempWater.text = getString(R.string.tempC, place.tempWater)
-        } else {
-            imageTempWater.setImageResource(R.drawable.ic_nodatawave)
-            textTempWater.text = getString(R.string.no_data)
+            Color.RED -> {
+                imageTempWater.setImageResource(R.drawable.water_red)
+                textTempWater.text = getString(R.string.tempC, place.tempWater)
+            }
+            Color.BLUE -> {
+                imageTempWater.setImageResource(R.drawable.water_blue)
+                textTempWater.text = getString(R.string.tempC, place.tempWater)
+            }
         }
 
         imageTempAir.setImageDrawable(getDrawable(this@MapFragment.context!!, R.drawable.ic_noweatherdata))
@@ -360,13 +369,10 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
             arrayListOf(feature)))
         style.addSource(geoJsonSource)
 
-        val iconId = if(mapFragmentViewModel.isPinGray(place)){
-            iconIdGray
-        }else{
-            when(mapFragmentViewModel.isPlaceWarm(place)){
-                true -> iconIdRed
-                false -> iconIdBlue
-            }
+        val iconId = when(mapFragmentViewModel.getPinColor(place)){
+            Color.GRAY -> iconIdGray
+            Color.RED -> iconIdRed
+            Color.BLUE -> iconIdBlue
         }
 
         val symbolLayer = SymbolLayer(id, geoId)

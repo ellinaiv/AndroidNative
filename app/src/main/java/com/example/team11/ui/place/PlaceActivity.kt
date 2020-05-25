@@ -11,9 +11,11 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
+import com.example.team11.Color
 import com.example.team11.database.entity.Place
 import com.example.team11.R
 import com.example.team11.Transportation
@@ -42,12 +44,15 @@ class PlaceActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         Mapbox.getInstance(this, getString(R.string.access_token))
         setContentView(R.layout.activity_place)
-        Log.d("tagPlace", "kommet inn ")
         supportActionBar!!.hide()
 
         //Observerer stedet som er valgt
-        viewModel.place!!.observe(this, Observer { place ->
-            Log.d("tagPlace", place.toString())
+        viewModel.place?.observe(this, Observer { place ->
+            if(place == null){
+                Toast.makeText(this, getString(R.string.no_place), Toast.LENGTH_LONG).show()
+                finish()
+            }
+
             makeAboutPage(place, savedInstanceState)
 
             viewModel.isFavorite.observe(this, Observer { isFavorite ->
@@ -57,17 +62,16 @@ class PlaceActivity : AppCompatActivity() {
 
         // henter langtidsvarsel vær
         viewModel.getDayForecast().observe(this, Observer { dayForecast ->
-            Log.d("Fra databasen", dayForecast.toString())
+            Log.d("Fra databasen day", dayForecast.toString())
 
             makeDayForecast(dayForecast)
         })
 
         // henter timesvarsel vær
         viewModel.getHourForecast().observe(this, Observer { hourForecast ->
-            Log.d("Fra databasen", hourForecast.toString())
+            Log.d("Fra databasen hour", hourForecast.toString())
             makeHourForecast(hourForecast)
         })
-
         Log.d("tagPlace", "ferdig")
     }
 
@@ -84,16 +88,20 @@ class PlaceActivity : AppCompatActivity() {
 
         textPlaceName.text = place.name
 
-        // vanntemperatur
-        if (place.tempWater != Int.MAX_VALUE) {
-            textTempWater.text = getString(R.string.tempC, place.tempWater)
-            viewModel.personalPreference!!.observe(this, Observer { _ ->
-                when(viewModel.redWave(place)){
-                    true -> imageWater.setImageDrawable(getDrawable(R.drawable.water_red))
-                    false -> imageWater.setImageDrawable(getDrawable(R.drawable.water_blue))
+        viewModel.personalPreference.observe(this, Observer {
+            //Setter fargen paa boolgen
+            when(viewModel.colorWave(place)){
+                Color.GRAY -> imageWater.setImageDrawable(getDrawable(R.drawable.ic_nodatawave))
+                Color.RED -> {
+                    imageWater.setImageDrawable(getDrawable(R.drawable.water_red))
+                    textTempWater.text = getString(R.string.tempC, place.tempWater)
                 }
-            })
-        }
+                Color.BLUE -> {
+                    imageWater.setImageDrawable(getDrawable(R.drawable.water_blue))
+                    textTempWater.text = getString(R.string.tempC, place.tempWater)
+                }
+            }
+        })
 
         // infovinduer om havstrømninger og uv
         buttonCurrentsInfo.setOnClickListener {

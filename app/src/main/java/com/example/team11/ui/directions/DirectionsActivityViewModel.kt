@@ -12,8 +12,8 @@ import com.example.team11.R
 
 class DirectionsActivityViewModel(context: Context): ViewModel() {
     var place: LiveData<Place>? = null
-    var wayOfTransportation: MutableLiveData<Transportation>? = null
-    private var placeRepository: PlaceRepository? = null
+    lateinit var wayOfTransportation: MutableLiveData<Transportation>
+    lateinit var placeRepository: PlaceRepository
 
 
     /**
@@ -22,8 +22,8 @@ class DirectionsActivityViewModel(context: Context): ViewModel() {
     init {
         if(place == null){
             placeRepository = PlaceRepository.getInstance(context)
-            place = placeRepository!!.getCurrentPlace()
-            wayOfTransportation = placeRepository!!.getWayOfTransportation()
+            place = placeRepository.getCurrentPlace()
+            wayOfTransportation = placeRepository.getWayOfTransportation()
         }
     }
 
@@ -47,7 +47,7 @@ class DirectionsActivityViewModel(context: Context): ViewModel() {
      * @param way: måten brukeren ønsker å komme seg til stranden
      */
     fun changeWayOfTransportation(way: Transportation){
-        placeRepository!!.changeWayOfTransportation(way)
+        placeRepository.changeWayOfTransportation(way)
     }
 
     /**
@@ -58,23 +58,15 @@ class DirectionsActivityViewModel(context: Context): ViewModel() {
      * @return String representasjon av timer og minutter
      */
     fun convertTime(sec: Double?, context: Context): String{
-        if(sec == null){
-            return context.getString(R.string.no_travel_time)
-        }
+        if(sec == null) return context.getString(R.string.no_travel_time)
+
         val hoursAndMinutes = (sec/3600)
         var hours = hoursAndMinutes.roundToInt()
-        if(hoursAndMinutes < hours){
-            hours -= 1
-        }
+        if(hoursAndMinutes < hours) hours -= 1
+
         val minutes = ((hoursAndMinutes - hours)*60).roundToInt()
-        if(hours == 0){
-            return context.getString(R.string.travel_time_minutes, minutes)
-        }
-
-        if(minutes == 0){
-            return context.getString(R.string.travel_time_hours, hours)
-        }
-
+        if(hours == 0) return context.getString(R.string.travel_time_minutes, minutes)
+        if(minutes == 0) return context.getString(R.string.travel_time_hours, hours)
         return context.getString(R.string.travel_time_hours_minutes, hours, minutes)
 
     }
@@ -86,14 +78,11 @@ class DirectionsActivityViewModel(context: Context): ViewModel() {
      * @return String representasjon av distansen
      */
     fun convertToCorrectDistance(meters: Double?, context: Context): String{
-        if(meters == null){
-            return context.getString(R.string.no_distance)
-        }
+        if(meters == null) return context.getString(R.string.no_distance)
+
         val metersInt = meters.roundToInt()
         val cntDigits = digitsInInt(metersInt)
-        if(cntDigits < 4){
-            return context.getString(R.string.distance_m, metersInt)
-        }
+        if(cntDigits < 4) return context.getString(R.string.distance_m, metersInt)
 
         val km = metersInt.toDouble()/1000
         return context.getString(R.string.distance_km, km)

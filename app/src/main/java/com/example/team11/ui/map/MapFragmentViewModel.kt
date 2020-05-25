@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
+import com.example.team11.Color
 import com.example.team11.database.entity.PersonalPreference
 import com.example.team11.database.entity.Place
 import com.example.team11.Repository.PlaceRepository
@@ -38,8 +39,8 @@ class MapFragmentViewModel(context: Context): ViewModel() {
         }
     }
 
-    fun getNowForecast(places: List<Place>): LiveData<List<WeatherForecastDb>>?{
-        return placeRepository.getNowForecastsList(places)
+    fun getNowForecast(placesList: List<Place>): LiveData<List<WeatherForecastDb>>?{
+        return placeRepository.getNowForecastsList(placesList)
     }
 
     /**
@@ -64,46 +65,32 @@ class MapFragmentViewModel(context: Context): ViewModel() {
     }
 
     /**
-     * Sjekker om stedet er varmt, basert på brukeren sin preferance
+     * Sjekker om stedet er varmt (rodt, blaat (graat hvis det ikke er noe data)
      * @param place: stedet som man vil finne ut om er varmt
      * @return true hvis stedet er varmt, false hvis kaldt
      */
-    fun isPlaceWarm(place: Place): Boolean{
-        val personalPreferenceValue = personalPreference.value?.get(0)?: return false
+    fun getPinColor(place: Place): Color{
+        val personalPreferenceValue = personalPreference.value?.get(0)?: return Color.GRAY
         if(personalPreferenceValue.showBasedOnWater){
-            if(personalPreferenceValue.waterTempMid <= place.tempWater) return true
-            return false
+            if(place.tempWater == Int.MAX_VALUE) return Color.GRAY
+            if(personalPreferenceValue.waterTempMid <= place.tempWater) return Color.RED
+            return Color.BLUE
         }
-        Log.d("isPlaceWarm", "BEASET PÅ AIR")
-        val tempAir = getPlaceNowForecast(place) ?: return false
-        Log.d("isPlaceWarm", tempAir.tempAir.toString() + " <> " + personalPreferenceValue.airTempMid.toString())
-        Log.d("aitTemp", personalPreferenceValue.airTempMid.toString())
-        if(personalPreferenceValue.airTempMid <= tempAir.tempAir) return true
-        return false
+        val tempAir = getPlaceNowForecast(place) ?: return Color.GRAY
+        if(personalPreferenceValue.airTempMid <= tempAir.tempAir) return Color.RED
+        return Color.BLUE
     }
 
     /**
-     * Sjekker om stedet man er på skal ha en graa pin
-     * @param place: stedet som man vil finne ut om skal være graa
-     * @return true hvis graa, false ellers
-     */
-    fun isPinGray(place: Place): Boolean{
-        val personalPreferenceValue = personalPreference.value?.get(0)?: return true
-        if(personalPreferenceValue.showBasedOnWater){
-            if(place.tempWater == Int.MAX_VALUE) return true
-            return false
-        }
-        if(getPlaceNowForecast(place) == null) return true
-        return false
-    }
-
-    /**
-     * Sjekker om et sted skal ha rød eller blaa boolge
+     * Sjekker om et sted skal ha graa, rood eller blaa boolge
      * @param place: Stedet man vil sjekke
+     * @return fargen boolgen skal veare
      */
-    fun redWave(place: Place): Boolean{
-        if(personalPreference.value?.get(0)?.waterTempMid!! <= place.tempWater) return true
-        return false
+    fun colorWave(place: Place): Color{
+        if(place.tempWater == Int.MAX_VALUE) return Color.GRAY
+        val waterTemp = personalPreference.value?.get(0)?.waterTempMid ?: return Color.GRAY
+        if(waterTemp <= place.tempWater) return Color.RED
+        return Color.BLUE
     }
 
 

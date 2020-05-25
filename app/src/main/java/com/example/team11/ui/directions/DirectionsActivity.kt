@@ -75,9 +75,19 @@ class DirectionsActivity : AppCompatActivity() , PermissionsListener {
 
         //Observerer stedet som er valgt
         viewModel.place!!.observe(this, Observer { place ->
+            if (place == null){
+                Toast.makeText(this, getString(R.string.no_route_found), Toast.LENGTH_LONG).show()
+                finish()
+            }
             makeMap(place, savedInstanceState)
             makeTitleText(place)
-            viewModel.wayOfTransportation!!.observe(this, Observer { way->
+            viewModel.wayOfTransportation.observe(this, Observer { way->
+
+                if (way == null){
+                    Toast.makeText(this, getString(R.string.no_route_found), Toast.LENGTH_LONG).show()
+                    finish()
+                }
+
                 this.way = way
                 if(first){
                     first = false
@@ -95,9 +105,8 @@ class DirectionsActivity : AppCompatActivity() , PermissionsListener {
                             buttonCar.setBackgroundResource(R.drawable.background)
                         }
                     }
-                }else{
-                    makeRoute()
                 }
+                makeRoute()
                 buttonRefresh.setOnClickListener {
                     makeRoute()
                 }
@@ -202,7 +211,6 @@ class DirectionsActivity : AppCompatActivity() , PermissionsListener {
                         .zoom(10.0)
                         .build()
                     mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(position), 2)
-                    enableLocationComponent(style)
                 }
             }finally {
                 enableButtons()

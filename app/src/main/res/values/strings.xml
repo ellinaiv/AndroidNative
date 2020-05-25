@@ -102,9 +102,10 @@
     <string name="no_travel_time">Kunne ikke finne reisetid</string>
     <string name="travel_time_minutes">%1$d minutter</string>
     <string name="travel_time_hours">%1$d timer</string>
-    <string name="travel_time_hours_minutes">%1$d timer og %2$d</string>
+    <string name="travel_time_hours_minutes">%1$d timer og %2$d minutter</string>
     <string name="no_route_found">Fant ingen rute</string>
     <string name="empty_list">Kunne ikke finne noen badeplasser</string>
+    <string name="no_place">Klarte ikke å finne plassen</string>
 
     <!--    buttons-->
     <string name="button_back">Trykk her for å gå tilbake</string>

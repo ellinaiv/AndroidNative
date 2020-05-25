@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.os.Parcelable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +13,7 @@ import android.widget.ImageButton
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.team11.database.entity.Place
@@ -25,7 +25,7 @@ import kotlinx.android.synthetic.main.fragment_places_list.imageEmptyListShark
 import kotlinx.android.synthetic.main.fragment_places_list.searchText
 import kotlinx.android.synthetic.main.fragment_places_list.textNoElementInList
 
-class PlacesListFragment : Fragment() {
+class PlacesListFragment : Fragment(){
 
     private lateinit var placesListViewModel: PlacesListFragmentViewModel
     private lateinit var filterPlaces: List<Place>
@@ -40,16 +40,19 @@ class PlacesListFragment : Fragment() {
         val root = inflater.inflate(R.layout.fragment_places_list, container, false)
         val layoutManager = LinearLayoutManager(context)
 
-        placesListViewModel.places!!.observe(viewLifecycleOwner, Observer { places ->
-            recycler_viewPlaces.layoutManager = layoutManager
-            placesListViewModel.getForecasts(places)!!.observe(viewLifecycleOwner, Observer { forecasts ->
+        if(placesListViewModel.places != null){
+            Transformations.switchMap(placesListViewModel.places!!) {places ->
+                placesListViewModel.getForecasts(places)
+            }.observe(viewLifecycleOwner, Observer {forecasts ->
+                recycler_viewPlaces.layoutManager = layoutManager
+                val places = placesListViewModel.places!!.value ?: emptyList()
+                Log.d("tagStørrelseListe", places.size.toString())
                 recycler_viewPlaces.adapter =
                     ListAdapter(
                         places,
                         forecasts,
                         requireContext(),
-                        placesListViewModel,
-                        false
+                        placesListViewModel
                     )
 
 
@@ -68,7 +71,7 @@ class PlacesListFragment : Fragment() {
                     hideKeyboard()
                 }
             })
-        })
+        }
         placesListViewModel.personalPreference.observe(viewLifecycleOwner, Observer {})
 
         val filterButton = root.findViewById<ImageButton>(R.id.filterButton)
@@ -89,8 +92,7 @@ class PlacesListFragment : Fragment() {
                 filterPlaces,
                 forecasts,
                 requireContext(),
-                placesListViewModel,
-                false
+                placesListViewModel
             )
         if (recycler_viewPlaces.adapter!!.itemCount == 0) {
             imageEmptyListShark.visibility = View.VISIBLE

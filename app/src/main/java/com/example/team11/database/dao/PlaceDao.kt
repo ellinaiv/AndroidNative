@@ -51,23 +51,23 @@ interface PlaceDao {
 
     /**
      * Henter ut alle steder
-     * @return liste med alle steder
+     * @return liste med alle steder som oppfyller filtreringskriterie
      */
     @Query("""
         SELECT * 
         FROM place 
         WHERE (place.tempWater < (
-            SElECT pp.waterTempMid 
+            SELECT pp.waterTempMid 
             FROM personal_preference as pp
         ) 
         AND (
             SELECT pp.showWaterCold 
             FROM personal_preference as pp
         ) 
-        OR place.tempWater > (
+        OR place.tempWater >= (
             SElECT pp.waterTempMid 
             FROM personal_preference as pp
-        ) AND  (
+        ) AND (
             SELECT pp.showWaterWarm
             FROM personal_preference as pp
         )) AND (((SELECT COUNT(*) FROM weather_forecast as wf WHERE wf.place_id = place.id AND wf.time = :timeNow) = 0)
@@ -89,7 +89,7 @@ interface PlaceDao {
             WHERE wf.place_id = place.id
             AND wf.time = :timeNow
             LIMIT 1
-        ) > (
+        ) >= (
             SElECT pp.airTempMid 
             FROM personal_preference as pp
         ) AND (
@@ -102,6 +102,9 @@ interface PlaceDao {
 
     @Query("SELECT COUNT(*) FROM place")
     fun getNumbPlaces(): Int
+
+    @Query("SELECT * FROM place")
+    fun getAllPlaces(): LiveData<List<Place>>
 
 
     /**

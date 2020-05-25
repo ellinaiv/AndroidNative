@@ -11,20 +11,25 @@ import android.widget.*
 import androidx.cardview.widget.CardView
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
+import com.example.team11.Color
 import com.example.team11.database.entity.Place
 import com.example.team11.R
 import com.example.team11.database.entity.WeatherForecastDb
 import com.example.team11.ui.place.PlaceActivity
 import com.example.team11.ui.favorites.FavoritesFragmentViewModel
 
-/*
+/**
  * List adapter viser informasjon på de forskjellige cardsViews.
  * @param myDataset er arraylist med badeplasser
- * @param context er kotexten til activity der cardViews skal visses
+ * @param forecasts er listen med vearmeldingen for alle stedene
+ * @param context er contexten til activity der cardViews skal visses
+ * @param listViewModel er viewModelen til det fragmentet som eier adapteren
  */
 
-class ListAdapter(private val places: List<Place>, private val forecasts: List<WeatherForecastDb>, val context: Context,
-                  private val viewModel: ViewModel, private val favorite: Boolean) : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
+class ListAdapter(private val places: List<Place>,
+                  private val forecasts: List<WeatherForecastDb>,
+                  val context: Context,
+                  private val listViewModel: ListViewModel) : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
 
     class MyViewHolder(itemView: CardView) : RecyclerView.ViewHolder(itemView){
 
@@ -41,53 +46,34 @@ class ListAdapter(private val places: List<Place>, private val forecasts: List<W
         return MyViewHolder(v)
     }
 
-
-    // TODO("Celsius burde komme fra string resource ")
     override fun onBindViewHolder(holder: MyViewHolder, position: Int){
         holder.itemName.text = places[position].name
-        Log.d("tagStørrelse", places.size.toString())
-        Log.d("tagStørrelse", forecasts.size.toString())
-        if(places.size == forecasts.size) {
-            if(places[position].tempWater != Int.MAX_VALUE){
-                holder.itemTempWater.text = context.getString(R.string.tempC, places[position].tempWater)
-                Log.d("tagTemp", places[position].id.toString())
-                Log.d("tagTemp", forecasts[position].placeId.toString())
-            }
-            if(forecasts[position].tempAir != Int.MAX_VALUE) {
-                holder.itemTempAir.text =
-                    context.getString(R.string.tempC, forecasts[position].tempAir)
-                holder.imageTempAir.setImageDrawable(
-                    context.getDrawable(
-                        context.resources.getIdentifier(
-                            forecasts[position].symbol, "drawable", this.context.packageName)))
-            }
+        val forecastList = forecasts.filter { it.placeId == places[position].id}
+        if(forecastList.isNotEmpty()) {
+            val forecast = forecastList[0]
+            holder.itemTempAir.text =
+                context.getString(R.string.tempC, forecast.tempAir)
+            holder.imageTempAir.setImageDrawable(
+                context.getDrawable(
+                    context.resources.getIdentifier(
+                        forecast.symbol, "drawable", this.context.packageName)))
         }
 
-        //TODO("Må disse være ulike egentlig?")
-        if(favorite && places[position].tempWater != Int.MAX_VALUE){
-            val favoritePlacesViewModel = viewModel as FavoritesFragmentViewModel
-            when(favoritePlacesViewModel.redWave(places[position])){
-                true -> holder.imageWater.setImageDrawable(context.getDrawable(R.drawable.water_red))
-                false ->holder.imageWater.setImageDrawable(context.getDrawable(R.drawable.water_blue))
+        when(listViewModel.colorWave(places[position])){
+            Color.GRAY -> holder.imageWater.setImageDrawable(context.getDrawable(R.drawable.ic_nodatawave))
+            Color.RED -> {
+                holder.imageWater.setImageDrawable(context.getDrawable(R.drawable.water_red))
+                holder.itemTempWater.text = context.getString(R.string.tempC, places[position].tempWater)
             }
-
-        }else if(places[position].tempWater != Int.MAX_VALUE){
-            val placesListActivityViewModel = viewModel as PlacesListFragmentViewModel
-            when(placesListActivityViewModel.redWave(places[position])){
-                true -> holder.imageWater.setImageDrawable(context.getDrawable(R.drawable.water_red))
-                false ->holder.imageWater.setImageDrawable(context.getDrawable(R.drawable.water_blue))
+            Color.BLUE -> {
+                holder.imageWater.setImageDrawable(context.getDrawable(R.drawable.water_blue))
+                holder.itemTempWater.text = context.getString(R.string.tempC, places[position].tempWater)
             }
         }
 
 
        holder.itemView.setOnClickListener{
-           if(favorite){
-               val favoritePlacesViewModel = viewModel as FavoritesFragmentViewModel
-               favoritePlacesViewModel.changeCurrentPlace(places[position])
-           }else{
-               val placesListActivityViewModel = viewModel as PlacesListFragmentViewModel
-               placesListActivityViewModel.changeCurrentPlace(places[position])
-           }
+           listViewModel.changeCurrentPlace(places[position])
            val intent = Intent(context, PlaceActivity::class.java)
            context.startActivity(intent)
         }
