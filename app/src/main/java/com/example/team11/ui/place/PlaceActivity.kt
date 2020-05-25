@@ -209,7 +209,7 @@ class PlaceActivity : AppCompatActivity() {
             }
 
             // havstrømninger
-            var currentsText = convertCurrents(forecast[0].speed)
+            val currentsText = convertCurrents(forecast[0].speed)
             textCurrentsResult.text = getString(R.string.place_currents_result, currentsText)
             setColor(textCurrentsResult, currentsText)
 
