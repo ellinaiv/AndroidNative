@@ -1,6 +1,5 @@
 package com.example.team11.util
 
-import android.util.Log
 import com.example.team11.database.entity.Place
 import org.junit.Assert.*
 import org.junit.Test
@@ -9,15 +8,15 @@ import org.junit.Test
 class UtilTest{
 
 
-    val placeGrorud = Place(701, "Badedammen ved Grorud", 59.975274, 10.885098, Int.MAX_VALUE)
-    val placeBekkensten = Place(702, "Bekkensten", 59.792160, 10.733422, Int.MAX_VALUE)
-    val placeBestemorstranda = Place(703, "Bestemorstranda", 59.826644, 10.758245, Int.MAX_VALUE)
-    val placeBogstadvannet = Place(704, "Bogstadvannet", 59.969994, 10.636734, Int.MAX_VALUE)
-    val placeBrekkedammen = Place(705, "Brekkedammen (Frysja)", 59.967367, 10.779186, Int.MAX_VALUE)
-    val answer = listOf(placeGrorud, placeBekkensten, placeBestemorstranda,
+    private val placeGrorud = Place(701, "Badedammen ved Grorud", 59.975274, 10.885098, Int.MAX_VALUE)
+    private val placeBekkensten = Place(702, "Bekkensten", 59.792160, 10.733422, Int.MAX_VALUE)
+    private val placeBestemorstranda = Place(703, "Bestemorstranda", 59.826644, 10.758245, Int.MAX_VALUE)
+    private val placeBogstadvannet = Place(704, "Bogstadvannet", 59.969994, 10.636734, Int.MAX_VALUE)
+    private val placeBrekkedammen = Place(705, "Brekkedammen (Frysja)", 59.967367, 10.779186, Int.MAX_VALUE)
+    private val answer = listOf(placeGrorud, placeBekkensten, placeBestemorstranda,
         placeBogstadvannet, placeBrekkedammen)
 
-    val withoutTemp = """<?xml version="1.0" encoding="UTF-8"?>
+    private val withoutTemp = """<?xml version="1.0" encoding="UTF-8"?>
     <badetemp xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#" xml:lang="en">
     	<credit>
     		<!-- For å bruke åpne/gratis badetemperaturdata fra Oslo kommune, MÅ du vise følgende tekst godt synlig på nettsiden din. Teksten skal være en lenke til URL-en som er spesifisert.-->
@@ -69,7 +68,7 @@ class UtilTest{
     </badetemp>
     """
 
-    val withTemp = """<?xml version="1.0" encoding="UTF-8"?>
+    private val withTemp = """<?xml version="1.0" encoding="UTF-8"?>
     <badetemp xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#" xml:lang="en">
     	<credit>
     		<!-- For å bruke åpne/gratis badetemperaturdata fra Oslo kommune, MÅ du vise følgende tekst godt synlig på nettsiden din. Teksten skal være en lenke til URL-en som er spesifisert.-->
@@ -121,7 +120,7 @@ class UtilTest{
     </badetemp>
     """
 
-    val withAndWithoutTemp = """<?xml version="1.0" encoding="UTF-8"?>
+    private val withAndWithoutTemp = """<?xml version="1.0" encoding="UTF-8"?>
     <badetemp xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#" xml:lang="en">
     	<credit>
     		<!-- For å bruke åpne/gratis badetemperaturdata fra Oslo kommune, MÅ du vise følgende tekst godt synlig på nettsiden din. Teksten skal være en lenke til URL-en som er spesifisert.-->
@@ -211,7 +210,7 @@ class UtilTest{
     @Test
     fun testGetWantedForecastDbHour(){
         val time: Long = 1590066907777
-        val answer = listOf("15", "16", "17", "18", "19", "20", "21")
+        val answer = listOf("15", "16", "17", "18", "19", "20")
         val timesHour = Util.getWantedForecastDb(true, time)
         assertEquals(answer, timesHour)
     }

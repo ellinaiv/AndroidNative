@@ -1,7 +1,6 @@
 package com.example.team11.ui.place
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -18,7 +17,7 @@ class PlaceActivityViewModel(context: Context): ViewModel() {
 
     var place: MutableLiveData<Place>? = null
     lateinit var isFavorite: LiveData<Boolean>
-    private var placeRepository: PlaceRepository? = null
+    lateinit var placeRepository: PlaceRepository
     lateinit var personalPreference: LiveData<List<PersonalPreference>>
 
     /**
@@ -27,9 +26,9 @@ class PlaceActivityViewModel(context: Context): ViewModel() {
     init {
         if(place == null){
             placeRepository = PlaceRepository.getInstance(context)
-            place = placeRepository!!.getCurrentPlace()
-            isFavorite = placeRepository!!.isPlaceFavorite(place!!.value!!)
-            personalPreference = placeRepository!!.getPersonalPreferences()
+            place = placeRepository.getCurrentPlace()
+            isFavorite = placeRepository.isPlaceFavorite(place!!.value!!)
+            personalPreference = placeRepository.getPersonalPreferences()
         }
     }
 
@@ -42,25 +41,23 @@ class PlaceActivityViewModel(context: Context): ViewModel() {
     /**
      * Markerer stedet som favoritt i databasen
      */
-    fun addFavoritePlace() = placeRepository!!.addFavoritePlace(place!!.value!!)
+    fun addFavoritePlace() = placeRepository.addFavoritePlace(place!!.value!!)
 
     /**
      * Markerer stedet som ikke-favoritt i databasen
      */
-    fun removeFavoritePlace() = placeRepository!!.removeFavoritePlace(place!!.value!!)
+    fun removeFavoritePlace() = placeRepository.removeFavoritePlace(place!!.value!!)
 
     /**
      * Henter forecast for de neste timene fra database
-     * @param place
      * @return Livedata<List<HourForecast>>
      */
-    fun getHourForecast() = placeRepository!!.getForecast(place!!.value!!, true)
+    fun getHourForecast() = placeRepository.getForecast(place!!.value!!, true)
     /**
      * Henter forecast for de neste dagene fra database
-     * @param place
      * @return Livedata<List<HourForecast>>
      */
-    fun getDayForecast() = placeRepository!!.getForecast(place!!.value!!, false)
+    fun getDayForecast() = placeRepository.getForecast(place!!.value!!, false)
 
 
     /**
@@ -68,7 +65,7 @@ class PlaceActivityViewModel(context: Context): ViewModel() {
      * @param way: måten brukeren ønsker å komme seg til stranden
      */
     fun changeWayOfTransportation(way: Transportation){
-        placeRepository!!.changeWayOfTransportation(way)
+        placeRepository.changeWayOfTransportation(way)
     }
 
     /**
