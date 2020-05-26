@@ -4,6 +4,11 @@ import androidx.room.*
 import androidx.room.ForeignKey.CASCADE
 
 
+/**
+ * Klasse med entity for weather_forecast databasen.
+ * Her lagred alle vær forecast
+ */
+
 @Entity(tableName = "weather_forecast",
     foreignKeys = [ForeignKey(entity = Place::class, parentColumns = arrayOf("id"), childColumns = arrayOf("place_id"), onDelete = CASCADE)],
     primaryKeys = ["place_id","time"])

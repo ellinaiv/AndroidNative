@@ -2,6 +2,11 @@ package com.example.team11.database.entity
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
+
+/**
+ * Klasse med entity for place_databasen, lagrer all informasjon om steder + vanntemperatur
+ */
+
 @Entity(tableName = "place")
 class Place(
     @PrimaryKey val id: Int,

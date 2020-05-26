@@ -1,7 +1,7 @@
 package com.example.team11.api
 
-import com.example.team11.valueObjects.WeatherForecastApi
-import com.example.team11.valueObjects.OceanForecast
+import com.example.team11.api.valueObjects.WeatherForecastApi
+import com.example.team11.api.valueObjects.OceanForecast
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
@@ -12,7 +12,7 @@ import retrofit2.http.Query
 
 /**
  * Klasse som henter data fra https://in2000-apiproxy.ifi.uio.no/weatherapi/
- * @Return serviceApiInterface som inneholder de ulike metodene for å hente ulik data
+ * @Return serviceApiInterface som on success inneholder en liste med de ulike objektene.
  */
 object ApiClient {
 
@@ -36,7 +36,7 @@ object ApiClient {
     }
 
     /**
-     * Metode for http-logging, logger http-resultat, feilkoder og alle kall til API
+     * Metode for http-logging: logger http-resultat, feilkoder og alle kall til API
      */
     private fun interceptor(): HttpLoggingInterceptor {
         val httpLoggingInterceptor = HttpLoggingInterceptor()

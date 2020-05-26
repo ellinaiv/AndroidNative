@@ -1,4 +1,4 @@
-package com.example.team11.valueObjects
+package com.example.team11.api.valueObjects
 
 import com.google.gson.annotations.SerializedName
 
