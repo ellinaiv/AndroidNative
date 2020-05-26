@@ -50,7 +50,8 @@ interface PlaceDao {
     fun placeExists(placeId: Int): Boolean
 
     /**
-     * Henter ut alle steder
+     * Henter ut alle ønskede steder basert på personal preference, så denne henter bare ut
+     * steder i samsvar med filtrering
      * @return liste med alle steder som oppfyller filtreringskriterie
      */
     @Query("""
@@ -98,6 +99,8 @@ interface PlaceDao {
         ))))
             ORDER BY id
         """)
+
+
     fun getPlaceList(timeNow: String): LiveData<List<Place>>
 
     @Query("SELECT COUNT(*) FROM place")

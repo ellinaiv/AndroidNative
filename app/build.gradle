@@ -106,7 +106,7 @@ dependencies {
     implementation "androidx.work:work-runtime-ktx:2.3.4"
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
-    debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
+    //debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
 
 
     //Vector

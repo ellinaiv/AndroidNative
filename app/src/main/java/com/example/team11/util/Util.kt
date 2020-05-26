@@ -13,66 +13,75 @@ import java.util.concurrent.TimeUnit
 //TODO("Hadde vært smooth om vi kunne refaktorert noe av dette, her er det mye kode som går igjen mange steder")
 object Util {
 
-
+    /**
+     * Henter ut ønsket tid på formatet som brukes i API
+     * Ønsket tid er de [Constants.NUMB_HOURS_FORECAST] neste timene
+     * Fra og med nå
+     */
     fun getWantedHoursForecastApi(): List<String>{
         val listTimes = arrayListOf<String>()
         val c: Calendar = GregorianCalendar()
         c.time = Date(System.currentTimeMillis())
-        Log.d("Gattering time before: ", c.time.toString())
         c.set(Calendar.MINUTE, 0)
         c.set(Calendar.SECOND, 0)
-        Log.d("Gattering time After: ", c.time.toString())
         val stringFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
         for (hour in 0..Constants.NUMB_HOURS_FORECAST){
             listTimes.add(stringFormat.format(c.time))
-            Log.d("Gattering times", stringFormat.format(c.time))
             c.add(Calendar.HOUR_OF_DAY, 1)
         }
         return listTimes
     }
 
+    /**
+     * Henter ut ønsket tid på formatet som brukes i API
+     * Ønsket tid er de [Constants.NUMB_DAYS_FORECAST] neste dagene
+     * Fra (ikke med) i dag
+     */
     fun getWantedDaysForecastApi(): List<String>{
         val listTimes = arrayListOf<String>()
         val c: Calendar = GregorianCalendar()
         c.time = Date(System.currentTimeMillis())
-        Log.d("Gattering time before: ", c.time.toString())
         c.set(Calendar.HOUR_OF_DAY, 12)
         c.set(Calendar.MINUTE, 0)
         c.set(Calendar.SECOND, 0)
-        Log.d("Gattering time After: ", c.time.toString())
         val stringFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
         for (hour in 0 until Constants.NUMB_DAYS_FORECAST){
             c.add(Calendar.DATE, 1)
             listTimes.add(stringFormat.format(c.time))
-            Log.d("Gattering times API", stringFormat.format(c.time))
         }
         return listTimes
     }
 
-
+    /**
+     * Hjelpefunksjon for [getWantedDaysForecastDb]
+     */
     private fun getWantedHoursForecastDb(c: Calendar, stringFormat: SimpleDateFormat): List<String>{
         val listTimes = arrayListOf<String>()
         for (hour in 0 until Constants.NUMB_HOURS_FORECAST){
             listTimes.add(stringFormat.format(c.time))
-            Log.d("Gattering times DB", stringFormat.format(c.time))
             c.add(Calendar.HOUR_OF_DAY, 1)
         }
-        Log.d("HOUR", listTimes.toString())
         return listTimes
     }
 
+    /**
+     * Hjelpefunksjon for [getWantedDaysForecastDb]
+     */
     private fun getWantedDaysForecastDb(c : Calendar, stringFormat: SimpleDateFormat): List<String>{
         val listTimes = arrayListOf<String>()
         c.set(Calendar.HOUR_OF_DAY, 12)
         for (hour in 0 until Constants.NUMB_DAYS_FORECAST){
             c.add(Calendar.DATE, 1)
             listTimes.add(stringFormat.format(c.time))
-            Log.d("Gattering times DB", stringFormat.format(c.time))
         }
-        Log.d("DAY", listTimes.toString())
         return listTimes
     }
 
+    /**
+     * @param [hour] Om man ønsker tiden returnert som timer eller dager.
+     * [currentTime] Tiden man ønsker
+     * @return returnerer den gitte tiden på formatet som brukes i weather_forecast databasen
+     */
     fun getWantedForecastDb(hour: Boolean, currentTime: Long): List<String>{
         val c: Calendar = GregorianCalendar()
         c.time = Date(currentTime)
@@ -82,6 +91,10 @@ object Util {
         return getWantedDaysForecastDb(c, SimpleDateFormat("dd/MM"))
     }
 
+    /**
+     * @param time tid på formatet som kommer fra weather forecast API
+     * @return tid på formatet som brukes i weather_forecast databasen
+     */
     fun formatToHoursTime(time: String): String{
         val parser =  SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
         val dateTime = parser.parse(time)
@@ -89,6 +102,10 @@ object Util {
         return formatter.format(dateTime)
     }
 
+    /**
+     * @param time tid på formatet som kommer fra weather forecast API
+     * @return tid på formatet som brukes i weather_forecast databasen
+     */
     fun formatToDaysTime(time: String): String{
         val parser =  SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
         val dateTime = parser.parse(time)
@@ -96,6 +113,10 @@ object Util {
         return formatter.format(dateTime)
     }
 
+    /**
+     * @param currentTime hva tiden er nå
+     * @return returnerer den gitte tiden på formatet som brukes i weather_forecast databasen
+     */
     fun getNowHourForecastDb(currentTime: Long): List<String>{
         val listTimes = arrayListOf<String>()
         val c: Calendar = GregorianCalendar()
@@ -103,28 +124,34 @@ object Util {
         c.set(Calendar.MINUTE, 0)
         c.set(Calendar.SECOND, 0)
         val stringFormat = SimpleDateFormat("HH")
-        Log.d("Getting nowTime", stringFormat.format(c.time))
         listTimes.add(stringFormat.format(c.time))
         return listTimes
     }
 
+    /**
+     * Metode som sjekker om en database burde oppdateres, basert på når databasen sist ble oppdatert
+     * @param [metadataDao] MetdataDao, her ligger date last cached. [nameDatabase] navnet på
+     * databasen man vil sjekke. [timeout] Hvor ofte data for gitte databasen burde caches.
+     * [timeUnit] timeunit på [timeout], f.eks. HOURS, DAYS
+     */
     fun shouldFetch(metadataDao: MetadataDao, nameDatabase: String, timeout: Int, timeUnit: TimeUnit): Boolean{
         val dateLastFetched = metadataDao.getDateLastCached(nameDatabase)
         val now = System.currentTimeMillis()
         val timeoutMilli = timeUnit.toMillis(timeout.toLong())
-        Log.d("tagDatabase", "dateLastFetched: $dateLastFetched")
 
         if(dateLastFetched.equals(0)){
             return true
         }
         if (now - dateLastFetched > timeoutMilli) {
-            Log.d("tagDatabse", "Now: $now, dateLastFetcged: $dateLastFetched, timeoutMilli: $timeoutMilli")
             return true
         }
         return false
 
     }
 
+    /**
+     * Metode som parser xlm fra places
+     */
     fun parseXMLPlace(response: String): List<Place>{
         val places = ArrayList<Place>()
         val factory = XmlPullParserFactory.newInstance()

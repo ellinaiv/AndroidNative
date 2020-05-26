@@ -2,7 +2,6 @@ package com.example.team11.Repository
 
 import android.content.Context
 import android.os.AsyncTask
-import android.text.format.DateUtils.isToday
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -22,20 +21,16 @@ import com.example.team11.util.Util.getWantedDaysForecastApi
 import com.example.team11.util.Util.getWantedForecastDb
 import com.example.team11.util.Util.getWantedHoursForecastApi
 import com.example.team11.util.Util.shouldFetch
-import com.example.team11.valueObjects.OceanForecast
-import com.example.team11.valueObjects.WeatherForecastApi
+import com.example.team11.api.valueObjects.OceanForecast
+import com.example.team11.api.valueObjects.WeatherForecastApi
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.coroutines.awaitString
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.lang.System.currentTimeMillis
-import java.text.DateFormat
-import java.text.SimpleDateFormat
-import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
 
@@ -69,6 +64,11 @@ class PlaceRepository private constructor(context: Context) {
             }
     }
 
+    /**
+     * Tar en boolean om man ønsker falsk data eller ikke. Oppdater Personal Preference databasen.
+     * Oppdaterer place databasen med enten falsk data, eller henter data på nytt fra api.
+     * @param newFalseData boolean for om bruker ønsker falsk data eller ikke.
+     */
     fun changeFalseData(newFalseData: Boolean) {
         GlobalScope.launch{
             if (personalPreferenceDao.getFalseData() != newFalseData) {
@@ -90,7 +90,7 @@ class PlaceRepository private constructor(context: Context) {
 
     /**
      * Oppdaterer preferansene til brukeren
-     * @param newPersonalPreference den nye preferansen
+     * @param personalPreference den nye preferansen
      */
     fun updatePersonalPreference(personalPreference: PersonalPreference) {
         AsyncTask.execute {
@@ -106,14 +106,16 @@ class PlaceRepository private constructor(context: Context) {
     fun getFavoritePlaces() = placeDao.getFavoritePlaceList()
 
     /**
-     * Legger til favoritt sted
+     * Marekerer et sted som favorittsted
+     * @param place man ønsker å sette som favorittsted
      */
     fun addFavoritePlace(place: Place) {
         AsyncTask.execute { placeDao.addFavorite(place.id) }
     }
 
     /**
-     * Fjern favoritt sted
+     * Fjerner markeringen for et sted som favorittsted
+     * @param place man ønsker å fjerne som favorittsted
      */
     fun removeFavoritePlace(place: Place) {
         AsyncTask.execute { placeDao.removeFavorite(place.id) }
@@ -121,11 +123,15 @@ class PlaceRepository private constructor(context: Context) {
 
     /**
      * Sjekker om sted er favoritt
+     * @param place sted man ønsker å sjekke
      */
     fun isPlaceFavorite(place: Place) = placeDao.isPlaceFavorite(place.id)
 
     /**
-     * getPlaces funksjonen henter en liste til viewModel med badesteder
+     * Metode som sjekker om data burde hentes fra API. Først returnerers places.
+     * Samtidig kjører en asynkron tråd dersom info om steder burde hentes på nytt.
+     * Data om steder hentes og caches dersom den burde hentes på nytt.
+     * Legges nye data inn i databasen oppdateres livedata automatisk.
      * @return: MutableLiveData<List<Place>>, liste med badesteder
      */
     fun getPlaces(): LiveData<List<Place>> {
@@ -145,6 +151,13 @@ class PlaceRepository private constructor(context: Context) {
         }
         return places
     }
+
+    /**
+     * Returnerer en liste med alle forecast akkuratt nå. Sjekker også om data om forecast
+     * burde hentes på nytt.
+     * @param places Alle steder der man vil ha now-forecast for
+     * @return Livedata<List<WeatherForecastDd>> for alle steder i places
+     */
 
     fun getNowForecastsList(places: List<Place>): LiveData<List<WeatherForecastDb>>? {
         val placeIds = places.map { it.id }
@@ -170,6 +183,7 @@ class PlaceRepository private constructor(context: Context) {
 
     /**
      * getPlaces funksjonen henter en liste til viewModel med vær for de netse timene
+     * Sjekker om data om forecasts burde oppdateres.
      * @return: LiveData<List<HourForecast>>, liste med badesteder
      */
     fun getForecast(place: Place, hour: Boolean): LiveData<List<WeatherForecastDb>> {
@@ -192,7 +206,10 @@ class PlaceRepository private constructor(context: Context) {
         return forecast
     }
 
-
+    /**
+     * @param places Liste med steder som skal legges inn i databasen
+     * Lagrer data i databasen, og oppdaterer metadatabasen om når data sist ble lagret.
+     */
     private fun cachePlacesDb(places: List<Place>) {
         Log.d("tagStørrelseRep2", places.size.toString())
         placeDao.insertPlaceList(places)
@@ -204,6 +221,9 @@ class PlaceRepository private constructor(context: Context) {
         )
     }
 
+    /**
+     * @param [weatherForecast] List of weatherforecasts to cache [placeId] Id of place beeing cached
+     */
     fun cacheWeatherForecastDb(weatherForecast: List<WeatherForecastDb>, placeId: Int) {
        weatherForecastDao.deleteForecastsForPlace(placeId)
         weatherForecastDao.insertWeatherForecast(weatherForecast)
@@ -224,7 +244,7 @@ class PlaceRepository private constructor(context: Context) {
     }
 
     /**
-     * Henter ut currentPlace
+     * Henter ut currentPlaceinneholder de ulike metodene for å hente ulik data
      * @return stedet som er currentPlace
      */
     fun getCurrentPlace() = currentPlace
@@ -306,10 +326,9 @@ class PlaceRepository private constructor(context: Context) {
 
 
     /**
-     * Henter forecast til et sted fra met sitt api.
-     * @param place stranden man ønsker forecast for
-     * @return Når returnerer den bare temperatur, må se ann hvordan det skal være når databasen er på plass
-     *
+     * Henter forecast til et sted fra met sitt api og legger nødvendig infromasjon inn i nye objekter
+     * av klassen [WeatherForecastDb].
+     * @param place stedet man ønsker forecast for
      */
     private fun fetchWeatherForecast(place: Place) {
         val tag = "tagWeather"

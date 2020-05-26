@@ -3,6 +3,10 @@ package com.example.team11.database.entity
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
+/**
+ * Klasse med entity for personal_preference databasen.
+ */
+
 @Entity(tableName = "personal_preference")
 class PersonalPreference(
     var waterTempMid : Int = 15,
