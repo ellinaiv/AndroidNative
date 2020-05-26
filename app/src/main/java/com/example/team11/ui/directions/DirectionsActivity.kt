@@ -1,8 +1,12 @@
 package com.example.team11.ui.directions
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.graphics.BitmapFactory
 import android.graphics.Typeface
+import android.net.ConnectivityManager
+import android.net.Network
+import android.net.NetworkRequest
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Spannable
@@ -69,6 +73,76 @@ class DirectionsActivity : AppCompatActivity() , PermissionsListener {
         backButton.setOnClickListener {
             finish()
         }
+
+
+        val manager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val builder = NetworkRequest.Builder()
+
+        manager.registerNetworkCallback(
+            builder.build(),
+            object : ConnectivityManager.NetworkCallback(){
+
+                override fun onAvailable(network: Network) {
+                    super.onAvailable(network)
+                    runOnUiThread {
+                        viewModel.hasInternet.value = true
+                    }
+                }
+
+                override fun onUnavailable(){
+                    super.onUnavailable()
+                    runOnUiThread {
+                        viewModel.hasInternet.value = false
+                    }
+                }
+
+                override fun onLost(network: Network) {
+                    super.onLost(network)
+                    runOnUiThread {
+                        viewModel.hasInternet.value = false
+                    }
+                }
+
+                override fun onLosing(network: Network, maxMsToLive: Int) {
+                    super.onLosing(network, maxMsToLive)
+                    runOnUiThread {
+                        viewModel.hasInternet.value = false
+                    }
+                }
+            }
+        )
+
+        viewModel.hasInternet.observe(this, Observer{internet ->
+            if(internet){
+                hasInternet(savedInstanceState)
+            }else{
+                noInternet()
+            }
+        })
+    }
+
+
+    /**
+     * Det som skjer hvis enheten ikke har internett
+     * Kartet blir borte og bilde og beskjed om at det ikke er internett dukker opp
+     */
+    private fun noInternet(){
+        mapViewDir?.visibility = View.GONE
+        imageNoInternet.visibility = View.VISIBLE
+        textNoInternet.visibility = View.VISIBLE
+        buttonDirections.visibility = View.GONE
+        layoutAboutRoute.visibility = View.GONE
+    }
+
+    /**
+     * Det som skjer hvis enheten har internett
+     * Fjerner beskjed og bilde om at det ikke er internett og gjør kartet synlig
+     */
+    private fun hasInternet(savedInstanceState: Bundle?) {
+        mapViewDir?.visibility = View.VISIBLE
+        imageNoInternet.visibility = View.GONE
+        textNoInternet.visibility = View.GONE
+        buttonDirections.visibility = View.VISIBLE
 
         buttonTransportationEvents()
         var first = true
@@ -195,7 +269,7 @@ class DirectionsActivity : AppCompatActivity() , PermissionsListener {
      * @param savedInstanceState: mapView trenger denne til onCreate metoden sin
      */
     private fun makeMap(place: Place, savedInstanceState: Bundle?) {
-        mapView = findViewById(R.id.mapView)
+        mapView = findViewById(R.id.mapViewDir)
         mapView?.onCreate(savedInstanceState)
         mapView?.getMapAsync { mapboxMap ->
             disableButtons()

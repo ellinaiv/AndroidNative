@@ -14,7 +14,7 @@ class DirectionsActivityViewModel(context: Context): ViewModel() {
     var place: LiveData<Place>? = null
     lateinit var wayOfTransportation: MutableLiveData<Transportation>
     lateinit var placeRepository: PlaceRepository
-
+    val hasInternet = MutableLiveData<Boolean>()
 
     /**
      * Setter verdier
@@ -24,6 +24,7 @@ class DirectionsActivityViewModel(context: Context): ViewModel() {
             placeRepository = PlaceRepository.getInstance(context)
             place = placeRepository.getCurrentPlace()
             wayOfTransportation = placeRepository.getWayOfTransportation()
+            hasInternet.value = false
         }
     }
 
