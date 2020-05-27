@@ -195,7 +195,7 @@ class PlaceActivity : AppCompatActivity() {
 
 
     /**
-     * setter våværende vær,
+     * setter nåværende vær,
      * setter verdier i views for havstrømninger og uv,
      * lager timesvarsel for vær (kaller på setForecastViews)
      *
