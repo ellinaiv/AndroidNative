@@ -106,10 +106,6 @@ interface PlaceDao {
     @Query("SELECT COUNT(*) FROM place")
     fun getNumbPlaces(): Int
 
-    @Query("SELECT * FROM place")
-    fun getAllPlaces(): LiveData<List<Place>>
-
-
     /**
      * Henter ut liste med alle steder som er favoritter
      * @return liste med steder som er favoritter
