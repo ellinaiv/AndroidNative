@@ -38,7 +38,7 @@
     <string name="place_uv_info_very_strong">UV-indeks: 8-10
         \nTiltak: Unngå solen mellom kl. 12-15 og søk skygge.
         Bruk klær, solhatt og solbriller.</string>
-    <string name="place_uv_info_extreme">UV-indeks: >11
+    <string name="place_uv_info_extreme">UV-indeks 11+
         \nTiltak: Unngå solen mellom kl. 12-15. Søk skygge.
         Klær, solhatt og solbriller absolutt nødvendig.</string>
     <string name="place_info_more"><u>Se mer på yr.no</u></string>
