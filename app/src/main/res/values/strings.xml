@@ -29,7 +29,7 @@
     <string name="place_uv">UV-stråling</string>
     <string name="place_uv_result"><b>%1$s</b></string>
     <string name="place_uv_info_title">Informasjon om UV-stråling</string>
-    <string name="place_uv_info_weak">UV–indeks: 1-2 \nTiltak: Ingen. Vær ute og nyt sola!</string>
+    <string name="place_uv_info_weak">UV-indeks: 1-2 \nTiltak: Ingen. Vær ute og nyt sola!</string>
     <string name="place_uv_info_moderate">UV-indeks: 3-5
         \nTiltak: Klær, solhatt og solbriller. Ta pauser fra sola!</string>
     <string name="place_uv_info_strong">UV-indeks: 6-7
