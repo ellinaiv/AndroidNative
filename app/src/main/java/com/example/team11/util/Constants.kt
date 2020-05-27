@@ -7,6 +7,6 @@ object Constants {
     const val NUMB_DAYS_FORECAST = 6
     const val waterTempLow: Int = 0
     const val waterTempHigh: Int = 30
-    const val airTempLow: Int = -30
-    const val airTempHigh: Int = 30
+    const val airTempLow: Int = -15
+    const val airTempHigh: Int = 40
 }

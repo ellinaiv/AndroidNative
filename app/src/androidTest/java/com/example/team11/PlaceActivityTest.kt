@@ -57,11 +57,6 @@ class PlaceActivityTest {
     }
 
     @Test
-    fun testWaves() {
-        //TODO
-    }
-
-    @Test
     fun testWaterTemp(){
         goToPlaceActivity()
         val activityInstance = getActivityInstance() as PlaceActivity
@@ -74,33 +69,6 @@ class PlaceActivityTest {
             onView(withId(R.id.textTempWater))
                 .check(matches(withSubstring(placeInstance.value!!.tempWater.toString())))
         }
-    }
-
-    @Test
-    fun testWeatherNow() {
-        /**
-         * denne fungerer ikke, derfor er den kommentert ut.. activityInstance.viewModel.getHourForecast().value gir null og
-         * dermed får man NullPointerException. Har også prøvd med observer,
-         * men det var heller ikke mulig..
-         */
-        //værikon
-//        goToPlaceActivity()
-//        val activityInstance = getActivityInstance() as PlaceActivity
-//        val actualImage = getActivityInstance()!!.findViewById<ImageView>(R.id.imageWeather).drawable.toBitmap()
-//        val forecastSymbol = activityInstance.viewModel.getHourForecast().value!![0].symbol
-//        val expectedImage = activityInstance.getDrawable(activityInstance.resources.getIdentifier(forecastSymbol,
-//            "drawable", activityInstance.packageName))!!.toBitmap()
-//        assert(actualImage == expectedImage)  //usikker på ==
-
-        //lufttemperatur
-        //nedbør
-    }
-
-    @Test
-    fun testCurrentsResult() {
-        /**
-         * kan ikke implementeres pga. ikke tilgang til data fra databasen. (se testWeatherNow())
-         */
     }
 
     @Test
@@ -132,14 +100,7 @@ class PlaceActivityTest {
         onView(withId(R.id.layoutCurrentsInfo)).check(matches(not(isDisplayed())))
     }
 
-    @Test
-    fun testUVResult() {
-        /**
-         * kan ikke implementeres pga. ikke tilgang til data fra databasen. (se testWeatherNow())
-         */
-    }
-
-    @Test
+   @Test
     fun testOpenUVInfo(){
         goToPlaceActivity()
         onView(withId(R.id.buttonUVInfo))
@@ -168,19 +129,6 @@ class PlaceActivityTest {
         onView(withId(R.id.layoutUVInfo)).check(matches(not(isDisplayed())))
     }
 
-    @Test
-    fun testHourForecast() {
-        /**
-         * kan ikke implementeres pga. ikke tilgang til data fra databasen. (se testWeatherNow())
-         */
-    }
-
-    @Test
-    fun testLongForecast() {
-        /**
-         * kan ikke implementeres pga. ikke tilgang til data fra databasen. (se testWeatherNow())
-         */
-    }
 
 
 
