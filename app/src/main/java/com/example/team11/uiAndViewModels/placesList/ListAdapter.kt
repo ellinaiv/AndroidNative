@@ -47,7 +47,7 @@ class ListAdapter(private val places: List<Place>,
         if(forecastList.isNotEmpty()) {
             val forecast = forecastList[0]
             holder.itemTempAir.text =
-                context.getString(R.string.tempC, forecast.tempAir)
+                context.getString(R.string.temp_C, forecast.tempAir)
             holder.imageTempAir.setImageDrawable(
                 context.getDrawable(
                     context.resources.getIdentifier(
@@ -58,11 +58,11 @@ class ListAdapter(private val places: List<Place>,
             Color.GRAY -> holder.imageWater.setImageDrawable(context.getDrawable(R.drawable.ic_nodatawave))
             Color.RED -> {
                 holder.imageWater.setImageDrawable(context.getDrawable(R.drawable.water_red))
-                holder.itemTempWater.text = context.getString(R.string.tempC, places[position].tempWater)
+                holder.itemTempWater.text = context.getString(R.string.temp_C, places[position].tempWater)
             }
             Color.BLUE -> {
                 holder.imageWater.setImageDrawable(context.getDrawable(R.drawable.water_blue))
-                holder.itemTempWater.text = context.getString(R.string.tempC, places[position].tempWater)
+                holder.itemTempWater.text = context.getString(R.string.temp_C, places[position].tempWater)
             }
         }
 

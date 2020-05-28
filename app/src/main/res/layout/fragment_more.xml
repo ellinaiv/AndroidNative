@@ -45,7 +45,7 @@
 
                 android:padding="22dp"
 
-                android:text="@string/aboutApp"
+                android:text="@string/about_app"
                 android:textColor="@color/mainTextColor"
                 android:textSize="34sp"/>
 
@@ -63,7 +63,7 @@
                 android:lineSpacingExtra="12sp"
                 android:padding="12dp"
 
-                android:text="@string/aboutAppText"
+                android:text="@string/about_app_text"
                 android:textColor="@color/mainTextColor"
                 android:textSize="16sp"
 
@@ -88,7 +88,7 @@
 
                 android:padding="22dp"
 
-                android:text="@string/aboutAPI"
+                android:text="@string/about_API"
                 android:textColor="@color/mainTextColor"
                 android:textSize="34sp"/>
 
@@ -106,7 +106,7 @@
                 android:lineSpacingExtra="12sp"
                 android:padding="12dp"
 
-                android:text="@string/aboutAPIText"
+                android:text="@string/about_API_text"
                 android:textColor="@color/mainTextColor"
                 android:textSize="16sp"
 
@@ -141,7 +141,7 @@
 
                     android:padding="22dp"
 
-                    android:text="@string/settingsTitle"
+                    android:text="@string/settings_title"
                     android:textColor="@color/mainTextColor"
                     android:textSize="34sp"/>
 
@@ -159,7 +159,7 @@
                     android:lineSpacingExtra="12sp"
                     android:padding="12dp"
 
-                    android:text="@string/aboutSettings"
+                    android:text="@string/about_settings"
                     android:textColor="@color/mainTextColor"
                     android:textSize="16sp"
 

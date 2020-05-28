@@ -91,15 +91,15 @@ class FilterActivity : AppCompatActivity() {
      */
     private fun makeSeekBar(personalPreference: PersonalPreference){
         seekBarWater.progress = personalPreference.waterTempMid
-        textTempLowWater.text = getString(R.string.tempC, Constants.waterTempLow)
-        textTempHighWater.text = getString(R.string.tempC, Constants.waterTempHigh)
+        textTempLowWater.text = getString(R.string.temp_C, Constants.waterTempLow)
+        textTempHighWater.text = getString(R.string.temp_C, Constants.waterTempHigh)
         seekBarWater.max = Constants.waterTempHigh
 
         seekBarWater.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seek: SeekBar,
                                            progress: Int, fromUser: Boolean) {
                 val value = (progress * (seek.width - 2 * seek.thumbOffset)) / seek.max
-                val degreeMid = getString(R.string.tempC, progress)
+                val degreeMid = getString(R.string.temp_C, progress)
                 textTempMidWater.text = degreeMid
                 textTempMidWater.x = seekBarWater.x + value
             }
@@ -115,15 +115,15 @@ class FilterActivity : AppCompatActivity() {
 
 
         seekBarAir.progress = personalPreference.airTempMid - Constants.airTempLow
-        textTempLowAir.text = getString(R.string.tempC, Constants.airTempLow)
-        textTempHighAir.text = getString(R.string.tempC, Constants.airTempHigh)
+        textTempLowAir.text = getString(R.string.temp_C, Constants.airTempLow)
+        textTempHighAir.text = getString(R.string.temp_C, Constants.airTempHigh)
         seekBarAir.max = Constants.airTempHigh - Constants.airTempLow
 
         seekBarAir.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
             override fun onProgressChanged(seek: SeekBar, progress: Int, fromUser: Boolean) {
                 val newProgress = progress + Constants.airTempLow
                 val value = (progress * (seek.width - 2 * seek.thumbOffset)) / seek.max
-                val degreeMid = getString(R.string.tempC, newProgress)
+                val degreeMid = getString(R.string.temp_C, newProgress)
                 textTempMidAir.text = degreeMid
                 textTempMidAir.x = seekBarAir.x + value
             }

@@ -54,7 +54,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/imageEmptyListShark"
 
-        android:text="@string/noFavorites"
+        android:text="@string/no_favorites"
         android:textAlignment="center"
         />
 

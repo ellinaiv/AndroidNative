@@ -92,11 +92,11 @@ class PlaceActivity : AppCompatActivity() {
                 Color.GRAY -> imageWater.setImageDrawable(getDrawable(R.drawable.ic_nodatawave))
                 Color.RED -> {
                     imageWater.setImageDrawable(getDrawable(R.drawable.water_red))
-                    textTempWater.text = getString(R.string.tempC, place.tempWater)
+                    textTempWater.text = getString(R.string.temp_C, place.tempWater)
                 }
                 Color.BLUE -> {
                     imageWater.setImageDrawable(getDrawable(R.drawable.water_blue))
-                    textTempWater.text = getString(R.string.tempC, place.tempWater)
+                    textTempWater.text = getString(R.string.temp_C, place.tempWater)
                 }
             }
         })
@@ -206,7 +206,7 @@ class PlaceActivity : AppCompatActivity() {
             Log.d("tagTemp", forecast.toString())
             // vær nå
             if (forecast[0].tempAir != Int.MAX_VALUE){
-                textTempAir.text = getString(R.string.tempC, forecast[0].tempAir)
+                textTempAir.text = getString(R.string.temp_C, forecast[0].tempAir)
                 imageWeather.setImageDrawable(getDrawable(resources.getIdentifier(forecast[0].symbol,
                     "drawable", this.packageName)))
                 imageWeather.contentDescription = getString(R.string.place_weather_icon_description,
@@ -260,7 +260,7 @@ class PlaceActivity : AppCompatActivity() {
         } else {
             // tilgjengelig værdata
             time.text = format + forecast.time
-            temp.text = getString(R.string.tempC, forecast.tempAir)
+            temp.text = getString(R.string.temp_C, forecast.tempAir)
             rain.text = getString(R.string.place_rain, forecast.precipitation.toInt())
             symbol.setImageDrawable(getDrawable(resources.getIdentifier(forecast.symbol,
                 "drawable", this.packageName)))

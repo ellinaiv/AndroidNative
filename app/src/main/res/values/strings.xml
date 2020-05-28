@@ -3,7 +3,7 @@
 
 
     <!--    textViews-->
-    <string name="tempC">%1$d °C</string>
+    <string name="temp_C">%1$d °C</string>
     <string name="rain_mm">%1$f mm</string>
     <string name="place_rain">%1$d mm</string>
     <string name="not_available">Ikke tilgjengelig</string>
@@ -44,12 +44,12 @@
     <string name="place_long_forecast">Langtidsvarsel</string>
     <string name="place_public_transport_link"><u>Finn reise på ruter.no</u></string>
     <string name="place_select_route_type">Vis rute til badeplass:</string>
-    <string name="aboutApp">Om Splæsj</string>
-    <string name="aboutAPI">Om API</string>
-    <string name="settingsTitle">Innstillinger</string>
-    <string name="waterPreference">Preferanse for vanntemperatur</string>
-    <string name="noFavorites">Du har ikke lagt til noen favorittbadeplasser enda!</string>
-    <string name="aboutAppText">Splæsj er appen for deg som er glad i å bade i Oslo! Her har
+    <string name="about_app">Om Splæsj</string>
+    <string name="about_API">Om API</string>
+    <string name="settings_title">Innstillinger</string>
+    <string name="water_preference">Preferanse for vanntemperatur</string>
+    <string name="no_favorites">Du har ikke lagt til noen favorittbadeplasser enda!</string>
+    <string name="about_app_text">Splæsj er appen for deg som er glad i å bade i Oslo! Her har
         vi samlet relevant informasjon om værforhold, vanntemperatur og reisevei til forskjellige
         badeplasser på ett sted, for at det skal være enklere å ta et informert valg om hvilken
         badeplass som passer best for deg.
@@ -57,7 +57,7 @@
         Maria Løvland Johansson, Marlen Jarholt, Melanie Østbøll og Silje H. Lund. Appen er utviklet
         som en del av teamarbeidet i IN2000 - Software Engineering med prosjektarbeid ved Institutt
         for Informatikk, Universitetet i Oslo, våren 2020.</string>
-    <string name="aboutAPIText"><b>MET</b>
+    <string name="about_API_text"><b>MET</b>
         \nSplæsj bruker værdata fra WeatherAPI-et til Meteorologisk institutt.
         Dette gir appen informasjon om værforhold som lufttemperatur, UV-stråling
         og havstrømninger ved ulike badeplasser.
@@ -68,7 +68,7 @@
         \nSplæsj innhenter data om lokasjon og vanntemperatur for de ulike badeplassene ved å
         benytte API fra Oslo kommune.
     </string>
-    <string name="aboutSettings">
+    <string name="about_settings">
         Målingene av badetemperaturene fra Oslo kommune er tilgjengelige mellom juni og august.
         Dersom du ønsker å teste de ulike funksjonalitetene i appen utenom denne perioden kan du
         slå på falske data. Det vil da bli lagt til tilfeldige verdier for vanntemperatur.
@@ -77,21 +77,21 @@
     <string name="on">På</string>
     <string name="from">Fra</string>
     <string name="to"> til</string>
-    <string name="yourPosition">din posisjon</string>
+    <string name="your_position">din posisjon</string>
     <string name="distance">Distanse:</string>
     <string name="time">Beregnet reisetid:</string>
     <string name="favorite">Favoritter</string>
-    <string name="titleFilter">Filtrering</string>
-    <string name="showPlacesWater">Vis badeplasser med:</string>
-    <string name="coldWater"><b>Kaldt vann</b></string>
-    <string name="warmWater"><b>Varmt vann</b></string>
-    <string name="preferenceAir">Preferanse for lufttemperatur</string>
-    <string name="showPlacesAir">Vis badeplasser med:</string>
-    <string name="coldAir"><b>Lav lufttemperatur</b></string>
-    <string name="hotAir"><b>Høy lufttemperatur</b></string>
-    <string name="representationMap">Fargene på kartet representerer:</string>
-    <string name="airTemp">Lufttemperatur</string>
-    <string name="waterTemp">Vanntemperatur</string>
+    <string name="title_filter">Filtrering</string>
+    <string name="show_places_water">Vis badeplasser med:</string>
+    <string name="cold_water"><b>Kaldt vann</b></string>
+    <string name="warm_water"><b>Varmt vann</b></string>
+    <string name="preference_air">Preferanse for lufttemperatur</string>
+    <string name="show_places_air">Vis badeplasser med:</string>
+    <string name="cold_air"><b>Lav lufttemperatur</b></string>
+    <string name="hot_air"><b>Høy lufttemperatur</b></string>
+    <string name="representation_map">Fargene på kartet representerer:</string>
+    <string name="air_temp">Lufttemperatur</string>
+    <string name="water_temp">Vanntemperatur</string>
     <string name="empty"> </string>
     <string name="no_distance">"Kunne ikke finne reiselengde"</string>
     <string name="distance_m">%1$d m</string>
@@ -112,8 +112,8 @@
     <string name="place_button_info_currents">Vis informasjon om måling av havstrømninger</string>
     <string name="place_button_info_uv">Vis informasjon om måling av UV-stråling</string>
     <string name="place_button_close_info">Trykk her for å lukke infovinduet</string>
-    <string name="infoRefreshButton">Oppdater rute</string>
-    <string name="addFilter">Legg til filter</string>
+    <string name="info_refresh_button">Oppdater rute</string>
+    <string name="add_filter">Legg til filter</string>
     <string name="reset">Nullstill</string>
     <string name="filter_button">Trykk her for å filtrer badeplassene</string>
     <string name="rep_button_water">Hvis markert, vises markørene i kartet vanntempratur </string>
@@ -134,8 +134,8 @@
 
     <!--    map stuff-->
     <string name="access_token">sk.eyJ1IjoiamFyaG9sdCIsImEiOiJjazg0ZDBsMHkwMTN4M2prNzJpcHZnMXFkIn0.k3JYH8gx2QewGmE4Vf2GsQ</string>
-    <string name="noCommute">Kan ikke vise vei uten lokasjon</string>
-    <string name="needUsersPosition">Kan ikke vise veien til badeplassen uten din posisjon</string>
+    <string name="no_commute">Kan ikke vise vei uten lokasjon</string>
+    <string name="need_users_position">Kan ikke vise veien til badeplassen uten din posisjon</string>
     <string name="title_activity_bottom_navigation">BottomNavigation</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
@@ -144,7 +144,7 @@
     <string name="title_mer">MER</string>
     <string name="title_list">LISTE</string>
     <string name="title_map">KART</string>
-    <string name="noMap">Klarte ikke å tegne opp ruten</string>
+    <string name="no_map">Klarte ikke å tegne opp ruten</string>
 
 
 </resources>

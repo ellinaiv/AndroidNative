@@ -97,7 +97,7 @@
                 android:gravity="start"
 
                 android:fontFamily="@font/raleway_medium"
-                android:text="@string/titleFilter"
+                android:text="@string/title_filter"
                 android:textColor="@color/mainTextColor"
                 android:textSize="24sp"/>
 
@@ -113,7 +113,7 @@
                 android:layout_marginTop="22dp"
                 android:gravity="start"
 
-                android:text="@string/waterPreference"
+                android:text="@string/water_preference"
 
                 android:textColor="@color/mainTextColor"
                 android:textSize="14sp"
@@ -197,7 +197,7 @@
                 android:gravity="start"
 
                 android:fontFamily="@font/roboto_medium"
-                android:text="@string/showPlacesWater"
+                android:text="@string/show_places_water"
                 android:textColor="@color/mainTextColor"
                 android:textSize="12sp"/>
 
@@ -234,7 +234,7 @@
                     android:layout_marginStart="15dp"
 
                     android:fontFamily="@font/roboto_medium"
-                    android:text="@string/coldWater"
+                    android:text="@string/cold_water"
                     android:textColor="@color/coldBlue"
                     android:textSize="12sp"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -271,7 +271,7 @@
                     android:layout_marginStart="15dp"
 
                     android:fontFamily="@font/roboto_medium"
-                    android:text="@string/warmWater"
+                    android:text="@string/warm_water"
                     android:textColor="@color/warmRed"
                     android:textSize="12sp"/>
 
@@ -291,7 +291,7 @@
                 android:layout_marginTop="48dp"
                 android:gravity="start"
 
-                android:text="@string/preferenceAir"
+                android:text="@string/preference_air"
 
                 android:textColor="@color/mainTextColor"
                 android:textSize="14sp"
@@ -371,7 +371,7 @@
                 android:gravity="start"
 
                 android:fontFamily="@font/roboto_medium"
-                android:text="@string/showPlacesWater"
+                android:text="@string/show_places_water"
                 android:textColor="@color/mainTextColor"
                 android:textSize="12sp"/>
 
@@ -408,7 +408,7 @@
                     android:layout_marginStart="15dp"
 
                     android:fontFamily="@font/roboto_medium"
-                    android:text="@string/coldAir"
+                    android:text="@string/cold_air"
                     android:textColor="@color/coldBlue"
                     android:textSize="12sp"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -446,7 +446,7 @@
                     android:layout_marginStart="15dp"
 
                     android:fontFamily="@font/roboto_medium"
-                    android:text="@string/hotAir"
+                    android:text="@string/hot_air"
                     android:textColor="@color/warmRed"
                     android:textSize="12sp"/>
 
@@ -465,7 +465,7 @@
                 android:gravity="start"
 
                 android:fontFamily="@font/roboto_medium"
-                android:text="@string/representationMap"
+                android:text="@string/representation_map"
                 android:textColor="@color/mainTextColor"/>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -519,7 +519,7 @@
                     android:gravity="start"
 
                     android:fontFamily="@font/roboto_medium"
-                    android:text="@string/airTemp"
+                    android:text="@string/air_temp"
                     android:textColor="@color/mainTextColor"
                     android:textSize="12sp"/>
 
@@ -556,7 +556,7 @@
                     android:gravity="start"
 
                     android:fontFamily="@font/roboto_medium"
-                    android:text="@string/waterTemp"
+                    android:text="@string/water_temp"
                     android:textColor="@color/mainTextColor"
                     android:textSize="12sp"/>
 

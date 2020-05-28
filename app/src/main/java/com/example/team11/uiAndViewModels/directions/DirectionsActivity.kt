@@ -305,7 +305,7 @@ class DirectionsActivity : AppCompatActivity() , PermissionsListener {
             }finally {
                 enableButtons()
             }
-        }?: Toast.makeText(this, getString(R.string.noMap) , Toast.LENGTH_SHORT).show()
+        }?: Toast.makeText(this, getString(R.string.no_map) , Toast.LENGTH_SHORT).show()
     }
 
     /**
@@ -357,7 +357,7 @@ class DirectionsActivity : AppCompatActivity() , PermissionsListener {
      * @param place stedet som er destinasjonen
      */
     private fun makeTitleText(place: Place){
-        val aboutDirection = SpannableStringBuilder(" " + getString(R.string.yourPosition) + " ")
+        val aboutDirection = SpannableStringBuilder(" " + getString(R.string.your_position) + " ")
         aboutDirection.setSpan(
             StyleSpan(Typeface.BOLD),
             0,
@@ -473,7 +473,7 @@ class DirectionsActivity : AppCompatActivity() , PermissionsListener {
     }
 
     override fun onExplanationNeeded(permissionsToExplain: MutableList<String>?) {
-        Toast.makeText(this, getString(R.string.needUsersPosition), Toast.LENGTH_LONG).show()
+        Toast.makeText(this, getString(R.string.need_users_position), Toast.LENGTH_LONG).show()
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
@@ -485,7 +485,7 @@ class DirectionsActivity : AppCompatActivity() , PermissionsListener {
             enableLocationComponent(mapboxMap!!.style!!)
             getRoute(viewModel.place!!.value!!)
         }else{
-            Toast.makeText(this, getString(R.string.noCommute), Toast.LENGTH_LONG).show()
+            Toast.makeText(this, getString(R.string.no_commute), Toast.LENGTH_LONG).show()
             finish()
         }
     }

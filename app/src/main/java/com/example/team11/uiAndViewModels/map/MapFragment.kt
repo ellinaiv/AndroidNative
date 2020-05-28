@@ -285,11 +285,11 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
             }
             Color.RED -> {
                 imageTempWater.setImageResource(R.drawable.water_red)
-                textTempWater.text = getString(R.string.tempC, place.tempWater)
+                textTempWater.text = getString(R.string.temp_C, place.tempWater)
             }
             Color.BLUE -> {
                 imageTempWater.setImageResource(R.drawable.water_blue)
-                textTempWater.text = getString(R.string.tempC, place.tempWater)
+                textTempWater.text = getString(R.string.temp_C, place.tempWater)
             }
         }
 
@@ -298,7 +298,7 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
         val placeForecast = mapFragmentViewModel.getPlaceNowForecast(place)
         if(placeForecast != null){
             if(placeForecast.tempAir != Int.MAX_VALUE){
-                textTempAir.text = getString(R.string.tempC, placeForecast.tempAir)
+                textTempAir.text = getString(R.string.temp_C, placeForecast.tempAir)
                 imageTempAir.setImageDrawable(getDrawable(this@MapFragment.context!!, resources.getIdentifier(placeForecast.symbol,
                     "drawable", activity!!.packageName)))
             }
