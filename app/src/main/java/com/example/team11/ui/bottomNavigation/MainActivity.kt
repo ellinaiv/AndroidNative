@@ -27,10 +27,10 @@ class MainActivity : AppCompatActivity() {
             setOf(
                 R.id.navigationMap,
                 R.id.navigationList,
-                R.id.navigationFavorites
+                R.id.navigationFavorites,
+                R.id.navigationMore
             )
         )
-
 
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)

@@ -42,16 +42,18 @@ class FilterActivity : AppCompatActivity() {
         }
 
         viewModel.personalPreferences!!.observe(this, Observer {personalPreferences ->
-            makeSeekBar(personalPreferences[0])
-            waterRepresentation = personalPreferences[0].showBasedOnWater
-            if(waterRepresentation){
-                buttonWaterTemp.setImageResource(R.drawable.rep_true)
-                buttonAirTemp.setImageResource(R.drawable.rep_false)
-            }else{
-                buttonAirTemp.setImageResource(R.drawable.rep_true)
-                buttonWaterTemp.setImageResource(R.drawable.rep_false)
+            if(personalPreferences.isNotEmpty()){
+                makeSeekBar(personalPreferences[0])
+                waterRepresentation = personalPreferences[0].showBasedOnWater
+                if(waterRepresentation){
+                    buttonWaterTemp.setImageResource(R.drawable.rep_true)
+                    buttonAirTemp.setImageResource(R.drawable.rep_false)
+                }else{
+                    buttonAirTemp.setImageResource(R.drawable.rep_true)
+                    buttonWaterTemp.setImageResource(R.drawable.rep_false)
+                }
+                makeCheckBoxes(personalPreferences[0])
             }
-            makeCheckBoxes(personalPreferences[0])
         })
 
     }
