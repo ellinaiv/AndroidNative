@@ -1,22 +1,24 @@
 package com.example.team11.ui.directions
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.graphics.BitmapFactory
 import android.graphics.Typeface
+import android.net.ConnectivityManager
+import android.net.Network
+import android.net.NetworkRequest
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.StyleSpan
-import android.util.Log
 import android.view.View
 import android.widget.ImageButton
-import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
-import com.example.team11.Place
+import com.example.team11.database.entity.Place
 import com.example.team11.R
 import com.example.team11.Transportation
 import com.mapbox.android.core.permissions.PermissionsListener
@@ -51,13 +53,12 @@ import retrofit2.Response
 
 class DirectionsActivity : AppCompatActivity() , PermissionsListener {
 
-    private val viewModel: DirectionsActivityViewModel by viewModels{ DirectionsActivityViewModel.InstanceCreator() }
+    private val viewModel: DirectionsActivityViewModel by viewModels{ DirectionsActivityViewModel.InstanceCreator(applicationContext) }
     private var permissionManager = PermissionsManager(this)
     private var mapboxMap: MapboxMap? = null
     private var mapView: MapView? = null
     private val routeSourceId = "ROUTE_SOURCE_ID"
     private var way: Transportation? = null
-    private var tag = "TAG"
     private var buttonWalkClicked = false
     private var buttonBikeClicked = false
     private var buttonCarClicked = false
@@ -73,14 +74,94 @@ class DirectionsActivity : AppCompatActivity() , PermissionsListener {
             finish()
         }
 
+
+        val manager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val builder = NetworkRequest.Builder()
+
+        manager.registerNetworkCallback(
+            builder.build(),
+            object : ConnectivityManager.NetworkCallback(){
+
+                override fun onAvailable(network: Network) {
+                    super.onAvailable(network)
+                    runOnUiThread {
+                        viewModel.hasInternet.value = true
+                    }
+                }
+
+                override fun onUnavailable(){
+                    super.onUnavailable()
+                    runOnUiThread {
+                        viewModel.hasInternet.value = false
+                    }
+                }
+
+                override fun onLost(network: Network) {
+                    super.onLost(network)
+                    runOnUiThread {
+                        viewModel.hasInternet.value = false
+                    }
+                }
+
+                override fun onLosing(network: Network, maxMsToLive: Int) {
+                    super.onLosing(network, maxMsToLive)
+                    runOnUiThread {
+                        viewModel.hasInternet.value = false
+                    }
+                }
+            }
+        )
+
+        viewModel.hasInternet.observe(this, Observer{internet ->
+            if(internet){
+                hasInternet(savedInstanceState)
+            }else{
+                noInternet()
+            }
+        })
+    }
+
+
+    /**
+     * Det som skjer hvis enheten ikke har internett
+     * Kartet blir borte og bilde og beskjed om at det ikke er internett dukker opp
+     */
+    private fun noInternet(){
+        mapViewDir?.visibility = View.GONE
+        imageNoInternet.visibility = View.VISIBLE
+        textNoInternet.visibility = View.VISIBLE
+        buttonDirections.visibility = View.GONE
+        layoutAboutRoute.visibility = View.GONE
+    }
+
+    /**
+     * Det som skjer hvis enheten har internett
+     * Fjerner beskjed og bilde om at det ikke er internett og gjør kartet synlig
+     */
+    private fun hasInternet(savedInstanceState: Bundle?) {
+        mapViewDir?.visibility = View.VISIBLE
+        imageNoInternet.visibility = View.GONE
+        textNoInternet.visibility = View.GONE
+        buttonDirections.visibility = View.VISIBLE
+
         buttonTransportationEvents()
         var first = true
 
         //Observerer stedet som er valgt
         viewModel.place!!.observe(this, Observer { place ->
+            if (place == null){
+                Toast.makeText(this, getString(R.string.no_route_found), Toast.LENGTH_LONG).show()
+                finish()
+            }
             makeMap(place, savedInstanceState)
             makeTitleText(place)
-            viewModel.wayOfTransportation!!.observe(this, Observer { way->
+            viewModel.wayOfTransportation.observe(this, Observer { way->
+
+                if (way == null){
+                    Toast.makeText(this, getString(R.string.no_route_found), Toast.LENGTH_LONG).show()
+                    finish()
+                }
+
                 this.way = way
                 if(first){
                     first = false
@@ -98,9 +179,8 @@ class DirectionsActivity : AppCompatActivity() , PermissionsListener {
                             buttonCar.setBackgroundResource(R.drawable.background)
                         }
                     }
-                }else{
-                    makeRoute()
                 }
+                makeRoute()
                 buttonRefresh.setOnClickListener {
                     makeRoute()
                 }
@@ -189,12 +269,11 @@ class DirectionsActivity : AppCompatActivity() , PermissionsListener {
      * @param savedInstanceState: mapView trenger denne til onCreate metoden sin
      */
     private fun makeMap(place: Place, savedInstanceState: Bundle?) {
-        mapView = findViewById(R.id.mapView)
+        mapView = findViewById(R.id.mapViewDir)
         mapView?.onCreate(savedInstanceState)
         mapView?.getMapAsync { mapboxMap ->
             disableButtons()
             this.mapboxMap = mapboxMap
-            Log.d(tag, mapboxMap.toString())
             mapboxMap.setStyle(Style.MAPBOX_STREETS)
             try {
                 mapboxMap.getStyle { style ->
@@ -206,7 +285,6 @@ class DirectionsActivity : AppCompatActivity() , PermissionsListener {
                         .zoom(10.0)
                         .build()
                     mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(position), 2)
-                    enableLocationComponent(style)
                 }
             }finally {
                 enableButtons()
@@ -256,7 +334,7 @@ class DirectionsActivity : AppCompatActivity() , PermissionsListener {
         val geoId = "GEO_ID"
         val icon = BitmapFactory.decodeResource(
             this@DirectionsActivity.resources,
-            R.drawable.marker_place
+            R.drawable.marker_blue
         )
         style.addImage(iconIdRed, icon)
 
@@ -306,7 +384,6 @@ class DirectionsActivity : AppCompatActivity() , PermissionsListener {
      */
     private fun getRoute(place: Place){
         //hentet stedet vi skal bruke
-        Log.d(tag, "getPlace")
         val originLocation = mapboxMap!!.locationComponent.lastKnownLocation ?: return
         val originPoint = Point.fromLngLat(originLocation.longitude, originLocation.latitude)
         val profile = when(way){
@@ -331,14 +408,14 @@ class DirectionsActivity : AppCompatActivity() , PermissionsListener {
         client.enqueueCall(object : Callback<DirectionsResponse> {
             override fun onResponse(call: Call<DirectionsResponse>, response: Response<DirectionsResponse>) {
                 if(response.body() == null || response.body()!!.routes().size < 1){
-                    Toast.makeText(this@DirectionsActivity, "No routes found", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@DirectionsActivity, getString(R.string.no_route_found), Toast.LENGTH_SHORT).show()
                     return
                 }
 
                 val currentRoute = response.body()!!.routes()[0]
 
-                textDistance.text = viewModel.convertToCorrectDistance(currentRoute.distance())
-                textTime.text = viewModel.convertTime(currentRoute.duration())
+                textDistance.text = viewModel.convertToCorrectDistance(currentRoute.distance(), this@DirectionsActivity)
+                textTime.text = viewModel.convertTime(currentRoute.duration(), this@DirectionsActivity)
                 layoutAboutRoute.visibility = View.VISIBLE
 
 
@@ -365,7 +442,6 @@ class DirectionsActivity : AppCompatActivity() , PermissionsListener {
      */
     @SuppressLint("MissingPermission")
     private fun enableLocationComponent(style: Style){
-        Log.d(tag, "enableLocationComponent")
         if(PermissionsManager.areLocationPermissionsGranted(this)){
             //grunnet et problem med emulatorer vil ikke foregroundDrawable bli svart på kartet,
             //skal fungere som normalt på et vanlig device
@@ -397,7 +473,7 @@ class DirectionsActivity : AppCompatActivity() , PermissionsListener {
     }
 
     override fun onExplanationNeeded(permissionsToExplain: MutableList<String>?) {
-        Toast.makeText(this, getString(R.string.viTrengerPosFordi), Toast.LENGTH_LONG).show()
+        Toast.makeText(this, getString(R.string.needUsersPosition), Toast.LENGTH_LONG).show()
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
@@ -409,7 +485,7 @@ class DirectionsActivity : AppCompatActivity() , PermissionsListener {
             enableLocationComponent(mapboxMap!!.style!!)
             getRoute(viewModel.place!!.value!!)
         }else{
-            Toast.makeText(this, getString(R.string.ikkeViseVei), Toast.LENGTH_LONG).show()
+            Toast.makeText(this, getString(R.string.noCommute), Toast.LENGTH_LONG).show()
             finish()
         }
     }

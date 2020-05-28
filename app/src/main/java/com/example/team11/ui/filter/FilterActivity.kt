@@ -5,13 +5,15 @@ import android.os.Bundle
 import android.widget.SeekBar
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
-import com.example.team11.PersonalPreference
+import com.example.team11.database.entity.PersonalPreference
 import com.example.team11.R
+import com.example.team11.util.Constants
 import kotlinx.android.synthetic.main.activity_filter.*
 import kotlinx.android.synthetic.main.activity_filter.textTempMidWater
 
 class FilterActivity : AppCompatActivity() {
-    private val viewModel: FilterActivityViewModel by viewModels{ FilterActivityViewModel.InstanceCreator() }
+    private val viewModel: FilterActivityViewModel by viewModels{ FilterActivityViewModel.InstanceCreator(applicationContext) }
+    private var waterRepresentation = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,23 +21,37 @@ class FilterActivity : AppCompatActivity() {
 
         supportActionBar!!.hide()
         buttonBack.setOnClickListener {
+            updateFilter()
             finish()
         }
 
-        buttonReset.setOnClickListener {
-            viewModel.resetPersonalPreference()
+        buttonAirTemp.setOnClickListener {
+            if(waterRepresentation){
+                waterRepresentation = false
+                buttonAirTemp.setImageResource(R.drawable.rep_true)
+                buttonWaterTemp.setImageResource(R.drawable.rep_false)
+            }
         }
 
-        buttonFilter.setOnClickListener {
-            setFilter()
-            finish()
+        buttonWaterTemp.setOnClickListener {
+            if(! waterRepresentation){
+                waterRepresentation = true
+                buttonWaterTemp.setImageResource(R.drawable.rep_true)
+                buttonAirTemp.setImageResource(R.drawable.rep_false)
+            }
         }
 
         viewModel.personalPreferences!!.observe(this, Observer {personalPreferences ->
-            makeSeekBar(personalPreferences)
-            switchRepresentation.isChecked = personalPreferences.showBasedOnWater
-            makeCheckBoxes(personalPreferences)
-
+            makeSeekBar(personalPreferences[0])
+            waterRepresentation = personalPreferences[0].showBasedOnWater
+            if(waterRepresentation){
+                buttonWaterTemp.setImageResource(R.drawable.rep_true)
+                buttonAirTemp.setImageResource(R.drawable.rep_false)
+            }else{
+                buttonAirTemp.setImageResource(R.drawable.rep_true)
+                buttonWaterTemp.setImageResource(R.drawable.rep_false)
+            }
+            makeCheckBoxes(personalPreferences[0])
         })
 
     }
@@ -43,17 +59,17 @@ class FilterActivity : AppCompatActivity() {
     /**
      * Lager et nytt objekt som er den nye preferansen til brukeren
      */
-    private fun setFilter(){
-        viewModel.updatePersonalPreference(
-            PersonalPreference(
-                waterTempMid = seekBarWater.progress,
-                airTempMid = seekBarAir.progress + viewModel.personalPreferences!!.value!!.airTempLow,
-                showAirCold = checkBoxColdAir.isChecked,
-                showAirWarm = checkBoxWarmAir.isChecked,
-                showWaterCold = checkBoxColdWater.isChecked,
-                showWaterWarm = checkBoxWarmWater.isChecked,
-                showBasedOnWater = switchRepresentation.isChecked
-        ))
+    private fun updateFilter(){
+        val pp = PersonalPreference(
+            waterTempMid = seekBarWater.progress + Constants.waterTempLow,
+            airTempMid = seekBarAir.progress + Constants.airTempLow,
+            showAirCold = checkBoxColdAir.isChecked,
+            showAirWarm = checkBoxWarmAir.isChecked,
+            showWaterCold = checkBoxColdWater.isChecked,
+            showWaterWarm = checkBoxWarmWater.isChecked,
+            showBasedOnWater = waterRepresentation
+        )
+        viewModel.updatePersonalPreference(pp)
     }
 
     /**
@@ -73,9 +89,9 @@ class FilterActivity : AppCompatActivity() {
      */
     private fun makeSeekBar(personalPreference: PersonalPreference){
         seekBarWater.progress = personalPreference.waterTempMid
-        textTempLowWater.text = getString(R.string.tempC, personalPreference.waterTempLow)
-        textTempHighWater.text = getString(R.string.tempC, personalPreference.waterTempHigh)
-        seekBarWater.max = personalPreference.waterTempHigh
+        textTempLowWater.text = getString(R.string.tempC, Constants.waterTempLow)
+        textTempHighWater.text = getString(R.string.tempC, Constants.waterTempHigh)
+        seekBarWater.max = Constants.waterTempHigh
 
         seekBarWater.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seek: SeekBar,
@@ -96,14 +112,14 @@ class FilterActivity : AppCompatActivity() {
         })
 
 
-        seekBarAir.progress = personalPreference.airTempMid - personalPreference.airTempLow
-        textTempLowAir.text = getString(R.string.tempC, personalPreference.airTempLow)
-        textTempHighAir.text = getString(R.string.tempC, personalPreference.airTempHigh)
-        seekBarAir.max = personalPreference.airTempHigh - personalPreference.airTempLow
+        seekBarAir.progress = personalPreference.airTempMid - Constants.airTempLow
+        textTempLowAir.text = getString(R.string.tempC, Constants.airTempLow)
+        textTempHighAir.text = getString(R.string.tempC, Constants.airTempHigh)
+        seekBarAir.max = Constants.airTempHigh - Constants.airTempLow
 
         seekBarAir.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
             override fun onProgressChanged(seek: SeekBar, progress: Int, fromUser: Boolean) {
-                val newProgress = progress + personalPreference.airTempLow
+                val newProgress = progress + Constants.airTempLow
                 val value = (progress * (seek.width - 2 * seek.thumbOffset)) / seek.max
                 val degreeMid = getString(R.string.tempC, newProgress)
                 textTempMidAir.text = degreeMid
@@ -119,5 +135,10 @@ class FilterActivity : AppCompatActivity() {
             }
 
         })
+    }
+
+    override fun onPause() {
+        super.onPause()
+        updateFilter()
     }
 }
