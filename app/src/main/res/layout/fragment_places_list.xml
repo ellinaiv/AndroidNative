@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:layout_marginBottom="?attr/actionBarSize"
     android:background="@color/backgroundLight"
-    tools:context=".ui.placesList.PlacesListFragment"
+    tools:context=".uiAndViewModels.placesList.PlacesListFragment"
     >
 
     <androidx.recyclerview.widget.RecyclerView

@@ -2,10 +2,6 @@ package com.example.team11
 
 
 import android.app.Activity
-import android.widget.ImageView
-import androidx.core.graphics.drawable.toBitmap
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
@@ -16,9 +12,9 @@ import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
 import androidx.test.rule.ActivityTestRule
 import androidx.test.runner.lifecycle.ActivityLifecycleMonitorRegistry
 import androidx.test.runner.lifecycle.Stage
-import com.example.team11.ui.bottomNavigation.MainActivity
-import com.example.team11.ui.place.PlaceActivity
-import com.example.team11.ui.placesList.PlacesListFragment
+import com.example.team11.uiAndViewModels.bottomNavigation.MainActivity
+import com.example.team11.uiAndViewModels.place.PlaceActivity
+import com.example.team11.uiAndViewModels.placesList.PlacesListFragment
 import junit.framework.Assert.assertTrue
 import org.hamcrest.Matchers.allOf
 import org.hamcrest.Matchers.not

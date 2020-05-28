@@ -14,10 +14,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <!-- android:theme="@style/Theme.AppCompat.Light.NoActionBar"-->
-        <activity android:name=".ui.directions.DirectionsActivity" />
-        <activity android:name=".ui.filter.FilterActivity" />
-        <activity android:name=".ui.place.PlaceActivity" />
-        <activity android:name=".ui.bottomNavigation.MainActivity">
+        <activity android:name=".uiAndViewModels.directions.DirectionsActivity" />
+        <activity android:name=".uiAndViewModels.filter.FilterActivity" />
+        <activity android:name=".uiAndViewModels.place.PlaceActivity" />
+        <activity android:name=".uiAndViewModels.bottomNavigation.MainActivity">
         <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
