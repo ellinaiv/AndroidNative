@@ -26,11 +26,20 @@ import kotlin.math.abs
 @RunWith(AndroidJUnit4::class)
 class FilterActivityTest{
 
+    /**
+     * For at denne testen skal kjøres riktig må man slette appen.
+     * Det kommer av at hvis du har endret personal preferances vil
+     * dette pårvirke resultatet av testene (Grunnet at det blir lagret
+     * i databasen). Vi kunne ha hentet ut viewmodel og brukt hentent ut
+     * PersonalPreference derfra, men da måtte det gå på bekostning av
+     * at viewModelen måtte være public i FilterActivity, noe vi ikke ønsker.
+     */
+
 
     @get :Rule
     val activityTestRule = ActivityTestRule(FilterActivity::class.java)
     private lateinit var appContext: Context
-    private lateinit var pp: PersonalPreference
+
 
     @Before
     fun setup(){
