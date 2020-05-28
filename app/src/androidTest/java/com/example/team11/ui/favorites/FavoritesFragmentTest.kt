@@ -30,7 +30,7 @@ class FavoritesFragmentTest{
         launchFragmentInContainer<PlacesListFragment>(themeResId = R.style.AppTheme)
         onView(withId(R.id.recycler_viewPlaces))
             .perform(actionOnItemAtPosition<RecyclerView.ViewHolder>(0, click()))
-        onView(withId(R.id.toggleFavourite))
+        onView(withId(R.id.toggleFavorite))
             .perform(click())
         launchFragmentInContainer<FavoritesFragment>(themeResId = R.style.AppTheme)
 
@@ -39,7 +39,7 @@ class FavoritesFragmentTest{
         launchFragmentInContainer<PlacesListFragment>(themeResId = R.style.AppTheme)
         onView(withId(R.id.recycler_viewPlaces))
             .perform(actionOnItemAtPosition<RecyclerView.ViewHolder>(3, click()))
-        onView(withId(R.id.toggleFavourite))
+        onView(withId(R.id.toggleFavorite))
             .perform(click())
         launchFragmentInContainer<FavoritesFragment>(themeResId = R.style.AppTheme)
 
@@ -49,7 +49,7 @@ class FavoritesFragmentTest{
         launchFragmentInContainer<PlacesListFragment>(themeResId = R.style.AppTheme)
         onView(withId(R.id.recycler_viewPlaces))
             .perform(actionOnItemAtPosition<RecyclerView.ViewHolder>(6, click()))
-        onView(withId(R.id.toggleFavourite))
+        onView(withId(R.id.toggleFavorite))
             .perform(click())
         launchFragmentInContainer<FavoritesFragment>(themeResId = R.style.AppTheme)
 

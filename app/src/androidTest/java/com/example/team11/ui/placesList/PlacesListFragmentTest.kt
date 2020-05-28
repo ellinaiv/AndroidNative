@@ -30,9 +30,29 @@ class PlacesListFragmentTes{
     }
 
     @Test
+    fun testPlacesList(){
+
+        onView(withId(R.id.searchText))
+            .perform(typeText("Bekkensten"))
+        onView(withId(R.id.textName)).check(matches(withText("Bekkensten")))
+    }
+    @Test
+    fun testFragmentRecreation() {
+        val scenario = launchFragmentInContainer<PlacesListFragment>(themeResId = R.style.AppTheme)
+        scenario.recreate()
+    }
+
+    @Test
+    fun testScrolling(){
+        onView(withId(R.id.recycler_viewPlaces)).perform(ViewActions.swipeUp())
+        onView(withId(R.id.recycler_viewPlaces)).perform(ViewActions.swipeDown())
+    }
+
+    @Test
     fun testClickable(){
         onView(allOf(withId(R.id.recycler_viewPlaces), isDisplayed()))
             .perform(click())
+
     }
 
 }
