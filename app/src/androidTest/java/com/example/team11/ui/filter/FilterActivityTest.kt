@@ -1,7 +1,6 @@
 package com.example.team11.ui.filter
 
 import android.content.Context
-import android.util.Log
 import android.view.View
 import android.widget.SeekBar
 import androidx.test.espresso.Espresso.onView
@@ -9,13 +8,12 @@ import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
 import androidx.test.espresso.action.ViewActions.scrollTo
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
-import com.example.team11.database.entity.PersonalPreference
 import com.example.team11.R
+import com.example.team11.database.entity.PersonalPreference
 import com.example.team11.util.Constants
 import org.hamcrest.Matcher
 import org.junit.Assert.assertEquals
@@ -23,7 +21,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import java.lang.Exception
 import kotlin.math.abs
 
 @RunWith(AndroidJUnit4::class)
@@ -33,6 +30,7 @@ class FilterActivityTest{
     @get :Rule
     val activityTestRule = ActivityTestRule(FilterActivity::class.java)
     private lateinit var appContext: Context
+    private lateinit var pp: PersonalPreference
 
     @Before
     fun setup(){
