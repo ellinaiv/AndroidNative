@@ -2,6 +2,10 @@ package com.example.team11.api.valueObjects
 
 import com.google.gson.annotations.SerializedName
 
+/**
+ * Brukes for å legge in data fra API
+ */
+
 data class OceanForecast(
     @SerializedName("mox:forecast")
     val OceanForecastLayers: List<Layer>

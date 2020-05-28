@@ -17,7 +17,7 @@ class PersonalPreference(
     var showAirWarm: Boolean = true,
     var showBasedOnWater: Boolean = true,
     var falseData: Boolean = false,
-    @PrimaryKey() val id: Int = 0
+    @PrimaryKey val id: Int = 0
 ){
     override fun toString(): String {
         return "PersonalPreference(waterTempMid=$waterTempMid, airTempMid=$airTempMid, showWaterCold=$showWaterCold, showWaterWarm=$showWaterWarm, showAirCold=$showAirCold, showAirWarm=$showAirWarm, showBasedOnWater=$showBasedOnWater, falseData=$falseData, id=$id)"

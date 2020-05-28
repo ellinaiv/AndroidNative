@@ -17,8 +17,7 @@ interface PersonalPreferenceDao{
     fun addPersonalPreference(personalPreference: PersonalPreference)
 
     /**
-     * Henter ut tid for når en database sist ble cachet
-     * @param tableName_, navnet på den databasen man vil sjekke, hent navnet fra dbConstants-filen
+     * Henter ut tall data fra tabellen, all informasjon om personlig preferanse
      */
     @Query("SELECT * FROM personal_preference")
     fun getPersonalPreference(): LiveData<List<PersonalPreference>>

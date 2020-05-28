@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName
 // For versjon 2.0 av apiet
 
 /**
- * Deklarerer at primary key er en foreign key fra place databasen
+ * Brukes for å legge in data fra API
  */
 
 data class WeatherForecastApi(

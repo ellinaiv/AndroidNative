@@ -138,7 +138,6 @@ class PlaceRepository private constructor(context: Context) {
         val places: LiveData<List<Place>> = placeDao.getPlaceList(getNowHourForecastDb(
             currentTimeMillis())[0])
         GlobalScope.launch {
-            Log.d("tagStørrelseRep3", placeDao.getNumbPlaces().toString())
             if (placeDao.getNumbPlaces() == 0 || shouldFetch(
                     metadataDao,
                     Constants.MEATDATA_ENTRY_PLACE_TABLE,
@@ -211,7 +210,6 @@ class PlaceRepository private constructor(context: Context) {
      * Lagrer data i databasen, og oppdaterer metadatabasen om når data sist ble lagret.
      */
     private fun cachePlacesDb(places: List<Place>) {
-        Log.d("tagStørrelseRep2", places.size.toString())
         placeDao.insertPlaceList(places)
         metadataDao.updateDateLastCached(
             MetadataTable(
@@ -273,7 +271,6 @@ class PlaceRepository private constructor(context: Context) {
 
     private suspend fun fetchPlaces(url: String): List<Place>{
         var places = listOf<Place>()
-        val tag = "getData() ---->"
         try {
             val response = Fuel.get(url).awaitString()
             places = Util.parseXMLPlace(response)
@@ -282,9 +279,7 @@ class PlaceRepository private constructor(context: Context) {
                     place.favorite = placeDao.isPlaceFavoriteNonLiveData(place.id)
                 }
             }
-            Log.d("tagStørrelseRep", places.size.toString())
         } catch (e: Exception) {
-            Log.e(tag, e.message.toString())
         }
         return places
     }
@@ -311,7 +306,6 @@ class PlaceRepository private constructor(context: Context) {
                         response.body()?.OceanForecastLayers?.get(1)
                             ?.OceanForecastDetails?.seaSpeed?.content?.toDouble()
                             ?.let {
-                                Log.d("tagSpeed", place.name + it.toString())
                                 AsyncTask.execute{weatherForecastDao.addSpeed(place.id, it)}
                             }
                     }
@@ -355,7 +349,6 @@ class PlaceRepository private constructor(context: Context) {
                         if (nextHours == null) {
                             nextHours = forecast.types.nextSixHourForecast
                         }
-                        Log.d("tagDatabaseTime", time)
                         wantedForecastDb.add(
                             WeatherForecastDb(
                                 place.id,

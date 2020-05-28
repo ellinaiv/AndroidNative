@@ -48,10 +48,10 @@ abstract class AppDatabase : RoomDatabase() {
                     override fun onCreate(db: SupportSQLiteDatabase) {
                         super.onCreate(db)
                         Executors.newSingleThreadScheduledExecutor()
-                            .execute(Runnable {
+                            .execute{
                                 getInstance(context).personalPreferenceDao()
                                     .addPersonalPreference(PersonalPreference())
-                            })
+                            }
                     }
                 })
                 .build()

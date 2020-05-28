@@ -10,6 +10,10 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.team11.R
 import com.mapbox.mapboxsdk.Mapbox
 
+/**
+ * Hoved activitien vår, her ligger alle fragments
+ */
+
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

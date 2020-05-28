@@ -36,7 +36,7 @@ interface WeatherForecastDao {
 
     /**
      * Henter ut alle forecast for alle steder med tidspunkt nå
-     * @param placeId Id for alle stedene
+     * @param placeIds Id for alle stedene
      * @return liste med HourForecast
      */
     @Query("SELECT * FROM weather_forecast WHERE time IN (:wantedTimes) AND place_id in (:placeIds) ORDER BY place_id")

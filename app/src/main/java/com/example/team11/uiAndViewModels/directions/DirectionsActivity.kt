@@ -82,6 +82,10 @@ class DirectionsActivity : AppCompatActivity() , PermissionsListener {
             builder.build(),
             object : ConnectivityManager.NetworkCallback(){
 
+
+                /**
+                 * Sjekker om bruker har interentt og viser beskjed dersom bruke ikke har internett
+                 */
                 override fun onAvailable(network: Network) {
                     super.onAvailable(network)
                     runOnUiThread {

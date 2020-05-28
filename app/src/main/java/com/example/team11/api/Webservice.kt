@@ -16,7 +16,7 @@ import retrofit2.http.Query
  */
 object ApiClient {
 
-    private val API_BASE_URL = "https://in2000-apiproxy.ifi.uio.no/weatherapi/"
+    private const val API_BASE_URL = "https://in2000-apiproxy.ifi.uio.no/weatherapi/"
 
     private var servicesApiInterface: ServicesApiInterface?=null
 

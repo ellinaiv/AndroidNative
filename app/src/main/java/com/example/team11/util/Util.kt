@@ -1,6 +1,5 @@
 package com.example.team11.util
 
-import android.util.Log
 import com.example.team11.database.dao.MetadataDao
 import com.example.team11.database.entity.Place
 import org.xmlpull.v1.XmlPullParser
@@ -10,7 +9,6 @@ import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-//TODO("Hadde vært smooth om vi kunne refaktorert noe av dette, her er det mye kode som går igjen mange steder")
 object Util {
 
     /**
@@ -163,7 +161,6 @@ object Util {
         lateinit var name: String
         lateinit var lat: String
         lateinit var long: String
-        var tempWater = Int.MAX_VALUE
         var id = 0
 
         while (eventType != XmlPullParser.END_DOCUMENT) {
@@ -188,7 +185,7 @@ object Util {
                 long = xpp.text
                 xpp.next()
             } else if (eventType == XmlPullParser.START_TAG && xpp.name == "temp_vann") {
-                tempWater = Int.MAX_VALUE
+                var tempWater = Int.MAX_VALUE
                 if (xpp.next() != XmlPullParser.END_TAG) {
                     tempWater = xpp.text.toInt()
                     xpp.next()

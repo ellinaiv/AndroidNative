@@ -8,9 +8,7 @@ import com.example.team11.database.entity.Place
 interface PlaceDao {
 
     /**
-     * Setter inn nye steder, men setter kun inn de stedene som ikke ligger der fra før,
-     * regner med at steder ikke endrer posisjon, og det er for at favorite-informasjonen
-     * skal bevares
+     * Setter inn nye steder, og erstatter gammel informasjon med ny informasjon
      * @param place en liste med alle stedene
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -39,13 +37,19 @@ interface PlaceDao {
     fun isPlaceFavorite(placeId: Int): LiveData<Boolean>
 
     /**
-     * Sjekker om et sted er favoritt
+     * Sjekker om et sted er favoritt og returnerer non.livedata slik at dette kan brukes i
+     * repository når nye info om steder skal legges inn må denne informasjonen videreføres
      * @param placeId iden til stedet
-     * @return Livedata<Boolean>
+     * @return Boolean
      */
     @Query("SELECT favorite FROM place WHERE id  = :placeId")
     fun isPlaceFavoriteNonLiveData(placeId: Int): Boolean
 
+    /**
+     * Sjekker om et sted eksisterer
+     * @param placeId
+     * @return Boolean
+     */
     @Query("SELECT COUNT(*) FROM place WHERE id = :placeId")
     fun placeExists(placeId: Int): Boolean
 
@@ -99,10 +103,13 @@ interface PlaceDao {
         ))))
             ORDER BY id
         """)
-
-
     fun getPlaceList(timeNow: String): LiveData<List<Place>>
 
+
+    /**
+     * Sjekker hvor mange steder som finnes i databasen for å sjekke om den er tom
+     * @return Int
+     */
     @Query("SELECT COUNT(*) FROM place")
     fun getNumbPlaces(): Int
 
@@ -113,6 +120,12 @@ interface PlaceDao {
     @Query("SELECT * FROM place WHERE favorite = 1 ORDER BY id")
     fun getFavoritePlaceList(): LiveData<List<Place>>
 
+    /**
+     * Endrer temperatur på badeplasser til en falsk temperatur
+     * @param [noDataValue] Ny verdi på temperatur hvis badevannstemperaturer ikke finnes for et sted
+     * [maxValue] maksverdi for badevannstemperatur
+     * [minValue] minverdi for badetemperatur
+     */
     @Query("UPDATE place SET tempWater = ABS(RANDOM()) % (:maxValue - :minValue) + :minValue WHERE tempWater = :noDataValue")
     fun changeToFalseData(noDataValue: Int, maxValue: Int, minValue: Int)
 

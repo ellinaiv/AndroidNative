@@ -13,7 +13,7 @@ import com.example.team11.R
 class DirectionsActivityViewModel(context: Context): ViewModel() {
     var place: LiveData<Place>? = null
     lateinit var wayOfTransportation: MutableLiveData<Transportation>
-    lateinit var placeRepository: PlaceRepository
+    private lateinit var placeRepository: PlaceRepository
     val hasInternet = MutableLiveData<Boolean>()
 
     /**

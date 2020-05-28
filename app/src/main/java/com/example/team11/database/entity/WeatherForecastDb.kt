@@ -6,7 +6,7 @@ import androidx.room.ForeignKey.CASCADE
 
 /**
  * Klasse med entity for weather_forecast databasen.
- * Her lagred alle vær forecast
+ * Her lagres alle værmeldinger
  */
 
 @Entity(tableName = "weather_forecast",
