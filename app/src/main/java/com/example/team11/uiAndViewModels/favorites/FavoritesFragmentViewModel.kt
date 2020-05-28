@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.team11.Color
 import com.example.team11.database.entity.Place
 import com.example.team11.database.entity.PersonalPreference
-import com.example.team11.Repository.PlaceRepository
+import com.example.team11.repository.PlaceRepository
 import com.example.team11.uiAndViewModels.placesList.ListViewModel
 
 class FavoritesFragmentViewModel(context: Context): ViewModel(), ListViewModel {
