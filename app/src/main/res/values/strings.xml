@@ -103,6 +103,7 @@
     <string name="no_route_found">Fant ingen rute</string>
     <string name="empty_list">Kunne ikke finne noen badeplasser</string>
     <string name="no_place">Klarte ikke å finne plassen</string>
+    <string name="place_format">%1$s%2$s</string>
 
     <!--    buttons-->
     <string name="button_back">Trykk her for å gå tilbake</string>

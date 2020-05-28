@@ -46,7 +46,6 @@ class PlacesListFragment : Fragment(){
             }.observe(viewLifecycleOwner, Observer {forecasts ->
                 recycler_viewPlaces.layoutManager = layoutManager
                 val places = placesListViewModel.places!!.value ?: emptyList()
-                Log.d("tagStørrelseListe", places.size.toString())
                 recycler_viewPlaces.adapter =
                     ListAdapter(
                         places,

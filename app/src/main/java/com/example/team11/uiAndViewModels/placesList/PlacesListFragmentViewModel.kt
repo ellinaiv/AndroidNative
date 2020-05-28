@@ -13,13 +13,13 @@ import com.example.team11.repository.PlaceRepository
 class PlacesListFragmentViewModel(context: Context) : ViewModel(), ListViewModel {
     var places: LiveData<List<Place>>? = null
     lateinit var personalPreference: LiveData<List<PersonalPreference>>
-    private var placeRepository: PlaceRepository? = null
+    private lateinit var placeRepository: PlaceRepository
 
     init {
         if(places == null){
             placeRepository = PlaceRepository.getInstance(context)
-            places = placeRepository!!.getPlaces()
-            personalPreference = placeRepository!!.getPersonalPreferences()
+            places = placeRepository.getPlaces()
+            personalPreference = placeRepository.getPersonalPreferences()
         }
     }
     class InstanceCreator(val context: Context) : ViewModelProvider.Factory {
@@ -29,10 +29,10 @@ class PlacesListFragmentViewModel(context: Context) : ViewModel(), ListViewModel
     }
 
     override fun changeCurrentPlace(place: Place){
-        placeRepository?.changeCurrentPlace(place)
+        placeRepository.changeCurrentPlace(place)
     }
 
-    fun getForecasts(placesIn: List<Place>) = placeRepository!!.getNowForecastsList(placesIn)
+    fun getForecasts(placesIn: List<Place>) = placeRepository.getNowForecastsList(placesIn)
 
     /**
      * Sjekker om et sted skal ha graa, rood eller blaa boolge

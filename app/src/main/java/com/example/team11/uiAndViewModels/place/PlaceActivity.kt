@@ -5,7 +5,6 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.ImageView
@@ -60,17 +59,13 @@ class PlaceActivity : AppCompatActivity() {
 
         // henter langtidsvarsel vær
         viewModel.getDayForecast().observe(this, Observer { dayForecast ->
-            Log.d("Fra databasen day", dayForecast.toString())
-
             makeDayForecast(dayForecast)
         })
 
         // henter timesvarsel vær
         viewModel.getHourForecast().observe(this, Observer { hourForecast ->
-            Log.d("Fra databasen hour", hourForecast.toString())
             makeHourForecast(hourForecast)
         })
-        Log.d("tagPlace", "ferdig")
     }
 
     /**
@@ -176,7 +171,6 @@ class PlaceActivity : AppCompatActivity() {
      * @param forecast liste med objekter som inneholder værdata
      */
     private fun makeDayForecast(forecast: List<WeatherForecastDb>) {
-        Log.d("TESTER", forecast.size.toString())
         if (forecast.size >= 5){
             setForecastViews(forecast[0], textDate1Day, imageForecast1Day,
                 textTemp1Day, textRain1Day, "")
@@ -200,10 +194,7 @@ class PlaceActivity : AppCompatActivity() {
      * @param forecast liste med objekter som inneholder værdata
      */
     private fun makeHourForecast(forecast: List<WeatherForecastDb>) {
-        Log.d("tagTemp", forecast.size.toString())
-
         if (forecast.size >= 6){
-            Log.d("tagTemp", forecast.toString())
             // vær nå
             if (forecast[0].tempAir != Int.MAX_VALUE){
                 textTempAir.text = getString(R.string.temp_C, forecast[0].tempAir)
@@ -224,8 +215,6 @@ class PlaceActivity : AppCompatActivity() {
             textUVResult.text = getString(R.string.place_uv_result, uvText)
             setColor(textUVResult, uvText)
 
-            Log.d("Her er det!", forecast.toString())
-
             // timesvarsel
             setForecastViews(forecast[1], text1Hour, imageForecast1Hour,
                 textTemp1Hour, textRain1Hour, "kl. ")
@@ -238,7 +227,6 @@ class PlaceActivity : AppCompatActivity() {
             setForecastViews(forecast[5], text5Hours, imageForecast5Hours,
                 textTemp5Hours, textRain5Hours, "kl. ")
         }
-        Log.d("tagPlace", "makeHourForecast ferdig")
     }
 
 
@@ -251,6 +239,7 @@ class PlaceActivity : AppCompatActivity() {
      * @param symbol imageView som viser værikonet for gjeldende tid
      * @param temp textView som viser lufttemperatur for gjeldende tid
      * @param rain textView som viser nedbørsmengde for gjeldende tid
+     * @param format formateringen på stringen
      */
     private fun setForecastViews(forecast: WeatherForecastDb, time: TextView, symbol: ImageView,
                                  temp: TextView, rain: TextView, format: String) {
@@ -259,7 +248,7 @@ class PlaceActivity : AppCompatActivity() {
             return
         } else {
             // tilgjengelig værdata
-            time.text = format + forecast.time
+            time.text = getString(R.string.place_format, format, forecast.time)
             temp.text = getString(R.string.temp_C, forecast.tempAir)
             rain.text = getString(R.string.place_rain, forecast.precipitation.toInt())
             symbol.setImageDrawable(getDrawable(resources.getIdentifier(forecast.symbol,
@@ -314,7 +303,7 @@ class PlaceActivity : AppCompatActivity() {
      * finner riktig tekstfarge for views som viser havstrømninger og UV-stråling
      *
      * @param text teksten som skal vises i viewet
-     * @param type "uv" eller "currents"
+     * @param resultView "uv" eller "currents"
      * @return ID for fargekoden i colors.xml
      */
     private fun setColor(resultView: TextView, text: String) {
@@ -392,7 +381,6 @@ class PlaceActivity : AppCompatActivity() {
     }
 
     override fun onPause() {
-        Log.d("tagPause", "Nå er jeg paused!")
         if (toggleFavorite.isChecked) viewModel.addFavoritePlace()
         else viewModel.removeFavoritePlace()
         super.onPause()
