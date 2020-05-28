@@ -8,13 +8,13 @@ import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
 import androidx.test.espresso.action.ViewActions.scrollTo
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
-import com.example.team11.database.entity.PersonalPreference
 import com.example.team11.R
+import com.example.team11.database.entity.PersonalPreference
+import com.example.team11.util.Constants
 import org.hamcrest.Matcher
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -26,11 +26,20 @@ import kotlin.math.abs
 @RunWith(AndroidJUnit4::class)
 class FilterActivityTest{
 
+    /**
+     * For at denne testen skal kjøres riktig må man slette appen.
+     * Det kommer av at hvis du har endret personal preferances vil
+     * dette pårvirke resultatet av testene (Grunnet at det blir lagret
+     * i databasen). Vi kunne ha hentet ut viewmodel og brukt hentent ut
+     * PersonalPreference derfra, men da måtte det gå på bekostning av
+     * at viewModelen måtte være public i FilterActivity, noe vi ikke ønsker.
+     */
+
 
     @get :Rule
     val activityTestRule = ActivityTestRule(FilterActivity::class.java)
     private lateinit var appContext: Context
-    private val pp = PersonalPreference()
+
 
     @Before
     fun setup(){
@@ -45,7 +54,7 @@ class FilterActivityTest{
 
     @Test
     fun testSeekBarWaterTextMid(){
-        val temp = 22
+        val temp = Constants.waterTempHigh - 1
         onView(withId(R.id.seekBarWater))
             .perform(scrollTo())
             .perform(setProgress(temp))
@@ -55,10 +64,10 @@ class FilterActivityTest{
 
     @Test
     fun testSeekBarAirTextMid(){
-        val temp = 12
+        val temp = Constants.airTempHigh - 1
         onView(withId(R.id.seekBarAir))
             .perform(scrollTo())
-  //          .perform((setProgress(temp + abs(pp.airTempLow))))
+            .perform((setProgress(temp + abs(Constants.airTempLow))))
         onView(withId(R.id.textTempMidAir))
             .check(matches(withText(appContext.getString(R.string.tempC, temp))))
     }
@@ -66,17 +75,17 @@ class FilterActivityTest{
     @Test
     fun testTextHighAirAndTextLowAir(){
         onView(withId(R.id.textTempHighAir))
- //           .check(matches(withText(appContext.getString(R.string.tempC, pp.airTempHigh))))
+            .check(matches(withText(appContext.getString(R.string.tempC, Constants.airTempHigh))))
         onView(withId(R.id.textTempLowAir))
-   //         .check(matches(withText(appContext.getString(R.string.tempC, pp.airTempLow))))
+           .check(matches(withText(appContext.getString(R.string.tempC, Constants.airTempLow))))
     }
 
     @Test
     fun testTextHighWaterAndTextLowWater(){
         onView(withId(R.id.textTempHighWater))
-  //          .check(matches(withText(appContext.getString(R.string.tempC, pp.waterTempHigh))))
+           .check(matches(withText(appContext.getString(R.string.tempC, Constants.waterTempHigh))))
         onView(withId(R.id.textTempLowWater))
-   //         .check(matches(withText(appContext.getString(R.string.tempC, pp.waterTempLow))))
+           .check(matches(withText(appContext.getString(R.string.tempC, Constants.waterTempLow))))
     }
 
     @Test
@@ -106,7 +115,7 @@ class FilterActivityTest{
             }
 
             override fun getConstraints(): Matcher<View> {
-                return ViewMatchers.isAssignableFrom(SeekBar::class.java)
+                return isAssignableFrom(SeekBar::class.java)
             }
         }
     }

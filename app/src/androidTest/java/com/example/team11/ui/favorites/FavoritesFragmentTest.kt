@@ -22,6 +22,16 @@ import java.lang.Thread.sleep
 
 class FavoritesFragmentTest{
 
+    /**
+     * For at denne testen skal kjøres riktig må man slette appen.
+     * Det kommer av at hvis brukern har lagt til noen  favoritter vil
+     * dette pårvirke resultatet av testene (Grunnet at det blir lagret
+     * i databasen). Vi kunne ha hentet ut
+     * viewmodel og hentet ut lista med favoriter, men da
+     * måtte det gå på bekostning av at viewModelen måtte være public
+     * i FavoritesFragments noe vi ikke ønsker.
+     */
+
     @get:Rule
     val activityTestRule = ActivityTestRule(MainActivity::class.java)
 
