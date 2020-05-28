@@ -57,7 +57,7 @@
                 android:layout_marginRight="12dp"
                 android:layout_marginLeft="12dp"
 
-                android:src="@drawable/water_blue"
+                android:src="@drawable/ic_nodatawave"
                 android:contentDescription="@string/water_temp_icon" />
 
             <TextView
@@ -72,6 +72,7 @@
                 android:layout_gravity="center"
                 android:maxLines="1"
                 android:textColor="@color/mainTextColor"
+                android:text="@string/no_data"
 
                 android:paddingTop="6dp"
                 android:textSize="12sp"/>
@@ -90,7 +91,7 @@
                 android:padding="4dp"
                 android:layout_marginEnd="12dp"
 
-                android:src="@drawable/sun"
+                android:src="@drawable/ic_noweatherdata"
                 android:contentDescription="@string/weather_icon" />
 
             <TextView
@@ -106,6 +107,7 @@
                 android:layout_marginEnd="12dp"
                 android:maxLines="1"
                 android:textColor="@color/mainTextColor"
+                android:text="@string/no_data"
 
                 android:paddingTop="6dp"
                 android:textSize="12sp"/>

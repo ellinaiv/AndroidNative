@@ -31,7 +31,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
 
-        android:background="@color/backgroundLight"
+        android:background="@color/backgroundDark"
         android:padding="6dp"
         >
 
@@ -45,7 +45,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
 
-            android:background="@color/backgroundLight"
+            android:background="@color/transparent"
             android:contentDescription="@string/button_back"
             android:src="@drawable/arrow_left"/>
 
@@ -59,7 +59,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
 
-            android:background="@color/backgroundLight"
+            android:background="@color/transparent"
             android:contentDescription="@string/infoRefreshButton"
             android:src="@drawable/refresh" />
 

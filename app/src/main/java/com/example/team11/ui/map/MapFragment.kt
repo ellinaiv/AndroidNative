@@ -1,5 +1,6 @@
 package com.example.team11.ui.map
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -15,12 +16,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageButton
+import androidx.appcompat.content.res.AppCompatResources.getDrawable
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.*
+import com.example.team11.Color
 import com.example.team11.database.entity.Place
 import com.example.team11.ui.place.PlaceActivity
 import com.example.team11.R
@@ -41,7 +43,8 @@ import kotlinx.android.synthetic.main.fragment_map.*
 class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
 
     private val iconIdRed = "ICON_ID_RED"
-    private val iconIdBlue = "ICON_ID_BLUE "
+    private val iconIdBlue = "ICON_ID_BLUE"
+    private val iconIdGray = "ICON_ID_GRAY"
     private val geojsonId = "GEOJSON_ID"
     private var listOfGeojsonId = mutableListOf<String>()
     private val layerId = "LAYER_ID:"
@@ -59,7 +62,6 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        //TODO("Context i fragment kan være null før onAttach() og etter onDetach(), men burde være ganske safe i oncreat, litt usikker på om jeg burde bruke !! her.")
         mapFragmentViewModel =
             ViewModelProvider(this, MapFragmentViewModel.InstanceCreator(requireContext())).get(MapFragmentViewModel::class.java)
 
@@ -116,6 +118,8 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
             }
         })
 
+
+
         return root
     }
 
@@ -144,15 +148,24 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
         textNoInternet.visibility = View.GONE
         searchText.isEnabled = true
 
-        mapFragmentViewModel.places!!.observe(viewLifecycleOwner, Observer {places->
-            makeMap(places)
-            searchText.doOnTextChanged { text, _, _, _ ->
-                if(text.toString().isEmpty()){
-                    removePlace()
+        if (mapFragmentViewModel.places != null){
+            Transformations.switchMap(mapFragmentViewModel.places!!) { places ->
+                mapFragmentViewModel.getNowForecast(places)
+            }.observe(viewLifecycleOwner, Observer { forecast ->
+                mapFragmentViewModel.listOfNowForecast = forecast
+                val placesList = mapFragmentViewModel.places!!.value ?: emptyList()
+                Log.d("tagStørrelseMap", placesList.size.toString())
+
+                makeMap(placesList)
+                searchText.doOnTextChanged { text, _, _, _ ->
+                    if (text.toString().isEmpty()) {
+                        removePlace()
+                    }
+                    search(text.toString(), placesList)
                 }
-                search(text.toString(), places)
-            }
-        })
+            })
+        }
+        mapFragmentViewModel.personalPreference.observe(viewLifecycleOwner, Observer {  })
     }
 
 
@@ -161,7 +174,7 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
      * @param name: en input-streng som skal brukes for å filtrere places
      * @param places: en liste med badesteder som skal filtreres
      */
-    private fun search(name: String, places: List<Place>){
+    private fun search(name: String, places: List<Place>) {
         filterPlaces = places.filter{ it.name.contains(name, ignoreCase = true)}
         if(filterPlaces.size == 1){
             val position = CameraPosition.Builder()
@@ -218,7 +231,7 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
 
     /**
      * Det er denne metoden som registrerer om trykket faktisk traff et punkt på kartet, eller
-     * ikke, og hva man i såfall skal gjøre når man har trykket på noe. Her vil den da vise
+     * ikke, og hva man i så fall skal gjøre når man har trykket på noe. Her vil den da vise
      * et kort med informasjon om badestedet
      * @param screenPoint: det stedet på skjermen hvor brukeren trykket
      * @return Boolean: true, hvis det er et sted vi kan trykke på, false ellers
@@ -236,7 +249,7 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
         return false
     }
     /**
-     * Fjerner kortet som hviser informasjonen om et sted
+     * Fjerner kortet som viser informasjonen om et sted
      */
     private fun removePlace(){
         placeViewHolder.visibility = View.GONE
@@ -261,14 +274,36 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
      * Legger til kort over kartviewet, med infomrasjon om en bestemt badestrand
      * @param place: Stedet som skal ha informasjonen sin på display
      */
+    @SuppressLint("UseRequireInsteadOfGet")
     private fun showPlace(place: Place){
-        when(mapFragmentViewModel.redWave(place)){
-            true -> imageTempWater.setImageResource(R.drawable.water_red)
-            false -> imageTempWater.setImageResource(R.drawable.water_blue)
-        }
         textName.text = place.name
-        textTempAir.text = getString(R.string.notAvailable)
-        textTempWater.text = getString(R.string.tempC, place.tempWater)
+
+        when(mapFragmentViewModel.colorWave(place)){
+            Color.GRAY -> {
+                imageTempWater.setImageResource(R.drawable.ic_nodatawave)
+                textTempWater.text = getString(R.string.no_data)
+            }
+            Color.RED -> {
+                imageTempWater.setImageResource(R.drawable.water_red)
+                textTempWater.text = getString(R.string.tempC, place.tempWater)
+            }
+            Color.BLUE -> {
+                imageTempWater.setImageResource(R.drawable.water_blue)
+                textTempWater.text = getString(R.string.tempC, place.tempWater)
+            }
+        }
+
+        imageTempAir.setImageDrawable(getDrawable(this@MapFragment.context!!, R.drawable.ic_noweatherdata))
+        textTempAir.text = getString(R.string.no_data)
+        val placeForecast = mapFragmentViewModel.getPlaceNowForecast(place)
+        if(placeForecast != null){
+            if(placeForecast.tempAir != Int.MAX_VALUE){
+                textTempAir.text = getString(R.string.tempC, placeForecast.tempAir)
+                imageTempAir.setImageDrawable(getDrawable(this@MapFragment.context!!, resources.getIdentifier(placeForecast.symbol,
+                    "drawable", activity!!.packageName)))
+            }
+        }
+
 
         //zoomer til stedet på kartet
         val position = CameraPosition.Builder()
@@ -301,6 +336,12 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
             R.drawable.marker_blue
         )
         style.addImage(iconIdBlue, icon)
+
+        icon = BitmapFactory.decodeResource(
+            this.resources,
+            R.drawable.marker_no_data
+        )
+        style.addImage(iconIdGray, icon)
     }
     
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -320,10 +361,7 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
         val id = layerId + place.id.toString()
         val geoId = geojsonId + place.id.toString()
 
-        if(listOfGeojsonId.contains(geoId) or listOfLayerId.contains(id)){
-            Log.d("TagMapFragment", "En id finnes fra før av")
-            return
-        }
+        if(listOfGeojsonId.contains(geoId) or listOfLayerId.contains(id)) return
 
         val feature = mapFragmentViewModel.getFeature(place)
         feature.addNumberProperty(propertyId, place.id)
@@ -331,9 +369,10 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
             arrayListOf(feature)))
         style.addSource(geoJsonSource)
 
-        val iconId = when(mapFragmentViewModel.isPlaceWarm(place)){
-            true -> iconIdRed
-            false -> iconIdBlue
+        val iconId = when(mapFragmentViewModel.getPinColor(place)){
+            Color.GRAY -> iconIdGray
+            Color.RED -> iconIdRed
+            Color.BLUE -> iconIdBlue
         }
 
         val symbolLayer = SymbolLayer(id, geoId)
@@ -348,7 +387,7 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
     }
 
 
-    fun Fragment.hideKeyboard() {
+    private fun Fragment.hideKeyboard() {
         view?.let { activity?.hideKeyboard(it) }
     }
 
@@ -356,7 +395,7 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
         hideKeyboard(currentFocus ?: View(this))
     }
 
-    fun Context.hideKeyboard(view: View) {
+    private fun Context.hideKeyboard(view: View) {
         val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
     }

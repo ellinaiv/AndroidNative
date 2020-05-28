@@ -7,36 +7,41 @@
 
     <!--    textViews-->
     <string name="tempC">%1$d °C</string>
-    <string name="notAvailable">Ikke tilgjengelig</string>
+    <string name="rain_mm">%1$f mm</string>
+    <string name="place_rain">%1$d mm</string>
+    <string name="not_available">Ikke tilgjengelig</string>
+    <string name="no_data">Ingen data</string>
+    <string name="no_weather_data">Ingen værdata</string>
     <string name="place_name">Badeplass</string>
+    <string name="place_hour">kl. %1$s</string>
     <string name="place_currents">Havstrømninger</string>
-    <string name="place_info_weak_title"><b>Svak</b></string>
-    <string name="place_info_moderate_title"><b>Moderat</b></string>
-    <string name="place_info_strong_title"><b>Sterk</b></string>
-    <string name="place_info_very_strong_title"><b>Svært sterk</b></string>
-    <string name="place_info_extreme_title"><b>Ekstrem</b></string>
-    <string name="place_info_box_little_title"><b>Lite</b></string>
-    <string name="place_currents_info_title">Informasjon om havstrømninger</string>
-    <string name="place_currents_info_weak">TODO</string>
-    <string name="place_currents_info_moderate">TODO</string>
-    <string name="place_currents_info_strong">TODO</string>
-    <string name="place_currents_info_more"><u>Les mer på ...</u></string>
+    <string name="place_currents_result"><b>%1$s</b></string>
+    <string name="place_info_weak"><b>Svak</b></string>
+    <string name="place_info_moderate"><b>Moderat</b></string>
+    <string name="place_info_strong"><b>Sterk</b></string>
+    <string name="place_info_very_strong"><b>Svært sterk</b></string>
+    <string name="place_info_extreme"><b>Ekstrem</b></string>
+    <string name="place_currents_info">Informasjon om havstrømninger</string>
+    <string name="place_currents_info_weak">0–0.4 m/s</string>
+    <string name="place_currents_info_moderate">0.4–0.8 m/s</string>
+    <string name="place_currents_info_strong">0.8–1.2 m/s</string>
+    <string name="place_currents_info_very_strong">1.2–1.8 m/s</string>
     <string name="place_uv">UV-stråling</string>
+    <string name="place_uv_result"><b>%1$s</b></string>
     <string name="place_uv_info_title">Informasjon om UV-stråling</string>
-    <string name="place_uv_info_weak"><b>UV-indeks: 1-2 \nTiltak: Ingen. Vær ute og nyt sola!</b>></string>
-    <string name="place_uv_info_moderate"><b>UV-indeks: 3-5
-        \nTiltak: Klær, solhatt og solbriller. Ta pauser fra sola!</b></string>
-    <string name="place_uv_info_strong"><b>UV-indeks: 6-7
+    <string name="place_uv_info_weak">UV-indeks: 1-2 \nTiltak: Ingen. Vær ute og nyt sola!</string>
+    <string name="place_uv_info_moderate">UV-indeks: 3-5
+        \nTiltak: Klær, solhatt og solbriller. Ta pauser fra sola!</string>
+    <string name="place_uv_info_strong">UV-indeks: 6-7
         \nTiltak: Klær, solhatt og solbriller. Ta pauser fra solen mellom kl. 12-15.
-        Bruk solkrem med middels faktor (SPF 15) og UVA-beskyttelse.</b></string>
-    <string name="place_uv_info_very_strong"><b>UV-indeks: 8-10
+        Bruk solkrem med middels faktor (SPF 15) og UVA-beskyttelse.</string>
+    <string name="place_uv_info_very_strong">UV-indeks: 8-10
         \nTiltak: Unngå solen mellom kl. 12-15 og søk skygge.
-        Bruk klær, solhatt og solbriller.</b></string>
-    <string name="place_uv_info_extreme"><b>UV-indeks: >11
+        Bruk klær, solhatt og solbriller.</string>
+    <string name="place_uv_info_extreme">UV-indeks 11+
         \nTiltak: Unngå solen mellom kl. 12-15. Søk skygge.
-        Klær, solhatt og solbriller absolutt nødvendig.</b>
-    </string>
-    <string name="place_uv_info_more"><u>Les mer på yr.no</u></string>
+        Klær, solhatt og solbriller absolutt nødvendig.</string>
+    <string name="place_info_more"><u>Se mer på yr.no</u></string>
     <string name="place_forecast">Værvarsel</string>
     <string name="place_hour_forecast">Timesvarsel</string>
     <string name="place_long_forecast">Langtidsvarsel</string>
@@ -97,9 +102,10 @@
     <string name="no_travel_time">Kunne ikke finne reisetid</string>
     <string name="travel_time_minutes">%1$d minutter</string>
     <string name="travel_time_hours">%1$d timer</string>
-    <string name="travel_time_hours_minutes">%1$d timer og %2$d</string>
+    <string name="travel_time_hours_minutes">%1$d timer og %2$d minutter</string>
     <string name="no_route_found">Fant ingen rute</string>
     <string name="empty_list">Kunne ikke finne noen badeplasser</string>
+    <string name="no_place">Klarte ikke å finne plassen</string>
 
     <!--    buttons-->
     <string name="button_back">Trykk her for å gå tilbake</string>
@@ -108,6 +114,7 @@
     <string name="place_button_walk">Vis gangvei til badestedet</string>
     <string name="place_button_info_currents">Vis informasjon om måling av havstrømninger</string>
     <string name="place_button_info_uv">Vis informasjon om måling av UV-stråling</string>
+    <string name="place_button_close_info">Trykk her for å lukke infovinduet</string>
     <string name="infoRefreshButton">Oppdater rute</string>
     <string name="addFilter">Legg til filter</string>
     <string name="reset">Nullstill</string>
@@ -119,10 +126,14 @@
     <!--    content description for images-->
     <string name="water_icon">Badevann ikon</string>
     <string name="weather_icon">Ikon som viser været</string>
-    <string name="water_temp_icon">ikon som viser om vanntemperaturen er varm eller kald i forhold til gjeldende preferansƒer</string>
+    <string name="water_temp_icon">ikon som viser om vanntemperaturen er varm eller kald i forhold
+        til gjeldende preferanser</string>
     <string name="empty_shark">En hai som symboliserer at du ikke har noen favoritter</string>
     <string name="search_image">Bilde av et forstørrelsesglass</string>
     <string name="map_no_internet_image">Symbol som viser at det ikke er noe internettforbindelse</string>
+    <string name="no_internet_image">Symbol som viser at det ikke er noe internettforbindelse</string>
+    <string name="place_weather_icon_description">Ikon som viser været: %1$s</string>
+    <string name="place_icon_public_transport">Ikon for offentlig transport</string>
 
     <!--    map stuff-->
     <string name="access_token">sk.eyJ1IjoiamFyaG9sdCIsImEiOiJjazg0ZDBsMHkwMTN4M2prNzJpcHZnMXFkIn0.k3JYH8gx2QewGmE4Vf2GsQ</string>

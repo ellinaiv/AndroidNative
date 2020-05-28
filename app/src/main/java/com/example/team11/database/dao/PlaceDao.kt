@@ -13,7 +13,7 @@ interface PlaceDao {
      * skal bevares
      * @param place en liste med alle stedene
      */
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertPlaceList(place: List<Place>)
 
     /**
@@ -39,17 +39,82 @@ interface PlaceDao {
     fun isPlaceFavorite(placeId: Int): LiveData<Boolean>
 
     /**
-     * Henter ut alle steder
-     * @return liste med alle steder
+     * Sjekker om et sted er favoritt
+     * @param placeId iden til stedet
+     * @return Livedata<Boolean>
      */
-    @Query("SELECT * FROM place")
-    fun getPlaceList(): LiveData<List<Place>>
+    @Query("SELECT favorite FROM place WHERE id  = :placeId")
+    fun isPlaceFavoriteNonLiveData(placeId: Int): Boolean
+
+    @Query("SELECT COUNT(*) FROM place WHERE id = :placeId")
+    fun placeExists(placeId: Int): Boolean
+
+    /**
+     * Henter ut alle ønskede steder basert på personal preference, så denne henter bare ut
+     * steder i samsvar med filtrering
+     * @return liste med alle steder som oppfyller filtreringskriterie
+     */
+    @Query("""
+        SELECT * 
+        FROM place 
+        WHERE (place.tempWater < (
+            SELECT pp.waterTempMid 
+            FROM personal_preference as pp
+        ) 
+        AND (
+            SELECT pp.showWaterCold 
+            FROM personal_preference as pp
+        ) 
+        OR place.tempWater >= (
+            SElECT pp.waterTempMid 
+            FROM personal_preference as pp
+        ) AND (
+            SELECT pp.showWaterWarm
+            FROM personal_preference as pp
+        )) AND (((SELECT COUNT(*) FROM weather_forecast as wf WHERE wf.place_id = place.id AND wf.time = :timeNow) = 0)
+         OR ((
+            SELECT wf.temp_air 
+            FROM weather_forecast as wf 
+            WHERE place_id = place.id
+            AND wf.time = :timeNow
+            LIMIT 1
+        ) < (
+            SElECT pp.airTempMid 
+            FROM personal_preference as pp
+        ) AND (
+            SELECT pp.showAirCold
+            FROM personal_preference as pp
+        ) OR ((
+            SELECT wf.temp_air 
+            FROM weather_forecast as wf 
+            WHERE wf.place_id = place.id
+            AND wf.time = :timeNow
+            LIMIT 1
+        ) >= (
+            SElECT pp.airTempMid 
+            FROM personal_preference as pp
+        ) AND (
+            SELECT pp.showAirWarm
+            FROM personal_preference as pp
+        ))))
+            ORDER BY id
+        """)
+
+
+    fun getPlaceList(timeNow: String): LiveData<List<Place>>
+
+    @Query("SELECT COUNT(*) FROM place")
+    fun getNumbPlaces(): Int
 
     /**
      * Henter ut liste med alle steder som er favoritter
      * @return liste med steder som er favoritter
      */
-    @Query("SELECT * FROM place WHERE favorite = 1")
+    @Query("SELECT * FROM place WHERE favorite = 1 ORDER BY id")
     fun getFavoritePlaceList(): LiveData<List<Place>>
+
+    @Query("UPDATE place SET tempWater = ABS(RANDOM()) % (:maxValue - :minValue) + :minValue WHERE tempWater = :noDataValue")
+    fun changeToFalseData(noDataValue: Int, maxValue: Int, minValue: Int)
+
 
 }
