@@ -89,7 +89,7 @@ class MoreFragment : Fragment() {
     }
 
     /**
-     * Nullstriller hele activiten (med tanke på viewene).
+     * Nullstiller synlighet for views
      */
     private fun makeViewsDisappear(){
         textAboutApp.visibility = View.GONE

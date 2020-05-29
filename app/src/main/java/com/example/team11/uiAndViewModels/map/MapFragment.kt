@@ -10,7 +10,6 @@ import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkRequest
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -154,7 +153,6 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
             }.observe(viewLifecycleOwner, Observer { forecast ->
                 mapFragmentViewModel.listOfNowForecast = forecast
                 val placesList = mapFragmentViewModel.places!!.value ?: emptyList()
-                Log.d("tagStørrelseMap", placesList.size.toString())
 
                 makeMap(placesList)
                 searchText.doOnTextChanged { text, _, _, _ ->
@@ -172,7 +170,7 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
     /**
      * Søkefunksjonen filtrerer places etter navn og zoomer til det stedet på kartet
      * @param name: en input-streng som skal brukes for å filtrere places
-     * @param places: en liste med badesteder som skal filtreres
+     * @param places: en liste med badeplasser som skal filtreres
      */
     private fun search(name: String, places: List<Place>) {
         filterPlaces = places.filter{ it.name.contains(name, ignoreCase = true)}
@@ -187,8 +185,8 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
     }
 
     /**
-     * Tegner opp kartet og passer på at alle steden blir plassert på kartet
-     * @param places: en liste med steder som skal plasseres på kartet
+     * Tegner opp kartet og passer på at alle badeplassene blir plassert på kartet
+     * @param places: en liste med badeplasser som skal plasseres på kartet
      */
     private fun makeMap(places: List<Place>){
         mapView?.getMapAsync {mapBoxMap ->
@@ -209,7 +207,7 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
     }
 
     /**
-     * Fjerner alle steden på kartet
+     * Fjerner alle badeplassene på kartet
      * @param style: stilen til kartet
      */
     private fun removeLayers(style: Style){
@@ -233,8 +231,8 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
      * Det er denne metoden som registrerer om trykket faktisk traff et punkt på kartet, eller
      * ikke, og hva man i så fall skal gjøre når man har trykket på noe. Her vil den da vise
      * et kort med informasjon om badestedet
-     * @param screenPoint: det stedet på skjermen hvor brukeren trykket
-     * @return Boolean: true, hvis det er et sted vi kan trykke på, false ellers
+     * @param screenPoint: punktet på skjermen hvor brukeren trykket
+     * @return Boolean: true, hvis det er et punkt vi kan trykke på, false ellers
      */
     private fun handleClickIcon(screenPoint: PointF): Boolean{
         val features = filterLayer(screenPoint)
@@ -249,17 +247,17 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
         return false
     }
     /**
-     * Fjerner kortet som viser informasjonen om et sted
+     * Fjerner kortet som viser informasjonen om en badeplass
      */
     private fun removePlace(){
         placeViewHolder.visibility = View.GONE
     }
     /**
-     * Filtrerer slik at kun de layeren som er et sted blir registert (Det ligger allerede
-     * noen layer automatisk inne i kartet. Og legger til de featurene som er i nærheten av
+     * Filtrerer slik at kun layers som er een badeplass blir registert (Det ligger allerede
+     * noen layers automatisk inne i kartet. Legger også til features som er i nærheten av
      * der brukeren trykket
-     * @param screenPoint: det stedet på skjermen hvor brukeren trykket
-     * @return List<Feature> en liste med alle steden som ble registrert i nærheten av trykket
+     * @param screenPoint: punktet på skjermen hvor brukeren trykket
+     * @return List<Feature> en liste med alle steder som ble registrert i nærheten av trykket
      */
     private fun filterLayer(screenPoint: PointF): List<Feature>{
         val feature = mutableListOf<Feature>()
@@ -271,8 +269,8 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
     }
 
     /**
-     * Legger til kort over kartviewet, med infomrasjon om en bestemt badestrand
-     * @param place: Stedet som skal ha informasjonen sin på display
+     * Legger til et lite kort over kartviewet, med infomrasjon om en bestemt badeplass
+     * @param place: badeplassen som det skal vises informasjonen om
      */
     @SuppressLint("UseRequireInsteadOfGet")
     private fun showPlace(place: Place){
@@ -351,10 +349,9 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
 
     }
     /**
-     * Legger til en marker for en place. Legger til farge på markeren etter Preferance og
+     * Legger til en marker for en badeplass. Legger til farge på markeren etter Preference og
      * legger til navnet på stedet
-     *
-     * @param place: Stedet som skal plasseres på kartet
+     * @param place: badeplassen som skal plasseres på kartet
      * @param style: Stilen på kartet
      */
     private fun addMarker(place: Place, style: Style){
@@ -389,10 +386,6 @@ class MapFragment : Fragment(), MapboxMap.OnMapClickListener {
 
     private fun Fragment.hideKeyboard() {
         view?.let { activity?.hideKeyboard(it) }
-    }
-
-    fun Activity.hideKeyboard() {
-        hideKeyboard(currentFocus ?: View(this))
     }
 
     private fun Context.hideKeyboard(view: View) {

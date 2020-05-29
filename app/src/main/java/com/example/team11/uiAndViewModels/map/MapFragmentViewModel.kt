@@ -43,15 +43,15 @@ class MapFragmentViewModel(context: Context): ViewModel() {
     }
 
     /**
-     * Gir featuren til en Place sin lokasjon (en feature er det som trengs for å vise noe
+     * Henter Feature for lokasjonen for en badeplass (en Feature er det som trengs for å vise noe
      * på kartet)
-     * @param place: en strand
+     * @param place: en badeplass
      * @return en Feature verdi basert på lokasjonen til place
      */
     fun getFeature(place: Place) = Feature.fromGeometry(Point.fromLngLat(place.lng, place.lat))!!
 
     /**
-     * Endrer hvilken strand man vil undersøke nøyere
+     * Endrer hvilken badeplass man vil undersøke nøyere
      */
     fun changeCurrentPlace(place: Place){
         placeRepository.changeCurrentPlace(place)
@@ -64,9 +64,9 @@ class MapFragmentViewModel(context: Context): ViewModel() {
     }
 
     /**
-     * Sjekker om stedet er varmt (rodt, blaat (graat hvis det ikke er noe data)
-     * @param place: stedet som man vil finne ut om er varmt
-     * @return true hvis stedet er varmt, false hvis kaldt
+     * Sjekker om stedet er varmt (rød eller blå, grå hvis det ikke er noe data)
+     * @param place: badeplassen der man vil finne ut om det er varmt
+     * @return true hvis badeplassen er varm, false hvis kald
      */
     fun getPinColor(place: Place): Color{
         val personalPreferenceValue = personalPreference.value?.get(0)?: return Color.GRAY
@@ -81,9 +81,9 @@ class MapFragmentViewModel(context: Context): ViewModel() {
     }
 
     /**
-     * Sjekker om et sted skal ha graa, rood eller blaa boolge
-     * @param place: Stedet man vil sjekke
-     * @return fargen boolgen skal veare
+     * Sjekker om en badeplass skal ha grå, rød eller blå bølge
+     * @param place: badeplassen man vil sjekke
+     * @return fargen bølgeikonet skal veare
      */
     fun colorWave(place: Place): Color{
         if(place.tempWater == Int.MAX_VALUE) return Color.GRAY

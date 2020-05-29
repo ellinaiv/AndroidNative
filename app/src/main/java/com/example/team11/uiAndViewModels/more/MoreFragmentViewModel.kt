@@ -23,7 +23,6 @@ class MoreFragmentViewModel(context: Context) : ViewModel() {
             return modelClass.getConstructor(Context::class.java).newInstance(context)
         }
     }
-    fun updatePersonalPreference(pp: PersonalPreference) = placeRepository!!.updatePersonalPreference(pp)
 
     fun changeFalseData(newFalseData: Boolean){
         placeRepository!!.changeFalseData(newFalseData)
