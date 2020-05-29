@@ -105,7 +105,11 @@ class FilterActivity : AppCompatActivity() {
             }
 
             override fun onStartTrackingTouch(seek: SeekBar) {
-                // write custom code for progress is started
+                val progress = seek.progress
+                val value = (progress * (seek.width - 2 * seek.thumbOffset)) / seek.max
+                val degreeMid = getString(R.string.temp_C, progress)
+                textTempMidWater.text = degreeMid
+                textTempMidWater.x = seekBarWater.x + value
             }
 
             override fun onStopTrackingTouch(seek: SeekBar) {
@@ -129,7 +133,13 @@ class FilterActivity : AppCompatActivity() {
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
-                // write custom code for progress is started
+                val seek = seekBar ?: return
+                val progress = seek.progress
+                val newProgress = progress + Constants.airTempLow
+                val value = (progress * (seek.width - 2 * seek.thumbOffset)) / seek.max
+                val degreeMid = getString(R.string.temp_C, newProgress)
+                textTempMidAir.text = degreeMid
+                textTempMidAir.x = seekBarAir.x + value
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
