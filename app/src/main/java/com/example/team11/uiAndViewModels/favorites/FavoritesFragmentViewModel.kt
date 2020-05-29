@@ -32,7 +32,7 @@ class FavoritesFragmentViewModel(context: Context): ViewModel(), ListViewModel {
 
     /**
      * Sender beskjed til repository om at stedet man vil lese mer om skal endre seg.
-     * Denne må kalles når man før man går inn i PlaceActivity
+     * Denne må kalles før man går inn i PlaceActivity
      * @param place: stedet man ønsker å dra til
      */
     override fun changeCurrentPlace(place: Place){
