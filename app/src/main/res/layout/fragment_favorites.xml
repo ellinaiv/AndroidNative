@@ -5,13 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginBottom="?attr/actionBarSize"
-    tools:context=".ui.favorites.FavoritesFragment"
+    android:background="@color/backgroundLight"
+    tools:context=".uiAndViewModels.favorites.FavoritesFragment"
     >
 
     <TextView
         android:id="@+id/textFavorite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_medium"
 
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -43,7 +45,7 @@
         android:contentDescription="@string/empty_shark" />
 
     <TextView
-        android:id="@+id/textNoFavorites"
+        android:id="@+id/textNoElementInList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
@@ -52,7 +54,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/imageEmptyListShark"
 
-        android:text="@string/noFavorites"
+        android:text="@string/no_favorites"
         android:textAlignment="center"
         />
 

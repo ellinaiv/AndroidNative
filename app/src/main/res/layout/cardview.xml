@@ -28,9 +28,11 @@
 
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@+id/gridLayout"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.509" />
 
         <GridLayout
             android:id="@+id/gridLayout"
@@ -57,7 +59,7 @@
                 android:layout_marginRight="12dp"
                 android:layout_marginLeft="12dp"
 
-                android:src="@drawable/water_blue"
+                android:src="@drawable/ic_nodatawave"
                 android:contentDescription="@string/water_temp_icon" />
 
             <TextView
@@ -72,6 +74,7 @@
                 android:layout_gravity="center"
                 android:maxLines="1"
                 android:textColor="@color/mainTextColor"
+                android:text="@string/no_data"
 
                 android:paddingTop="6dp"
                 android:textSize="12sp"/>
@@ -90,7 +93,7 @@
                 android:padding="4dp"
                 android:layout_marginEnd="12dp"
 
-                android:src="@drawable/sun"
+                android:src="@drawable/ic_noweatherdata"
                 android:contentDescription="@string/weather_icon" />
 
             <TextView
@@ -106,6 +109,7 @@
                 android:layout_marginEnd="12dp"
                 android:maxLines="1"
                 android:textColor="@color/mainTextColor"
+                android:text="@string/no_data"
 
                 android:paddingTop="6dp"
                 android:textSize="12sp"/>

@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginBottom="?attr/actionBarSize"
-    tools:context=".ui.map.MapFragment">
+    android:background="@color/backgroundLight"
+    tools:context=".uiAndViewModels.map.MapFragment">
 
     <com.mapbox.mapboxsdk.maps.MapView
         android:id="@+id/mapView"
@@ -154,7 +155,7 @@
                     android:layout_marginRight="12dp"
                     android:layout_marginLeft="12dp"
 
-                    android:src="@drawable/water_blue"
+                    android:src="@drawable/ic_nodatawave"
                     android:contentDescription="@string/water_temp_icon" />
 
                 <TextView
@@ -165,6 +166,7 @@
                     android:fontFamily="@font/roboto_medium"
                     android:layout_row="1"
                     android:layout_column="0"
+                    android:layout_marginEnd="12dp"
 
                     android:layout_gravity="center"
                     android:maxLines="1"
@@ -189,7 +191,7 @@
                     android:padding="4dp"
                     android:layout_marginEnd="12dp"
 
-                    android:src="@drawable/sun"
+                    android:src="@drawable/ic_noweatherdata"
                     android:contentDescription="@string/weather_icon" />
 
                 <TextView
@@ -206,6 +208,7 @@
                     android:ellipsize="end"
                     android:fontFamily="@font/roboto_medium"
                     android:maxLines="1"
+                    android:text="@string/no_data"
                     android:textColor="@color/mainTextColor"
                     android:textSize="12sp"/>
 
@@ -215,5 +218,41 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
+
+
+    <ImageView
+        android:id="@+id/imageNoInternet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        mapbox:layout_constraintTop_toTopOf="parent"
+        mapbox:layout_constraintLeft_toLeftOf="parent"
+        mapbox:layout_constraintRight_toRightOf="parent"
+        mapbox:layout_constraintBottom_toBottomOf="parent"
+
+        android:src="@drawable/wifi_off"
+        android:visibility="gone"
+
+
+        android:contentDescription="@string/map_no_internet_image" />
+
+    <TextView
+        android:id="@+id/textNoInternet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        mapbox:layout_constraintTop_toBottomOf="@id/imageNoInternet"
+        mapbox:layout_constraintLeft_toLeftOf="parent"
+        mapbox:layout_constraintRight_toRightOf="parent"
+        android:padding="6dp"
+
+        android:text="@string/map_no_internet"
+        android:textSize="15sp"
+        android:textColor="@color/gray_text_color"
+        android:fontFamily="@font/roboto_medium"
+
+        android:visibility="gone"
+        />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
