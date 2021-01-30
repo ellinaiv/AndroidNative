@@ -10,4 +10,4 @@ Maria Løvland Johansson, marialjo</br>
 Silje Helene Lund, siljehlu</br>
 ```
 
-You can find all the information on the arcitechture and technical solutions in the __Demo adn stack.pptx__.
+You can find all the information on the arcitechture and technical solutions in the __Demo and stack.pptx__.
