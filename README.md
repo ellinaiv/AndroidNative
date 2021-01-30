@@ -8,6 +8,6 @@ Johanna Hårseth, [johannahaarseth](https://github.com/johannahaarseth)</br>
 Linn Melanie Østbøll, [mullmon](https://github.com/mullmon)</br>
 Maria Løvland Johansson, marialjo</br>
 Silje Helene Lund, siljehlu</br>
-
+```
 
 You can find all the information on the arcitechture and technical solutions in the __Demo adn stack.pptx__.
