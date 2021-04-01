@@ -3,7 +3,7 @@
 
 This folder contains the code for android application developed as a part of school project in course Software Engineering, IN2000.</br>
 This application is designed to give an overview of beaches and other swimming spots in Oslo.</br>
-See also DempSplæsj.mp4 to get an illustration of the application functionality.<\br>
+See also DempSplæsj.mp4 to get an illustration of the application functionality.</br>
 
 ## Functionality:
 - [x] Map visualisation with all possible swimming locations markers.
