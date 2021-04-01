@@ -1,7 +1,7 @@
 # Splæsj </br>
 
 
-This folder contains the code for android application developed as a part of school project in course Software Engineering, IN2000.</br><
+This folder contains the code for android application developed as a part of school project in course Software Engineering, IN2000.</br>
 This application is designed to give an overview of beaches and other swimming spots in Oslo.</br>
 See also DempSplæsj.mp4 to get an illustration of the application functionality.<\br>
 
@@ -20,10 +20,12 @@ See also DempSplæsj.mp4 to get an illustration of the application functionality
 
 ## Architecture:
 The application is developed according to MVVM-architecture and the architecture is sketched below:</br>
-**General**
-![plot](./Architecture.png)
-**MVVM**
-![plot](./MVVM.png)
+
+
+![General architecture](./Architecture.png)
+
+
+![MVVM-architecture](./MVVM.png)
 
 ## Tech stack:
 * Android Studio
